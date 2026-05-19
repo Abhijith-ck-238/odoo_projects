@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_shipment_type,access.shipment.type,custom_logistcs.model_shipment_type,base.group_user,1,1,1,1
+access_shipment_type_lines,access.shipment.type.lines,custom_logistcs.model_shipment_type_lines,base.group_user,1,1,1,1
+access_logistics_report_manager,access.logistics.report,custom_logistcs.model_logistics_report,logistics.logistics_manager,1,1,1,1

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="unit_unit_list" model="ir.ui.view">
+            <field name="name">unit.unit.list</field>
+            <field name="model">unit.unit</field>
+            <field name="arch" type="xml">
+                <list string="Units">
+                   <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+         <record id="unit_unit_form" model="ir.ui.view">
+            <field name="name">unit.unit.form</field>
+            <field name="model">unit.unit</field>
+            <field name="arch" type="xml">
+                <form string="Units">
+                    <sheet>
+                        <group>
+                                <field name="name" required="True"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_unit" model="ir.actions.act_window">
+            <field name="view_mode">list,form</field>
+            <field name="name"> Units </field>
+            <field name="res_model">unit.unit</field>
+        </record>
+
+        <menuitem
+                id="menu_unit"
+                name="Units"
+                parent="hr.menu_human_resources_configuration"
+                action="action_unit"
+                />
+
+    </data>
+</odoo>

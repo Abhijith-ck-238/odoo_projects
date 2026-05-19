@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="action_activate_tracking" model="ir.actions.server">
+            <field name="name">Activate Tracking</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="groups_id" eval="[(4, ref('stock.group_stock_user'))]"/>
+            <field name="code">
+                records.action_activate_tracking()
+            </field>
+        </record>
+</odoo>

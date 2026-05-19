@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail_activity_change_task_ranges"
+                model="mail.activity.type">
+            <field name="name">Ticket time range updated</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">project.task</field>
+        </record>
+
+        <record id="mail_activity_helpdesk_ticket_move"
+                model="mail.activity.type">
+            <field name="name">Ticket Moves</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">project.task</field>
+        </record>
+        <record id="mail_activity_helpdesk_ticket_move_1"
+                model="mail.activity.type">
+            <field name="name">Ticket Moves heldpesk</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">helpdesk.ticket</field>
+        </record>
+
+        <record id="mail_activity_fs_ticket_move" model="mail.activity.type">
+            <field name="name">Ticket Move</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">project.task</field>
+        </record>
+
+        <record id="mail_activity_fs_ticket_move_out_of_the_stage"
+                model="mail.activity.type">
+            <field name="name">Ticket Move</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">project.task</field>
+        </record>
+
+        <record id="mail_activity_fs_ticket_move_out_of_the_stage_resources"
+                model="mail.activity.type">
+            <field name="name">Ticket Move</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">project.task</field>
+        </record>
+
+        <record id="mail_activity_fs_ticket_move_out_of_the_stage_modality"
+                model="mail.activity.type">
+            <field name="name">Ticket Move</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">project.task</field>
+        </record>
+
+
+        <record id="mail_activity_task_range_update" model="mail.activity.type">
+            <field name="name">Task Range Updated</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">project.task</field>
+        </record>
+
+        <record id="mail_activity_user_update" model="mail.activity.type">
+            <field name="name">User Updated</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">project.task</field>
+        </record>
+        <record id="mail_activity_resource_update" model="mail.activity.type">
+            <field name="name">Resources Updated</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">project.task</field>
+        </record>
+        <record id="mail_activity_resource_removed" model="mail.activity.type">
+            <field name="name">Remove</field>
+            <field name="icon">fa-trash-o</field>
+            <field name="res_model">project.task</field>
+        </record>
+        <record id="mail_activity_user_removed" model="mail.activity.type">
+            <field name="name">Remove</field>
+            <field name="icon">fa-trash-o</field>
+            <field name="res_model">project.task</field>
+        </record>
+
+        <record id="mail_activity_helpdesk_ticket_assigned"
+                model="mail.activity.type">
+            <field name="name">Ticket Move</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">helpdesk.ticket</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="project_task_allowed_stages" model="ir.ui.view">
+            <field name="name">project.task.allowed_stages</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <!--                    <field name="allowed_stages" invisible="1" force_save="1"/>-->
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="project_task_contract_status" model="ir.ui.view">
+            <field name="name">project.task.contract_status</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id"
+                   ref="itkan_helpdesk.project_task_inh_form_itkan_fsm"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@class='oe_title pe-0']" position="before">
+                    <group col="2">
+
+                        <group>
+                            <div class="o_row">
+                                <label for="serial_no_search"/>
+                                <field name="serial_no_search"
+                                       style="min-width:100px;"/>
+                                <button name="search_by_serial_no" type="object"
+                                        string="Update SN" class="btn-primary"/>
+                            </div>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//div[@class='oe_title pe-0']" position="replace">
+                    <div class="o_row">
+                        <label for="name" string="Title"/>
+                        <field name="name"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='user_ids']" position="before">
+                            <field name="allowed_stages" invisible="1" force_save="1"/>
+                            <field name="is_contract_valid" invisible="1"/>
+                            <field name="is_contract_in_warranty" invisible="1"/>
+                            <h5 invisible="is_contract_valid"
+                                class="text-danger font-weight-bold">
+                                Contract is Expired
+                            </h5>
+                            <h5 invisible="not is_contract_valid or not is_contract_in_warranty"
+                                class="text-success font-weight-bold">Contract is Valid
+                                (within warranty).
+                            </h5>
+                            <h5 invisible="not is_contract_valid or is_contract_in_warranty"
+                                class="text-success font-weight-bold">Contract is Valid
+                                (out of warranty).
+                            </h5>
+                            <field name="province" string="Province"/>
+                            <field name="site_id" string="Site"/>
+                            <field name="sn" string="SN Number" force_save="1" readonly="1"/>
+
+
+
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" string="Call Reported By"/>
+                </xpath>
+
+                <xpath expr="//button[@name='view_service_report']"
+                       position="before">
+                    <button name="action_field_service_subtask" type="object"
+                            class="oe_stat_button" icon="fa-tasks"
+                            invisible="subtask_count == 0">
+                        <field string="SUB FST" name="subtask_count"
+                               widget="statinfo"/>
+                    </button>
+                    <button name="action_field_service_main_task" type="object"
+                            class="oe_stat_button" icon="fa-tasks"
+                            invisible="not parent_id">
+                        <span>MAIN FST</span>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='service_report_doc']"
+                       position="replace">
+                    <field name="service_report_docs"
+                           widget="many2many_binary"/>
+                </xpath>
+                <xpath expr="//field[@name='service_report_docs']"
+                       position="before">
+                    <field name="ticket_type_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="studio_customization.odoo_studio_project__76245eeb-b0d5-487c-9fe2-d7b63189207f" model="ir.ui.view">
+            <field name="active">1</field>
+            <field name="inherit_id" ref="industry_fsm.project_task_action_fsm_no_quick_create"/>
+        </record>
+
+        <record id="project_task_view_kanban_fsm__add_contract_status"
+                model="ir.ui.view">
+            <field name="name">project.task.kanban.fsm.add.contract_status
+            </field>
+            <field name="model">project.task</field>
+            <field name="inherit_id"
+                   ref="industry_fsm.project_task_action_fsm_no_quick_create"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//kanban" position="inside">
+                        <field name="is_contract_valid"/>
+                        <field name="is_contract_in_warranty" invisible="1"/>
+                        <field name="site_id"/>
+                        <field display="full" name="province"/>
+                        <field name="ticket_type_id"/>
+                        <field name="x_studio_field_jZHGv"/>
+<!--                        <field display="full" name="service_type"/>-->
+                    </xpath>
+                    <xpath expr="//kanban[1]" position="attributes">
+                        <attribute name="default_group_by">stage_id</attribute>
+                    </xpath>
+                    <xpath expr="//footer" position="after">
+
+                        <div>
+                            <h5 invisible="is_contract_valid" class="text-danger font-weight-bold">
+                                Contract is Expired
+                            </h5>
+                            <h5 invisible="not is_contract_valid or not is_contract_in_warranty"
+                                class="text-success font-weight-bold">
+                                Contract is
+                                Valid (within warranty).
+                            </h5>
+                            <h5 invisible="not is_contract_valid or is_contract_in_warranty"
+                                class="text-success font-weight-bold">Contract
+                                is
+                                Valid (out of warranty).
+                            </h5>
+                        </div>
+                    </xpath>
+                    <xpath expr="//div[hasclass('flex-column')]/div[hasclass('d-flex')]" position="after">
+                        <field display="full" name="site_id"/>
+                        <field display="full" name="x_studio_field_jZHGv"/>
+                        <field display="full" name="ticket_type_id"/>
+<!--                        <field display="full" name="service_type"/>-->
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="project_task_view_form_fsm_inherit" model="ir.ui.view">
+            <field name="name">project.task.form.fsm.inherit</field>
+            <field name="model">project.task</field>
+            <field name="priority">1000</field>
+            <field name="inherit_id"
+                   ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='display_timesheet_timer']" position="after">
+                    <field name="is_show_product_cart" invisible="1"/>
+                    <field name="can_edit_task_range" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_fsm_view_material']" position="attributes">
+                    <attribute name="invisible">not is_show_product_cart</attribute>
+                    <attribute name="groups"/>
+                </xpath>
+                <field name="material_line_total_price" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//field[@name='date_deadline'][2]" position="attributes">
+                    <attribute name="readonly">not can_edit_task_range</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline'][1]" position="attributes">
+                    <attribute name="readonly">not can_edit_task_range</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ir_cron_update_id_and_resource_name" model="ir.cron">
+            <field name="name">Set id and resource name</field>
+            <field name="model_id" ref="base.model_ir_attachment"/>
+            <field name="state">code</field>
+            <field name="code">model.set_id_and_resource_name()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+<!--            <field name="numbercall">-1</field>-->
+        </record>
+
+        <record id="ir_cron_update_filter" model="ir.cron">
+            <field name="name">Filter Action</field>
+            <field name="model_id" ref="custom_helpdesk.model_helpdesk_ticket"/>
+            <field name="state">code</field>
+            <field name="code">model.update_filter_action()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+<!--            <field name="numbercall">-1</field>-->
+            <field name="active">False</field>
+        </record>
+        <record id="ir_cron_compute_unit_id" model="ir.cron">
+            <field name="name">compute unit id</field>
+            <field name="model_id" ref="custom_helpdesk.model_helpdesk_ticket"/>
+            <field name="state">code</field>
+            <field name="code">model.compute_overlap_sn_trigger()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active">False</field>
+        </record>
+    </data>
+</odoo>

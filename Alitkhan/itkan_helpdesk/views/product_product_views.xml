@@ -1,0 +1,20 @@
+<odoo>
+	<data>
+		<record id="product_product_itkan" model="ir.ui.view">
+			<field name="name">product.product.itkan.kanban</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_template_kanban_view" />
+			<field name="arch" type="xml">
+				<xpath expr="//div[@class='o_kanban_record_headings']/ul" position="attributes">
+					<attribute name="groups">purchase.group_purchase_user</attribute>
+				</xpath>
+				<xpath expr="//field[@name='list_price']" position="after">
+					<ul>
+						<li><strong>Quantiy On Hand: <field name="qty_available"/> </strong></li>
+					</ul>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

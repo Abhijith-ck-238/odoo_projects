@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_hr_expense_budget_consumption_tree" model="ir.ui.view">
+        <field name="name">hr.expense.budget.consumption.tree</field>
+        <field name="model">hr.expense.budget.consumption</field>
+        <field name="arch" type="xml">
+            <list string="Budget Consumption">
+                <field name="policy_id"/>
+                <field name="period_key"/>
+                <field name="cap_amount"/>
+                <field name="consumed_amount"/>
+                <field name="committed_amount"/>
+                <field name="available_amount"/>
+                <field name="consumption_percentage" widget="percentpie"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Budget Consumption Form View -->
+    <record id="view_hr_expense_budget_consumption_form" model="ir.ui.view">
+        <field name="name">hr.expense.budget.consumption.form</field>
+        <field name="model">hr.expense.budget.consumption</field>
+        <field name="arch" type="xml">
+            <form string="Budget Consumption">
+                <sheet>
+                    <group>
+                        <field name="policy_id"/>
+                        <field name="period_key"/>
+                    </group>
+                    <group string="Amounts">
+                        <group>
+                            <field name="cap_amount"/>
+                        <field name="consumed_amount"/>
+                        <label for="committed_amount"/>
+                        <div class="o_row">
+                        <field name="committed_amount"/>
+                        <button name="action_view_expense_sheets"
+                        type="object"
+                        string="Entries..."
+                        class="btn-link"/>
+                        </div>
+                        </group>
+                        <group>
+                            <field name="available_amount"/>
+                        <field name="consumption_percentage"/>
+                        </group>
+
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_budget_consumption_dynamic_view" model="ir.actions.server">
+    <field name="name">Budget Consumption</field>
+    <field name="model_id" ref="budget_restriction.model_hr_expense_budget_consumption"/>
+    <field name="state">code</field>
+        <field name="groups_id" eval="[
+        (4, ref('account.group_account_manager')),
+        (4, ref('hr_expense.group_hr_expense_team_approver')),
+    ]"/>
+    <field name="code">
+special_users = [
+    env.ref('__export__.res_users_68_0bae31a5').id,
+    env.ref('__export__.res_users_1144_d8379cef').id,
+]
+# Check if the user belongs to the budget owner group
+if env.user.has_group('account.group_account_manager'):
+    domain = []
+elif env.user.has_group('hr_expense.group_hr_expense_team_approver'):
+    if env.user.id in special_users:
+        domain = ['|', ('policy_id.budget_owner_id', '=', env.user.id), ('policy_id.scope_tag_ids.name', '=', 'Tech Group')]
+    else:
+        domain = [('policy_id.budget_owner_id', '=', env.user.id)]
+
+action = {
+    'name': 'Budget Consumption',
+    'type': 'ir.actions.act_window',
+    'res_model': 'hr.expense.budget.consumption',
+    'view_mode': 'list,form',
+    'domain': domain,
+}
+    </field>
+</record>
+
+    <!-- Sub Menu: Budget Consumption -->
+    <menuitem id="menu_hr_expense_budget_consumption"
+              name="Budget Consumption"
+              parent="menu_hr_expense_budget_root"
+              action="action_budget_consumption_dynamic_view"
+              sequence="20"/>
+</odoo>

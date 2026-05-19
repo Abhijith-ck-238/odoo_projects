@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="cyllo_studio.SelectionFieldValue" owl="1">
+         <div class="cy-drag-input_container mb-2" t-att-data-index="props.index">
+             <t t-log="'fdfdfdfd'"></t>
+            <button class="btn btn-secondary handle-drag cy-drag_edit-btn" type="button"><i class="ri-drag-move-line handle-drag"/></button>
+            <input type="text" t-model="state.value" class="w-100 cy-draginput--box p-1" style="background-color: white !important"/>
+<!--             <span t-else="" class="w-100 cy-draginput&#45;&#45;box p-1" t-esc="state.value"/>-->
+<!--            <button class="cy-drag_edit-btn cy-drag_save" type="button" t-on-click="toggle"><i t-att-class="state.edit ? 'ri-save-fill' : 'ri-edit-box-line'"/></button>-->
+            <button class="cy-drag_edit-btn cy-drag_delete" type="button" t-on-click="()=> props.deleteValue(props.index)"><i class="ri-delete-bin-6-fill"/></button>
+         </div>
+
+<!--         <div class="input-group bg-secondary mb-2" t-att-data-index="props.index">-->
+<!--            <button class="btn btn-secondary handle-drag" type="button" style="border-radius:0 !important;"><i class="ri-drag-move-line handle-drag"/></button>-->
+<!--            <input t-if="state.edit" type="text" t-att-readonly="!state.edit" t-model="state.value" class="form-control bg-white my-1 border-2"/>-->
+<!--             <span t-else="" class="form-control" t-esc="state.value"/>-->
+<!--            <button class="btn btn-primary" type="button" style="border-radius:0 !important;" t-on-click="toggle"><i t-att-class="state.edit ? 'ri-save-3-fill' : 'ri-edit-box-line'"/></button>-->
+<!--            <button class="btn btn-danger" type="button" style="border-radius:0 !important;" t-on-click="()=> props.deleteValue(props.index)"><i class="ri-delete-bin-line"/></button>-->
+<!--        </div>-->
+
+    </t>
+</templates>

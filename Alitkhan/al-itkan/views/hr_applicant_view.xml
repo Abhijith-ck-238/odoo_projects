@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_applicant_form_inherit" model="ir.ui.view">
+            <field name="name">hr_applicant.view.form.inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header//button[3]" position="after">
+                    <field name="is_accepted" invisible='1' />
+                    <field name="is_interview" invisible='1' />
+                    <button string="Approve" name="button_approve" type="object" 
+                        invisible=" not is_interview or is_accepted"
+                        confirm="Are you sure you want to approve this applicant ?" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_contract_report_pivot" model="ir.ui.view">
+        <field name="name">contract.report.pivot</field>
+        <field name="model">contract.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Contract Analysis" disable_linking="True">
+                <field name="contract_type" type="row"/>
+                <field name="price" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_contract_report_graph" model="ir.ui.view">
+        <field name="name">contract.report.graph</field>
+        <field name="model">contract.report</field>
+        <field name="arch" type="xml">
+            <graph string="Contract Analysis" type="line">
+                <field name="contract_type" type="measure"/>
+                  <field name="price" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+
+<!--    <record id="contract_report_view_dashboard" model="ir.ui.view">-->
+<!--        <field name="name">contract.report.view.dashboard</field>-->
+<!--        <field name="model">contract.report</field>-->
+<!--        <field name="mode">primary</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="My Dashboard" js_class="board">-->
+<!--                <board style="2-1">-->
+<!--                    <column>-->
+<!--                        <action view_mode="list" string="ABC" name="%(module.windaction_id)d"></action>-->
+<!--                    </column>-->
+<!--                </board>-->
+<!--            </form>-->
+            <!--            <dashboard>-->
+            <!--                <view type="graph" ref="custom_contract.view_contract_report_graph"/>-->
+            <!--                <group>-->
+            <!--                     <aggregate name="active_device"-->
+            <!--                           string="Active Devices" field="active_device"/>-->
+            <!--                    <aggregate name="active_warranty"-->
+            <!--                           string="Active Warranty" field="active_warranty"/>-->
+            <!--                    <aggregate name="active_maintenance"-->
+            <!--                           string="Active Maintenance" field="active_maintenance"/>-->
+            <!--                    <aggregate name="active_contract"-->
+            <!--                       string="Active Contract" field="active_contract" group_operator="min"/>-->
+            <!--                    <aggregate name="expired_contract"-->
+            <!--                       string="Expired Contract" field="expired_contract" group_operator="min"/>-->
+            <!--                </group>-->
+            <!--                <view type="pivot" ref="custom_contract.view_contract_report_pivot"/>-->
+            <!--            </dashboard>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="view_contract_report_search" model="ir.ui.view">
+        <field name="name">contract.report.search</field>
+        <field name="model">contract.report</field>
+        <field name="arch" type="xml">
+            <search string="Contract Analysis">
+                <group expand="1" string="Group By">
+                    <filter string="Site" name="Site" context="{'group_by':'site'}"/>
+                    <filter string="Vendor" name="vendor" context="{'group_by':'partner_id'}"/>
+                    <filter string="Modality" name="modality" context="{'group_by':'modality'}"/>
+                    <filter string="Contract Type" name="contract_type" context="{'group_by':'contract_type'}"/>
+                    <filter string="Starting Date" name="starting_date" context="{'group_by':'starting_date'}"/>
+                    <filter string="PAC Date" name="pac_date" context="{'group_by':'pac_date'}"/>
+                    <filter string="EOC Date" name="eoc_date" context="{'group_by':'eoc_date'}"/>
+                    <filter string="Contract" name="contract" context="{'group_by':'contract_id'}"/>
+                    <filter string="Province" name="province" context="{'group_by':'province'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_contract_report" model="ir.actions.act_window">
+        <field name="name">Contract Analysis</field>
+        <field name="res_model">contract.report</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="help">This report performs analysis on your Contracts.</field>
+    </record>
+
+
+    <menuitem
+            id="menu_contract_reporting"
+            name="Reporting"
+            parent="contracts.menu_root"
+            sequence="50"/>
+    <menuitem
+            id="menu_contract_report"
+            name="Contract Report"
+            parent="custom_contract.menu_contract_reporting"
+            action="custom_contract.action_contract_report"
+            sequence="10"/>
+
+</odoo>

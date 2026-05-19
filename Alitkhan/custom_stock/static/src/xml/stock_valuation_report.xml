@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="custom_stock.RemoveButtonTemplate" t-inherit="web.ListView.Buttons" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
+            <button type="button"
+                    class="btn btn-primary o_stock_valuation_remove_button"
+                    t-on-click="() => this.removeSelectedRecords()">
+                Remove
+            </button>
+        </xpath>
+    </t>
+</templates>
+

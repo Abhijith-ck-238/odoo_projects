@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gen_offering,gen.offering,model_gen_offering,base.group_user,1,1,1,1
+access_offering_wizard_warning,offering.wizard.warning,model_offering_wizard_warning,base.group_user,1,1,1,1

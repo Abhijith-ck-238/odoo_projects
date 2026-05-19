@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="Big5" ?>
+<odoo>
+    <data>
+        <record id="action_remove_duplicate_inventory_valuation" model="ir.actions.server">
+            <field name="name">Remove Duplicate Inventory Valuation</field>
+            <field name="model_id" ref="custom_stock.model_remove_duplicate_inventory_valuation"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.open_duplicated_inventory_valuation_entries()
+            </field>
+        </record>
+
+        <menuitem id="menu_remove_duplicate_inventory_valuation" name="Remove Duplicate Inventory Valuation"
+                  parent="stock.menu_stock_root" action="action_remove_duplicate_inventory_valuation"
+                  groups="stock.group_stock_manager"
+        />
+    </data>
+</odoo>

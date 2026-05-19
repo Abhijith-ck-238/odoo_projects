@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <record id="purchase_order_offering_purchase_report_inh_form" model="ir.ui.view">
+            <field name="name">purchase_order_offering_purchase_report_inh.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Offering Purchase Order Information" name="offering_purchase_order_information">
+                    <group>
+                        <group>
+                            <field name="contract_id"/>
+                            <field name="project_no"/>
+                            <field name="product_specification"/>
+                            <field name="delivery_time_Date"/>
+                            <field name="partial_shipment"/>
+                            <field name="transshipment"/>
+                            <field name="shipment_by"/>
+                            <field name="consignee_name"/>           
+                        </group>
+                        <group>
+                            <field name="delivery_conditions" widget="many2many_tags"/>
+                            <field name="type_of_shipping" widget="many2many_tags"/>
+                            <field name="required_documents" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                            <field name="extra_notes"/>
+                            <field name="add_notes"/>
+                    </group>
+                    <group>
+                    <field name="dispatch_address"/>
+                    </group>
+                    <group>
+                    <field name="end_user_address"/>
+                    </group>
+                    <group>
+                    <field name="invoice_address"/>
+                    </group>
+                    <group>
+                    <field name="payment_term"/>
+                    </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

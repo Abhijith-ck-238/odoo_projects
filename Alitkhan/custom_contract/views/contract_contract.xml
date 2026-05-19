@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="contract_contract_view_inherit" model="ir.ui.view">
+            <field name="name">contract.contract.form.inherit</field>
+            <field name="model">contract.contract</field>
+            <field name="inherit_id" ref="custom_contract.contracts_product_view_inheritt"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='redirect_to_invoices']" position="before">
+                    <button name="action_pac_document" type="object"
+                            class="oe_stat_button" icon="fa-file-text-o">
+                        <field string="PAC" name="pac_document_count"
+                               widget="statinfo"/>
+                    </button>
+                    <button name="action_dac_document" type="object"
+                            class="oe_stat_button" icon="fa-file-text-o">
+                        <field string="DAC" name="dac_document_count"
+                               widget="statinfo"/>
+                    </button>
+                    <button name="action_handing_over_document" type="object"
+                            class="oe_stat_button" icon="fa-file-text-o">
+                        <field string="Handing Over Document" name="handing_over_document_count"
+                               widget="statinfo"/>
+                    </button>
+                    <button name="action_related_shipment" type="object"
+                            class="oe_stat_button" icon="fa-truck">
+                        <field string="Shipments" name="related_shipment_count"
+                               widget="statinfo"/>
+                    </button>
+                    <button name="action_training_tickets" type="object"
+                            class="oe_stat_button" icon="fa-ticket">
+                        <field string="Training Ticket" name="training_ticket_count"
+                               widget="statinfo"/>
+                    </button>
+                </xpath>
+                <xpath expr="//button[@name='button_view_related_pm']"
+                       position="replace">
+                    <button class="oe_stat_button" name="button_view_related_pm"
+                            type="object"
+                            icon="fa-bars"
+                            invisible="pm_count == 0">
+                        <field name="pm_count" widget="statinfo"
+                               string="PM Schedule"/>
+                    </button>
+                    <button class="oe_stat_button" name="button_view_related_pm_ticket"
+                            type="object"
+                            icon="fa-bars"
+                            invisible="pm_ticket_count == 0">
+                        <field name="pm_ticket_count" widget="statinfo"
+                               string="PM Tickets"
+                               style="font-size:10px;"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="contract_contract_view_form_inherit" model="ir.ui.view">
+            <field name="name">contract.contract.view.form.inherit</field>
+            <field name="model">contract.contract</field>
+            <field name="inherit_id" ref="itkan_offering.contract_contract_inh_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='related_offering_record']" position="after">
+                    <field name="lc_activated"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

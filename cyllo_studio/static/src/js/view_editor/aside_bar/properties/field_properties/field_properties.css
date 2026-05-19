@@ -1,0 +1,29 @@
+.cy-content_box {
+    padding: 0.5rem;
+    border: 1px solid #828176;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+.cy-btn_save {
+    background-color: #9EA700;
+    color: #fff;
+    border: 1px solid #9EA700;
+    padding: 8px 20px;
+    border-radius: 3px;
+    box-shadow: none;
+}
+.cy-btn_save:focus{
+    background-color: #9EA700;
+}
+.cy-cancel_btn {
+    padding: 8px 20px;
+    border-radius: 3px;
+    border: 1px solid #BCBBA7;
+    color: #BCBBA7;
+    font-weight: 500;
+    background-color: transparent;
+}
+
+.cy-cancel_btn:focus{
+    background-color: transparent;
+}

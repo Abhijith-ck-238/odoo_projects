@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ir_cron_compute_is_pm_date_in_the_month" model="ir.cron">
+            <field name="name">Compute is pm date in this month or next month
+            </field>
+            <field name="model_id"
+                   ref="itkan_pm.model_preventive_maintainence"/>
+            <field name="state">code</field>
+            <field name="code">
+                model.compute_is_pm_date_in_this_month_or_next_month()
+            </field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+<!--            <field name="numbercall">-1</field>-->
+        </record>
+
+        <record id="ir_cron_assign_contract_on_pm" model="ir.cron">
+            <field name="name">Assign contract on preventive maintenance</field>
+            <field name="model_id"
+                   ref="itkan_pm.model_preventive_maintainence"/>
+            <field name="state">code</field>
+            <field name="code">model.assign_contract_on_pm()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+<!--            <field name="numbercall">-1</field>-->
+        </record>
+
+        <record id="ir_cron_assign_maintenance_iq" model="ir.cron">
+            <field name="name">Set value to maintenance iq</field>
+            <field name="model_id" ref="itkan_pm.model_helpdesk_ticket"/>
+            <field name="state">code</field>
+            <field name="code">model.assign_maintenance_iq()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+<!--            <field name="numbercall">-1</field>-->
+        </record>
+
+    </data>
+
+</odoo>

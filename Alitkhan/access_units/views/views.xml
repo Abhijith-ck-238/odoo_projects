@@ -1,0 +1,53 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="access_units.list">
+      <field name="name">access_units list</field>
+      <field name="model">access.units</field>
+      <field name="arch" type="xml">
+        <list editable="top">
+          <field name="name"/>
+        </list>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="access_units.action_window">
+      <field name="name">Access Units Window</field>
+      <field name="res_model">access.units</field>
+      <field name="view_mode">list</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="access_units.action_server">
+      <field name="name">access_units server</field>
+      <field name="model_id" ref="model_access_units_access_units"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- menu categories -->
+    <menuitem name="Access units" id="access_units.menu_1" parent="hr.menu_hr_root"
+      action="access_units.action_window" groups="access_units.administrator_users"/>
+
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="access_units.menu_1_list" parent="access_units.menu_1"
+              action="access_units.action_window"/>
+    <menuitem name="Server to list" id="access_units" parent="access_units.menu_2"
+              action="access_units.action_server"/>
+-->
+  </data>
+</odoo>

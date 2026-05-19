@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="action_activity_report" model="ir.actions.report">
+       <field name="name">Activity Report</field>
+       <field name="model">mail.activity</field>
+       <field name="report_type">qweb-pdf</field>
+       <field name="report_name">activity_reports.report_activity_template</field>
+       <field name="report_file">activity_reports.report_activity_template</field>
+       <field name="binding_model_id" ref="mail.model_mail_activity"/>
+       <field name="binding_type">report</field>
+   </record>
+</odoo>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_purchasequotation_document_inherit"
+              inherit_id="purchase.report_purchasequotation_document">
+
+        <xpath expr="//div[hasclass('page')]" position="inside">
+             <style>
+                .o_snail_mail .address{
+                padding-top: 0 !important;
+                }
+                 .table > :not(caption) > * > * {
+                    padding: 0.3rem 0.3rem;
+                }
+            </style>
+         </xpath>
+
+    <xpath expr="//t[@t-else='']/t[@t-set='information_block']" position="replace">
+         <t t-set="information_block">
+                <div>
+                     <strong class="d-block mt-3">Shipping address:</strong>
+                <div t-if="o.picking_type_id and o.picking_type_id.warehouse_id">
+                    <span t-field="o.picking_type_id.warehouse_id.name"/>
+                    <div t-field="o.picking_type_id.warehouse_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+
+                </div>
+                <div>Address: <span t-field="o.company_id.street"/></div>
+                <div t-field="o.company_id.street2" t-if="o.company_id.street2"/>
+                    <div>
+                        <span t-field="o.company_id.city" t-if="o.company_id.city"/>
+                        <span t-if="o.company_id.state_id">, <span t-field="o.company_id.state_id.name"/></span>
+                        <span t-if="o.company_id.zip"> <span t-field="o.company_id.zip"/></span>
+                    </div>
+                    <div t-field="o.company_id.country_id.name" t-if="o.company_id.country_id"/>
+                    <div t-field="o.company_id.phone" t-if="o.company_id.phone"/>
+                </div>
+            </t>
+     </xpath>
+
+    <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
+        <attribute name="t-call">custom_purchase.custom_external_layout_purchase</attribute>
+    </xpath>
+
+    <xpath expr="//th[@name='th_description']" position="attributes">
+        <attribute name="class">fw-bold</attribute>
+        <attribute name="style">border-top: 1px solid #d3d3d3; border-bottom: 1px solid #d3d3d3;</attribute>
+    </xpath>
+
+    <xpath expr="//th[@name='th_expected_date']" position="attributes">
+        <attribute name="class">text-center fw-bold</attribute>
+        <attribute name="style">border-top: 1px solid #d3d3d3; border-bottom: 1px solid #d3d3d3;</attribute>
+    </xpath>
+
+    <xpath expr="//th[@name='th_quantity']" position="attributes">
+        <attribute name="class">text-end fw-bold</attribute>
+        <attribute name="style">border-top: 1px solid #d3d3d3; border-bottom: 1px solid #d3d3d3;</attribute>
+    </xpath>
+
+        <xpath expr="//t[@t-if='not order_line.display_type']/td[@id='product']" position="attributes">
+        <attribute name="style">border-top: 1px solid #d3d3d3;</attribute>
+    </xpath>
+
+    <xpath expr="//t[@t-if='not order_line.display_type']/td[@class='text-center']" position="attributes">
+        <attribute name="style">border-top: 1px solid #d3d3d3;</attribute>
+    </xpath>
+    <xpath expr="//t[@t-if='not order_line.display_type']/td[@class='text-end']" position="attributes">
+        <attribute name="style">border-top: 1px solid #d3d3d3;</attribute>
+    </xpath>
+
+<!--    <xpath expr="//span[@t-field='order_line.date_planned']" position="attributes">-->
+<!--        <attribute name="t-options">{"widget": "date"}</attribute>-->
+<!--    </xpath>-->
+
+    <xpath expr="//div[@t-field='o.partner_id']" position="replace">
+        <strong>Customer Name:</strong><br/>
+        <div>
+            <div><span t-field="o.partner_id.name"/></div>
+            <div><span t-field="o.partner_id.street"/></div>
+            <div><span t-field="o.partner_id.street2"/></div>
+            <div><span t-field="o.partner_id.city"/></div>
+            <div> <span t-field="o.partner_id.country_id.name"/></div>
+            <div t-if="o.partner_id.phone">
+                <i class="fa fa-phone"/> <span t-field="o.partner_id.phone"/>
+            </div>
+            <div t-if="o.partner_id.email">
+                <i class="fa fa-envelope"/> <span t-field="o.partner_id.email"/>
+            </div>
+        </div>
+    </xpath>
+
+    <xpath expr="//div[contains(@class,'page')]" position="inside">
+        <div class="footer">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-inline mb4">
+                    <li t-if="o.company_id.phone" class="list-inline-item d-inline">
+                        Phone: <span t-field="o.company_id.phone"/>
+                    </li>
+                    <li t-if="o.company_id.email" class="list-inline-item d-inline">
+                        Email: <span t-field="o.company_id.email"/>
+                    </li>
+                    <li t-if="o.company_id.website" class="list-inline-item d-inline">
+                        Web: <span t-field="o.company_id.website"/>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col-6">
+                        <span t-field="o.company_id.report_footer"/>
+                    </div>
+                </div>
+                <!-- Add page numbering -->
+                <div class="text-center mt-3" style="color: #666; font-size: 12px;">
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+        </div>
+    </xpath>
+    </template>
+</odoo>

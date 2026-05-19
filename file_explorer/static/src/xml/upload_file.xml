@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!--
+    ============================================================================
+    Template Name: upload_file_pop
+
+    Description:
+        File input component used for selecting a file to upload.
+        This template is typically rendered conditionally inside the
+        File Explorer toolbar when upload mode is enabled.
+
+    Purpose:
+        - Allows the user to choose a local file
+        - File reference is accessed via t-ref for processing
+        - Used by UploadFile component logic
+
+    References:
+        t-ref="file"  -> Used in JS/OWL component to access selected file
+                         (e.g., this.refs.file.files[0])
+
+    Expected Usage:
+        Rendered inside a parent component that handles:
+            - Upload logic
+            - Authentication
+            - Target upload path
+            - Backend communication
+
+    Notes:
+        - No state binding required (native file input)
+        - File object must be accessed from DOM via ref
+    ============================================================================
+    -->
+
+    <t t-name="upload_file_pop">
+
+        <!--
+        File Input Field
+        - Accepts a single file
+        - Use multiple="true" if multi-upload is needed
+        -->
+        <input type="file"
+               class="form-controls"
+               t-ref="file"/>
+
+    </t>
+</templates>

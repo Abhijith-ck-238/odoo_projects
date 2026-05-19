@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="rfid_transfer_view_tree" model="ir.ui.view">
+            <field name="model">rfid.transfer</field>
+            <field name="arch" type="xml">
+                <list string="RFID Transfer">
+                    <field name="transfer"/>
+                    <field name="transfer_type"/>
+                    <field name="date"/>
+                    <field name="picking_id"/>
+                    <field name="total_quantity"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="rfid_transfer_view_form" model="ir.ui.view">
+            <field name="model">rfid.transfer</field>
+            <field name="arch" type="xml">
+                <form string="RFID Transfer">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="transfer"
+                                   string="Transfer"/>
+                            <h1>
+                                <field name="transfer"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="transfer_type"/>
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <field name="picking_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Transfer Lines">
+                                <field name="transfer_line_ids">
+                                    <list editable="bottom">
+                                        <field name="epc_id"/>
+                                        <field name="product_name"/>
+                                        <field name="product_ref"/>
+                                        <field name="lot_id" column_invisible="1"/>
+                                        <field name="lot_number"/>
+                                        <field name="product_qty"/>
+                                        <field name="is_available"/>
+                                    </list>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="total_quantity"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="rfid_transfer_view_search" model="ir.ui.view">
+            <field name="name">rfid.transfer</field>
+            <field name="model">rfid.transfer</field>
+            <field name="priority">32</field>
+            <field name="arch" type="xml">
+                <search string="Rfid Transfer">
+                    <field name="transfer"/>
+                    <field name="transfer_type"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_rfid_transfer" model="ir.actions.act_window">
+            <field name="name">RFID Transfer</field>
+            <field name="res_model">rfid.transfer</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id"
+                   ref="rfid_connector.rfid_transfer_view_search"/>
+            <field name="help">RFID Transfers</field>
+        </record>
+
+        <menuitem
+                id="menu_rfid_transfer"
+                name="RFID Transfer"
+                sequence="101"
+                parent="stock.menu_stock_inventory_control"
+                action="action_rfid_transfer"/>
+    </data>
+</odoo>

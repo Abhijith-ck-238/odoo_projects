@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_dx_offer" model="report.paperformat">
+        <field name="name">European A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">6</field>
+        <field name="margin_bottom">4</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">43</field>
+        <field name="dpi">100</field>
+    </record>
+
+
+<!--    <report id="report_offer"-->
+<!--            string="DX Offer"-->
+<!--            model="quotation.offer"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="dx_auto_offering.report_quotation_offer"-->
+<!--            file="dx_auto_offering.report_quotation_offer"/>-->
+
+    <record id="report_offer" model="ir.actions.report">
+        <field name="name">DX Offer</field>
+        <field name="model">quotation.offer</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">dx_auto_offering.report_quotation_offer</field>
+        <field name="report_file">dx_auto_offering.report_quotation_offer</field>
+        <field name="print_report_name">'DX Offer - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_quotation_offer"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>

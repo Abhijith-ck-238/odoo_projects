@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+            <field name="name">
+                hr.expensenses.config.settings.view.form.inherit
+            </field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id"
+                   ref="hr_expense.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//block[@name="expenses_setting_container-->
+                <xpath expr="//block[@name='expenses_setting_container']" position="inside">
+
+<!--                <xpath expr="//div[hasclass('o_settings_container')]"-->
+<!--                       position="before">-->
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="accounting_users_to_notify"
+                                       string="Accounting Users to Notify"/>
+                                <div class="text-muted">
+                                    Accounting users can be notified about the
+                                    Budget Approval.
+                                </div>
+                                <field name="accounting_users_to_notify"
+                                       widget="many2many_tags"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="budget_check_approver"
+                                       string="Budget Check Approver"/>
+                                <div class="text-muted">
+                                    Users can be notified about the Budget
+                                    Check.
+                                </div>
+                                <field name="budget_check_approver"
+                                       widget="many2many_tags"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_alert_deadline,alert.deadline,model_alert_deadline,base.group_user,1,1,1,1
+access_amendment_amendment,amendment.amendment,model_amendment_amendment,base.group_user,1,1,1,1
+access_payment_installation,payment.installation,model_payment_installation,base.group_user,1,1,1,1
+access_lc_type,access.lc.type,model_lc_type,base.group_user,1,1,1,1
+access_pledge_stage,access.pledge.stage,model_pledge_stage,base.group_user,1,1,1,1
+access_field_access,access.field.access,model_field_access,base.group_user,1,1,1,1
+access_pledge_pledge_view_only,access.pledge.pledge,model_pledge_pledge,custom_pledges.group_pledge_view_only,1,0,0,0
+access_pledge_extension_view_only,access.pledge.extension,pledge_assets.model_pledge_extension,custom_pledges.group_pledge_view_only,1,0,0,0
+access_pledge_expense_view_only,access.pledge.expense,pledge_assets.model_pledge_expense,custom_pledges.group_pledge_view_only,1,0,0,0
+access_pledge_pledge,access.pledge.pledge,model_pledge_pledge,custom_pledges.group_pledge_view_and_edit,1,1,0,0
+access_pledge_extension,access.pledge.extension,pledge_assets.model_pledge_extension,custom_pledges.group_pledge_view_and_edit,1,1,0,0
+access_pledge_expense,access.pledge.expense,pledge_assets.model_pledge_expense,custom_pledges.group_pledge_view_and_edit,1,1,0,0
+access_pledge_report,access.pledge.report,model_pledge_report,base.group_user,1,1,1,1

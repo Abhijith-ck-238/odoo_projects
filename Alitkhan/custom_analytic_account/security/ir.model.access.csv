@@ -1,0 +1,7 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_account_analytic_account,account.analytic.account,analytic.model_account_analytic_account,custom_analytic_account.group_analytic_user,1,0,0,0
+access_account_analytic_line,account.analytic.line,analytic.model_account_analytic_line,custom_analytic_account.group_analytic_user,1,0,0,0
+hr_expense.access_account_analytic_line_user,account.analytic.line.user,account.model_account_analytic_line,hr_expense.group_hr_expense_team_approver,1,0,0,0
+hr_timesheet.access_account_analytic_line_user,analytic.account.analytic.line.timesheet.user,analytic.model_account_analytic_line,hr_timesheet.group_hr_timesheet_user,1,0,0,0
+analytic.access_account_analytic_line,analytic.access_account_analytic_line,analytic.model_account_analytic_line,analytic.group_analytic_accounting,1,0,0,0
+project.access_account_analytic_line_project,account.analytic.line project,analytic.model_account_analytic_line,project.group_project_manager,1,0,0,0

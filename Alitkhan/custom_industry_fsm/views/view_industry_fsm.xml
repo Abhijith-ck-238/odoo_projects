@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<data>
+        <record id="view_task_form2_inherit_hide_ws" model="ir.ui.view">
+            <field name="name">task.form.inherit.hide.worksheet</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="industry_fsm_report.view_task_form2_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='worksheet_template_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_task_form2_inherit_hide_user_ids" model="ir.ui.view">
+            <field name="name">task.form.inherit.hide.assignees</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_task_form_fsm_inherit_custom_industry_fsm"
+                model="ir.ui.view">
+            <field name="name">project.task.form.fsm.inherit.custom.industry.fsm</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="industry_fsm.view_task_form2_inherit"/>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='brand_id']" position='after'>
+                    <field name="total_working_days"/>
+                    <field name="total_working_fridays"/>
+                    <field name="maintenance_iq" readonly="is_maintenance_iq_readonly == False"
+                           string="Maintenance Iq"/>
+                    <field name="is_maintenance_iq_readonly" invisible="1"/>
+                     <field name="company_id" />
+                    <field name="service_type" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='under_warranty']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//div[@name='button_box']" position='inside'>
+                    <button class="oe_stat_button"
+                            name="action_view_product_reservation"
+                            type="object" icon="fa-bookmark"
+                            help="Product Reservation"
+                            groups="custom_product_reservation.group_product_reservation_user">
+                        <div class="o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="product_reservation_count"
+                                       widget="statinfo"
+                                       string="Product Reservation"
+                                       class="mr-1"/>
+                            </span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_task_hide_buttons" model="ir.ui.view">
+            <field name="name">project.task.hide.buttons</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id"
+                   ref="industry_fsm_report.view_task_form2_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_preview_worksheet']"
+                       position="replace">
+                    <button name="action_preview_worksheet" type="object"
+                            string="Sign Report" class="btn-primary"
+                            invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_preview_worksheet']"
+                       position="replace">
+                    <button name="action_preview_worksheet" type="object"
+                            string="Sign Report" class="btn-primary"
+                            invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_fsm_validate']"
+                       position="replace">
+                    <button name="action_fsm_validate" type="object"
+                            string="Mark As Done" class="btn-primary"
+                            invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_fsm_validate']"
+                       position="replace">
+                    <button name="action_fsm_validate" type="object"
+                            string="Mark As Done" class="btn-primary"
+                            invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_send_report']"
+                       position="replace">
+                    <button name="action_send_report" type="object"
+                            string="Send Report" class="btn-primary"
+                            invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_send_report']"
+                       position="replace">
+                    <button name="action_send_report" type="object"
+                            string="Send Report" class="btn-primary"
+                            invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_project_task_view_form" model="ir.ui.view">
+            <field name="name">inherit_project_task_view_form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id"
+                   ref="project_task_form_fsm_inherit_custom_industry_fsm"/>
+
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='service_type']"
+                       position="attributes">
+                    <attribute name="readonly">False</attribute>
+                    <attribute name="groups">logistics.logistics_manager
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="project_task_view_list_fsm" model="ir.ui.view">
+            <field name="name">
+                project.task.view.list.inherit.custom.industry.fsm
+            </field>
+            <field name="model">project.task</field>
+            <field name="inherit_id"
+                   ref="industry_fsm.project_task_view_list_fsm"/>
+            <field name="arch" type="xml">
+                <xpath expr="//list" position="attributes">
+                    <attribute name="delete">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_task_view_form_fsm" model="ir.ui.view">
+            <field name="name">
+                project.task.view.form.inherit.custom.industry.fsm
+            </field>
+            <field name="model">project.task</field>
+            <field name="inherit_id"
+                   ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="delete">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+
+        <record id="project_task_action_fsm_own_ticket"
+                model="ir.actions.act_window">
+            <field name="name">My Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">
+                kanban,map,gantt,calendar,list,form,activity
+            </field>
+            <field name="search_view_id"
+                   ref="industry_fsm.project_task_view_search_fsm"/>
+            <field name="domain">[('is_fsm', '=',
+                True),'|',('user_id','=',uid),('co_user_ids','in',uid)]
+            </field>
+            <field name="context">{
+                'fsm_mode': True,
+                'search_default_my_tasks': True,
+                'search_default_planned_future': True,
+                'search_default_planned_today': True,
+                }
+            </field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('industry_fsm.project_task_view_list_fsm')})]"/>
+            <field name="help" type="html">
+                <p class='o_view_nocontent_smiling_face'>No future Tasks
+                    planned
+                </p>
+                <p>You can create one for yourself by clicking on Create.</p>
+            </field>
+        </record>
+
+        <record id="project_task_action_fsm_map_own_ticket"
+                model="ir.actions.act_window">
+            <field name="name">Map</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">
+                map,kanban,gantt,calendar,list,form,activity
+            </field>
+            <field name="search_view_id"
+                   ref="industry_fsm.project_task_view_search_fsm"/>
+            <field name="domain">[('is_fsm', '=',
+                True),'|',('user_id','=',uid),('co_user_ids','in',uid)]
+            </field>
+            <field name="context">{
+                'search_default_my_tasks': True,
+                'search_default_planned_today': True,
+                'search_default_todo': True,
+                }
+            </field>
+        </record>
+
+        <record id="project_task_action_to_invoice_fsm_own_ticket"
+                model="ir.actions.act_window">
+            <field name="name">To Invoice</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">
+                list,kanban,gantt,calendar,map,pivot,graph,form,activity
+            </field>
+            <field name="search_view_id"
+                   ref="industry_fsm.project_task_view_search_fsm"/>
+            <field name="domain">[('is_fsm', '=', True),
+                '|',('user_id','=',uid),('co_user_ids','in',uid)]
+            </field>
+            <field name="context">{
+                'fsm_mode': True,
+                'search_default_to_invoice': True,
+                'default_user_id': False,
+                }
+            </field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No task to Invoice
+                </p>
+                <p>All tasks were invoiced</p>
+            </field>
+        </record>
+
+        <menuitem id="fsm_menu_tasks_kanban_own_ticket"
+                  name="Tasks"
+                  action="project_task_action_fsm_own_ticket"
+                  sequence="11"
+                  parent="industry_fsm.fsm_tasks_menu"
+                  groups="custom_industry_fsm.group_fsm_own_ticket_user"/>
+
+        <menuitem id="fsm_menu_tasks_map_own_ticket"
+                  name="Map"
+                  action="project_task_action_fsm_map_own_ticket"
+                  sequence="20"
+                  parent="industry_fsm.fsm_tasks_menu"
+                  groups="custom_industry_fsm.group_fsm_own_ticket_user"/>
+
+        <menuitem id="fsm_menu_all_tasks_root_own_ticket"
+                  name="All Tasks"
+                  sequence="15"
+                  parent="industry_fsm.fsm_menu_root"
+                  groups="custom_industry_fsm.group_fsm_own_ticket_user"/>
+
+        <menuitem id="fsm_menu_all_tasks_invoice_own_ticket"
+                  name="To Invoice"
+                  action="project_task_action_to_invoice_fsm_own_ticket"
+                  sequence="30"
+                  parent="custom_industry_fsm.fsm_menu_all_tasks_root_own_ticket"
+                  groups="custom_industry_fsm.group_fsm_own_ticket_user"/>
+    </data>
+</odoo>

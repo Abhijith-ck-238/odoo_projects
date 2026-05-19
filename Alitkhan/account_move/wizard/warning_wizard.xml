@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="warning_wizard_view" model="ir.ui.view">
+            <field name="name">wizard for warning</field>
+            <field name="model">wizard.warning</field>
+            <field name="arch" type="xml">
+                <form string="Warning">
+                    <group>
+                        <field name="msg" nolabel="1"/>
+                    </group>
+                    <footer>
+                        <button name="yes" string="Ok" type="object"
+                                class="oe_highlight"/>
+                        <button name="no" string="Cancel" type="object"
+                                class="oe_highlight"/>
+
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="warning_wizard" model="ir.actions.act_window">
+            <field name="name">Warning Wizard</field>
+            <field name="res_model">wizard.warning</field>
+            <field name="view_id" ref="warning_wizard_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

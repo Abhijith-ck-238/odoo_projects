@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="report_invoice_document_fc" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[hasclass('page')]/t[@t-set='layout_document_title']" position="replace">
+            <h4>
+                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
+                <span t-elif="o.move_type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
+                <span t-elif="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+                <span t-elif="o.move_type == 'out_refund'">Credit Note</span>
+                <span t-elif="o.move_type == 'in_refund'">Debit Note</span>
+                <span t-elif="o.move_type == 'in_invoice'">Vendor Bill</span>
+                <span t-if="o.name != '/'" t-field="o.name"/>
+            </h4>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="after">
+            <table class="table table-bordered table-sm" style="width:40%; font-size: x-small; float: right;">
+                <tr class="text-bold">
+                    <td class="" style="background: lightgray;">
+                        Bank:
+                    </td>
+                    <td class="">
+                        <p class="m-0" t-field="o.partner_bank_id.bank_id.name"/>
+                    </td>
+                </tr>
+                <tr class="text-bold">
+                    <td class="" style="background: lightgray;">
+                        IBAN:
+                    </td>
+                    <td class="">
+                        <p class="m-0" t-field="o.partner_bank_id.bank_id.bic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="" style="background: lightgray;">
+                        Account Holder Name:
+                    </td>
+                    <td class="">
+                        <p class="m-0" t-field="o.partner_bank_id.acc_holder_name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="" style="background: lightgray;">
+                        Account Number:
+                    </td>
+                    <td class="">
+                        <p class="m-0" t-field="o.partner_bank_id.acc_number"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="" style="background: lightgray;">
+                        Swift:
+                    </td>
+                    <td class="">
+                        <p class="m-0" t-field="o.partner_bank_id.bank_id.bic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="" style="background: lightgray;">
+                        Currency:
+                    </td>
+                    <td class="">
+                        <p class="m-0" t-field="o.currency_id.name"/>
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+    </template>
+</odoo>

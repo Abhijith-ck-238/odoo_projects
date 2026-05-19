@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_job_form_inherit" model="ir.ui.view">
+        <field name="name">hr.job.view.form.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="set_recruit" string="Start Recruitment" invisible="state != 'open'" type="object" class="oe_highlight" groups="base.group_user"/>
+                <button name="set_open" string="Stop Recruitment" invisible="state != 'recruit'" type="object" groups="base.group_user"/>
+                <field name="state" widget="statusbar" statusbar_visible="recruit,open"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

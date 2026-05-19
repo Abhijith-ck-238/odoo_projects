@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="service_report_company_view_form" model="ir.ui.view">
+            <field name="name">service.report.company.form</field>
+            <field name="model">service.report.company</field>
+            <field name="inherit_id"
+                   ref="studio_customization.default_form_view_fo_d3ff4871-a59d-4abe-9348-99b055568151"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="replace">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="print_company_name"/>
+                        </group>
+                        <group>
+                            <field name="logo"/>
+                            <field name="kimadia_template"/>
+                            <field name="sign_of_baneficiary"/>
+                            <field name="sign_of_maintenance_administrator"/>
+                            <field name="sign_of_device_operator"/>
+                            <field name="sign_of_agent"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

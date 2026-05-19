@@ -1,0 +1,284 @@
+<odoo>
+    <record id="logistics_types_form" model="ir.ui.view">
+        <field name="name">logistics_types.form</field>
+        <field name="model">logistics.shipment.transtypes</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="name" placeholder="Name"/>
+                    </h1>
+                    <group>
+                        <field name="is_transport"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="shipment_form" model="ir.ui.view">
+        <field name="name">logistics_shipment.form</field>
+        <field name="model">logistics.shipment</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight"
+                            invisible="status != 'draft'"/>
+                    <button name="action_done" type="object" string="Done" class="oe_highlight"
+                            invisible="status != 'active'"/>
+                    <button name="action_reset" type="object" string="Reset" class="oe_highlight"
+                            invisible="status == 'draft'"/>
+
+                    <field name="status" widget="statusbar" statusbar_visible="draft,active,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" groups="logistics.logistics_manager">
+                        <button name="redirect_to_pos" type="object" class="oe_stat_button"
+                                icon="fa-shopping-cart" groups="">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Expenses</span>
+
+                                <field name="total_po" widget="statinfo" nolabel="1"/>
+                            </div>
+                        </button>
+
+                        <button name="redirect_to_routes" type="object" class="oe_stat_button"
+                                icon="fa-book" groups="">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Routes</span>
+                                <field name="routes_count" widget="statinfo" nolabel="1"/>
+                            </div>
+                        </button>
+
+                        <button name="redirect_to_documents" type="object" class="oe_stat_button"
+                                icon="fa-book" groups="">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Documents</span>
+                                <field name="document_count" widget="statinfo" nolabel="1"/>
+                            </div>
+                        </button>
+                    </div>
+                    <group style="font-size:50px;">
+                        <field name="name_seq" nolabel="1" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="current_location"/>
+                    </group>
+
+                    <group>
+
+                        <group>
+                            <field name="contract_ids" readonly="status != 'draft'" widget="many2many_tags"/>
+                            <field name="origin_ids" widget="many2many_tags" required="1" readonly="status != 'draft'"/>
+                            <field name="origin_is_selected" invisible="1" readonly="status != 'draft'"/>
+                            <field name="customer" required="1" readonly="status != 'draft'"
+                                   domain="[('employee','=',False)]"/>
+                        </group>
+
+                        <group>
+                            <field name="vendor" invisible="multi_vendor" readonly="status != 'draft'"
+                                   domain="[('is_company','=',True)]" required="1"/>
+                            <field name="multi_vendor" readonly="status != 'draft'"/>
+                            <field name="tags_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color', 'no_create_edit': True}"
+                                   readonly="status != 'draft'"/>
+                            <field name="ratio" decoration-danger="ratio &gt; 1"/>
+                            <span style="color:red;" invisible="ratio &lt; 1">Warning, Shipping cost is higher than
+                                items cost
+                            </span>
+                        </group>
+
+                    </group>
+
+                    <group>
+                        <button name="get_from_pos" type="object" string="Get From PO's" class="oe_highlight"
+                                invisible="not origin_is_selected"/>
+                    </group>
+
+                    <notebook>
+                        <page name='shipment' string='Shipment Items Lines'>
+                            <field name="shipment_lines" readonly="status == 'done'">
+                                <list editable="top">
+                                    <field name="product_id" width="200px"/>
+                                    <field name="vendors" column_invisible="not parent.multi_vendor" width="200px"
+                                           required="1"/>
+                                    <field name="qty" width="200px"/>
+                                    <field name="unit_price" width="200px" invisible="1"/>
+                                    <field name="amount_total" width="200px" sum="Total Amounts"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="logistics_shipment_tree" model="ir.ui.view">
+        <field name="name">logistics_shipment.tree</field>
+        <field name="model">logistics.shipment</field>
+        <field name="arch" type="xml">
+            <list string="Shipments">
+                <field name="name_seq"/>
+                <field name="status"/>
+                <field name="contract_ids"/>
+                <field name="origin_ids"/>
+                <field name="customer"/>
+                <field name="vendor"/>
+                <field name="multi_vendor"/>
+                <field name="shipment_total"/>
+                <field name="total_po"/>
+                <field name="ratio"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="logistics_shipment_kanban" model="ir.ui.view">
+        <field name="name">logistics_shipment.kanban</field>
+        <field name="model">logistics.shipment</field>
+        <field name="arch" type="xml">
+            <kanban string="Shipments" default_group_by="stage_id" class="o_kanban_large_column"
+                    on_create="quick_create" archivable="false">
+                <field name="name_seq"/>
+                <field name="contract_ids"/>
+                <field name="origin_ids"/>
+                <field name="customer"/>
+                <field name="vendor"/>
+                <field name="shipment_total"/>
+                <field name="total_po"/>
+                <field name="ratio"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click o_has_icon #{kanban_color(record.color.raw_value)}"
+                             style="margin-bottom:10px;">
+                            <div style="margin:5px;padding:10px;border:2px solid #333;" class="kanban-inner-card">
+                                <h1>
+                                    <field name="name_seq"/>
+                                </h1>
+                                <p>
+                                    Contract:
+                                    <field name="contract_ids"/>
+
+                                </p>
+                                <p>
+                                    <div style="display:flex;flex-direction:column;justify-content:space-around;align-items:center;flex-wrap:wrap;">
+                                        Origin:
+                                        <field name="origin_ids"/>
+                                    </div>
+                                </p>
+
+                                <p>
+                                    Customer:
+                                    <field name="customer"/>
+                                </p>
+
+                                <p>
+                                    Vendor:
+                                    <field name="vendor"/>
+                                </p>
+
+                                <div groups="logistics.logistics_user,logistics.logistics_manager"
+                                     style="display:flex;justify-content:space-between;align-items:center;">
+                                    <div style="display:flex;flex-direction:column;justify-content:space-around;align-items:center;color:rgb(27, 210, 238);">
+                                        Shipment Total
+                                        <field name="shipment_total"/>
+                                    </div>
+                                    <div style="display:flex;flex-direction:column;justify-content:space-around;align-items:center;color:rgb(27, 210, 238);">
+                                        PO Total
+                                        <field name="total_po"/>
+                                    </div>
+                                    <div style="display:flex;flex-direction:column;justify-content:space-around;align-items:center;color:rgb(27, 210, 238);">
+                                        Ratio
+                                        <field name="ratio"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="logistics_shipment_kanban_readonly" model="ir.ui.view">
+        <field name="name">logistics_shipment.kanban.readonly</field>
+        <field name="model">logistics.shipment</field>
+        <field name="arch" type="xml">
+            <kanban string="Shipments" default_group_by="stage_id" class="o_kanban_large_column" create='false'
+                    edit="false" quick_create="false" archivable="false" group_create="false" group_delete="false"
+                    group_edit="false" sortable="true">
+                <field name="stage_id" readonly="1"/>
+                <field name="name_seq"/>
+                <field name="contract_ids"/>
+                <field name="origin_ids"/>
+                <field name="customer"/>
+                <field name="vendor"/>
+                <field name="shipment_total"/>
+                <field name="total_po"/>
+                <field name="ratio"/>
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click o_has_icon #{kanban_color(record.color.raw_value)}"
+                             style="margin-bottom:10px;">
+                            <div style="margin:5px;padding:10px;border:2px solid #333;" class="kanban-inner-card">
+                                <h1 class="sh_t_name">
+                                    <field name="name_seq"/>
+                                </h1>
+                                <p class="sh_t_contract">
+                                    Contract:
+                                    <field name="contract_ids"/>
+                                </p>
+                                <p>
+                                    <div class="sh_t_origins"
+                                         style="display:flex;flex-direction:column;justify-content:space-around;align-items:center;flex-wrap:wrap;">
+                                        Origin:
+<!--                                        <field name="origin_ids"/>-->
+                                        <field widget="ClickableMany2ManyTags" name="origin_ids"/>
+                                    </div>
+                                </p>
+
+                                <p class="sh_t_customer">
+                                    Customer:
+                                    <field name="customer"/>
+                                </p>
+
+                                <p class="sh_t_vendor">
+                                    Vendor:
+                                    <field name="vendor"/>
+                                </p>
+
+                                <div class="sh_t_totals" groups="logistics.logistics_user,logistics.logistics_manager"
+                                     style="display:flex;justify-content:space-between;align-items:center;">
+                                    <div style="display:flex;flex-direction:column;justify-content:space-around;align-items:center;color:rgb(27, 210, 238);">
+                                        Shipment Total
+                                        <field name="shipment_total"/>
+                                    </div>
+                                    <div style="display:flex;flex-direction:column;justify-content:space-around;align-items:center;color:rgb(27, 210, 238);">
+                                        PO Total
+                                        <field name="total_po"/>
+                                    </div>
+                                    <div style="display:flex;flex-direction:column;justify-content:space-around;align-items:center;color:rgb(27, 210, 238);">
+                                        Ratio
+                                        <field name="ratio"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+
+
+</odoo>

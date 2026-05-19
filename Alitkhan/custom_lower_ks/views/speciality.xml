@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="lower_ks_speciality_view_tree" model="ir.ui.view">
+        <field name="name">lower.ks.speciality.list</field>
+        <field name="model">lower.ks.speciality</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="lower_ks_speciality_view_form" model="ir.ui.view">
+        <field name="name">lower.ks.speciality.form</field>
+        <field name="model">lower.ks.speciality</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="color" widget="color_picker"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="lower_ks_speciality_view_search" model="ir.ui.view">
+        <field name="name">lower.ks.speciality.search</field>
+        <field name="model">lower.ks.speciality</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_lower_ks_speciality" model="ir.actions.act_window">
+        <field name="name">Speciality</field>
+        <field name="res_model">lower.ks.speciality</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_lower_ks_speciality" name="Speciality" action="action_lower_ks_speciality" parent="lower_ks_configuration" sequence="8"/>
+</odoo>

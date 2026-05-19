@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        
+<!--        <record id="user_group" model="res.groups">-->
+<!--            <field name="name">Contracts User</field>-->
+<!--            <field name="category_id" ref="base.module_category_operations_documents"/>-->
+<!--            <field name="users" eval="[(4, 2)]"/>-->
+<!--        </record>-->
+
+<!--        <record id="manager_group" model="res.groups">-->
+<!--            <field name="name">Contracts Manager</field>-->
+<!--            <field name="category_id" ref="base.module_category_operations_documents"/>-->
+<!--            <field name="implied_ids" eval="[(4, ref('contracts.user_group') )]"/>-->
+<!--            <field name="users" eval="[(4, 2)]"/>-->
+<!--        </record>-->
+
+
+<!--        created new category, since the module_category_operations_documents is not exists-->
+
+<!--        <record id="module_category_contracts" model="ir.module.category">-->
+<!--            <field name="name">Contracts</field>-->
+<!--        </record>-->
+
+         <record id="user_group" model="res.groups">
+            <field name="name">Contracts User</field>
+            <field name="category_id" ref="base.module_category_productivity_documents"/>
+            <field name="users" eval="[(4, 2)]"/>
+        </record>
+
+        <record id="manager_group" model="res.groups">
+            <field name="name">Contracts Manager</field>
+            <field name="category_id" ref="base.module_category_productivity_documents"/>
+            <field name="implied_ids" eval="[(4, ref('contracts.user_group'))]"/>
+            <field name="users" eval="[(4, 2)]"/>
+        </record>
+
+
+    </data>
+</odoo>

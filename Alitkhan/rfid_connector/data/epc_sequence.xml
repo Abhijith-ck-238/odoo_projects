@@ -1,0 +1,8 @@
+<data>
+    <record id="seq_rfid_epc" model="ir.sequence">
+        <field name="name">epc.sequence</field>
+        <field name="code">epc.seq</field>
+        <field name="prefix">ITK</field>
+        <field name="padding">9</field>
+    </record>
+</data>

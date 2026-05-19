@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_offering_config_search" model="ir.ui.view">
+              <field name="name">offering.config.search</field>
+              <field name="model">offering.config</field>
+              <field name="arch" type="xml">
+                <search string="Search Offering">
+                  <field name="iq"/>
+                  <field name="product_id"/>
+                  <field name="vendor"/>
+                  <field name="product_bom_lines" string="Part number" filter_domain="[('product_bom_lines.smn', '=', self)]"/>
+                  <field name="product_bom_lines" string="Sub item" filter_domain="[('product_bom_lines.product_id.name', 'ilike', self)]"/>
+                  <group expand="0" string="Group By">
+                    <filter string="iq" name="iq" context="{'group_by': 'iq'}"></filter>
+                  </group>
+                </search>
+              </field>
+            </record>
+
+         <record model="ir.actions.act_window" id="itkan_offering.config_action_window">
+          <field name="name">Config Window</field>
+          <field name="res_model">offering.config</field>
+          <field name="view_mode">list,form</field>
+          <field name="search_view_id" ref="view_offering_config_search"></field>
+        </record>
+
+    </data>
+</odoo>

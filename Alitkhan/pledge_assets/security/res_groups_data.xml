@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="module_category_pledge_assets" model="ir.module.category">
+            <field name="name">Pledge Assets</field>
+            <field name="description"> </field>
+        </record>
+        <record id="pledge_user" model="res.groups">
+            <field name="name">Pledge User</field>
+            <field name="category_id" ref="module_category_pledge_assets"/>
+        </record>
+    </data>
+</odoo>

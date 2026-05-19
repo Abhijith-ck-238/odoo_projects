@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="purchase_order_form_purchase_lot" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit.purchase.lot</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='button_confirm']" position="before">
+                    <field name="create_lot" invisible="1"/>
+                    <button name="action_create_lot" string="Create Lot" class="oe_highlight" type="object"
+                            invisible= "create_lot == False or state not in ('draft','sent')"/>
+                </xpath>
+                <xpath expr="//list/field[@name='price_subtotal']" position="after">
+                    <field name="display_assign_lots" invisible="1"/>
+                    <button name="action_open_purchase_lot" string="Register lots, packs, location"
+                          type="object" icon="fa-list" width="0.1"
+                          invisible = "display_assign_lots == False"/>
+              </xpath>
+            </field>
+        </record>
+        <record id="view_purchase_line_lot" model="ir.ui.view">
+            <field name="name">purchase.line.lot.form</field>
+            <field name="model">purchase.order.line</field>
+            <field name="priority">1000</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <div class="oe_button_box" name="button_box">
+                        <field name="stock_production_lot_ids" invisible="1"/>
+                        <button class="oe_stat_button" name="button_lot_entries"
+                                string="Lot/Serial Number" type="object"
+                                invisible="stock_production_lot_ids == []" icon="fa-bars"/>
+                    </div>
+                    <field name="company_id" invisible="1"/>
+                    <field name="state" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="product_id" readonly="1"/>
+                            <label for="product_qty"/>
+                            <div class="o_row">
+                                <span><field name="product_qty" readonly="1" nolabel="1"/></span>
+                                <span><field name="product_uom" readonly="1" nolabel="1"/></span>
+                            </div>
+                        </group>
+                    </group>
+                    <field name="purchase_product_lot_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="ref"/>
+                            <field name="product_qty"/>
+                            <field name="use_date"/>
+                            <field name="alert_date"/>
+                        </list>
+                    </field>
+                    <footer class="oe_edit_only">
+                        <button string="Confirm" special="save" class="oe_highlight"/>
+                        <button string="Discard" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

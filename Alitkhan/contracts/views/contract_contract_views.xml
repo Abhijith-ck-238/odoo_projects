@@ -1,0 +1,110 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="contracts.form">
+            <field name="name">Contracts Form</field>
+            <field name="model">contract.contract</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <h1>
+                            <field name="number" placeholder="Contract Number"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="iq"/>
+                                <field name="partner_id"/>
+                                <field name="contract_signed_by"/>
+                                <field name="signed_date"/>
+                                <field name="starting_condition"/>
+                                <field name="old_data" invisible="1"/>
+
+
+                                <field name="main_contract"
+                                       options="{'no_create': True, 'no_create_edit':True}"/>
+
+                            </group>
+                            <group>
+                                <field name="contract_categ" widget="radio"/>
+                                <field name="first_payment_date"/>
+                                <field name="project_manager"/>
+
+                                <field name="first_payment"/>
+                                <field name="sites" widget="many2many_tags"
+                                       invisible="1"/>
+                                <!-- <field name="display_name"/> -->
+                            </group>
+                            <group string="Documents">
+                                <field name="technical_docs1" readonly="1" invisible="1"/>
+                                <field name="technical_docs2" readonly="1" invisible="1"/>
+
+                                <field name="financial_docs1" readonly="1" invisible="1"/>
+                                <field name="financial_docs2" readonly="1" invisible="1"/>
+
+                            </group>
+                            <group>
+                                <!-- Added By AhmedNaseem@11-11-2021 -->
+                                <field name="x_studio_training_documents_1"
+                                       widget="many2many_binary" string="Training Documents"/>
+                                <field name="technical_docs_att"
+                                       widget="many2many_binary"/>
+                                <field name="financial_docs_att"
+                                       widget="many2many_binary"/>
+
+
+                            </group>
+
+                        </group>
+
+
+                        <field name="product_lines">
+
+                            <list>
+                                <field name="product_id"
+                                       column_invisible="parent.old_data == True"/>
+                                <field name="product_char"
+                                       column_invisible="parent.old_data == False"/>
+                                <field name="price"/>
+                                <field name="qty"/>
+
+                                <field name="site"/>
+                                <field name="functional_location"/>
+                                <field name="supplier"/>
+                                <field name="modality"/>
+                                <field name="part_number"/>
+                                <field name="sn"/>
+                                <field name="password_validity" optional="1"/>
+                                <field name="password_validity_date"
+                                       optional="1"/>
+                                <field name="warranty" optional="1"/>
+                                <field name="maintainence" optional="1"/>
+                                <field name="starting_date"/>
+                                <field name="pac_date"/>
+                                <field name="eoc_date"/>
+                                <field name="contract_type"/>
+                                <!-- <field name="status"/> -->
+                            </list>
+                        </field>
+
+                        <field name="notes"/>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="contracts.tree">
+            <field name="name">Contracts Tree</field>
+            <field name="model">contract.contract</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="number"/>
+                    <field name="iq"/>
+                    <field name="partner_id"/>
+                    <field name="signed_date"/>
+                    <field name="project_manager"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
+</odoo>

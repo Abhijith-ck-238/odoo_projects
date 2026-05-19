@@ -1,0 +1,57 @@
+<odoo>
+  <data>
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="contracts.contracts_action_window">
+      <field name="name">Main Contracts Window</field>
+      <field name="res_model">contract.contract</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="contracts.contracts_product_action_window">
+      <field name="name">Contracts Product Window</field>
+      <field name="res_model">contract.product</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="contracts.contracts_province_action_window">
+      <field name="name">Provinces Window</field>
+      <field name="res_model">contract.province</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="contracts.contracts_site_action_window">
+      <field name="name">Sites Window</field>
+      <field name="res_model">contract.site</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="contracts.contracts_modality_action_window">
+      <field name="name">Modalities Window</field>
+      <field name="res_model">contract.modality</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="contracts.contracts_condition_action_window">
+      <field name="name">Conditions Window</field>
+      <field name="res_model">contract.condition</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="Contracts" id="contracts.menu_root" web_icon="contracts,static/src/img/icon.png" groups="contracts.user_group"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Contracts" id="contracts.menu_1" parent="contracts.menu_root" action="contracts.contracts_action_window" sequence="1" groups="contracts.user_group"/>
+    <menuitem name="Configurations" id="contracts.menu_settings" parent="contracts.menu_root" sequence="5" groups="contracts.manager_group"/>
+    <menuitem name="Provinces" id="contracts.menu_province" parent="contracts.menu_settings" action="contracts.contracts_province_action_window"/>
+    <menuitem name="Sites" id="contracts.menu_sites" parent="contracts.menu_settings" action="contracts.contracts_site_action_window"/>
+    <menuitem name="Modalities" id="contracts.menu_modalities" parent="contracts.menu_settings" action="contracts.contracts_modality_action_window"/>
+    <menuitem name="Conditions" id="contracts.menu_conditions" parent="contracts.menu_settings" action="contracts.contracts_condition_action_window"/>
+    <menuitem name="Contract Products" id="contracts.menu_contract_product" parent="contracts.menu_settings" action="contracts.contracts_product_action_window" groups="base.group_no_one"/>
+
+  </data>
+</odoo>

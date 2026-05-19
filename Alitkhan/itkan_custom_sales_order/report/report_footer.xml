@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <data>
+
+        <template id="offering_so_footer">
+            <div class="footer o_standard_footer">
+
+                    <div class="row">
+                        <div class="col-4" style="max-heigh:90px;">
+                            <span style="font-size: 12px; font-weight: bold;">JOB NO : </span>
+                            <span t-field="o.job_no" style="font-size: 11px;"/>
+                        </div> 
+                        <div class="col-4" style="max-heigh:90px;">
+                            <span style="font-size: 12px; font-weight: bold;">REQUISITIONER : </span>
+                        </div> 
+                        <div class="col-4" style="max-heigh:90px;">
+                            <span style="font-size: 12px; font-weight: bold;">DATED : </span>
+                            <span t-field="o.date" style="font-size: 11px;"/>
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-4" style="max-heigh:90px; border:1px solid black;">
+                            <span style="font-size: 12px; font-weight: bold;">Supplier : </span>
+                            <span t-field="o.supplier" style="font-size: 11px;"/>
+                        </div> 
+                        <div class="col-4" style="max-heigh:90px; border:1px solid black;">
+                            <span t-field="o.req" style="font-size: 11px;"/>
+                        </div>
+                        <div class="col-4" style="max-heigh:90px; border:1px solid black;">
+                            <span style="font-size: 12px; font-weight: bold;">Contract : </span>
+                            <span t-field="o.partner_id" style="font-size: 11px;"/>
+                        </div> 
+                    </div>
+                    <div class="row" style="margin-top:10px;">
+                        <span>Page </span><span class="page" /> of <span class="topage"/>
+                    </div>
+            </div>
+        </template>
+    </data>
+</odoo>

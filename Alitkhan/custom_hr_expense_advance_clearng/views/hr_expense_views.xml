@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="hr_expense_view_form_inherit_custom_fields" model="ir.ui.view">
+    <field name="name">hr.expense.view.form.inherit.custom.fields</field>
+    <field name="model">hr.expense</field>
+    <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+    <field name="arch" type="xml">
+
+        <!-- Hide the original price_unit -->
+<!--        <xpath expr="//field[@name='price_unit']" position="attributes">-->
+<!--            <attribute name="invisible">1</attribute>-->
+<!--        </xpath>-->
+
+        <!-- Hide the original quantity -->
+<!--        <xpath expr="//field[@name='quantity']" position="attributes">-->
+<!--            <attribute name="invisible">1</attribute>-->
+<!--        </xpath>-->
+
+<!--        &lt;!&ndash; Add custom fields &ndash;&gt;-->
+<!--        <xpath expr="//field[@name='employee_id']" position="after">-->
+<!--            <field name="c_price_unit" string="Unit Price"/>-->
+<!--            <field name="c_quantity" string="quantity"/>-->
+<!--        </xpath>-->
+
+        <xpath expr="//field[@name='total_amount']" position="attributes">
+            <attribute name="string">Total (Company Currency)</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='total_amount_currency']" position="attributes">
+            <attribute name="string">Total</attribute>
+        </xpath>
+
+
+        <field name="company_id" position="after">
+            <field name="analytic_distribution"/>
+        </field>
+
+    </field>
+</record>
+</odoo>

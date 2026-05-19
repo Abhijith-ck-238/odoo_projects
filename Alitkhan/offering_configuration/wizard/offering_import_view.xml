@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="gen_offering_wizard_view" model="ir.ui.view">
+            <field name="name">wizard for import offering from xls file</field>
+            <field name="model">gen.offering</field>
+            <field name="arch" type="xml">
+                <form string="Import Offering">
+                    <group>
+                        <group>
+                            <field name="import_option" widget="radio"/>
+                            <field name="file" filename="name"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="import_offering" string="Import" type="object" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="gen_offering_import_wizard" model="ir.actions.act_window">
+            <field name="name">Import Offering</field>
+            <field name="res_model">gen.offering</field>
+            <field name="view_id" ref="gen_offering_wizard_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Import" action="gen_offering_import_wizard"
+                  id="gen_offering_wizard_import"
+                  parent="itkan_offering.menu_root"/>
+
+    </data>
+</odoo>

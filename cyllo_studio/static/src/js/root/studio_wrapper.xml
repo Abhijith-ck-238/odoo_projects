@@ -1,0 +1,42 @@
+<templates id="template" xml:space="preserve">
+	<t t-name="cyllo_studio.StudioWrapper">
+		<div t-att-class="asideProps.type  and asideProps.type != 'dialog_box' ? 'pe-3' : ''" class="d-flex h-100  ps-2 col-12">
+			<div t-att-class="asideProps.type and asideProps.type != 'dialog_box' ? 'col-10' : 'col-12'" class="pe-2">
+				<div class="rounded m-2 overflow-hidden border-view shadow">
+					<div class="cy-window-view d-flex gap-2 py-2 ps-1">
+						<div class="p-2 border rounded-circle" style="background-color: #d3d3d3"/>
+						<div class="p-2 border rounded-circle" style="background-color: #d3d3d3"/>
+						<div class="p-2 border rounded-circle" style="background-color: #d3d3d3"/>
+					</div>
+					<div class="o_action_manager d-flex position-relative" style="min-height: 87vh;">
+<!--						<MenuSideBar/>-->
+						<StudioMenuSideBar/>
+ 						<div t-if="props.info and props.info?.componentProps?.action" class="position-relative">
+							<t t-if="props.info.Component" t-component="props.info.Component" className="'o_action'" t-props="props.info.componentProps" t-key="props.info.id"/>
+							<div class="cy-studio-overlay opacity-0 opacity-75-hover">
+								<div class="text-center">
+									<i class="ri-lock-2-fill text-danger" style="font-size: 10rem;"/>
+									<h2 class="fw-bolder text-danger">
+										<t t-esc="props.info?.componentProps.action?.display_name"/>
+                                Editing Restricted !
+
+
+									</h2>
+								</div>
+							</div>
+						</div>
+						<t t-elif="props.info.Component" t-component="props.info.Component" className="'o_action'" t-props="props.info.componentProps" t-key="props.info.id"/>
+					</div>
+				</div>
+			</div>
+			<t t-if="asideBarAvailable || state?.isAnimatingSidebar ">
+				<t t-if="!state.activity_view">
+					<AsideBar t-props="asideProps"/>
+				</t>
+				<t t-if="viewDetails.viewType == 'activity' and props.edit">
+					<ActivityDialog t-props="activityProps"/>
+				</t>
+			</t>
+		</div>
+	</t>
+</templates>

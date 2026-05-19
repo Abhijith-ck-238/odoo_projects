@@ -1,0 +1,22 @@
+<odoo>
+    <record id="product_packs_line_form" model="ir.ui.view">
+        <field name="name">product.packs.line.form</field>
+        <field name="model">product.packs.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="product_id"/>
+                </group>
+                <field name="product_lines">
+                    <list editable="bottom" create="1" edit="1">
+                        <field name="product_id" width="2"/>
+                        <field name="qty_uom" width="1"/>
+                        <field name="unit_price" width="1" sum="Unit Price"/>
+                        <field name="total_price" width="1" sum="Total Price"/>
+                    </list>
+                </field>
+            </form>
+        </field>
+    </record>
+</odoo>

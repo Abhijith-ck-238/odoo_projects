@@ -1,0 +1,14 @@
+<data>
+    <record id="seq_guest_house_bed" model="ir.sequence">
+        <field name="name">guest.house.bed.sequence</field>
+        <field name="code">guest.house.bed.seq</field>
+        <field name="prefix">BD</field>
+        <field name="padding">4</field>
+    </record>
+    <record id="seq_reservation" model="ir.sequence">
+        <field name="name">reservation.sequence</field>
+        <field name="code">reservation.seq</field>
+        <field name="prefix">BR</field>
+        <field name="padding">5</field>
+    </record>
+</data>

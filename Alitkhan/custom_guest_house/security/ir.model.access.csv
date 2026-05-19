@@ -1,0 +1,10 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_guest_house_user,access.guest.house.user,custom_guest_house.model_guest_house,custom_guest_house.group_guest_house_user,1,1,0,0
+access_guest_house_bed_user,access.guest.house.bed.user,custom_guest_house.model_guest_house_bed,custom_guest_house.group_guest_house_user,1,1,0,0
+access_bed_reservation_user,access.bed.reservation.user,custom_guest_house.model_bed_reservation,custom_guest_house.group_guest_house_user,1,1,1,1
+access_reservation_wizard_user,access.reservation.wizard.user,custom_guest_house.model_reservation_wizard,custom_guest_house.group_guest_house_user,1,1,1,1
+
+access_guest_house_admin,access.guest.house.admin,custom_guest_house.model_guest_house,custom_guest_house.group_guest_house_admin,1,1,1,1
+access_guest_house_bed_admin,access.guest.house.bed.admin,custom_guest_house.model_guest_house_bed,custom_guest_house.group_guest_house_admin,1,1,1,1
+access_bed_reservation_admin,access.bed.reservation.admin,custom_guest_house.model_bed_reservation,custom_guest_house.group_guest_house_admin,1,1,1,1
+access_reservation_wizard_admin,access.reservation.wizard.admin,custom_guest_house.model_reservation_wizard,custom_guest_house.group_guest_house_admin,1,1,1,1

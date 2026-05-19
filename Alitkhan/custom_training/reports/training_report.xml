@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_training_report_tree" model="ir.ui.view">
+         <field name="name">training.report.tree</field>
+         <field name="model">training.report</field>
+         <field name="arch" type="xml">
+             <list string="Training Analysis">
+                    <field name="training_id"/>
+             </list>
+         </field>
+    </record>
+
+    <record id="view_training_report_pivot" model="ir.ui.view">
+         <field name="name">training.report.pivot</field>
+         <field name="model">training.report</field>
+         <field name="arch" type="xml">
+             <pivot string="Training Analysis" disable_linking="True">
+                 <field name="training_id" type="row"/>
+                 <field name="stage_id" type="column"/>
+                 <field name="contract_id" type="column"/>
+                 <field name="training_type_id" type="column"/>
+                 <field name="analytic_account_id" type="column"/>
+                 <field name="modality_id" type="column"/>
+                 <field name="partner_id" type="column"/>
+                 <field name="date" type="column"/>
+                 <field name="training_location_id" type="column"/>
+                 <field name="site_sector_id" type="column"/>
+                 <field name="attendees_count" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="view_training_report_graph" model="ir.ui.view">
+         <field name="name">training.report.graph</field>
+         <field name="model">training.report</field>
+         <field name="arch" type="xml">
+             <graph string="Training Analysis" type="line">
+                <field name="attendees_count" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+<!--    <record id="training_report_view_dashboard" model="ir.ui.view">-->
+<!--        <field name="name">training.report.view.dashboard</field>-->
+<!--        <field name="model">training.report</field>-->
+<!--        <field name="mode">primary</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <dashboard>-->
+<!--                <view type="graph" ref="custom_training.view_training_report_graph"/>-->
+<!--                <group>-->
+
+<!--                </group>-->
+<!--                <view type="pivot" ref="custom_training.view_training_report_pivot"/>-->
+<!--            </dashboard>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="view_training_report_search" model="ir.ui.view">
+        <field name="name">training.report.search</field>
+        <field name="model">training.report</field>
+        <field name="arch" type="xml">
+            <search string="Traianing Analysis">
+                <group expand="1" string="Group By">
+                    <filter string="Training" name="Training" context="{'group_by':'training_id'}"/>
+                    <filter string="Stage" name="Stage" context="{'group_by':'stage_id'}"/>
+                    <filter string="Contract" name="Contract" context="{'group_by':'contract_id'}"/>
+                    <filter string="Training Type" name="Training Type" context="{'group_by':'training_type_id'}"/>
+                    <filter string="Budget" name="Budget" context="{'group_by':'analytic_account_id'}"/>
+                    <filter string="Modality" name="Modality" context="{'group_by':'modality_id'}"/>
+                    <filter string="Vendor" name="Vendor" context="{'group_by':'partner_id'}"/>
+                    <filter string="Date" name="Date" context="{'group_by':'date'}"/>
+                    <filter string="Location" name="Location" context="{'group_by':'training_location_id'}"/>
+                    <filter string="Site Sector" name="Site Sector" context="{'group_by':'site_sector_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_training_report" model="ir.actions.act_window">
+        <field name="name">Training Analysis</field>
+        <field name="res_model">training.report</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_training_report_search"/>
+        <field name="help">This report performs analysis on your Training.</field>
+    </record>
+
+    <menuitem
+            id="menu_training_reporting"
+            name="Reporting"
+            parent="custom_training.training_menu_root"
+            sequence="50" groups="group_training_administrator"/>
+    <menuitem
+        id="menu_training_report"
+        name="Training"
+        parent="menu_training_reporting"
+        action="custom_training.action_training_report"
+        sequence="10"/>
+</odoo>

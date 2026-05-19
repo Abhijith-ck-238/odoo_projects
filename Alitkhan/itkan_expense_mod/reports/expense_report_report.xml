@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="expense_report_custom" inherit_id="hr_expense.report_expense_sheet">
+            <!-- <xpath expr="//div[@class='page']//table[@class='table table-sm']//tr//th[7]" position="after">
+                <th class="text-center" >Price in IQD</th>
+            </xpath>
+
+
+            <xpath expr="//div[@class='page']//table[@class='table table-sm']//tr//td[7]" position="after">
+                <td  class="text-right">
+                    <span t-field="line.total_iqd"/>
+                </td>
+            </xpath> -->
+
+    <xpath expr="//div[@class='row justify-content-end o_total mt-n3']//div[@class='col-4']//table[@class='table table-borderless']//tbody" position="inside">
+
+                <tr class="border-black">
+                        <td><strong>Total IQD Lines</strong></td>
+                        <td class="text-right">
+                            <span t-field="o.total_iqd_amounts" />
+                        </td>
+                </tr>
+                <tr class="border-black">
+                        <td><strong>Total USD Lines</strong></td>
+                        <td class="text-right">
+                            <span t-field="o.total_usd_amounts" />
+                        </td>
+                </tr>
+               
+            </xpath>
+        </template>
+    </data>
+</openerp>

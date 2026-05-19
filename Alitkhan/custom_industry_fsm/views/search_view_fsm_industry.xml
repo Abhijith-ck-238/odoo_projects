@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="industry_fsm_product_search_view" model="ir.ui.view">
+            <field name="name">industry.fsm.product.product.search</field>
+            <field name="model">product.product</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='services']" position="after">
+                    <separator/>
+                    <filter string="Material Quantity Is Set"
+                            name="fsm_quantity"
+                            domain="[('fsm_quantity', '!=', False)]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="field_service_search" model="ir.ui.view">
+            <field name="name">project.task.field.service.search</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id"
+                   ref="industry_fsm.project_task_view_search_fsm"/>
+            <field name="arch" type="xml">
+                <filter name="planned_today" position="after">
+                    <filter string="This Week" name="this_week" domain="[
+                            ('create_date', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-3)).strftime('%Y-%m-%d'))),
+                            ('create_date', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=-2)).strftime('%Y-%m-%d')))]"/>
+                    <filter name="current_month" string="This Month" domain="[
+                         ('create_date', '&gt;=', (context_today()).strftime('%%Y-%%m-01')),
+                        ('create_date', '&lt;=', (context_today() + relativedelta(day=31)).strftime('%%Y-%%m-%%d'))]"/>
+                    <filter name="last_30_days" string="Last 30 Days" domain="[
+                         ('create_date', '&lt;=', (context_today()).strftime('%%Y-%%m-%%d')),
+                        ('create_date', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(days=-30), datetime.time(11,59,59)))]"/>
+                </filter>
+                <filter name="planned_future" position="replace">
+                    <filter name="planned_future" string="Future"
+                            domain="[('planned_date_begin', '&gt;', datetime.datetime.combine(context_today(), datetime.time(11,59,59)))]"/>
+                </filter>
+                <filter name="planned_today" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="string">Planned for Today</attribute>
+                </filter>
+            </field>
+        </record>
+    </data>
+</odoo>

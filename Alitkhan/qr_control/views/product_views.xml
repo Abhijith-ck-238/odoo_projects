@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_product_form">
+        <field name="name">product.form</field>
+        <field name="model">product.product</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Products" unarchive="false" archive="false"
+                  duplicate="false" delete="false">
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button type="object"
+                                name="action_product_virtual_reservation_report"
+                                invisible="type != 'consu'"
+                                context="{'default_product_id': id}"
+                                class="oe_stat_button" icon="fa-cubes">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="virtual_reserved_qty"
+                                           widget="statinfo" nolabel="1"
+                                           class="mr4"/>
+                                    <field name="uom_name"/>
+                                </span>
+                                <span class="o_stat_text">Virtual Reserved
+                                </span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button"
+                                name="action_open_quants"
+                                icon="fa-cubes"
+                                type="object"
+                                invisible="type != 'consu'">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="qty_available"
+                                           widget="statinfo" nolabel="1"
+                                           class="mr4"/>
+                                    <field name="uom_name"/>
+                                </span>
+                                <span class="o_stat_text">On Hand</span>
+                            </div>
+                        </button>
+                        <button
+                                name="action_open_free_quants" type="object"
+                                invisible="type != 'consu'"
+                                context="{'default_product_id': id}"
+                                class="oe_stat_button" icon="fa-cubes">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="free_available_qty"
+                                           widget="statinfo" nolabel="1"
+                                           class="mr4"/>
+                                    <field name="uom_name"/>
+                                </span>
+                                <span class="o_stat_text">Free Quantity</span>
+                            </div>
+                        </button>
+                        <button name="action_open_reserved" type="object"
+                                invisible="type != 'consu'"
+                                context="{'default_product_id': id}"
+                                class="oe_stat_button" icon="fa-cubes">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="reserved_qty" widget="statinfo"
+                                           nolabel="1" class="mr4"/>
+                                    <field name="uom_name"/>
+                                </span>
+                                <span class="o_stat_text">Reserved</span>
+                            </div>
+                        </button>
+                        <button name="action_open_incoming" type="object"
+                                invisible="type != 'consu'"
+                                context="{'default_product_id': id}"
+                                class="oe_stat_button" icon="fa-cubes">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="incoming_qty" widget="statinfo"
+                                           nolabel="1" class="mr4"/>
+                                    <field name="uom_name"/>
+                                </span>
+                                <span class="o_stat_text">Incoming</span>
+                            </div>
+                        </button>
+                    </div>
+                    <field name='product_variant_count' invisible='1'/>
+                    <field name='is_product_variant' invisible='1'/>
+                    <field name='attribute_line_ids' invisible='1'/>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived"
+                            bg_color="bg-danger"
+                            invisible="active"/>
+                    <field name="id" invisible="True"/>
+                    <field name="image_1920" widget="image" class="oe_avatar"
+                           options="{'preview_image': 'image_128'}"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name"
+                               string="Product Name"/>
+                        <h1>
+                            <field name="name" placeholder="Product Name"/>
+                        </h1>
+                        <div name="options" groups="base.group_user">
+                            <div>
+                                <field name="sale_ok"/>
+                                <label for="sale_ok"/>
+                            </div>
+                            <div>
+                                <field name="purchase_ok"/>
+                                <label for="purchase_ok"/>
+                            </div>
+                        </div>
+                        <field name="stock_move_line_ids" invisible="1"/>
+                    </div>
+                    <notebook>
+                        <page string="General Information"
+                              name="general_information">
+                            <group>
+                                <group name="group_general">
+                                    <field name="active" invisible="1"/>
+                                    <field name="default_code"/>
+                                    <field name="type"/>
+                                    <field name="categ_id"
+                                           string="Product Category"/>
+                                    <field name="on_hand_locations"
+
+                                          />
+                                </group>
+                                <group/>
+                            </group>
+                            <group string="Internal Notes">
+                                <field name="description" nolabel="1"
+                                       placeholder="This note is only for internal purposes."/>
+                            </group>
+                            <field name="qr_reserved_product_ids"
+                                   invisible="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="activity_ids" widget="mail_activity"/>-->
+<!--                    <field name="message_ids" widget="mail_thread"/>-->
+<!--                </div>-->
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_product_tree">
+        <field name="name">product.tree</field>
+        <field name="model">product.product</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <list string="Products" duplicate="false" delete="false" import="0">
+                <field name="default_code" optional="show" readonly="1"/>
+                <field name="barcode" optional="hide" readonly="1"/>
+                <field name="name" readonly="1"/>
+                <field name="qty_available" readonly="1"/>
+                <field name="free_available_qty" readonly="1"/>
+                <field name="on_hand_locations"  optional="hide"/>
+                <field name="reserved_qty" readonly="1"/>
+                <field name="incoming_qty" readonly="1"/>
+                <field name="virtual_reserved_qty" readonly="1"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide" readonly="1"/>
+                <field name="categ_id" optional="hide"/>
+                <field name="type" optional="hide" readonly="1"/>
+                <field name="product_tmpl_id" invisible="1" readonly="1"/>
+                <field name="active" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_product_kanban">
+        <field name="name">product.kanban</field>
+        <field name="model">product.product</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <kanban class="o_modules_kanban" sample="1">
+                <field name="id"/>
+                <field name="lst_price"/>
+                <field name="activity_state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('product.product', 'image_128', record.id.raw_value)"
+                                     alt="Product" class="o_image_64_contain"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                    <small t-if="record.default_code.value">[
+                                        <field name="default_code"/>]
+                                    </small>
+                                </strong>
+                                <div class="o_kanban_tags_section">
+                                    <field name="product_template_attribute_value_ids"
+                                           groups="product.group_product_variant"/>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <strong>Price:
+                                            <field name="lst_price"/>
+                                        </strong>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <strong>On hand:
+                                            <field name="qty_available"/>
+                                        </strong>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <strong>Free Quantity:
+                                            <field name="free_available_qty"/>
+                                        </strong>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <strong>Virtually Reserved:
+                                            <field name="virtual_reserved_qty"/>
+                                        </strong>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <strong>Reserved:
+                                            <field name="reserved_qty"/>
+                                        </strong>
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <strong>Incoming:
+                                            <field name="incoming_qty"/>
+                                        </strong>
+                                    </li>
+                                </ul>
+                                <div name="tags"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="qr_product_search_form_view" model="ir.ui.view">
+        <field name="name">qr.product.product.search</field>
+        <field name="model">product.product</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='goods']" position="after">
+                <separator/>
+                <filter string="Virtually Reserved"
+                        name="filter_virtual_reserved_qty"
+                        domain="[('virtual_reserved_qty', '>', 0)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_products" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('view_product_tree')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_product_kanban')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_product_form')})]"/>
+        <field name="search_view_id"
+               ref="qr_control.qr_product_search_form_view"/>
+        <field name="context">{'search_default_consumable': 1}</field>
+        <field name="help">Products</field>
+    </record>
+
+    <record id="action_vr_products" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('view_product_tree')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_product_kanban')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_product_form')})]"/>
+        <field name="search_view_id" ref="product.product_search_form_view"/>
+        <field name="domain">[('virtual_reserved_qty','>',0)]</field>
+        <field name="help">Virtually Reserved Products</field>
+    </record>
+
+</odoo>

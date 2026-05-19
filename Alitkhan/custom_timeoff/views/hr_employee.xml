@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="hr_employee_form_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.form.inharit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="custom_employees.employee_form_extend"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='timeoff_deputy']"
+                       position="after">
+                    <field name="notified_user_ids" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

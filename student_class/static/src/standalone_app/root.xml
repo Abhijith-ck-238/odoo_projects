@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="student_class.StudentClassDashboard">
+        <div class="container mt-4">
+            <h2>Student Dashboard</h2>
+            <div class="row">
+                <t t-foreach="state.students" t-as="student" t-key="student.id">
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm">
+                            <div t-att-class="'card-header text-white ' + getStateColor(student.state)">
+                                <strong><t t-esc="student.name"/></strong>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Date: </strong><t t-esc="student.date"/></p>
+                                <p><strong>Status: </strong><t t-esc="student.state"/></p>                            
+                                <p><strong>Description: </strong><t t-esc="student.description"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

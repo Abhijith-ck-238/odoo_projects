@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+	<t t-name="cyllo_studio.CylloActivityDialog">
+<!--		<Dialog title="'Activity'" footer="false">-->
+			<h1>Activity Dialog</h1>
+<!--		</Dialog>-->
+	</t>
+</templates>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="payment_cybropay_redirect_form">
+        <form t-att-action="api_url" method="post">
+            <input type="hidden" name="reference" t-att-value="reference"/>
+            <!-- Added dummy submit to allow basic testing without JS auto-submit if needed -->
+            <button type="submit" class="btn btn-primary d-none">Pay</button>
+        </form>
+    </template>
+    <template id="payment_cybropay_inline_form">
+        <div t-attf-id="cybropay-direct-container-{{provider_id}}">
+            <select id="cybropay_simulated_state" class="form-select">
+                <option value="done">Successful</option>
+                <option value="cancel">Cancelled</option>
+            </select>
+        </div>
+    </template>
+</odoo>

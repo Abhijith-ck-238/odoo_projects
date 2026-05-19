@@ -1,0 +1,93 @@
+// Variables
+$dark-bg: #2d2d2d;
+$light-text: #ffffff;
+$secondary-bg: #444;
+$secondary-border: #555;
+$accent-color: #7c8a00;
+$checkbox-text-color: #999;
+
+// Base styles
+.overall_container_list.page_properties {
+    background: #25281a;
+    color: $light-text;
+    padding: 15px;
+    border-radius: 3px;
+
+    // Label styles
+    .cy-navbar_label {
+        color: $checkbox-text-color;
+    }
+    .multi-selector-container{
+
+    .o_multi_record_selector{
+        border:unset;
+        }
+    }
+    // Input field styles
+    .mb-2 {
+        .form-control.cy-input {
+            background: $secondary-bg;
+            border: 1px solid $secondary-border;
+            color: $light-text;
+        }
+
+        .multi-selector-container {
+            background: $secondary-bg;
+            border: 1px solid $secondary-border;
+            padding: 5px;
+            border-radius: 3px;
+        }
+    }
+
+    // Checkbox group styles
+    .overall_container_list.d-flex {
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+
+            input[type="checkbox"] {
+                margin-right: 8px;
+            }
+
+            .checkbox-text {
+                color: var(--checkbox-text-color);
+                margin-left: 25px;
+            }
+
+            .cy-basedOn {
+                color: $accent-color;
+                margin-left: 70px;
+
+                .setting-icon-svg {
+                    fill: $accent-color;
+                }
+            }
+        }
+    }
+
+    // Button styles
+    .btn_div {
+            .cy-btn_save{
+                 background:#7c8a00;
+                 color:#ffffff
+            }
+            .cy-cancel_btn{
+                 background:#444;
+                 color:#ffffff
+            }
+
+            .cy-btn_save, .cy-cancel_btn {
+                padding: 8px 16px;;
+                border-radius: 6px;
+                font-size: 14px;
+                font-weight: 600;
+                transition: all 0.2s ease;
+                width: 100%;
+                margin-top: 15px;
+
+                &:hover {
+                    filter: brightness(0.95);
+                }
+            }
+    }
+}

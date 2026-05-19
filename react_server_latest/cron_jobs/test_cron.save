@@ -1,0 +1,1 @@
+1 * * * * cat "ohh it worked :O " >> temp

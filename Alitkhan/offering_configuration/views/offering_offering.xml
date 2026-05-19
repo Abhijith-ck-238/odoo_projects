@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="offering_view_inherit" model="ir.ui.view">
+            <field name="name">offering</field>
+            <field name="model">offering.offering</field>
+            <field name="inherit_id" ref="itkan_offering.offering_offering_form"/>
+            <field name="arch" type="xml">
+                <field name="summary" position="before">
+                    <field name="employee_id"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                </field>
+                <field name="training" position="before">
+                    <field name="date"/>
+                </field>
+                <field name="iq" position="after">
+                    <field name="ref_iq"/>
+                    <field name="ref_name"/>
+                </field>
+                <field name="ref_number" position="attributes">
+                    <attribute name="required">0</attribute>
+                </field>
+                <field name="offer_currency" position="attributes">
+                    <attribute name="required">0</attribute>
+                </field>
+                <field name="price_list" position="attributes">
+                    <attribute name="required">0</attribute>
+                </field>
+                <field name="related_sale_order" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </field>
+                <field name="customer" position="replace">
+                    <field name="customer" widget="res_partner_many2one"
+                           context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}"
+                           options='{"always_reload": True}'/>
+                </field>
+                <field name="product_lines" position="replace">
+                    <field name="product_lines" readonly="state == 'cancelled'">
+                        <list editable="top" class="bg-yellow bg-green bg-orange bg-blue bg-light-blue bg-bright-yellow">
+                            <button name="edit_calculation_action" type="object" icon="fa-list" width="10px"/>
+                            <field name="optional_product" width="80px" optional="1"/>
+                            <field name="hide_from_offer_report" width="75px" optional="1"/>
+                            <field name="name" width="200px" optional="1"/>
+                            <field name="product_id" width="150px"/>
+                            <field name="vendor" width="75px" optional="1"/>
+                            <field name="config" domain="[('state','=','confirm')]" width="75px" optional="show"/>
+                            <field name="vendor_price" width="125px" optional="1"/>
+                            <field name="config_currency" column_invisible="1"/>
+                            <field name="currency" readonly="config_currency != False"/>
+                            <field name="exchange_rate_1"/>
+                            <field name="qty" sum="Total Quantity" force_save="1"/>
+                            <field name="config_policy_defined" invisible="1"/>
+                            <field name="policy" force_save="1" readonly="config_policy_defined == 'True'"/>
+                            <field name="exchange_rate"/>
+                            <field name="unit_price" sum="Total Unit Prices"
+                                   force_save="1" optional="show" width="130px"
+                                   string="Net price in original currency"/>
+                            <field name="total_price" optional="1" sum="Total Amount"
+                                   force_save="1" width="130px" string="Total price in original currency"/>
+                            <field name="discount" optional="1" force_save="1"/>
+                            <field name="price_unit_after_discount" optional="1" width="170px"
+                                   sum="Total unit after discount" force_save="1"/>
+                            <field name="price_total_after_discount" optional="1" width="170px"
+                                   sum="Total unit after discount" force_save="1"/>
+                            <field name="offer_unit_price" optional="1" width="170px"
+                                   sum="Total unit offer" force_save="1"/>
+                            <field name="offer_total_price" optional="1" width="170px"
+                                   sum="Total unit offer" force_save="1"/>
+                            <field name="offer_unit_iqd" optional="1" width="170px"
+                                   sum="Total unit offer IQD" force_save="1"/>
+                            <field name="offer_total_iqd" optional="1" width="170px"
+                                   sum="Total unit offer IQD" force_save="1"/>
+                            <field name="misc" optional="1"/>
+                            <field name="final_unit_price_usd" optional="1" width="170px"
+                                   sum="Total unit final" force_save="1"/>
+                            <field name="final_total_price_usd" optional="1" width="170px"
+                                   sum="Total final" force_save="1"/>
+                            <field name="final_unit_price_iqd" optional="1" width="170px"
+                                   sum="Total unit final IQD" force_save="1"/>
+                            <field name="final_total_price_iqd" optional="1" width="170px"
+                                   sum="Total final IQD" force_save="1"/>
+                            <field name="budget_unit_price" optional="1" width="170px"
+                                   sum="Total unit budget" force_save="1"/>
+                            <field name="budget_total_price" optional="1" width="170px"
+                                   sum="Total budget" force_save="1"/>
+                        </list>
+                    </field>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

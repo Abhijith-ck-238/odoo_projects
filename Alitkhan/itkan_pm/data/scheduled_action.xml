@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="preventive_maintainence_scheduled_action" model="ir.cron">
+            <field name="name">Automated Preventive Maitainence Helpdesk ticket creation</field>
+            <field name="model_id" ref="model_preventive_maintainence"/>
+            <field name="state">code</field>
+            <field name="code">model._pm_watch()</field>
+            <field name="active" eval="True"/>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+        </record>
+
+        <record id="contracts_create_pm" model="ir.cron">
+            <field name="name">Auto create PM tickets from contracts</field>
+            <field name="model_id" ref="contracts.model_contract_contract"/>
+            <field name="state">code</field>
+            <field name="code">model.generated_pm_records()</field>
+            <field name="active" eval="True"/>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+        </record>
+    </data>
+</odoo>

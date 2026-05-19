@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_sales_report_inhert" inherit_id="itkan_custom_sales_order.report_saleorder">
+            <xpath expr="//t[@t-if='o.related_offering_record']" position="replace">
+                <t t-if="o.related_offering_record">
+                    <t t-foreach="o.order_line" t-as="order_line">
+                        <t t-if="o.is_to_print_subunit_pricing == True">
+
+                            <div class="row" style="margin-bottom:10px;" t-if="order_line.sale_pack_id">
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;background-color:grey;" colspan="5">
+                                                <span style="font-style:bold;color:white;"
+                                                      t-field="order_line.product_id"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:center;width:168px;" name="th_part_num">Part Number
+                                            </th>
+                                            <th style="text-align:center;width:168px;" name="th_state">State</th>
+                                            <th style="text-align:center;width:168px;" name="th_qty">Qty</th>
+                                            <th style="text-align:center;width:168px;" name="th_usd">Unit Price</th>
+                                            <th style="text-align:center;width:168px;" name="th_usd">Total Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="order_line.sale_pack_id.product_lines" t-as="pack_line">
+                                            <t t-set="line_unit_price"
+                                               t-value="order_line.get_pack_line_price(pack_line)"/>
+                                            <tr>
+                                                <td style="text-align:center;" name="th_part_num">
+                                                    <span t-field="pack_line.product_id.default_code"/>
+                                                </td>
+                                                <td style="text-align:left;" name="th_part_num">
+                                                    <span t-field="pack_line.product_id.name"/>
+                                                </td>
+                                                <td style="text-align:center;" name="th_qty">
+                                                    <span t-esc="int(pack_line.qty_uom)"/>
+                                                </td>
+                                                <td style="text-align:center;" name="th_unit_price">
+                                                    <span t-esc="line_unit_price"/>
+                                                </td>
+                                                <td style="text-align:center;" name="th_total_price">
+                                                    <span t-esc="line_unit_price * int(pack_line.qty_uom)"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="row" style="margin-bottom:10px;" t-if="order_line.sale_pack_id">
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;background-color:grey;" colspan="5">
+                                                <span style="font-style:bold;color:white;"
+                                                      t-field="order_line.product_id"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:center;width:168px;" name="th_part_num">Part Number
+                                            </th>
+                                            <th style="text-align:center;width:168px;" name="th_state">State</th>
+                                            <th style="text-align:center;width:168px;" name="th_qty">Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="order_line.sale_pack_id.product_lines" t-as="pack_line">
+                                            <t t-set="line_unit_price"
+                                               t-value="order_line.get_pack_line_price(pack_line)"/>
+                                            <tr>
+                                                <td style="text-align:center;" name="th_part_num">
+                                                    <span t-field="pack_line.product_id.default_code"/>
+                                                </td>
+                                                <td style="text-align:left;" name="th_part_num">
+                                                    <span t-field="pack_line.product_id.name"/>
+                                                </td>
+                                                <td style="text-align:center;" name="th_qty">
+                                                    <span t-esc="int(pack_line.qty_uom)"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </t>
+
+                        <t t-if="o.is_to_print_subunit_pricing == True">
+
+                            <div class="row" style="margin-bottom:10px;" t-if="order_line.config">
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;background-color:grey;" colspan="5">
+                                                <span style="font-style:bold;color:white;"
+                                                      t-field="order_line.product_id.name"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:center;width:168px;" name="th_part_num">Part Number
+                                            </th>
+                                            <th style="text-align:center;width:168px;" name="th_state">Product</th>
+                                            <th style="text-align:center;width:168px;" name="th_qty">Qty</th>
+                                            <th style="text-align:center;width:168px;" name="th_usd">Unit Price</th>
+                                            <th style="text-align:center;width:168px;" name="th_usd">Total Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="order_line.config.product_bom_lines" t-as="config_line">
+                                            <!--                                            <t t-set="config_line_price_unit" t-value="config_line.price_unit * config_line.policy" />-->
+                                            <tr>
+                                                <td style="text-align:center;" name="th_part_num">
+                                                    <span t-field="config_line.product_id.default_code"/>
+                                                </td>
+                                                <td style="text-align:left;" name="th_part_num">
+                                                    <span t-field="config_line.product_id.name"/>
+                                                </td>
+                                                <td style="text-align:center;" name="th_qty">
+                                                    <span t-esc="int(config_line.qty)"/>
+                                                </td>
+                                                <td style="text-align:center;" name="th_unit_price">
+                                                    <span t-esc="round(config_line.so_total_price,2)"/>
+                                                </td>
+                                                <td style="text-align:center;" name="th_total_price">
+                                                    <span t-esc="round((config_line.so_total_price * int(config_line.qty)),2)"/>
+                                                </td>
+
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="row" style="margin-bottom:10px;" t-if="order_line.config">
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;background-color:grey;" colspan="5">
+                                                <span style="font-style:bold;color:white;"
+                                                      t-field="order_line.product_id.name"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:center;width:168px;" name="th_part_num">Part Number
+                                            </th>
+                                            <th style="text-align:center;width:168px;" name="th_state">Product</th>
+                                            <th style="text-align:center;width:168px;" name="th_qty">Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="order_line.config.product_bom_lines" t-as="config_line">
+                                            <tr>
+                                                <td style="text-align:center;" name="th_part_num">
+                                                    <span t-field="config_line.product_id.default_code"/>
+                                                </td>
+                                                <td style="text-align:left;" name="th_part_num">
+                                                    <span t-field="config_line.product_id.name"/>
+                                                </td>
+                                                <td style="text-align:center;" name="th_qty">
+                                                    <span t-esc="int(config_line.qty)"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

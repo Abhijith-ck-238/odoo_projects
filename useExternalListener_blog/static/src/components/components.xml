@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="useExternalListener_blog.CustomComponent">
+        <div class="o_custom_component p-4 bg-view border rounded shadow-sm m-3">
+            <h1 class="text-primary"><t t-esc="title"/></h1>
+            <p class="mt-2">This is a custom Odoo client action using Owl.</p>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit"
+              inherit_id="sale.report_saleorder_document">
+         <xpath expr="//t[contains(@t-if, 'doc.partner_shipping_id == doc.partner_invoice_id')]" position="replace">
+            <t t-set="information_block">
+            <div class="text-start" style="margin-top:-20px; margin-bottom:20px; line-height:1.6;">
+                <strong style="display:block; margin-bottom:4px;">Customer Name:</strong>
+                <span t-field="doc.partner_id.name" style="display:block; margin-bottom:10px; font-weight:500;"/>
+                <p t-if="doc.partner_id.vat" style="margin:0;">
+                    <t t-if="doc.company_id.account_fiscal_country_id.vat_label" t-out="doc.company_id.account_fiscal_country_id.vat_label"/>
+                    <t t-else="">Tax ID</t>:
+                    <span t-field="doc.partner_id.vat"/>
+                </p>
+            </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//t[@t-call='web.external_layout']" position="before">
+            <t t-set="is_sale_order" t-value="True"/>
+        </xpath>
+
+        <xpath expr="//t[@t-set='address']/div[@t-field='doc.partner_id']" position="replace">
+        <t t-set="address"/>
+
+        </xpath>
+
+        <xpath expr="//div[@t-field='doc.date_order']" position="replace">
+            <div t-field="doc.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;, &quot;format&quot;: &quot;dd/MM/yyyy&quot;}">2023-12-31</div>
+        </xpath>
+
+         <xpath expr="//table[@class='o_has_total_table table o_main_table table-borderless']" position="attributes">
+            <attribute name="style">border-collapse: collapse;</attribute>
+        </xpath>
+
+        <!-- Add style attribute to tbody rows -->
+        <xpath expr="//tbody[@class='sale_tbody']/t[@t-foreach='lines_to_report']/tr" position="attributes">
+            <attribute name="style">border-bottom: 1px solid #d3d3d3;</attribute>
+        </xpath>
+
+         <xpath expr="//div[@class='page']" position="inside">
+            <style>
+                th {
+                    font-weight: bold;
+                }
+                 thead {
+                    border-top: 1px solid #d3d3d3;
+                }
+
+                thead tr:last-child {
+                    border-bottom: 1px solid #d3d3d3;
+                }
+
+
+                .o_main_table thead {
+                    border-top: 1px solid #d3d3d3;
+                }
+
+                .o_main_table thead tr:last-child {
+                    border-bottom: 1px solid #d3d3d3 ;
+                }
+                  /* Add space between main table and totals section */
+                .clearfix[name="so_total_summary"] {
+                    margin-top: 40px !important;
+                }
+
+            </style>
+        </xpath>
+
+        <xpath expr="//div[contains(@class,'page')]" position="inside">
+        <div class="footer">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <ul class="list-inline mb4">
+                    <li t-if="doc.company_id.phone" class="list-inline-item d-inline">
+                        Phone: <span t-field="doc.company_id.phone"/>
+                    </li>
+                    <li t-if="doc.company_id.email" class="list-inline-item d-inline">
+                        Email: <span t-field="doc.company_id.email"/>
+                    </li>
+                    <li t-if="doc.company_id.website" class="list-inline-item d-inline">
+                        Web: <span t-field="doc.company_id.website"/>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col-6">
+                        <span t-field="doc.company_id.report_footer"/>
+                    </div>
+                </div>
+                <div t-if="report_type == 'pdf'" class="text-muted">
+                                Page:
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+                </div>
+            </div>
+        </div>
+        </xpath>
+
+    </template>
+</odoo>

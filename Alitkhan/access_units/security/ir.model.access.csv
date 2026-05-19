@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+read_access_units_access,read_access_units_access,model_access_units,access_units.user_users,1,0,0,0
+full_access_units_access,full_access_units_access,model_access_units,access_units.administrator_users,1,1,1,1
+read_access_units_line_access,read_access_units_line_access,model_access_units_line,access_units.user_users,1,0,0,0
+full_access_units_line_access,full_access_units_line_access,model_access_units_line,access_units.administrator_users,1,1,1,1

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="sp_orders_view_list">
+        <field name="name">SP Order List</field>
+        <field name="model">sp.order</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="serial_number"/>
+                <field name="contract_id"/>
+                <field name="employee_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sp_orders_view_form">
+        <field name="name">sp orders form</field>
+        <field name="model">sp.order</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <header>
+                    <button name="action_submit" type="object" string="Submit" class="btn btn-primary" invisible="state != 'draft'"/>/>
+                    <button name="action_create_po" type="object" string="Create PO" class="btn btn-primary" invisible="state != 'submit'" groups="custom_sp_orders.group_sp_orders_administrator"/>
+                    <button name="action_move_to_ordering" type="object" string="Move to Ordering" class="btn btn-primary" invisible="state != 'submit'"/>
+                    <button name="action_delivered" type="object" string="Delivered" class="btn btn-primary" invisible="state != 'ordering'"/>
+                    <button name="action_reset_draft" type="object" string="Reset to Draft" class="btn" invisible="state != 'submit'"/>
+                    <field name="state"  widget="statusbar"/>
+                </header>
+                <sheet>
+                     <div class="oe_button_box" name="button_box">
+                         <button name="action_purchase_order" type="object"
+                            class="oe_stat_button" icon="fa-shopping-car">
+                            <field string="PO" name="po_count"
+                                   widget="statinfo"/>
+                        </button>
+                     </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="serial_number" readonly="state == 'submit'"/>
+                            <field name="contract_id" readonly="state == 'submit'"/>
+                        </group>
+                        <group>
+                            <field name="employee_id" readonly="state == 'submit'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="product_line_ids" readonly="state == 'submit'">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div>
+                    <chatter>
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </chatter>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sp_orders_view_search">
+        <field name="name">sp orders form</field>
+        <field name="model">sp.order</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_sp_order">
+        <field name="name">Sp Orders</field>
+        <field name="res_model">sp.order</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <menuitem id="sp_orders_menu_root" name="Sp Orders" groups="custom_sp_orders.group_sp_order_user"/>
+    <menuitem id="menu_sp_orders" name="Sp Orders" action="action_sp_order" parent="sp_orders_menu_root" sequence="0"/>
+</odoo>

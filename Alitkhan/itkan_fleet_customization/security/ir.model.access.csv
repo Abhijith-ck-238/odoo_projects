@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_service_intervals,service.intervals,model_service_intervals,base.group_user,1,1,1,1
+access_vehicle_read_rule,vehicle.visible.to.all,fleet.model_fleet_vehicle,base.group_user,1,0,0,0
+access_vehicle_model_read_rule,vehicle.model.visible.to.all,fleet.model_fleet_vehicle_model,base.group_user,1,0,0,0
+access_vehicle_model_brand_read_rule,vehicle.model.brand.visible.to.all,fleet.model_fleet_vehicle_model_brand,base.group_user,1,0,0,0
+

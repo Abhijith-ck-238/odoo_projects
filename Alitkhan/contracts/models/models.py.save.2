@@ -1,0 +1,182 @@
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields, api
+
+
+
+
+class Contract(models.Model):
+    _name="contract.contract"
+    _order="id desc"
+    _inherit="mail.thread"
+
+    CONTRACT_CATEG = [("private","Private"),("governmental","Governmental")]
+    
+    name = fields.Char(string="Name")
+    number = fields.Char()
+    iq = fields.Char(string="IQ Number")
+    partner_id = fields.Many2one("res.partner",string="Contract With")
+    signed_date = fields.Date(string="Signed Date")
+    starting_condition = fields.Many2one("contract.condition",string="Starting Condition")
+    notes=fields.Text(string="Notes")
+    contract_signed_by = fields.Many2one("res.partner",string="Contract Signed By")
+    first_payment_date = fields.Date(string="First Payment Date")
+    project_manager = fields.Many2one("res.partner",string="Project Manager")
+    first_payment = fields.Float(string="First Payment",groups="itkan_offering.offering_manager")
+    pm_date=fields.Date(string="PM Date")
+    main_contract = fields.Many2one("contract.contract",string="Main Contract")
+    
+    contract_categ = fields.Selection(CONTRACT_CATEG,string="Contract Category")
+    attachements = fields.Many2one("ir.attachment",string="Attachments")    
+
+    product_lines = fields.One2many('contract.product', "contract_id", ondelete="cascade")
+
+    province = fields.Many2one("contract.province",string="Province")
+    old_data = fields.Boolean()
+    
+    sites=fields.Many2many('contract.site',compute="calc_sites")
+    
+    """
+    Added by AhmedNaseem@29-8-2021
+    """
+    technical_docs1=fields.Binary(string="Technical Document 1")
+    technical_docs2=fields.Binary(string="Technical Document 2")
+
+    financial_docs1=fields.Binary(string="Financial Document 1",groups="itkan_offering.offering_manager")
+    financial_docs2=fields.Binary(string="Financial Document 2",groups="itkan_offering.offering_manager")
+
+    """
+    Added by AhmedNaseem@11-11-2021
+    
+    """
+    
+    technical_docs_att = fields.Many2many(comodel_name="ir.attachment", 
+                                relation="attachement_contracts_docs_rel", 
+                                column1="contract_id",
+                                column2="attachment_id",
+                                string="Technical Documents")
+
+    financial_docs_att = fields.Many2many(comodel_name="ir.attachment", 
+                                relation="attachement_contracts_fin_docs_rel", 
+                                column1="contract_id",
+                                column2="attachment_id",
+                                string="finanical Documents",groups="itkan_offering.offering_manager")
+
+    
+
+    
+    @api.constrains('iq', 'number')
+    def _gen_name(self):
+        for contract in self:
+            name = ""
+            if contract.number:
+                name += contract.number
+            else:
+                if contract.iq:
+                    name += contract.iq
+                    contract.name = name
+                    return
+
+            name +=  f" - {contract.iq}"
+            contract.name = name
+
+    @api.constrains("product_lines")
+    def calc_sites(self):
+        sites=[]
+        for item in self.product_lines:
+            sites.append(item.site.id)
+        self.sites=sites
+
+class ContractProvince(models.Model):
+    _name="contract.province"
+    _rec_name="name"
+    name=fields.Char(string="Governorate")
+    prov_number = fields.Integer(string="Number")
+    sites = fields.One2many('contract.site', 'site_province', readonly=True)
+
+class ContractSites(models.Model):
+    _name="contract.site"
+    _rec_name = "site_name"
+    
+    site_name = fields.Char(string="Site Name")
+    site_number = fields.Integer(string="Site Number")
+    site_province = fields.Many2one("contract.province",string="province")
+    
+
+class ContractCondition(models.Model):
+    _name="contract.condition"
+    _rec_name="name"
+
+    name=fields.Char(string="Condition")
+
+class ContractProducts(models.Model):
+    _name="contract.product"
+    _parent_name = 'contract_id'
+    
+    CONTRACT_TYPES = [("Supplying & Maintenance","Supplying & Maintenance"),
+                      ("Maintenance","Maintenance"),("Supplying","Supplying"),
+                      ("3rd party","3rd party"),("Demo","Demo"),("N.A","N.A"),("Other","Other")]
+    
+    name=fields.Char(string="name", compute="_compute_name")
+    product_char = fields.Char(string="Product Char")
+    product_id = fields.Many2one("product.product",string="Product")
+    qty=fields.Integer(string="Quantity")
+    price = fields.Float(string="Price",groups="itkan_offering.offering_manager")
+    site = fields.Many2one("contract.site",string="Site")
+    supplier = fields.Many2one("res.partner",string="Vendor")
+    modality = fields.Many2one("contract.modality",string="Modality")
+    part_number = fields.Char(string="Part Number")
+    sn = fields.Char(string="Serial Number")
+    password_validity = fields.Selection([("yes","Yes"),("no","No")],string="Password/Validity")
+    password_validity_date =fields.Date(string="Password Validity Date")
+    contract_id = fields.Many2one('contract.contract', readonly=True, ondelete="cascade")
+    functional_location = fields.Char(string="Functional Location",store=True)
+    maintainence = fields.Integer(string="Maintainence")
+    starting_date = fields.Date(string="Starting Date")
+    pac_date = fields.Date(string="PAC Date")
+    eoc_date = fields.Date(string="EOC Date", compute='compute_eoc_date')
+    warranty = fields.Integer(string="Warranty")
+    contract_type = fields.Selection(CONTRACT_TYPES,string="Contract Type")
+
+#
+    def compute_eoc_date(self):
+	for item in self:
+            start_date = item.starting_date
+            warrenty = item.warranty
+            if start_date:
+                yr = start_date.year
+                maintenance = item.maintainence
+                yearnew = yr + maintenance + warrenty
+                new_date = start_date.replace(year=yearnew)
+                item.eoc_date = new_date
+            else:
+                item.eoc_date = ''
+
+    def _compute_name(self):
+        for rcd in self:
+            if rcd.product_id:
+                rcd.name = rcd.product_id.display_name
+            else:
+                rcd.name = rcd.product_char or "Empty"
+
+            if rcd.sn:
+                rcd.name += ' - ' + rcd.sn
+
+    @api.constrains("site")
+    def calc_functional_location(self):
+        """ FL = 13 digit = Province number + Digits(Zeros) + Site number """
+        for item in self:
+            if item.site:
+                prov_num = str(item.site.site_province.prov_number)
+                site_num = str(item.site.site_number)
+                zeros_num = 13 - (int(len(prov_num)) + int(len(site_num)))
+                item.functional_location = prov_num + ("0" * zeros_num) + site_num
+            else:
+                item.functional_location = False
+
+class ContractModality(models.Model):
+    _name="contract.modality"
+    _rec_name="name"
+    
+    name=fields.Char(string="Name")
+    user_ids = fields.Many2many("res.users", string="Managers")

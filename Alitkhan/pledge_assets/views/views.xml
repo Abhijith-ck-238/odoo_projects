@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action Definitions -->
+    <record id="pledge_window" model="ir.actions.act_window">
+    <field name="name">Pledges</field>
+    <field name="res_model">pledge.pledge</field>
+    <field name="view_mode">list,form,kanban,pivot</field>
+    <field name="view_ids" eval="[(5, 0, 0),
+                                 (0, 0, {'view_mode': 'list', 'view_id': ref('pledge_assets.tree')}),
+                                 (0, 0, {'view_mode': 'form', 'view_id': ref('pledge_assets.form')})]"/>
+        </record>
+
+    <record id="bank_window" model="ir.actions.act_window">
+        <field name="name">Banks</field>
+        <field name="res_model">pledge.bank</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem
+            id="menu_root"
+            name="Pledges"
+            web_icon="pledge_assets,static/description/icon.png"
+            action="pledge_window"
+            groups="pledge_assets.pledge_user"
+            sequence="10"/>
+
+    <menuitem
+            id="bank_menu"
+            name="Banks"
+            parent="menu_root"
+            action="bank_window"
+            groups="pledge_assets.pledge_user"
+            sequence="20"/>
+
+</odoo>

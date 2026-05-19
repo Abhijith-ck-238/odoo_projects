@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_hr_expense_budget_consumption_tree" model="ir.ui.view">
+        <field name="name">hr.expense.budget.consumption.tree</field>
+        <field name="model">hr.expense.budget.consumption</field>
+        <field name="arch" type="xml">
+            <list string="Budget Consumption">
+                <field name="policy_id"/>
+                <field name="period_key"/>
+                <field name="cap_amount"/>
+                <field name="consumed_amount"/>
+                <field name="committed_amount"/>
+                <field name="available_amount"/>
+                <field name="consumption_percentage" widget="percentpie"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Budget Consumption Form View -->
+    <record id="view_hr_expense_budget_consumption_form" model="ir.ui.view">
+        <field name="name">hr.expense.budget.consumption.form</field>
+        <field name="model">hr.expense.budget.consumption</field>
+        <field name="arch" type="xml">
+            <form string="Budget Consumption">
+                <sheet>
+                    <group>
+                        <field name="policy_id"/>
+                        <field name="period_key"/>
+                    </group>
+
+                    <group string="Amounts">
+                        <field name="cap_amount"/>
+                        <field name="consumed_amount"/>
+                        <field name="committed_amount"/>
+                        <field name="available_amount"/>
+                        <field name="consumption_percentage"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_expense_budget_consumption" model="ir.actions.act_window">
+        <field name="name">Budget Consumption</field>
+        <field name="res_model">hr.expense.budget.consumption</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Track consumption and availability of expense budgets by period.
+            </p>
+        </field>
+    </record>
+
+    <!-- Sub Menu: Budget Consumption -->
+    <menuitem id="menu_hr_expense_budget_consumption"
+              name="Budget Consumption"
+              parent="menu_hr_expense_budget_root"
+              action="action_hr_expense_budget_consumption"
+              sequence="20"/>
+</odoo>

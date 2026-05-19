@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="discuss.channel" id="deadline_notifications_channel">
+            <field name="name">Deadline Notifications</field>
+<!--            <field name="channel_type">channel</field>-->
+            <field name="description">Deadline Notifications channel</field>
+<!--              <field name="group_public_id" ref="base.group_system"/>-->
+<!--            <field name="group_ids" eval="[Command.link(ref('base.group_system'))]"/>-->
+        </record>
+    </data>
+</odoo>

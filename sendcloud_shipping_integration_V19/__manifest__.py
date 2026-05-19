@@ -1,0 +1,50 @@
+# -*- coding: utf-8 -*-
+###############################################################################
+#
+#    Cybrosys Technologies Pvt. Ltd.
+#
+#    Copyright (C) 2026-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
+#    Author: Abhijith CK (odoo@cybrosys.com)
+#
+#    This program is under the terms of the Odoo Proprietary License v1.0(OPL-1)
+#    It is forbidden to publish, distribute, sublicense, or sell copies of the
+#    Software or modified copies of the Software.
+#
+#    THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+#    FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL
+#    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,DAMAGES OR OTHER
+#    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,ARISING
+#    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+#    DEALINGS IN THE SOFTWARE.
+#
+###############################################################################
+{
+    'name': "Sendcloud Shipping Integration",
+    'version': '19.0.1.0.0',
+    'category': 'Productivity',
+    'summary': """Integrate Product Delivery with Sendcloud Shipping Integration""",
+    'description': """
+Addon for integrate product delivery with sendcloudshipping.Choose sendcloud as 
+shipping method and then complete the delivery after that a parcel will be 
+created in sendcloud account also tracking link and other details will get from odoo.
+""",
+    'author': "Cybrosys Techno Solutions",
+    'company': 'Cybrosys Techno Solutions',
+    'maintainer': 'Cybrosys Techno Solutions',
+    'website': "https://www.cybrosys.com",
+    'depends': ['sale_management', 'account', 'stock', 'delivery',
+                'stock_delivery'],
+    'data': ['security/ir.model.access.csv',
+             'data/product_product_data.xml',
+             'data/delivery_carrier_data.xml',
+             'views/delivery_carrier_views.xml',
+             'views/shipping_service_views.xml',
+             'views/stock_picking_views.xml',
+             ],
+    'images': ['static/description/banner.jpg'],
+    'license': 'OPL-1',
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+}

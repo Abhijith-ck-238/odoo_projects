@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_budget_analytic_new_team_approver,budget.analytic,account_budget.model_budget_analytic,custom_hr_expense_advance_clearng.group_team_approver,1,1,1,1
+access_analytic_account,account.analytic.account,model_account_analytic_account,custom_hr_expense_advance_clearng.group_team_approver,1,0,0,0
+access_expense,hr.expense,model_hr_expense,custom_hr_expense_advance_clearng.group_team_approver,1,1,1,1
+access_hr_expense_report,hr.expense.sheet,model_hr_expense_sheet,custom_hr_expense_advance_clearng.group_team_approver,1,1,1,1
+

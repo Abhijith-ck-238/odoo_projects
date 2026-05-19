@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    <template id="assets_backend_extend" inherit_id="web.assets_backend" name="Slides Frontend Assets">-->
+<!--        <xpath expr="//link[@href='/web/static/src/scss/list_view.scss']" position="replace">-->
+<!--            <link rel="stylesheet" type="text/scss" href="/custom_sales/static/src/scss/custom_list_view.scss"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
+</odoo>

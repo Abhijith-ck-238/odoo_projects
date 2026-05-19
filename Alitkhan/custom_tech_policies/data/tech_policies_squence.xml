@@ -1,0 +1,7 @@
+<data>
+    <record id="seq_tech_policies" model="ir.sequence">
+        <field name="name">tech.policies.sequence</field>
+        <field name="code">tech.policies.seq</field>
+        <field name="padding">1</field>
+    </record>
+</data>

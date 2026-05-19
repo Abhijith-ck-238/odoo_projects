@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="dx_invoice_header">
+            <div class="header">
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-8 text-left" style="font-family: 'Times New Roman', Times, serif;font-size:20px;text-align:left;">
+                        <span>AL-ITKAN SCIENTIFIC MEDICAL OFFICE</span><br/>
+                        <span>IRAQ - BAGHDAD</span><br/>
+                        <span>HAI AL-WAHDA Area: 904 - St:19 - House:59B </span>
+                    </div>
+                    <div class="col-4 text-right" style="font-family: 'Times New Roman', Times, serif;font-size:20px;text-align:right;">
+                        <span>مكتب الاتقان الطبي العلمي</span><br/>
+                        <span>العراق - بغداد</span><br/>
+                        <span>59B حي الوحدة - محلة 904 ز 19 د </span>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </data>
+</odoo>

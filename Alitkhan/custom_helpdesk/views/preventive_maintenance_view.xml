@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="preventive_maintainenance_view_extend" model="ir.ui.view">
+            <field name="name">preventive.maintainenance.view.extend</field>
+            <field name="model">preventive.maintainence</field>
+            <field name="inherit_id"
+                   ref="itkan_pm.preventive_maintainence_form"/>
+            <field name="arch" type="xml">
+                <field name="iq" position="after">
+                    <field name="modality" invisible="1"/>
+                    <field name="this_month" invisible="1"/>
+                    <field name="next_month" invisible="1"/>
+                    <field name="total_no_of_years"/>
+                    <field name="contract_id"/>
+                    <field name="contract_product_id" invisible="1"/>
+                    <field name="product_char"/>
+<!--                    <field name="province"/>-->
+                    <field name="site"/>
+                </field>
+                <xpath expr="//field[@name='pm_date_lines']/list/field[@name='date']"
+                       position="after">
+                    <field name="pm_rounded_date"/>
+                    <field name="year_count" column_invisible="1"/>
+                    <field name="pm_count" column_invisible="1"/>
+                    <button name="create_pm_ticket" type="object"
+                            string="CREATE NOW" class="btn-primary"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="service_report_extend" model="ir.ui.view">
+            <field name="name">service.report.extend</field>
+            <field name="model">service.report</field>
+            <field name="inherit_id" ref="service_reports.service_report_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='defect']" position="replace">
+                    <field name="defect" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='reported_by']" position="after">
+                    <field name="description"/>
+                </xpath>
+                <xpath expr="//field[@name='service_number']" position="after">
+                    <field name="job_number"/>
+                </xpath>
+                <xpath expr="//page[@name='done_desc']" position="after">
+                    <page string="Notes" name="note">
+                        <field name="note"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="travelling_details_tree" model="ir.ui.view">
+            <field name="name">travelling.data.tree</field>
+            <field name="model">travelling.data</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="travel_from"/>
+                    <field name="travel_to"/>
+                    <field name="distance"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="travelling_details_form" model="ir.ui.view">
+            <field name="name">travelling.data.form</field>
+            <field name="model">travelling.data</field>
+            <field name="arch" type="xml">
+                <form string="Travelling Data">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="travel_from"/>
+                                <field name="travel_to"/>
+                            </group>
+                            <group>
+                                <field name="distance"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="travelling_data_action_window">
+            <field name="name">Travelling Data</field>
+            <field name="res_model">travelling.data</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <menuitem name="Configurations" id="service_report_configuration" parent="service_reports.menu_root"
+                  groups="service_reports.service_report_manager"
+        />
+        <menuitem name="Travelling Data" id="travelling_configuration" parent="service_report_configuration"
+                  action="travelling_data_action_window" groups="service_reports.service_report_manager"
+        />
+
+        <menuitem name="Company Template" id="service_reports.company_template" parent="service_reports.menu_root"
+                  action="service_reports.company_template_action_window"
+                  groups="service_reports.service_report_manager"/>
+
+    </data>
+</odoo>

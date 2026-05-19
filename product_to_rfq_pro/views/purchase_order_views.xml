@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Inheriting purchase order form view for adding a button facilitates adding products in to rfq -->
+    <record id="purchase_order_form" model="ir.ui.view">
+        <field name="name">purchase.order.view.form.inherit.product.to.rfq.pro</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_products"
+                        type="object"
+                        icon="fa-plus"
+                        invisible="state != 'draft'">
+                    Add Products
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

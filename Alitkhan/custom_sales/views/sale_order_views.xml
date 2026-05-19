@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_search_inherit_exchange_value"
+            model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.exchange.value</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="total_of_exchange_products"/>
+                <filter string="Exchange value is set" name=""
+                        domain="[('total_of_exchange_products', '!=', False)]"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter string="Payment Status" name="payment_state" domain="[]"
+                        context="{'group_by': 'invoice_payment_state'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_report_view_pivot" model="ir.ui.view">
+        <field name="name">sale.report.pivot</field>
+        <field name="model">sale.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Sales Analysis" disable_linking="True"
+                   display_quantity="true">
+                <field name="categ_id" type="row"/>
+<!--                <field name="order_id" type="measure"/>-->
+                <field name="price_subtotal" type="measure"/>
+                <field name="price_total" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="sale_order_inherits_form" model="ir.ui.view">
+        <field name="name">sale_order_inherits_form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//button[@name='action_preview_sale_order']"
+                   position="before">
+                <button name="view_related_contracts" type="object"
+                        class="oe_stat_button" icon="fa-file-text icon"
+                        invisible="not contract_id"
+                        groups="__export__.res_groups_167_73baca6a">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Contracts</span>
+                    </div>
+                </button>
+            </xpath>
+
+<!--            <xpath expr="//button[3]" position="replace">-->
+<!--                <button name="%(sale.action_view_sale_advance_payment_inv)d"-->
+<!--                        string="Create Invoice"-->
+<!--                        type="action" class="btn-primary"-->
+<!--                        invisible="[('invoice_status', '!=', 'to invoice')]"-->
+<!--                        groups="account.group_account_invoice"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//button[4]" position="replace">-->
+<!--                <button name="%(sale.action_view_sale_advance_payment_inv)d"-->
+<!--                        string="Create Invoice"-->
+<!--                        type="action"-->
+<!--                        context="{'default_advance_payment_method': 'percentage'}"-->
+<!--                        invisible=" ['|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale')]"-->
+<!--                        groups="account.group_account_invoice"/>-->
+<!--            </xpath>-->
+
+
+            <xpath expr="//form/sheet/group[1]/group[1]/field[@name='partner_id']"
+                   position="after">
+                <field name="is_cancel_btn_visible" invisible="1" />
+            </xpath>
+
+            <xpath expr="//form/header/button[@name='action_cancel']"
+                   position="replace">
+                <button name="action_cancel" type="object" string="Cancel"
+                        invisible="not is_cancel_btn_visible"/>
+            </xpath>
+
+            <xpath expr="//form/header/button[@name='action_cancel']"
+                   position="after">
+                <button name="action_create_contract" type="object"
+                        string="Create Contract" groups="__export__.res_groups_167_73baca6a" invisible="contract_id"
+                />
+<!--                <button name="action_create_contract" type="object"-->
+<!--                        string="Create Contract"-->
+<!--                        groups="__export__.res_groups_167_73baca6a"-->
+<!--                        invisible="not contract_id"-->
+<!--                />-->
+            </xpath>
+
+            <xpath expr="//group[@name='sale_info']" position="inside">
+            <field name="analytic_account_id"/>
+        </xpath>
+
+        </field>
+    </record>
+
+    <record id="sale_order_inherits_form_new" model="ir.ui.view">
+        <field name="name">sale_order_inherits_form_new</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id"
+               ref="itkan_custom_sales_order.sale_order_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='offering_so_info']/group[1]/group[1]/field[@name='project_num']"
+                   position="after">
+                <field name="iq"/>
+            </xpath>
+            <xpath expr="//page[@name='offering_so_info']/group[1]/group[1]/field[@name='date']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_offering_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.offering.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="itkan_offering.offering_sale_inh_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='related_offering_record']"
+                       position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="sale_enterprise.sale_report_view_dashboard" model="ir.ui.view">-->
+<!--        <field name="name">sale.report.view.dashboard</field>-->
+<!--        <field name="model">sale.report</field>-->
+<!--        <field name="mode">primary</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <dashboard>-->
+<!--                <view type="graph" ref="sale.view_order_product_graph"/>-->
+<!--                <group>-->
+<!--                    <group>-->
+<!--                        <aggregate name="price_subtotal_confirmed_orders"-->
+<!--                                   string="Total Sales" field="price_total"-->
+<!--                                   help="Total, Tax Included"-->
+<!--                                   widget="monetary"/>-->
+<!--                        <aggregate name="price_subtotal_all_orders"-->
+<!--                                   string="Untaxed Total" field="price_subtotal"-->
+<!--                                   widget="monetary"/>-->
+<!--                        <aggregate name="order_id_confirmed_orders"-->
+<!--                                   field="order_id" string="Orders"/>-->
+<!--                        <formula name="total" string="Average Order"-->
+<!--                                 value="record.price_subtotal_confirmed_orders / record.order_id_confirmed_orders"-->
+<!--                                 widget="monetary"/>-->
+
+<!--                        <aggregate name="days_to_confirm"-->
+<!--                                   string="Days to Confirm"-->
+<!--                                   field="days_to_confirm" group_operator="avg"-->
+<!--                                   value_label="days"/>-->
+<!--                        <aggregate name="customers" string="# Customers"-->
+<!--                                   field="partner_id"/>-->
+<!--                        <aggregate name="lines" string="# Lines" field="nbr"/>-->
+<!--                        <aggregate name="total_exchange_value"-->
+<!--                                   string="Total Exchange Value"-->
+<!--                                   field="total_exchange"-->
+<!--                                   help="Total Exchange Value"-->
+<!--                                   widget="monetary"-->
+<!--                        />-->
+<!--                        <group string="Total Sales According to Currency">-->
+<!--                            <group>-->
+<!--                                <aggregate name="total_usd_prices"-->
+<!--                                           string="Total USD Price"-->
+<!--                                           field="total_usd_price"-->
+<!--                                           help="Total USD Price"-->
+<!--                                />-->
+<!--                                <aggregate name="total_iqd_prices"-->
+<!--                                           string="Total IQD Price"-->
+<!--                                           field="total_iqd_price"-->
+<!--                                           help="Total IQD Price"-->
+<!--                                />-->
+<!--                                <aggregate name="total_eur_prices"-->
+<!--                                           string="Total EUR Price"-->
+<!--                                           field="total_eur_price"-->
+<!--                                           help="Total EUR Price"-->
+<!--                                />-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <aggregate name="untaxed_total_usd_prices"-->
+<!--                                           string="Untaxed Total USD Price"-->
+<!--                                           field="untaxed_total_usd_price"-->
+<!--                                           help="Untaxed Total USD Price"-->
+<!--                                />-->
+<!--                                <aggregate name="untaxed_total_iqd_prices"-->
+<!--                                           string="Untaxed Total IQD Price"-->
+<!--                                           field="untaxed_total_iqd_price"-->
+<!--                                           help="Untaxed Total IQD Price"-->
+<!--                                />-->
+<!--                                <aggregate name="untaxed_total_eur_prices"-->
+<!--                                           string="Untaxed Total EUR Price"-->
+<!--                                           field="untaxed_total_eur_price"-->
+<!--                                           help="Untaxed Total EUR Price"-->
+<!--                                />-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                    <group col="1">-->
+<!--                        <widget name="pie_chart" title="Sales Teams"-->
+<!--                                attrs="{'groupby': 'team_id'}"/>-->
+<!--                    </group>-->
+<!--                </group>-->
+<!--                <view type="pivot"-->
+<!--                      ref="sale_enterprise.sale_report_view_pivot"/>-->
+<!--            </dashboard>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+<!--    <record id="generate_sale_report_inherit" model="ir.actions.server">-->
+<!--        <field name="name">Generate Sale Report</field>-->
+<!--        <field name="model_id" ref="sale.model_sale_report"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--            action = model.render_report()-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+<!--    <record id="sale.menu_reporting_sales" model="ir.ui.menu">-->
+<!--        <field name="action" ref="generate_sale_report_inherit"/>-->
+<!--    </record>-->
+    <function name="write" model="ir.model.data">
+        <function name="search" model="ir.model.data">
+            <value eval="[('module', '=', 'sale'), ('name','=','menu_sale_report')] "/>
+        </function>
+        <value eval=" {'noupdate': False} "/>
+    </function>
+
+    <menuitem id="sale.menu_sale_report"
+              name="Reporting"
+              parent="sale.sale_menu_root"
+              groups="sales_team.group_sale_manager,custom_sales.report_access_limited_users"
+              sequence="40"
+    />
+</odoo>

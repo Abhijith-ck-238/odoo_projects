@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mail_activity_product_reservation" model="mail.activity.type">
+            <field name="name">Product Reservation</field>
+            <field name="icon">fa-bars</field>
+            <field name="res_model">product.reservation</field>
+        </record>
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="training_stage_view_tree" model="ir.ui.view">
+        <field name="name">training.stage.list</field>
+        <field name="model">training.stage</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="sequence"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="training_stage_view_form" model="ir.ui.view">
+        <field name="name">training.stage.form</field>
+        <field name="model">training.stage</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="require_letters_certificate"/>
+                            <field name="move_from_user_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="require_purchase_order"/>
+                            <field name="users_notified_po" invisible ="require_purchase_order == False" widget="many2many_tags"/>
+                            <field name="move_to_user_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="training_stage_view_search" model="ir.ui.view">
+        <field name="name">training.stage.form</field>
+        <field name="model">training.stage</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_training_stage" model="ir.actions.act_window">
+        <field name="name">Training Stages</field>
+        <field name="res_model">training.stage</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_training_stage" name="Training Stage" action="action_training_stage" parent="training_configuration" sequence="3"/>
+</odoo>

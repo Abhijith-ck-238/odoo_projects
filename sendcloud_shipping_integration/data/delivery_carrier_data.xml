@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <data>
+        <!--Delivery carrier data-->
+        <record id="sendcloud_delivery_carrier_data" model="delivery.carrier">
+            <field name="name">Sendcloud</field>
+            <field name="delivery_type">sendcloud</field>
+            <field name="product_id"
+                   ref="sendcloud_shipping_integration.product_product_delivery_sendcloud"/>
+        </record>
+    </data>
+</odoo>

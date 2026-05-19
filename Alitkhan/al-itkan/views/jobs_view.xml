@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- job extention -->
+        <record id="hr_job_form_itkan_extention" model="ir.ui.view">
+            <field name="name">hr_job_form_itkan_extenstion</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="arch" type="xml">
+                <field name="address_id" position="after">
+                    <field name="opening_date"/>
+                    <field name="card_image"/>
+                    <field name="city" invisible="1"/>
+                    <field name="internal_ref"/>
+                </field>
+
+                <xpath expr="//h1" position="after">
+                    <h4>
+                        <field name="url"/>
+                        <label for="private_job"/>
+                        <field name="private_job"/>
+                    </h4>
+                </xpath>
+
+                <field name="no_of_recruitment" position="before">
+                    <field name="type_of_position"/>
+                </field>
+                
+                <xpath expr="//sheet" position="inside">
+                    <div>
+                        <label for="technical_knowledge"/>
+                        <field name="technical_knowledge"/>
+                        <br/>
+
+                        <label for="behavioral_competencies"/>
+                        <field name="behavioral_competencies"/>
+                        <br/>
+
+                        <label for="education_language_requirements"/>
+                        <field name="education_language_requirements"/>
+                        <br/>
+
+                        <label for="notes"/>
+                        <field name="notes"/>
+                    </div>                    
+                </xpath>
+            
+            </field>
+
+        </record>
+
+        <!-- recruitment tree extention -->
+        <record id="hr_applicant_list_Itkan" model="ir.ui.view">
+            <field name="name">hr_applicant.list.itkan</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
+            <field name="arch" type="xml">
+
+                <field name="partner_name" position="replace">
+                    <field name="external_ref"/>
+                </field>
+
+            </field>
+        </record>
+
+
+        <!-- recruitment search tree extention -->
+        <record id="hr_applicant_search_Itkan" model="ir.ui.view">
+            <field name="name">hr_applicant.search.itkan</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_search_bis"/>
+            <field name="arch" type="xml">
+                <field name="job_id" position="before">
+                    <field name="external_ref"/>
+                </field>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

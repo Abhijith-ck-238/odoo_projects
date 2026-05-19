@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_accountant.action_bank_statement_line_transactions_kanban" model="ir.actions.act_window">
+        <field name="domain">[]</field>
+    </record>
+</odoo>

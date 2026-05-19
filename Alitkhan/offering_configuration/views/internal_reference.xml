@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <data>
+      <record id="sequence_offering_offering" model="ir.sequence">
+      <field name="name">Offering Offering</field>
+      <field name="code">offering.offering</field>
+      <field name="active">TRUE</field>
+      <field name="prefix">ITKPN</field>
+      <field name="padding">8</field>
+      <field name="number_increment">1</field>
+      </record>
+   </data>
+</odoo>

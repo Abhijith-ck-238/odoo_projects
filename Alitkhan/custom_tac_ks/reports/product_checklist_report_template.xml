@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="product_checklist_header_new">
+        <div class="header">
+            <div class="row">
+                <div style="width: 100%;
+                            display:flex;">
+                    <table style="width:100%;border: none !important;" class="table-borderless">
+                        <td style="width:50%;border:none !important;">
+                        <img src="/custom_tac_ks/static/src/img/1.png" style="width: 357px;
+                                                                               padding-left: 12px;
+                                                                               padding-top: 20px;"/>
+                    </td>
+                    <td style="width:100%;
+                                padding-top: 20px;
+                                text-align:end;border:none;">
+                        <img src="/custom_tac_ks/static/src//img/5.png"
+                             style="width:225px;"/>
+                    </td>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div style="width:100%;
+                          text-align:center;
+                          padding:30px;">
+                    <h1 style="font-family:times new roman;">
+                        <u>Technical Awareness Checklist</u>
+                    </h1>
+                </div>
+            </div>
+        </div>
+
+    </template>
+    <template id="product_checklist_footer_new">
+        <div class="footer o_standard_footer">
+        </div>
+    </template>
+    <template id="product_checklist_custom_external_layout_new">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <div>
+            <div style="border: 3px solid #2F5495;margin: 20px;border-color: #2F5495;">
+                <t t-call="custom_tac_ks.product_checklist_header_new"/>
+                <div class="article o_report_layout_standard"
+                     t-att-data-oe-model="o and o._name"
+                     t-att-data-oe-id="o and o.id"
+                     t-att-data-oe-lang="o and o.env.context.get('lang')">
+                    <t t-raw="0"/>
+                </div>
+                <t t-call="custom_tac_ks.product_checklist_footer_new"/>
+            </div>
+        </div>
+    </template>
+    <template id="product_checklist_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+
+                <!-- Custom external layout -->
+                <t t-call="custom_tac_ks.product_checklist_custom_external_layout_new">
+                    <div class="page">
+                        <div class="row" style="padding-left:30px;padding-top:40px;
+                                        font-family:times new roman;">
+                            <h3><b>Customer: </b>
+                                <t t-esc="o.partner_id.name"/>
+                            </h3>
+                        </div>
+                        <t t-foreach="o.product_line_ids" t-as="product">
+                            <div style="padding:30px;
+                                        font-family:times new roman;">
+                                <div class="row" style="padding:5px;">
+                                    <h3>
+                                        <u>
+                                            <b>
+                                                <t t-esc="product.product_id.default_code"/>
+                                            </b>
+                                        </u>
+                                    </h3>
+                                </div>
+                                <div class="row" style="padding:5px;">
+                                    <h4>
+                                        <b>SN:</b>
+                                        <span>
+                                            <t t-esc="product.serial_number_id.name"/>
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div class="row" style="padding:5px;">
+                                    <table style="width:100%;border: 1px solid;border-color: #3b3d3f;">
+                                        <thead style="background-color: #2F5495;font-size: 35px;color: white;text-align:center;">
+                                            <tr>
+                                                <th style="width:30%;border: 1px solid;border-color: #686c70;">Feature</th>
+                                                <th style="width:10%;border: 1px solid;border-color: #686c70;">Checked</th>
+                                                <th style="border: 1px solid;border-color: #686c70;">Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-set="checklist" t-value="env['checklist.line'].search([('component_id', '=', product.id)])"/>
+                                            <t t-foreach="checklist.checklist_line_ids" t-as="item">
+                                                <tr style="font-size:20px; height:40px;">
+                                                    <td style="padding:5px;border: 1px solid;border-color: #686c70;background-color: #2F5495;color: white;">
+                                                        <t t-esc="item.checklist_item"/>
+                                                    </td>
+                                                    <td style="padding:5px;border: 1px solid;border-color: #686c70;text-align:center">
+                                                        <t t-if="item.is_checked">
+                                                            <i class="fa fa-check-square"/>
+                                                        </t>
+                                                    </td>
+                                                    <td style="padding:5px;border: 1px solid;border-color: #686c70;">
+                                                         <t t-esc="item.remark"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <t t-set="checklist_item" t-value="env['checklist.line'].search([('component_id', '=', product.id)])"/>
+                                <div class="row" style="padding:5px;">
+                                    <h5>
+                                        <b>Date:</b>
+                                        <span>
+                                            <span t-field="checklist_item.write_date" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/>
+                                        </span>
+                                    </h5>
+                                </div>
+                                <div class="row" style="padding:5px;">
+                                    <t t-foreach="product.images" t-as="image">
+                                        <img t-attf-src="data:image/png;base64, {{image.datas}}" style="height:225px;padding:10px;border: 1px solid;width: 350px;"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                        <div style="padding:30px;
+                                        font-family:times new roman;width:100%; border: none;">
+                            <table style="width:100%; border:none !important;">
+                                <td style="width:50%; border:none;">Alitkan Engineer: .........................</td>
+                                <td style="width:50%; border:none; text-align:end;"><div style="margin-right:35px;">Customer: .........................</div></td>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ITK_employee" model="ir.ui.view">
+            <field name="name">ITK_Employee</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet//group//group//field[@name='department_id']" position="after">
+                    <field name="divisions" invisible="1" readonly="1"/>
+                    <field name="units" invisible="1" readonly="1"/>
+                    <field name="start_date" groups="hr.group_hr_manager"/>
+                </xpath>
+                    
+                <xpath expr="//sheet//group//group//field[@name='mobile_phone']" position="after">
+                    <field name="subunits"/>
+                </xpath>
+
+                <field name="user_id" position="after">
+                    <field name="applicant_id" />
+                </field>
+
+            </field>
+        </record>
+        <record id="ITK_employee_search" model="ir.ui.view">
+            <field name="name">ITK_employee</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <field name="job_id" position="after">
+               
+                    <field name="new_divisions"/>
+                    <field name="units" />
+                    <field name="subunits" />
+                </field>
+            </field>
+        </record>
+    
+    </data>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <record model="ir.ui.view" id="qr_view_stock_lot_form">
+        <field name="name">qr.stock.lot.form</field>
+        <field name="model">stock.lot</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Lots">
+                <div class="oe_title">
+                        <label for="name"
+                               string="Lot/Serial"/>
+                        <h1>
+                            <field name="name" placeholder="Lot/Serial"/>
+                        </h1>
+                </div>
+                <group>
+                    <group>
+                        <field name="product_id"/>
+                        <field name="partner_ids" widget="many2many_tags"/>
+                        <field name="expiration_date" string="Expiration Date"/>
+                        <field name="product_qty"/>
+                        <field name="product_available_qty" string="Quantity Available"/>
+                        <field name="company_id"/>
+                        <field name="date_after_30" invisible="1"/>
+                        <field name="date_after_60" invisible="1"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+     </record>
+
+    <record model="ir.ui.view" id="qr_view_stock_lot_tree">
+        <field name="name">qr.product.tree</field>
+        <field name="model">stock.lot</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <list string="Lot/Serial" decoration-danger="expiration_date and (expiration_date &lt; current_date)" decoration-warning="expiration_date and (expiration_date &lt; date_after_30 and expiration_date &gt; current_date)" decoration-info="expiration_date and (expiration_date &lt; date_after_60 and expiration_date &gt; date_after_30)" decoration-success="expiration_date and (expiration_date &gt; date_after_60)">
+                <field name="product_id" class="qr_lot_serial_no_dec"/>
+                <field name="name" class="qr_lot_serial_no_dec"/>
+                <field name="expiration_date" string="Expiration Date" class="o_qr_lot_serial"/>
+                <field name="date_after_30" invisible="1"/>
+                <field name="date_after_60" invisible="1"/>
+                <field name="product_qty" class="qr_lot_serial_no_dec"/>
+                <field name="product_available_qty" string="Quantity Available" class="qr_lot_serial_no_dec"/>
+                <field name="partner_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_qr_lot_serial" model="ir.actions.act_window">
+        <field name="name">Lot/Serial</field>
+        <field name="res_model">stock.lot</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('qr_view_stock_lot_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('qr_view_stock_lot_form')})]"/>
+        <field name="help">Lot/ Serial</field>
+    </record>
+</odoo>

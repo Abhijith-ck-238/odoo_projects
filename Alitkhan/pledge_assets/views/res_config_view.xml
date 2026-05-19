@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Inherit Settings View -->
+        <record id="res_config_settings_view_form_pledges" model="ir.ui.view">
+            <field name="name">res.config.settings.pledges</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="Pledges" string="Pledges" name="Pledges" logo="pledge_assets/static/description/icon.png">
+                    <block title="Pledges">
+                        <div class="row mt-3">
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <label for="pt" string="Notify X days before expiration"/>
+                                <div class="mt-2">
+                                    <field name="pt"/>
+                                </div>
+                            </div>
+                        </div>
+                    </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+         <record id="notification_settings_action" model="ir.actions.act_window">
+                <field name="name">Settings</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">res.config.settings</field>
+                <field name="view_mode">form</field>
+                <field name="target">inline</field>
+                <field name="context">{'module' : 'pledge_assets', 'bin_size': False}</field>
+        </record>
+<!--         <menuitem id="A_settings_menu"-->
+<!--                   name="Settings"-->
+<!--                   parent="pledge_assets.menu_root"-->
+<!--                   action="notification_settings_action"-->
+<!--         />-->
+
+</odoo>

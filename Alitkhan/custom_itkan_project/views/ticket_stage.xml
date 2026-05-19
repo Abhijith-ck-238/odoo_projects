@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="project_stage_view_tree" model="ir.ui.view">
+        <field name="name">project.stage.list</field>
+        <field name="model">project.stage</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="sequence"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="project_stage_view_form" model="ir.ui.view">
+        <field name="name">project.stage.form</field>
+        <field name="model">project.stage</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="project_stage_view_search" model="ir.ui.view">
+        <field name="name">project.stage.form</field>
+        <field name="model">project.stage</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_project_stage" model="ir.actions.act_window">
+        <field name="name">Project Stages</field>
+        <field name="res_model">project.stage</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_itkan_project_configuration" name="Configuration" parent="custom_itkan_project.itkan_project_menu_root" sequence="1" groups="group_itkan_project_administrator"/>
+    <menuitem id="menu_project_stage" name="Project Stage" action="action_project_stage" parent="menu_itkan_project_configuration" sequence="3"/>
+</odoo>

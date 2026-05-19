@@ -1,0 +1,36 @@
+<odoo>
+        <record id="shipment_document_form" model="ir.ui.view">
+            <field name="name">shipment_document.form</field>
+            <field name="model">shipment.document</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="send_notifications" type="object" string="Send Notifications" invisible="not requires_action"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="file"/>
+                            <field name="requires_action"/>
+                            <field name="comments"/>
+                            <field name="notified_ids" invisible="not requires_action" required="requires_action" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                     <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="shipment_document_tree" model="ir.ui.view">
+            <field name="name">shipment_document.tree</field>
+            <field name="model">shipment.document</field>
+            <field name="arch" type="xml">
+                <list string="Shipment Document List">
+                    <field name="name"/>
+                    <field name="file"/>
+                    <field name="requires_action"/>
+                    <field name="comments"/>
+                </list>
+            </field>
+        </record>
+</odoo>

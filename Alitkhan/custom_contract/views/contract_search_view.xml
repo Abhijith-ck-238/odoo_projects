@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_contract_contract_search" model="ir.ui.view">
+            <field name="name">contract.contract.search</field>
+            <field name="model">contract.contract</field>
+            <field name="arch" type="xml">
+                <search string="Search Contracts">
+                    <field name="name"/>
+                    <field name="iq"/>
+                    <field name="number"/>
+                    <field name="main_contract"/>
+                    <field name="contract_signed_by"/>
+                    <field name="partner_id"/>
+                    <field name="is_contract_in_warranty"/>
+                    <filter string="Archived" name="inactive"
+                            domain="[('active', '=', False)]"/>
+                    <filter string="Active Contracts" name="activecontract"
+                            domain="[('is_eoc', '=', True)]"/>
+                    <filter string="Expired Contracts" name="expired_contract"
+                            domain="[('is_eoc', '=', False)]"/>
+                    <filter string="Contract in Warranty"
+                            name="contract_in_warranty"
+                            domain="[('is_contract_in_warranty', '=', True)]"/>
+                    <field name="product_lines" string="Part number"
+                           filter_domain="[('product_lines.part_number', '=', self)]"/>
+
+                    <field name="product_lines" string="Serial number"
+                           filter_domain="[('product_lines.sn', '=', self)]"/>
+                    <field name="product_lines" string="Modality"
+                           filter_domain="[('product_lines.modality', '=', self)]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Iq" name="iq"
+                                context="{'group_by': 'iq'}">
+
+                        </filter>
+                        <filter string="Contract Number" name="number"
+                                context="{'group_by': 'number'}">
+
+                        </filter>
+                        <filter string="Main Contract" name="main_contract"
+                                context="{'group_by': 'main_contract'}">
+
+                        </filter>
+                        <filter string="Signed By" name="contract_signed_by"
+                                context="{'group_by': 'contract_signed_by'}">
+
+                        </filter>
+                        <filter string="Contract With" name="partner_id"
+                                context="{'group_by': 'partner_id'}">
+
+                        </filter>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"
+                id="contracts.contracts_action_window">
+            <field name="name">Main Contracts Window</field>
+            <field name="res_model">contract.contract</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id"
+                   ref="view_contract_contract_search">
+
+            </field>
+        </record>
+    </data>
+</odoo>

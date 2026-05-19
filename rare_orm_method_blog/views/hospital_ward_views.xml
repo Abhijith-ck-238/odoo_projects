@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hospital_ward_view_tree" model="ir.ui.view">
+        <name>hospital.ward.view.tree</name>
+        <model>hospital.ward</model>
+        <arch type="xml">
+            <list>
+                <field name="display_name"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="capacity"/>
+            </list>
+        </arch>
+    </record>
+
+    <record id="hospital_ward_view_form" model="ir.ui.view">
+        <name>hospital.ward.view.form</name>
+        <model>hospital.ward</model>
+        <arch type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="capacity"/>
+                            <field name="display_name" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </arch>
+    </record>
+
+    <record id="hospital_ward_action" model="ir.actions.act_window">
+        <name>Wards</name>
+        <res_model>hospital.ward</res_model>
+        <view_mode>list,form</view_mode>
+    </record>
+</odoo>

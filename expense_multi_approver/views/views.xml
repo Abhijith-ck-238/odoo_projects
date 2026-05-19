@@ -1,0 +1,31 @@
+<odoo>
+	<data>
+
+		<record id="hr_expense_sheet_form" model="ir.ui.view">
+			<field name="name">hr.expense.sheet.form</field>
+			<field name="model">hr.expense.sheet</field>
+			<field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form" />
+			<field name="arch" type="xml">
+				<field name="user_id" position="replace">
+					<field name="user_ids" widget="many2many_tags" readonly="state != 'draft'"/>
+					<!-- <field name="next_approval_user"/> -->
+				</field>
+
+				<xpath expr="//page[@name='expenses']" position="after">
+					<page string="Approvals">
+						<field name="approval_lines" readonly="state != 'draft'">
+							<list editable="bottom" delete="0">
+								<field name="sequence" widget="handle"/>
+								<field name="user_id"/>
+								<field name="approved"/>
+								<field name="approved_by"/>
+								<field name="approved_date"/>
+							</list>
+						</field>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

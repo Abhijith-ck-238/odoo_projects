@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="peripheral_wizard_view" model="ir.ui.view">
+            <field name="name">wizard for peripheral</field>
+            <field name="model">peripherals.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Peripheral Window">
+                    <field name="contract_product_id" invisible="1"/>
+                    <field name="peripherals"/>
+                    <footer>
+                        <button string="Save" class="btn-primary" type="object" name="save_peripherals"/>
+                        <button string="Cancel" class="btn-primary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="peripheral_wizard" model="ir.actions.act_window">
+            <field name="name">Peripheral Wizard</field>
+            <field name="res_model">peripherals.wizard</field>
+            <field name="view_id" ref="peripheral_wizard_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

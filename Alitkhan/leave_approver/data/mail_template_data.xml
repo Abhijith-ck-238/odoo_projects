@@ -1,0 +1,155 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <!-- Mail template are declared in a NOUPDATE block
+         so users can freely customize/delete them -->
+    <data noupdate="0">
+        <!--Email template -->
+        <record id="email_template_send_direct_approval" model="mail.template">
+            <field name="name">Direct manager approval</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="email_from">{{(object.employee_id.user_id.email_formatted or user.email_formatted)}}</field>
+            <field name="partner_to">{{object.employee_id.direct_manager_id.partner_id.id}}</field>
+            <field name="subject">Leave Request approval</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        <t t-out="object.employee_id.direct_manager_id.partner_id.name"/>
+                        <br/>
+                        <t t-out="object.employee_id.name"/>
+                        has applied leave for
+                        <t t-out="object.number_of_days"/>
+                        <br/>
+                        Please click on view details to approve/refuse request.
+                    </p>
+                    <p style="margin: 16px 0px 16px 0px;">
+                        <a t-att-href="ctx.get('url')"
+                           style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">View Details
+                        </a>
+                    </p>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+        <record id="email_template_send_second_direct_approval" model="mail.template">
+            <field name="name">Second Direct manager approval</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="email_from">{{(object.employee_id.user_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{object.employee_id.second_direct_manager_id.partner_id.id}}</field>
+            <field name="subject">Leave Request approval</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        <t t-out="object.employee_id.second_direct_manager_id.partner_id.name"/>
+                        <br/>
+                        <t t-out="object.employee_id.name"/>
+                        has applied leave for
+                        <t t-out="object.number_of_days"/>
+                        <br/>
+                        Please click on view details to approve/refuse request.
+                    </p>
+                    <p style="margin: 16px 0px 16px 0px;">
+                        <a t-att-href="ctx.get('url')"
+                           style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">View Details
+                        </a>
+                    </p>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+        <record id="email_template_send_manager" model="mail.template">
+            <field name="name">Manager approval</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="email_from">{{(object.employee_id.user_id.email_formatted or user.email_formatted)}}
+            </field>
+            <field name="partner_to">{{object.employee_id.parent_id.user_id.partner_id.id}}</field>
+            <field name="subject">Leave Request approval</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        <t t-out="object.employee_id.parent_id.user_id.partner_id.name"/>
+                        <br/>
+                        <t t-out="object.employee_id.name"/>
+                        has applied leave for
+                        <t t-out="object.number_of_days"/>
+                        <br/>
+                        Please click on view details to approve/refuse request.
+                    </p>
+                    <p style="margin: 16px 0px 16px 0px;">
+                        <a t-att-href="ctx.get('url')"
+                           style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">View Details
+                        </a>
+                    </p>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+        <record id="email_template_send_director" model="mail.template">
+            <field name="name">Director approval</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="email_from">{{(object.employee_id.user_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{object.employee_id.director_id.partner_id.id}}</field>
+            <field name="subject">Leave Request approval</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        <t t-out="object.employee_id.director_id.partner_id.name"/>
+                        <br/>
+                        <t t-out="object.employee_id.name"/>
+                        has applied leave for
+                        <t t-out="object.number_of_days"/>
+                        <br/>
+                        Please click on view details to approve/refuse request.
+                    </p>
+                    <p style="margin: 16px 0px 16px 0px;">
+                        <a t-att-href="ctx.get('url')"
+                           style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">View Details
+                        </a>
+                    </p>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+        <record id="email_template_send_hr_officer" model="mail.template">
+            <field name="name">HR Officer approval</field>
+            <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="email_from">{{(object.employee_id.user_id.email_formatted or user.email_formatted)}}</field>
+            <field name="partner_to">{{object.employee_id.leave_manager_id.partner_id.id}}</field>
+            <field name="subject">Leave Request approval</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear
+                        <t t-out="object.employee_id.leave_manager_id.partner_id.name"/>
+                        <br/>
+                        <t t-out="object.employee_id.name"/>
+                        has applied leave for
+                        <t t-out="object.number_of_days"/>
+                        <br/>
+                        Please click on view details to approve/refuse request.
+                    </p>
+                    <p style="margin: 16px 0px 16px 0px;">
+                        <a t-att-href="ctx.get('url')"
+                           style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">View Details
+                        </a>
+                    </p>
+                    <br/>
+                    Thank you,
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+    </data>
+</odoo>

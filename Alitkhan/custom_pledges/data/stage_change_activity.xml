@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_activity_change_pledge_stage" model="mail.activity.type">
+        <field name="name">Change Pledge Stage</field>
+        <field name="icon">fa-bars</field>
+        <field name="res_model">pledge.pledge</field>
+    </record>
+
+</odoo>

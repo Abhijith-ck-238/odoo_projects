@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="helpdesk.group_helpdesk_user" model="res.groups">
+            <field name="name">Support center</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="base.module_category_services_helpdesk"/>
+        </record>
+
+        <record id="group_helpdesk_user_no_create" model="res.groups">
+            <field name="name">base-user</field>
+            <field name="category_id" ref="base.module_category_services_helpdesk"/>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'helpdesk'), ('name','=','helpdesk.helpdesk_user_rule')] "/>
+            </function>
+            <value eval=" {'noupdate': False} "/>
+        </function>
+
+        <record id="helpdesk.helpdesk_user_rule" model="ir.rule">
+            <field name="name">Helpdesk User</field>
+            <field name="model_id" ref="helpdesk.model_helpdesk_team"/>
+            <field name="domain_force">['|', ('member_ids','in', user.id), ('member_ids','=', False)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="groups"
+                   eval="[(4, ref('helpdesk.group_helpdesk_user','custom_helpdesk.group_helpdesk_user_no_create'))]"/>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'helpdesk'), ('name','=','helpdesk.helpdesk_user_rule')] "/>
+            </function>
+            <value eval=" {'noupdate': True} "/>
+        </function>
+
+    </data>
+</odoo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem name="Offering and Configuraion" id="itkan_offering.menu_root"
+                  groups="itkan_offering.offering_config_user,dx_auto_offering.group_dx_offering_manager,itkan_offering.offering_admin,itkan_offering.offering_manager,itkan_offering.offering_user,dx_auto_offering.group_dx_offering_user"/>
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ITK_Sale" model="ir.ui.view">
+            <field name="name">ITK_Sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="date_order" position="replace">
+                    <field name="date_order"/>   <!-- Replaced original order date with this one because they wanted it changeable-->
+                </field>
+                <field name="sale_order_template_id" position="after">
+                    <field name="company_report_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

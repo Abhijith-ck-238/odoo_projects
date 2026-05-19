@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+<!--        <record id="hr_expense_sheet_form_alitkan" model="ir.ui.view">-->
+<!--            <field name="name">hr.expense.sheet.form.alitkan</field>-->
+<!--            <field name="model">hr.expense.sheet</field>-->
+<!--            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="contract_id" position="after">-->
+<!--                    <field name="analytic_account_id" options="{'no_create': True, 'no_open': True}"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

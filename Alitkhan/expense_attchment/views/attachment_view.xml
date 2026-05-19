@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_expense_sheet_form_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.form.inherit</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+                <button name="action_get_attachment_view" position="attributes">
+                    <attribute name="invisible"></attribute>
+                </button>
+                <xpath expr="//button[@name='action_get_attachment_view']" position="before">
+                    <field name="nb_attachment"/>
+                </xpath>
+                <xpath expr="//button[@name='action_open_expense_view']" position="after">
+                    <button name="action_open_all_attachments" type="object"
+                            class="oe_stat_button" icon="fa-file-text-o">
+                        <field string="Documents" name="nb_attachment"
+                               widget="statinfo"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

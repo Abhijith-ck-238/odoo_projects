@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <record id="hr_expense_view_pivot_inherit_budget" model="ir.ui.view">-->
+<!--        <field name="name">hr.expense.view.pivot.inherit.budget</field>-->
+<!--        <field name="model">hr.expense</field>-->
+<!--        <field name="inherit_id" ref="hr_expense.hr_expense_view_pivot"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='date']" position="after">-->
+<!--                <field name="budget_policy_id" type="row"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="hr_expense_view_search_inherit_budget" model="ir.ui.view">
+        <field name="name">hr.expense.view.search.inherit.budget</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='company']" position="after">
+                <filter string="Budget Policy" name="groupby_budget_policy" domain="[]" context="{'group_by': 'budget_policy_id'}"/>
+                <filter string="Analytic Accounts" name="groupby_analytic_account_ids" domain="[]" context="{'group_by': 'analytic_account_ids'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_sync_expense_analytic_accounts" model="ir.actions.server">
+        <field name="name">Sync Expense Analytic Accounts</field>
+        <field name="model_id" ref="hr_expense.model_hr_expense"/>
+        <field name="binding_model_id" ref="hr_expense.model_hr_expense"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_sync_analytic_account_ids()
+        </field>
+    </record>
+</odoo>

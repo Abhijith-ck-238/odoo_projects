@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_checklist_line_view_form" model="ir.ui.view">
+        <field name="name">product.checklist.line.form</field>
+        <field name="model">checklist.line</field>
+        <field name="arch" type="xml">
+            <form create="0">
+                <sheet>
+                    <field name="checklist_line_ids">
+                        <list editable="bottom" create="0" delete="0">
+                            <field name="checklist_item" style="width:30%;" readonly="1"/>
+                            <field name="is_checked" style="width:70px;"/>
+                            <field name="remark"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

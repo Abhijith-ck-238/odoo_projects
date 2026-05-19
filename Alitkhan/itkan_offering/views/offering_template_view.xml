@@ -1,0 +1,65 @@
+<odoo>
+  <data>
+
+    <record id="offering_templatee_form" model="ir.ui.view">
+      <field name="name">offering.template.form</field>
+      <field name="model">offering.template</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="sections"/>
+            </group>
+            <field name="body"/>
+            <p style="color: lightgray; line-height: 0.4; font-size: large; margin-top: 30px;">
+              Please put the offer fields between curly braces like so: {iq}
+            </p>
+            <h3>Fields Name:</h3>
+            <div style="display: flex;">
+              <div style="display: flex; flex-direction: column; margin: 0 50px 0 0;">
+              <p>Customer: <code>customer</code></p>
+              <p>Reference Number: <code>ref_number</code></p>
+              <p>IQ Number: <code>iq</code></p>
+              <p>Region: <code>region</code></p>
+              </div>
+
+              <div style="display: flex; flex-direction: column; margin: 0 50px 0 0;">
+                <p>Signing Date: <code>sign_date</code></p>
+                <p>Offer Currency: <code>offer_currency</code></p>
+                <p>Related Contract: <code>related_contract</code></p>
+                <p>Related Sale Order: <code>related_sale_order</code></p>
+              </div>
+
+              <div style="display: flex; flex-direction: column; margin: 0 50px 0 0;">
+                <p>Report Vendor: <code>vendor_id</code></p>
+                <p>Project Name: <code>project_name</code></p>
+                <p>Tender No: <code>tendor_no</code></p>
+              </div>
+
+              <div style="display: flex; flex-direction: column; margin: 0 50px 0 0;">
+                <p>Project Subject: <code>project_subject</code></p>
+                <p>IFB no: <code>ifb_no</code></p>
+                <p>Offer Date: <code>offer_date</code></p>
+              </div>
+
+            </div>
+          </sheet>
+
+        </form>
+      </field>
+    </record>
+
+    <record id="offering_template_tree" model="ir.ui.view">
+      <field name="name">offering.template.tree</field>
+      <field name="model">offering.template</field>
+      <field name="arch" type="xml">
+        <list string="Report Template">
+          <field name="name"/>
+          <field name="sections"/>
+        </list>
+      </field>
+    </record>
+
+  </data>
+</odoo>

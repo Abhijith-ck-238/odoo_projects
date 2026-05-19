@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="ir_cron_sale_from_fsm" model="ir.cron">
+            <field name="name">Sale Order from Field Srvice</field>
+            <field name="model_id" ref="model_project_task"/>
+            <field name="state">code</field>
+            <field name="code">model.change_access_unit_of_sale_order()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="active">False</field>
+        </record>
+    </data>
+</odoo>

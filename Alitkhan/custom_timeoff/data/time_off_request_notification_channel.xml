@@ -1,0 +1,15 @@
+<odoo>
+    <data noupdate="1">
+        <record model="discuss.channel" id="general_time_off_notifications">
+            <field name="name">General Time Off Requests</field>
+            <field name="description">General Time Off Request Notifications channel
+            </field>
+        </record>
+
+        <record model="discuss.channel" id="technical_time_off_notifications">
+            <field name="name">Technical Time Off Requests</field>
+            <field name="description">Technical Time Off Requests
+            </field>
+        </record>
+    </data>
+</odoo>

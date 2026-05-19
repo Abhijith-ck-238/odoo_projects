@@ -1,0 +1,14 @@
+.dx_auto_offering_red-font{
+    color:red;
+    margin-left: 15px;
+}
+
+.dx_auto_offering_copy-input{
+    position: relative;
+    left:-999999999999999999999999px;
+}
+
+.dx_auto_offering_copy-on-click:hover{
+    color: rgb(190, 0, 0);
+    cursor: pointer;
+}

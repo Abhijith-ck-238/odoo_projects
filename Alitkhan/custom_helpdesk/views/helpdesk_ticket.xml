@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="helpdesk_ticket_search_this_month_and_week"
+                model="ir.ui.view">
+            <field name="name">helpdesk.ticket.search.thi_month.this_week
+            </field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id"
+                   ref="helpdesk.helpdesk_tickets_view_search"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <filter string="Current Week" name="current_week"
+                            domain="[
+                            ('create_date', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-3)).strftime('%Y-%m-%d'))),
+                            ('create_date', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=-2)).strftime('%Y-%m-%d')))]"/>
+                    <filter name="current_month" string="Current Month" domain="[
+                         ('create_date', '&gt;=', (context_today()).strftime('%%Y-%%m-01')),
+                        ('create_date', '&lt;=', (context_today() + relativedelta(day=31)).strftime('%%Y-%%m-%%d'))]"/>
+                    <filter name="last_30_days" string="Last 30 Days" domain="[
+                         ('create_date', '&lt;=', (context_today()).strftime('%%Y-%%m-%%d')),
+                        ('create_date', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(days=-30), datetime.time(11,59,59)))]"/>
+                    <filter name="last_14_days" string="Last 14 Days" domain="[
+                         ('create_date', '&lt;=', (context_today()).strftime('%%Y-%%m-%%d')),
+                        ('create_date', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(days=-14), datetime.time(11,59,59)))]"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="helpdesk_ticket_kanban_add_contract_status"
+                model="ir.ui.view">
+            <field name="name">helpdesk.ticket.kanban.add.contract.status
+            </field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id"
+                   ref="helpdesk.helpdesk_ticket_view_kanban"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//templates" position="before">
+                        <field name="contract_is_valid"/>
+                        <field name="is_contract_in_warranty" invisible="1"/>
+                    </xpath>
+
+                    <xpath expr="//footer" position="before">
+                        <div>
+                            <h5 invisible="contract_is_valid" class="text-danger font-weight-bold">Contract is
+                                Expired
+                            </h5>
+                            <h5 invisible="not contract_is_valid or not is_contract_in_warranty"
+                                class="text-success font-weight-bold">Contract is
+                                Valid (within warranty).
+                            </h5>
+                            <h5 invisible="not contract_is_valid or is_contract_in_warranty"
+                                class="text-success font-weight-bold">Contract is
+                                Valid (out of warranty).
+                            </h5>
+                        </div>
+                    </xpath>
+
+                    <!--<xpath expr="//field[@name = 'properties']" position="after">-->
+                    <xpath expr="//div[hasclass('fw-bold')]" position="after">
+                        <div>
+                            <field name="user_id"/>
+
+                        </div>
+                    </xpath>
+                    <!--<xpath expr="//footer" position="before">-->
+                    <xpath expr="//field[@name='site_id']" position="before">
+                        <div>
+                            <field name="ticket_type_id"/>
+                        </div>
+                        <div>
+                            <field name="province_id"/>
+                        </div>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="helpdesk_ticket_kanban_extend" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.kanban.extend</field>
+            <field name="model">helpdesk.ticket</field>
+<!--            <field name="groups_id"-->
+<!--                   eval="[(4,ref('custom_industry_fsm.group_project_user_limited'))]"/>-->
+            <field name="inherit_id"
+                   ref="helpdesk.helpdesk_ticket_view_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban[1]" position="attributes">
+                    <attribute name="archivable">0</attribute>
+                    <attribute name="group_edit">0</attribute>
+                    <attribute name="on_create"></attribute>
+                    <attribute name="quick_create_view"></attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="helpdesk_ticket_view_form_helpdesk_user" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.view.form.helpdesk.user</field>
+            <field name="model">helpdesk.ticket</field>
+<!--            <field name="groups_id"-->
+<!--                   eval="[(4,ref('custom_helpdesk.group_helpdesk_user_no_create'))]"/>-->
+            <field name="inherit_id"
+                   ref="itkan_helpdesk.helpdesk_ticket_inh_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//h5[2]" position="replace">
+                    <h5 invisible="not contract_is_valid or is_contract_in_warranty"
+                        class="text-success font-weight-bold">Contract is Valid
+                        (out of warranty).
+                    </h5>
+                </xpath>
+                <xpath expr="//h5[2]" position="after">
+                    <field name="is_contract_in_warranty" invisible="1"/>
+                    <field name="contract_is_valid" invisible="1"/>
+
+                    <h5  invisible="not contract_is_valid or not is_contract_in_warranty"
+                        class="text-success font-weight-bold">Contract is Valid
+                        (within warranty).
+                    </h5>
+                </xpath>
+<!--                <xpath expr="//field[@name='unit_id']" position="replace">-->
+<!--                    <field name="unit_id" options="{'no_create_edit': True}"-->
+<!--                           readonly="1"-->
+<!--                    />-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='brand_id']" position="replace">-->
+<!--                    <field name="brand_id" options="{'no_create_edit': True}"-->
+<!--                           readonly="1"-->
+<!--                    />-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='site_id']" position="replace">-->
+<!--                    <field name="site_id" options="{'no_create_edit': True}"-->
+<!--                           readonly="1"-->
+<!--                    />-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='province_id']" position="replace">-->
+<!--                    <field name="province_id" readonly="1"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='recieve_date']" position="replace">-->
+<!--                    <field name="recieve_date" readonly="1"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='email_cc']" position="replace">-->
+<!--                    <field name="email_cc" readonly="1"/>-->
+
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='email_cc']" position="before">-->
+<!--                    <field name="partner_email" readonly="1"/>-->
+
+<!--                </xpath>-->
+
+                <xpath expr="//field[@name='call_number']" position="replace">
+                    <field name="call_number" readonly="1"/>
+                </xpath>
+                <xpath expr="//page[@name='description']" position="replace">
+
+                </xpath>
+
+<!--                <xpath expr="//field[@name='partner_id']" position="replace">-->
+<!--                    <field name="partner_id" class="field_partner_id"-->
+<!--                           readonly="1"-->
+<!--                           domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"-->
+<!--                    />-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='user_id']"-->
+<!--                       position="after">-->
+<!--                    <field name="ticket_type_id" readonly="1"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='user_id']" position="replace">-->
+<!--                    <field name="user_id" readonly="1" class="field_user_id"-->
+<!--                    />-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='tag_ids']" position="replace">-->
+<!--                    <field name="tag_ids" widget="many2many_tags" readonly="1"-->
+<!--                           options="{'color_field': 'color'}"-->
+<!--                    />-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='exception_id']" position="replace">-->
+<!--                    <field name="exception_id" readonly="1"-->
+<!--                    />-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='date_end']" position="replace">
+                    <field name="date_end" widget="daterange"
+                           options="{&quot;related_start_date&quot;: &quot;date_start&quot;}"/>
+<!--                           readonly="1"-->
+<!--                    />-->
+                </xpath>
+
+                <xpath expr="//field[@name='resource_lines']"
+                       position="replace">
+                    <field name="resource_lines"
+                    >
+                        <list editable="top">
+                            <field name="categ_id"/>
+                            <field name="new_user_ids" column_invisible="1"/>
+
+                            <field name="categ_type" optional="show" column_invisible="1"/>
+                            <field name="qty"/>
+                            <field name="user_ids" widget="many2many_tags"
+                                   readonly="categ_type == 'vehicle'"
+                                   optional="show"/>
+                            <field name="vehicle_ids" widget="many2many_tags"
+                                   readonly="categ_type == 'human'"
+                                   optional="show"/>
+                            <field name="vehicle_mode_id"
+                                   options="{'no_create': True, 'no_create_edit': True}"
+                                   readonly="categ_type == 'human'"
+                                   optional="show"/>
+                            <field name="note" optional="show"/>
+                        </list>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <group>
+                                        <field name="categ_id"/>
+                                        <field name="categ_type"/>
+                                        <field name="qty"/>
+                                        <field name="new_user_ids"
+                                               invisible="1"/>
+
+                                    </group>
+                                    <group>
+                                        <field name="user_ids"
+                                               widget="many2many_tags"/>
+                                        <field name="vehicle_ids"
+                                               widget="many2many_tags"/>
+                                        <field name="vehicle_mode_id"/>
+                                    </group>
+                                    <field name="note"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+
+                </xpath>
+
+
+                <xpath expr="//field[@name='date_start']" position="replace">
+                    <field name="date_start" widget="daterange"
+                           options="{&quot;related_end_date&quot;: &quot;date_end&quot;}"/>
+<!--                           readonly="1"-->
+<!--                    />-->
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record model="helpdesk.tag" id="helpdesk_tag_form">-->
+<!--            -->
+<!--        </record>-->
+
+
+        <record id="helpdesk_ticket_view_form" model="ir.ui.view">
+            <field name="name">helpdesk.ticket</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id"
+                   ref="itkan_helpdesk.helpdesk_ticket_inh_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook"
+                       position="inside">
+                    <page string="Documents" name="documents"
+                          groups="helpdesk.group_helpdesk_user">
+                        <field name="service_report_attachments"
+                               widget="many2many">
+                            <kanban import="false">
+                                <field name="id"/>
+                                <field name="mimetype"/>
+                                <field name="type"/>
+                                <field name="create_uid"/>
+                                <field name="url"/>
+                                <field name="type"/>
+                                <field name="create_date"/>
+                                <field name="name"/>
+                                <field name="new_name"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_global_area oe_kanban_global_click o_kanban_attachment">
+                                            <div class="row">
+                                                <div class="offset-10">
+                                                    <div class="o_dropdown_kanban dropdown"
+                                                         groups="base.group_user">
+                                                        <a role="button"
+                                                           class="dropdown-toggle o-no-caret btn"
+                                                           data-toggle="dropdown"
+                                                           href="#"
+                                                           aria-label="Dropdown menu"
+                                                           title="Dropdown menu">
+                                                            <span class="fa fa-ellipsis-v"/>
+                                                        </a>
+                                                        <div class="dropdown-menu"
+                                                             role="menu">
+                                                            <a t-if="widget.deletable"
+                                                               role="menuitem"
+                                                               type="delete"
+                                                               class="dropdown-item">
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="o_kanban_image">
+                                                <div class="o_kanban_image_wrapper">
+                                                    <t t-set="webimage"
+                                                       t-value="new RegExp('image.*(gif|jpeg|jpg|png)').test(record.mimetype.value)"/>
+                                                    <div t-if="record.type.raw_value == 'url'"
+                                                         class="o_url_image fa fa-link fa-3x text-muted"/>
+                                                    <img t-elif="webimage"
+                                                         t-attf-src="/web/image/#{record.id.raw_value}"
+                                                         width="100"
+                                                         height="100"
+                                                         alt="Document"
+                                                         class="o_attachment_image"/>
+                                                    <div t-else="!webimage"
+                                                         class="o_image o_image_thumbnail"
+                                                         t-att-data-mimetype="record.mimetype.value"/>
+                                                </div>
+                                            </div>
+                                            <div class="o_kanban_details">
+                                                <div class="o_kanban_details_wrapper">
+                                                    <div t-att-title="record.new_name.raw_value"
+                                                         class="o_kanban_record_title">
+                                                        <field name="new_name"
+                                                               class="o_text_overflow"/>
+                                                    </div>
+                                                    <div class="o_kanban_record_body">
+                                                        <t t-if="record.type.raw_value == 'url'">
+                                                            <span class="o_document_url">
+                                                                <i class="fa fa-globe"/>
+                                                                <field name="url"
+                                                                       widget="url"/>
+                                                            </span>
+                                                        </t>
+                                                        <samp t-else=""
+                                                              class="text-muted"></samp>
+                                                    </div>
+                                                    <div class="o_kanban_record_bottom">
+                                                        <time class="oe_kanban_bottom_left">
+                                                            <field name="create_date"
+                                                                   widget="date"/>
+                                                        </time>
+                                                        <div class="oe_kanban_bottom_right">
+                                                            <img t-att-src="kanban_image('res.users', 'image_128', record.create_uid.raw_value)"
+                                                                 t-att-data-member_id="record.create_uid.raw_value"
+                                                                 t-att-alt="record.create_uid.raw_value"
+                                                                 class="oe_kanban_avatar"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form string="Attachments">
+                                <sheet>
+                                    <label for="new_name" class="oe_edit_only"/>
+                                    <h1>
+                                        <field name="new_name"/>
+                                    </h1>
+                                    <group>
+                                        <group>
+                                            <field name="name" invisible="1"/>
+                                            <field name="type"/>
+                                            <field name="datas"
+                                                   filename="new_name"
+                                                   invisible="type == 'url'"/>
+                                            <field name="url" widget="url"
+                                                   invisible="type == 'binary'"/>
+                                            <field name="mimetype"
+                                                   groups="base.group_no_one"/>
+                                        </group>
+                                        <group string="Attached To"
+                                               groups="base.group_no_one">
+                                            <field name="res_model"/>
+                                            <field name="res_field"/>
+                                            <field name="res_id"/>
+                                            <field name="res_name"/>
+                                            <field name="company_id"
+                                                   groups="base.group_multi_company"
+                                                   options="{'no_create': True}"/>
+                                            <field name="public"/>
+                                        </group>
+                                        <group string="History"
+                                               groups="base.group_no_one"
+                                               invisible="not create_date">
+                                            <label for="create_uid"
+                                                   string="Creation"/>
+                                            <div name="creation_div">
+                                                <field name="create_uid"
+                                                       readonly="1"
+                                                       class="oe_inline"/>
+                                                on
+                                                <field name="create_date"
+                                                       readonly="1"
+                                                       class="oe_inline"/>
+                                            </div>
+                                        </group>
+                                        <group name="description_group"
+                                               string="Description"
+                                               groups="base.group_no_one"
+                                               colspan="4">
+                                            <field name="description"
+                                                   nolabel="1"/>
+                                        </group>
+                                        <group groups="base.group_no_one"
+                                               string="Indexed Content"
+                                               colspan="4">
+                                            <field name="index_content"
+                                                   nolabel="1"/>
+                                        </group>
+                                    </group>
+                                </sheet>
+                            </form>
+
+                        </field>
+
+                    </page>
+                </xpath>
+                <xpath expr="//h5[2]" position="replace">
+                    <h5 invisible="not contract_is_valid or is_contract_in_warranty"
+                        class="text-success font-weight-bold">Contract is Valid
+                        (out of warranty).
+                    </h5>
+                </xpath>
+                <xpath expr="//h5[2]" position="after">
+                    <field name="is_contract_in_warranty" invisible="1"/>
+                    <field name="contract_is_valid" invisible="1"/>
+                    <field name="created_by" string="Created By"
+                           readonly="created_by"
+                           invisible="1"/>
+                    <h5 invisible="not contract_is_valid or not is_contract_in_warranty"
+                        class="text-success font-weight-bold">Contract is Valid
+                        (within warranty).
+                    </h5>
+                </xpath>
+                <xpath expr="//div[1]" position="replace">
+                    <div role="alert" class="alert alert-warning p-3 text-center"
+                         invisible="not overlap_sn">
+                        There is already another opened ticket with the same
+                        serial number
+                        <button name="view_tickets_with_same_serial_number"
+                                type="object" class="btn-link">
+                            <field class="align-middle" name="similar_tickets"/>
+                        </button>
+                    </div>
+                </xpath>
+                <xpath expr="//div[1]" position="after">
+                    <div role="alert" class="alert-warning p-3 text-center"
+                         invisible="not is_resource_set_on_task and not is_resource_set_on_agenda">
+                        The resources in the ticket is used somewhere else.
+                        <button name="view_tickets_with_resources" type="object"
+                                class="btn-link"
+                                string="View FS Tickets">
+                        </button>
+                        <button name="view_agenda_with_resources" type="object"
+                                class="btn-link" string="View Agenda">
+                        </button>
+
+                        <field name="is_resource_set_on_task" invisible="1"/>
+                        <field name="is_resource_set_on_agenda" invisible="1"/>
+                        <field name="is_contract_in_warranty" invisible="1"/>
+
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='exception_id']" position="replace">
+                    <field name="exception_id"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='unit_id']" position="replace">
+                    <field name="unit_id" options="{'no_create_edit': True}"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='brand_id']" position="replace">
+                    <field name="brand_id" options="{'no_create_edit': True}"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+
+                <xpath expr="//field[@name='call_type']" position="after">
+                    <field name="call_type" readonly="1"
+                           groups="custom_helpdesk.group_helpdesk_user_no_create"/>
+                    <field name="pm_workdone_description" readonly="1"
+                           groups="custom_helpdesk.group_helpdesk_user_no_create"/>
+                </xpath>
+
+                <xpath expr="//field[@name='call_type']" position="replace">
+                    <field name="call_type"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                    <field name="pm_workdone_description"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+
+                </xpath>
+                <xpath expr="//field[@name='province_id']" position="replace">
+                    <field name="province_id"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='site_id']" position="replace">
+                    <field name="site_id" options="{'no_create_edit': True}"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+
+                <xpath expr="//field[@name='sn_search']" position="replace">
+                    <field name="sn_search"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager,custom_helpdesk.group_helpdesk_user_no_create"/>
+                </xpath>
+                <xpath expr="//field[@name='recieve_date']" position="replace">
+                    <field name="recieve_date"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='email_cc']" position="replace">
+                    <field name="email_cc"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='email_cc']" position="before">
+                    <field name="partner_email"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='call_number']" position="replace">
+                    <field name="call_number"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='team_id']" position="replace">
+                    <field name="team_id"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="team_id" readonly="1"
+                           groups="custom_helpdesk.group_helpdesk_user_no_create"/>
+                </xpath>
+                <xpath expr="//field[@name='team_id']" position="replace">
+                    <field name="team_id"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="replace">
+                        <field name="user_id" class="field_user_id"
+                               groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                    <field name="ticket_type_id"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+
+                <xpath expr="//field[@name='tag_ids']" position="replace">
+                    <field name="tag_ids" widget="many2many_tags"
+                           options="{'color_field': 'color'}"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                    <field name="company_id" groups="base.group_multi_company" context="{'create': False}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" class="field_partner_id"
+                           domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+                </xpath>
+
+                <xpath expr="//page[@name='resouces']" position="replace">
+                    <page string="Resources" name="resouces"
+                    >
+                        <field name="resource_lines"
+                               groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager">
+                            <list editable="top">
+                                <field name="categ_id"/>
+                                <field name="new_user_ids" invisible="1"/>
+                                <field name="categ_type" optional="show"/>
+                                <field name="qty"/>
+                                <field name="user_ids" widget="many2many_tags"
+                                       readonly="categ_type == 'vehicle'"
+                                       optional="show"/>
+                                <field name="vehicle_ids"
+                                       widget="many2many_tags"
+                                       readonly="categ_type == 'human'"
+                                       optional="show"/>
+                                <field name="vehicle_mode_id"
+                                       options="{'no_create': True, 'no_create_edit': True}"
+                                       readonly="categ_type == 'human'"
+                                       optional="show"/>
+                                <field name="note" optional="show"/>
+                            </list>
+                            <form>
+                                <sheet>
+                                    <group>
+                                        <group>
+                                            <field name="categ_id"/>
+                                            <field name="categ_type"/>
+                                            <field name="qty"/>
+                                            <field name="new_user_ids"
+                                                   invisible="1"/>
+
+                                        </group>
+                                        <group>
+                                            <field name="user_ids"
+                                                   widget="many2many_tags"/>
+                                            <field name="vehicle_ids"
+                                                   widget="many2many_tags"/>
+                                            <field name="vehicle_mode_id"/>
+                                        </group>
+                                        <field name="note"/>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="call_received_partner_id"
+                           class="field_partner_id"
+                           domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+
+                </xpath>
+                <xpath expr="//field[@name='create_uid']" position="before">
+                    <field name="maintenance_iq" invisible="1"/>
+                    <field name="is_view_maintenance_iq" invisible="1"/>
+                    <field name="new_maintenance_iq" string="Maintainence Iq"
+                           readonly="not is_view_maintenance_iq"/>
+                </xpath>
+                <xpath expr="//sheet"
+                       position="inside">
+                    <field name="description"/>
+                </xpath>
+                <xpath expr="//field[@name='create_uid']"
+                       position="after">
+                    <field name="description" string="Reported Defect"
+                           groups="helpdesk.group_helpdesk_user,helpdesk.group_helpdesk_manager"/>
+
+                    <field name="description" string="Reported Defect"
+                           readonly="1"
+                           groups="custom_helpdesk.group_helpdesk_user_no_create"/>
+                </xpath>
+                <xpath expr="//button[@name='view_parent_ticket']"
+                       position="replace">
+                    <button name="view_parent_ticket" type="object"
+                            class="oe_stat_button" icon="fa-ticket"
+                            invisible="not parent_ticket">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Main</span>
+                            <span class="o_stat_text">Ticket</span>
+                        </div>
+                    </button>
+                </xpath>
+
+                <xpath expr="//button[@name='view_child_ticket']"
+                       position="replace">
+                    <button name="view_child_ticket" type="object"
+                            class="oe_stat_button" icon="fa-ticket"
+                            invisible="not child_ticket">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Sub</span>
+                            <span class="o_stat_text">Ticket</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="helpdesk_ticket_action" model="ir.actions.act_window">
+            <field name="name">Tickets</field>
+            <field name="res_model">helpdesk.ticket</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="context">{'search_default_last_14_days':True}
+            </field>
+<!--            <field name="context">{'search_default_team_id': 4,-->
+<!--                'search_default_last_14_days':True}-->
+<!--            </field>-->
+            <field name="search_view_id"
+                   ref="helpdesk.helpdesk_tickets_view_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new ticket
+                </p>
+                <p>To get things done, use activities and status on tickets.
+                    <br/>
+                    Chat in real time or by email to collaborate efficiently.
+                </p>
+            </field>
+        </record>
+
+<!--&lt;!&ndash;        scheduled action for removing html tag in description&ndash;&gt;-->
+<!--        <record id="action_ticket_convert_to_task" model="ir.actions.server">-->
+<!--            <field name="name">Remove html tag</field>-->
+<!--            <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>-->
+<!--            <field name="binding_model_id" ref="helpdesk.model_helpdesk_ticket"/>-->
+<!--            <field name="binding_view_types">list,form</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">action = records.action_remove_html_tag()</field>-->
+<!--        </record>-->
+
+        <menuitem id="helpdesk_menu_ticket_dashboard_new"
+                  action="custom_helpdesk.helpdesk_ticket_action"
+                  sequence="0" parent="helpdesk.menu_helpdesk_root"
+                  name="Overview"
+                  groups="helpdesk.group_helpdesk_user"
+        />
+        <menuitem id="helpdesk.helpdesk_menu_team_dashboard" name="Old Overview"
+                  sequence="20"
+                  parent="helpdesk.helpdesk_ticket_report_menu_main"
+                  action="helpdesk.helpdesk_team_dashboard_action_main"
+                  groups="helpdesk.group_helpdesk_manager"/>
+    </data>
+</odoo>

@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+    <record model="ir.ui.view" id="contracts.contract_site_form">
+      <field name="name">Contracts site Form</field>
+      <field name="model">contract.site</field>
+      <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="site_name"/>
+                        <field name="site_number"/>
+                        <field name="site_province"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="contracts.contract_site_tree">
+      <field name="name">Contracts site tree</field>
+      <field name="model">contract.site</field>
+      <field name="arch" type="xml">
+            <list>
+                    <field name="site_name"/>
+                    <field name="site_number"/>
+                    <field name="site_province"/>
+            </list>
+        </field>
+    </record>
+    </data>
+</odoo>

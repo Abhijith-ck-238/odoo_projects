@@ -1,0 +1,22 @@
+<odoo>
+    <record id="shipment_stage_form" model="ir.ui.view">
+            <field name="name">shipment_stage.form</field>
+            <field name="model">shipment.stage</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                            <field name="is_notification_stage"/>
+                            <field name="notify_by" invisible="not is_notification_stage"/>
+                            <field name="channel_name" invisible="notify_by == 'direct'" required="notify_by == 'channel'"/>
+                            <field name="notified_ids" widget="many2many_tags" invisible="notify_by == 'channel' or not is_notification_stage" required="notify_by == 'direct'"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+</odoo>

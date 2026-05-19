@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="service_reports.service_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.basic_layout">
+                        <div class="page">
+                            <!-- Font imports for PDF rendering -->
+                            <style>
+                                @font-face {
+                                font-family: 'Arial';
+                                src: url('/service_reports/static/src/fonts/arial/ARIALBD.TTF')
+                                format('opentype');}
+                                }
+                            </style>
+                          <div class="row"
+                             style="display: -webkit-box; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-align-self: center; align-self: center;height:65px;">
+                                <div class="col-4" style="white-space: nowrap; font-family: Lato; font-size: 13px; ">
+                                    <p style="padding-top:5px;font-weight: bold;">Service Report No. :
+                                        <span t-field="o.service_number" />
+                                    </p>
+                                </div>
+                                 <div class="col-5" style="text-align: center;">
+                                    <span style="white-space: nowrap; display: inline-block;">
+                                        <span style="font-family: Lato; font-size: 13px; font-weight: bold;">Service Report / </span>
+                                        <span style="font-family: 'Arial'; font-size: 15px; direction: rtl; text-align: right; font-weight: bold; unicode-bidi: embed;">تقرير صيانة</span>
+                                    </span>
+                                </div>
+
+                                <div class="col-4">
+                                    <t t-if="o.template_id.logo">
+                                        <span style="margin-left:60px;">
+                                        <img t-att-src="image_data_uri(o.template_id.logo)"
+                                             style="max-width:130px;max-height:90px;"/>
+                                        </span>
+                                    </t>
+                                </div>
+                            </div>
+                            <div>
+                                <table class="table table-sm o_main_table"
+                                   style="width: 100%; border: 1px solid black; border-collapse: collapse; margin-bottom: 0;margin: 0 !important;height: 20px;">
+                                <tr>
+                                    <!-- Left Side: Job No & Project No -->
+                                    <td style="border: 1px solid black; width: 50%;">
+                                <table style="width: 100%; border-collapse: collapse;" class="table-borderless">
+                                    <!-- Row: Job No -->
+                                  <tr>
+                                    <td colspan="3" style="padding: 0;">
+                                        <div style="margin-top: 2px;">
+                                            <table style="width: 100%; border-collapse: collapse;">
+                                                <tr>
+                                                    <td align="left" style="width: 33%; font-family: Lato; font-size: 13px; font-weight: bold;">
+                                                        Job No:
+                                                    </td>
+                                                    <td align="center" style="width: 34%; font-family: Lato; font-size: 13px; font-weight: normal; white-space: nowrap;">
+                                                        <span t-field="o.job_number"/>
+                                                    </td>
+                                                    <td align="right" style="font-family: 'Arial';font-size: 15px;width: 33%; font-weight: bold;">
+                                                        : رقم الصيانة
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                    <!-- Row: Project No -->
+                                    <tr>
+                                    <td colspan="3" style="padding: 0; border-top: 1px solid black;">
+                                        <div style="margin-top: 2px;">
+                                            <table style="width: 100%; border-collapse: collapse;">
+                                                <tr>
+                                                    <td align="left" style="font-family: Lato; font-size: 13px; font-weight: bold; white-space: nowrap; width: 33%;">
+                                                        Project No:
+                                                    </td>
+                                                    <td align="center" style="font-family: Lato; font-size: 13px; font-weight: normal; white-space: nowrap; width: 34%;">
+                                                        <span t-field="o.contract.number"/> - <span t-field="o.contract.iq"/>
+                                                    </td>
+                                                    <td align="right" style="font-family: 'Arial';font-size: 15px; font-weight: bold; width: 33%;">
+                                                        : رقم العقد
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </table>
+                            </td>
+
+
+                            <!-- Right Side: Engineer Names -->
+                            <td style="border: 1px solid black; width: 50%;">
+                                <table style="width: 100%; border-collapse: collapse;" class="table-borderless">
+                                    <tr>
+                                    <td colspan="3" style="padding: 0;">
+                                        <div style="margin-top: 2px;">
+                                            <table style="width: 100%; border-collapse: collapse;">
+                                                <tr>
+                                                    <td align="left" style="font-family: Lato; font-size: 13px; font-weight: bold; white-space: nowrap; width: 33%;">
+                                                        Eng. | Name:
+                                                    </td>
+                                                    <td align="center" style="font-family: Lato; font-size: 13px; font-weight: normal; width: 34%;white-space: nowrap;">
+                                                        <t t-if="o.engineer">
+                                                            <span t-esc="' '.join(o.engineer.name.split()[:2])"/>
+                                                        </t>
+                                                    </td>
+                                                    <td align="right" style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; white-space: nowrap; width: 33%;">
+                                                        اسم | المهندس:
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                    <tr>
+                                        <td colspan="3" style="padding: 0;">
+                                            <div style="margin-top: 2px;">
+                                                <table style="width: 100%; border-collapse: collapse;">
+                                                    <tr>
+                                                        <td align="left" style="font-family: Lato; font-size: 13px; font-weight: bold; white-space: nowrap; width: 33%;">
+                                                            Eng. || Name:
+                                                        </td>
+                                                        <td align="center" style="font-family: Lato; font-size: 13px; font-weight: normal; width: 34%;white-space: nowrap;">
+                                                            <t t-if="o.engineer_2">
+                                                                <span style="word-break: break-word;" t-esc="' '.join(o.engineer_2.name.split()[:2])"/>
+                                                            </t>
+                                                        </td>
+                                                        <td align="right" style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; white-space: nowrap; width: 33%;">
+                                                            اسم || المهندس:
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                                <table class="table table-sm o_main_table" style="width: 100%; border-collapse: collapse; margin-bottom: 0; table-layout: fixed;">
+                                    <tr>
+                                        <td style="border:1px solid black; width: 33.33%;">
+                                            <p style="font-family: 'Arial';font-size: 15px;direction: rtl; text-align: right; font-weight: bold; float: right; white-space: nowrap;">
+                                                عدد سنوات الضمان
+                                            </p>
+                                            <t t-if="o.contract_line_id.eoc_date and o.contract_line_id.eoc_date &gt;= datetime.date.today()">
+                                              <span style="font-family: Lato; font-size: 13px; font-weight: bold; margin-left: 30px;" t-esc="o.contract_line_id.warranty + o.contract_line_id.maintainence"/>
+                                            </t>
+
+<!--&lt;!&ndash;                                 <t t-if="o.contract_line_id and ((o.contract_line_id.warranty or 0) + (o.contract_line_id.maintainence or 0)) != 0">&ndash;&gt;-->
+<!--                                            <span style="font-family: Lato; font-size: 13px; font-weight: bold; margin-left: 30px;" t-esc="(o.contract_line_id.warranty or 0) + (o.contract_line_id.maintainence or 0)"/>-->
+<!--                                            </t>-->
+                                        </td>
+                                    <td style="border:1px solid black; width: 33.33%;">
+                                        <div style="display: flex">
+                                             <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float: right; white-space: nowrap;">
+                                                تاريخ التقرير
+                                            </p>
+                                        <span style="font-family: Lato; font-size: 13px; font-weight: normal;" t-field="o.date"/>
+                                        </div>
+                                    </td>
+                                        <td style="border:1px solid black; width: 33.33%; vertical-align: top;">
+                                            <div style="font-family: 'Arial'; font-size: 15px; direction: rtl; text-align: right; font-weight: bold; white-space: nowrap;">
+                                                <span>تاريخ البدء بفترة الضمان والصيانة </span>
+                                                <t t-if="o.contract_line_id.eoc_date and o.contract_line_id.eoc_date &gt;= datetime.date.today()">
+                                                    <span style="font-family: Lato; font-size: 13px; font-weight: bold; margin-right: 10px;" t-field="o.contract_line_id.starting_date"/>
+                                                </t>
+                                            </div>
+                                        </td>
+                                </tr>
+
+                                    <tr>
+                                        <td colspan="3" style="border: 1px solid black;">
+                                            <div style="margin-bottom: 3px; overflow: hidden;">
+                                                <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left;">
+                                                    DOH name:
+                                                    <span style="font-family: Lato; font-size: 13px; font-weight: normal; margin-left:80px;">
+                                                        <span t-field="o.hd_name"/>
+                                                    </span>
+                                                </p>
+                                                <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0; white-space: nowrap;">
+                                                    اسم دائرة الصحة:
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3" style="border: 1px solid black;">
+                                            <div style="margin-bottom: 3px; overflow: hidden;">
+                                                <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left;">
+                                                    Institution name:
+                                                    <span style="font-family: Lato; font-size: 13px; font-weight: normal; margin-left:80px;">
+                                                        <span t-field="o.site.site_name"/>
+                                                    </span>
+                                                </p>
+                                                <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0; white-space: nowrap;">
+                                                    اسم المؤسسه الصحية:
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3" style="border: 1px solid black;">
+                                            <div style="margin-bottom: 3px; overflow: hidden;">
+                                                <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left;">
+                                                    Equipment:
+                                                    <span style="font-family: Lato; font-size: 13px; font-weight: normal; margin-left:80px;">
+                                                        <span t-field="o.unit"/>
+                                                    </span>
+                                                </p>
+                                                <p style="font-family: 'Arial';font-size: 15px;direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0; white-space: nowrap;">
+                                                    الجهاز:
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3" style="border: 1px solid black;">
+                                            <div style="margin-bottom: 3px; overflow: hidden; height: 40px;">
+                                                <p style="font-family: Lato; font-size: 13px; font-weight: bold; float: left; margin: 0; white-space: nowrap;">
+                                                    Serial Number:
+                                                    <span style="font-family: Lato; font-size: 13px; font-weight: normal; margin-left: 80px;">
+                                                        <span t-field="o.sn"/>
+                                                    </span>
+                                                </p>
+                                                 <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0; white-space: nowrap;">
+                                                                                                                                            الرقم التسلسلي:
+                                                                                    </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3" style="border: 1px solid black;">
+                                            <div style="margin-bottom: 3px; overflow: hidden; height: 40px;">
+                                                <p style="font-family: Lato; font-size: 13px; font-weight: bold; float: left; margin: 0; white-space: nowrap;">
+                                                    Defect:
+                                                    <span style="font-family: Lato; font-size: 13px; font-weight: normal; margin-left: 80px;">
+                                                        <span t-field="o.description"/>
+                                                    </span>
+                                                </p>
+                                                 <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0; white-space: nowrap;">
+                                                     نوع العطل:
+                                                                                    </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3" style="border: 1px solid black;">
+                                            <div style="margin-bottom: 3px; overflow: hidden; height: 40px;">
+                                                <p style="font-family: Lato; font-size: 13px; font-weight: bold; float: left; margin: 0; white-space: nowrap;">
+                                                    Call reported By:
+                                                    <span style="font-family: Lato; font-size: 13px; font-weight: normal; margin-left: 80px;">
+                                                        <span t-field="o.reported_by"/>
+                                                    </span>
+                                                </p>
+                                                 <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0; white-space: nowrap;">
+                                                                                                                                            اسم المتصل:
+                                                                                    </p>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="3"
+                                            style="border: 1px solid black; padding: 2px; vertical-align: top; height: 250px;">
+                                            <div style="width: 100%; margin-top: 1px; margin-bottom: 3px; overflow: hidden;">
+                                                <span style="font-family: Lato; font-size: 13px; font-weight: bold; float: left;white-space: nowrap;padding-top: 1px;padding-left: 1px;">
+                                                    Work Done:
+                                                </span>
+                                                <span style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float: right;white-space: nowrap;padding-right: 2px;">
+                                                    تفاصيل العمل والمواد المستخدمه:
+                                                </span>
+                                            </div>
+                                            <div style="font-family: Lato; font-size: 13px; font-weight: normal; clear: both;" t-field="o.done_desc"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                    <td colspan="3"
+                                        style="border: 1px solid black; padding: 2px; vertical-align: middle; height: 40px;">
+                                        <table style="width:100%; border-collapse: collapse; margin-top: 1px; margin-bottom: 3px;" class="table-borderless">
+                                            <tr style="vertical-align: middle;">
+                                                <!-- English label -->
+                                                <td style="font-family: Lato; font-size: 13px; font-weight: bold; width:20%; text-align:left; white-space: nowrap;padding-left: 1px;">
+                                                    <p>
+                                                    Repair Completed:
+                                                    </p>
+                                                </td>
+
+                                        <!-- Checkboxes section -->
+                                                <td style="font-family: Lato; font-size: 13px; font-weight: normal; width:60%; text-align:center;">
+                                            <div style="display: inline-block;">
+                                                <!-- YES Option -->
+                                                <span style="display: inline-block; vertical-align: middle;">
+                                                    <span t-att-style="'display:inline-block; width:12px; height:12px; border:1px solid black; font-weight:bold; font-size:13px; line-height:10px; text-align:center;' + ('background:black; color:white;' if o.task_complete == 'Yes' else 'background:white; color:black;')">
+                                                        <t t-if="o.task_complete == 'Yes'">✔</t>
+                                                    </span>
+                                                    <span style="margin-left: 5px;">Yes</span>
+                                                </span>
+
+                                                <span style="display: inline-block; width: 100px;"></span>
+
+                                                <!-- NO Option -->
+                                                <span style="display: inline-block; vertical-align: middle;">
+                                                    <span t-att-style="'display:inline-block; width:12px; height:12px; border:1px solid black; font-weight:bold; font-size:13px; line-height:10px; text-align:center;' + ('background:black; color:white;' if o.task_complete == 'No' else 'background:white; color:black;')">
+                                                        <t t-if="o.task_complete == 'No'">✔</t>
+                                                    </span>
+                                                    <span style="margin-left: 5px;">No</span>
+                                                </span>
+                                            </div>
+                                        </td>
+
+                                        <!-- Arabic label -->
+                                        <td style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; width:20%; white-space: nowrap;padding-right: 2px;">
+                                            اتمام العمل:
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                                </table>
+                                <table class="table table-sm o_main_table table-borderless"
+                                       style="width: 100%; border: 1px solid black; border-collapse: collapse; margin-bottom: 0;">
+                                  <tr>
+                                        <td colspan="4"
+                                            style="border: 1px solid black; border-bottom: none; padding: 8px; vertical-align: top; height: 60px; width: 25%;">
+                                            <div style="width: 100%; overflow: hidden;">
+                                                <span style="font-family: Lato; font-size: 13px; font-weight: bold; float: left;white-space: nowrap;padding-top: 1px;">
+                                                     Notes:
+                                                </span>
+                                                <span style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float: right;white-space: nowrap;">
+                                                     الملاحظات:
+                                                </span>
+                                            </div>
+                                            <div style="font-family: Lato; font-size: 13px; font-weight: normal; clear: both; margin-top: 10px; padding-bottom: 50px;" t-field="o.note"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="border: 1px solid black; border-bottom: none; padding: 8px; vertical-align: top; height: 80px; width: 25%;">
+                                            <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left; margin: 0;">
+                                                Name:
+                                            </p>
+                                            <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0;">
+                                                الاسم:
+                                            </p>
+                                        </td>
+                                        <td style="border: 1px solid black; border-bottom: none; padding: 8px; vertical-align: top; height: 80px; width: 25%;">
+                                            <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left; margin: 0;">
+                                                Name:
+                                            </p>
+                                            <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0;">
+                                                الاسم:
+                                            </p>
+                                        </td>
+                                        <td style="border: 1px solid black; border-bottom: none; padding: 8px; vertical-align: top; height: 80px; width: 25%;">
+                                            <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left; margin: 0;">
+                                                Name:
+                                            </p>
+                                            <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0;">
+                                                الاسم:
+                                            </p>
+                                        </td>
+                                        <td style="border: 1px solid black; border-bottom: none; padding: 8px; vertical-align: top; height: 80px; width: 25%;">
+                                            <div>
+                                                <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left; margin: 0;">
+                                                    Name:
+                                                </p>
+                                                <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0;">
+                                                    الاسم:
+                                                </p>
+                                            </div>
+                                            <div style="font-family: Lato; font-size: 13px; font-weight: normal;">
+                                              <t t-if="o.engineer">
+                                                <p t-esc="' '.join(o.engineer.name.split()[:2])"
+                                                   style="margin-top: 40px;text-align: center; width: 100%;"/>
+                                            </t>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-left: 1px solid black; border-right: 1px solid black; border-top: none; padding: 8px; vertical-align: top; height: 40px;">
+                                            <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left; margin: 0;">
+                                                Date:
+                                            </p>
+                                            <p style="font-family: 'Arial';font-size: 15px;direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0;">
+                                                التاريخ:
+                                            </p>
+                                        </td>
+                                        <td style="border-left: 1px solid black; border-right: 1px solid black; border-top: none; padding: 8px; vertical-align: top; height: 40px;">
+                                            <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left; margin: 0;">
+                                                Date:
+                                            </p>
+                                            <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0;">
+                                                التاريخ:
+                                            </p>
+                                        </td>
+                                        <td style="border-left: 1px solid black; border-right: 1px solid black; border-top: none; padding: 8px; vertical-align: top; height: 40px;">
+                                            <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left; margin: 0;">
+                                                Date:
+                                            </p>
+                                            <p style="font-family: 'Arial';font-size: 15px;direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0;">
+                                                التاريخ:
+                                            </p>
+                                        </td>
+                                        <td style="border-left: 1px solid black; border-right: 1px solid black; border-top: none; padding: 8px; vertical-align: top; height: 40px;">
+                                            <p style="font-family: Lato; font-size: 13px; font-weight: bold; float:left; margin: 0;">
+                                                Date:
+                                            </p>
+                                            <p style="font-family: 'Arial';font-size: 15px; direction: rtl; text-align: right; font-weight: bold; float:right; margin: 0;">
+                                                التاريخ:
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid black; border-top: none; vertical-align: top; text-align: center;">
+                                            <p style="font-family: 'Arial';font-size: 13px; font-weight: bold; line-height: 1.1;"
+                                               t-field="o.template_id.sign_of_baneficiary"/>
+                                        </td>
+                                        <td style="border: 1px solid black; border-top: none; padding: 2px;vertical-align: top; text-align: center; height: 60px;">
+                                            <p style="font-family: 'Arial';font-size: 13px; font-weight: bold; line-height: 1.1;"
+                                               t-field="o.template_id.sign_of_maintenance_administrator"/>
+                                        </td>
+                                        <td style="border: 1px solid black; border-top: none; padding: 2px; vertical-align: top;text-align: center; height: 60px;">
+                                            <p style="font-family: 'Arial';font-size: 13px; font-weight: bold; line-height: 1.1;"
+                                               t-field="o.template_id.sign_of_device_operator"/>
+                                        </td>
+                                        <td style="border: 1px solid black; border-top: none; padding: 2px; text-align: center; vertical-align: top;height: 60px;">
+                                            <p style="font-family: 'Arial';font-size: 13px; font-weight: bold; line-height: 1.1;"
+                                               t-field="o.template_id.sign_of_agent"/>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_service_report" model="report.paperformat">
+            <field name="name">A4</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">43</field>
+            <field name="dpi">90</field>
+            <field name="css_margins" eval="True"/>
+        </record>
+
+        <record id="action_service_report" model="ir.actions.report">
+            <field name="name">Service Report</field>
+            <field name="model">service.report</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">service_reports.service_report_template</field>
+            <field name="report_file">service_reports.service_report_template</field>
+            <field name="binding_model_id"
+                   ref="service_reports.model_service_report"/>
+            <field name="paperformat_id"
+                   ref="service_reports.paperformat_service_report"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

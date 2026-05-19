@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_import,access.import.commission,model_import_commission,,1,1,1,1
+access_import_one,access.import.commission_one,model_import_commission_one,,1,1,1,1
+access_custom_sale_model,access.custom.sale.model,model_custom_sale_model,,1,1,1,1
+access_custom_hr_expense_advance_clearng_model,access.custom.hr.expense.advance.clearng.model,model_custom.hr.expense.advance.clearng,,1,1,1,1
+access_custom_sale_model,access.custom.sale.model,model_custom_sale_model,,1,1,1,1
+

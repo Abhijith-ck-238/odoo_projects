@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="hr_leave_extend" model="ir.ui.view">
+            <field name="name">hr.leave.extend.form</field>
+            <field name="model">hr.leave</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='duration_display']"
+                       position="after">
+                    <div class="row" name="user">
+                        <label class="col-2 mr-0" for="user_notified"/>
+                        <field name="user_notified" class="col-9 pl-0"
+                               widget="many2many_tags" force_save="1"/>
+                    </div>
+                    <div class="row" name="agenda" invisible="1">
+                        <label class="col-2 mr-0" for="agenda_id"/>
+                        <field name="agenda_id"/>
+                    </div>
+                </xpath>
+                 <xpath expr="//field[@name='duration_display']" position="attributes">
+                    <attribute name="column_invisible">1</attribute>
+                 </xpath>
+
+                <xpath expr="//button[@name='action_approve']" position="after">
+
+                        <button string="Approve" name="approve_time_off_officer"
+                                type="object" class="oe_highlight"
+                                invisible="state != 'time_off_officer'"/>
+
+<!--                    <button string="Approve" name="approve_time_off_officer"-->
+<!--                            type="object" invisible="state != 'time_off_officer'"-->
+<!--                            class="oe_highlight"/>-->
+                    <button string="Approve" name="approve_time_off_responsible"
+                            type="object" invisible="state != 'time_off_responsible'"
+                            class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_reset_confirm']"
+                       position="replace">
+                    <button string="Reset to Draft" name="action_reset_confirm"
+                            type="object"
+                            invisible="can_reset == False or state not in ['confirm', 'refuse', 'direct_manager', 'time_off_responsible']"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="hr_leave_tree_view_inherit" model="ir.ui.view">
+            <field name="name">hr.leave.tree.inherit</field>
+            <field name="model">hr.leave</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="new_divisions" string="Division"/>
+                    <field name="new_units" string="Unit"/>
+                </xpath>
+                 <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="new_units" position="move"/>
+                </xpath>
+
+                 <xpath expr="//field[@name='date_to']" position="after">
+                    <field name="number_of_days" sum="Sum of Duration (Days)"/>
+                  </xpath>
+            </field>
+        </record>
+
+<!--        <record id="view_hr_leave_form_manager_inherit_custom" model="ir.ui.view">-->
+<!--            <field name="name">hr.leave.view.form.manager.inherit.custom</field>-->
+<!--            <field name="model">hr.leave</field>-->
+<!--            <field name="inherit_id" ref="hr_holidays.hr_leave_view_form_manager"/>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--                &lt;!&ndash; Target the existing employee_id field &ndash;&gt;-->
+<!--                <xpath expr="//field[@name='employee_id']" position="attributes">-->
+<!--                    <attribute name="required">holiday_type == 'company'</attribute>-->
+<!--                    <attribute name="invisible">holiday_type != 'company'</attribute>-->
+<!--                </xpath>-->
+
+<!--            </field>-->
+<!--        </record>-->
+
+        <menuitem
+                id="hr_holidays.menu_hr_holidays_report"
+                name="Reporting"
+                parent="hr_holidays.menu_hr_holidays_root"
+                groups="hr_holidays.group_hr_holidays_manager,custom_timeoff.group_hr_holidays_time_off_support_center"
+                sequence="4"/>
+    </data>
+</odoo>

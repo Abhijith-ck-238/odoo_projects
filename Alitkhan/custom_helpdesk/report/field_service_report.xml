@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    <data>-->
+<!--        <record id="custom_helpdesk.action_field_service_task_report_xlsx" model="ir.actions.report">-->
+<!--            <field name="name">Field Service Task Report</field>-->
+<!--            <field name="model">field.service.task.xlsx.report</field>-->
+<!--            <field name="report_type">xlsx</field>-->
+<!--            <field name="report_name">custom_helpdesk.report_field_service_task</field>-->
+<!--            <field name="report_file">custom_helpdesk.report_field_service_task</field>-->
+<!--            <field name="binding_type">report</field>-->
+<!--        </record>-->
+<!--    </data>-->
+</odoo>

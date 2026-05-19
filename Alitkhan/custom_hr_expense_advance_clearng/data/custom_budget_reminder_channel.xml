@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="discuss.channel"
+                id="custom_general_budget_reminder_channel">
+            <field name="name">General Budget Reminder rtyhu</field>
+            <!--            <field name="public">private</field>-->
+            <field name="group_public_id"
+                   ref="hr_expense.group_hr_expense_manager"/>
+            <field name="description">Budget Reminder channel
+            </field>
+        </record>
+
+        <function model="ir.model.data" name="_update_xmlids">
+            <value model="base" eval="[{
+        'xml_id': 'custom_hr_expense_advance_clearng.custom_general_budget_reminder_channel',
+        'record': obj().env['ir.model.data'].search([
+            ('module', '=', 'custom_hr_expense_advance_clearng'),
+            ('name', '=', 'general_budget_reminder_channel')
+        ]),
+        'noupdate': True,
+    }]"/>
+        </function>
+
+        <record model="discuss.channel"
+                id="custom_technical_budget_reminder_channel">
+            <field name="name">Technical Budget Reminder rty</field>
+            <!--            <field name="public">private</field>-->
+            <field name="group_public_id"
+                   ref="hr_expense.group_hr_expense_manager"/>
+            <field name="description">Technical Division Employees - Budget
+                Reminder channel
+            </field>
+        </record>
+
+        <function model="ir.model.data" name="_update_xmlids">
+            <value model="base" eval="[{
+        'xml_id': 'custom_hr_expense_advance_clearng.custom_technical_budget_reminder_channel',
+        'record': obj().env['ir.model.data'].search([
+            ('module', '=', 'custom_hr_expense_advance_clearng'),
+            ('name', '=', 'technical_budget_reminder_channel')
+        ]),
+        'noupdate': True,
+    }]"/>
+        </function>
+
+    </data>
+</odoo>

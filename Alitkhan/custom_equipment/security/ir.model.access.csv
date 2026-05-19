@@ -1,0 +1,14 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_equipment_equipment_manager,access.equipment.equipment,model_equipment_equipment,group_equipment_manger,1,1,1,1
+access_equipment_equipment_user,access.equipment.equipment,model_equipment_equipment,group_equipment_user,1,0,0,0
+access_equipment_type,access.equipment.type,model_equipment_type,group_equipment_manger,1,1,1,1
+access_equipment_status,access.equipment.status,model_equipment_status,group_equipment_manger,1,1,1,1
+access_equipment_condition,access.equipment.condition,model_equipment_condition,group_equipment_manger,1,1,1,1
+access_equipment_employee_history_manger,access.equipment.employee.history,model_equipment_employee_history,group_equipment_manger,1,1,1,1
+access_equipment_employee_history_user,access.equipment.employee.history,model_equipment_employee_history,group_equipment_user,1,0,0,0
+access_equipment_employee_history_user,access.equipment.employee.history,model_equipment_employee_history,hr.group_hr_user,1,0,0,0
+access_equipment_equipment_user,access.equipment.equipment,model_equipment_equipment,hr.group_hr_user,1,0,0,0
+access_equipment_tools_manger,access.equipment.tools.manger,model_equipment_tools,group_equipment_manger,1,1,1,1
+access_equipment_tools_user,access.equipment.tools.user,model_equipment_tools,group_equipment_user,1,0,0,0
+access_equipment_tools_line_manger,access.equipment.tools.line.manger,model_equipment_tools_line,group_equipment_manger,1,1,1,1
+access_equipment_tools_line_user,access.equipment.tools.line.user,model_equipment_tools_line,group_equipment_user,1,1,1,1

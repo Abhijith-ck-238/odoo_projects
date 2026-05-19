@@ -1,0 +1,313 @@
+// Base color variables
+$primary-color: #9ea700;
+$secondary-color: #2ecc71;
+$accent-color: #f39c12;
+$danger-color: #e74c3c;
+$dark-color: #2a2a2a;
+$light-color: #ecf0f1;
+$border-color: #444444;
+$shadow-color: rgba(0, 0, 0, 0.2);
+
+// Theme variables
+$background-color: #2a2a2a;
+$card-background: #333333;
+$input-background: #444444;
+$input-border: $border-color;
+$input-focus-border: $primary-color;
+$text-color: #ffffff;
+$label-color: #aaaaaa;
+$disabled-color: #666666;
+
+// Spacing variables
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+// Font variables
+$font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$font-size-sm: 0.875rem;
+$font-size-md: 1rem;
+$font-size-lg: 1.125rem;
+
+// Border radius
+$border-radius-sm: 0.25rem;
+$border-radius-md: 0.375rem;
+$border-radius-lg: 0.5rem;
+
+// Box shadow
+$shadow-sm: 0 2px 4px $shadow-color;
+$shadow-md: 0 4px 8px $shadow-color;
+$shadow-lg: 0 8px 16px $shadow-color;
+
+.smart_button_overall_container_list {
+
+  .SmartButtonMultiRecord{
+        .ui-widget.ui-autocomplete{
+            display: block !important;
+            margin-top: 16%;
+            margin-left: -7%;
+            width: 114%;
+            position: absolute !important;
+            top: unset !important;
+            left:unset !important;
+        }
+  }
+
+  border-radius: $border-radius-md;
+  padding: 1rem;
+  margin-bottom: $spacing-xl;
+
+  .o_model_field_selector_controls{
+        display:none;
+  }
+  .o_model_field_selector{
+      color: #cccccc;
+      width: inherit;
+      border-bottom:unset;
+  }
+  .smartButtonIcon{
+        background: antiquewhite;
+        width: 100%;
+        padding: 8px 7px;
+        background-color: #444444;
+        border: 1px solid #444444;
+        border-radius: 0.375rem;
+        font-size: 1rem;
+  }
+  .cy-studio-visible-to-drop-align .o_multi_record_selector{
+        border: unset;
+
+  }
+  .o_model_field_selector > .o_model_field_selector_value > .o_model_field_selector_chain_part{
+
+    border: unset;
+    border-bottom: unset;
+    background: unset;
+    width: 126px;
+    display: contents;
+
+  }
+  // Reset default margins and padding for children
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  // Set font family for all children
+  font-family: $font-family;
+  color: $text-color;
+
+  // Label styles
+  .cy-navbar_label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    font-size: $font-size-sm;
+    color: $label-color;
+    font-weight: 500;
+  }
+
+  // Input field styles
+  .cy-input {
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    background-color: $input-background;
+    border: 1px solid $input-border;
+    border-radius: $border-radius-md;
+    font-size: $font-size-md;
+    color: $text-color;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $input-focus-border;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.3);
+    }
+
+    &[readonly] {
+      background-color: #444444;
+      /*cursor: not-allowed;*/
+    }
+  }
+
+  // Related field container
+  .related-field {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  // Button styles
+  .cy-btn_save {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius-md;
+    padding: 5px 5px;
+    font-size: $font-size-md;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width:auto !important
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+
+  .cy-cancel_btn {
+    background-color: $danger-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius-md;
+    padding: 1px 1.5px;
+    font-size: $font-size-md;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken($danger-color, 10%);
+    }
+  }
+
+  // Layout utilities
+  .d-flex {
+    display: flex;
+  }
+
+  .justify-content-center {
+    justify-content: center;
+  }
+
+  .align-items-center {
+    align-items: center;
+  }
+
+  .align-items-start {
+    align-items: flex-start;
+  }
+
+  .gap-2 {
+    gap: $spacing-md !important;
+    margin-bottom: 10px;
+  }
+
+  .gap-3 {
+    gap: $spacing-lg !important;
+  }
+
+  .mb-2 {
+    margin-bottom: $spacing-md !important;
+  }
+
+  .my-3 {
+    margin-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
+  }
+
+  .mt-3 {
+    margin-top: $spacing-lg;
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+
+  // Dropdown styles
+  .cy-studio-visible-to-drop-align {
+    position: relative;
+    min-height: $spacing-lg;
+  }
+  .modal-content.cy-sheet_icon-selectBox .modal-body{
+    background: #444444;
+    border: 1px solid #444444;
+    padding: 12px 18px 9px;
+  }
+
+  // Icon styles
+  .cy-icons {
+    font-size: $font-size-lg;
+    color: $text-color !important;
+    margin-left: 25%;
+
+    &.fa-fw {
+      width: 1.25em;
+      text-align: center;
+    }
+  }
+
+  // Selection list styles
+  .cy-selection_icon-list {
+    li {
+      list-style: none;
+      margin-bottom: $spacing-sm;
+    }
+  }
+
+  // Checkbox styles
+  .checkbox-can-create {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    input[type="checkbox"] {
+      width: 1rem;
+      height: 1rem;
+      accent-color: $primary-color;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      cursor: pointer;
+    }
+  }
+
+  // Button group styles
+  .btn_div {
+    margin-top: $spacing-xl;
+
+    button {
+      flex: 1;
+    }
+  }
+
+  // Disabled state styles
+  .opacity-75-hover {
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  // Border radius utilities
+  .rounded {
+    border-radius: $border-radius-md !important;
+  }
+
+  // Custom shadow utilities
+  .cy-sheet_icon-selectBox {
+    box-shadow: $shadow-lg;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .smart_button_overall_container_list {
+    padding: $spacing-md;
+
+    .btn_div {
+      flex-direction: column;
+      gap: $spacing-md;
+    }
+
+    .button-related-field .o_model_field_selector_chain_part {
+        background: red !important;
+    }
+
+  }
+}
+
+

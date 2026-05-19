@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+  
+    <record id="offering_offering_record_rule" model="ir.rule">
+      <field name="name">access.unit.offering.offering.rule</field>
+      <field name="model_id" ref="itkan_offering.model_offering_offering"/>
+      <field name="domain_force">
+        ['|', ('access_unit_ids.id','in', user.employee_id.access_units.ids), ('create_uid', '=', user.id)]
+      </field>
+    </record>
+
+    <record id="hr_employee_public_rule" model="ir.rule">
+      <field name="name">hr.employee.public.read</field>
+      <field name="model_id" ref="hr.model_hr_employee_public"/>
+      <field name="perm_read" eval="True"/>
+      <field name="perm_write" eval="False"/>
+      <field name="perm_create" eval="False"/>
+      <field name="perm_unlink" eval="False"/>
+      <field name="domain_force">
+        [(1, '=', 1)]
+      </field>
+    </record>
+
+    <record id="access_units.access_unites_limited_users" model="res.groups">
+      <field name="rule_groups" eval="[(4, ref('itkan_offering.offering_offering_record_rule')), (4, ref('itkan_offering.hr_employee_public_rule')) ]"/>
+    </record>
+
+    <record id="rule_see_access_unit_config" model="ir.rule">
+      <field name="name">See Configuration Base on AC</field>
+      <field name="model_id" ref="itkan_offering.model_offering_config"/>
+      <field name="groups" eval="[(4 , ref('itkan_offering.offering_manager') )]"/>
+      <field name="domain_force">
+        ['|', ('parent_unit_id.id','in', user.employee_id.access_units.ids), ('create_uid', '=', user.id)]
+      </field>
+    </record>
+    
+  </data>
+</odoo>

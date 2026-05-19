@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="standalone_app">
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+                <script type="text/javascript">
+                    var odoo = {
+                        csrf_token: "<t t-nocache="The csrf token must always be up to date." t-esc="request.csrf_token(None)"/>",
+                        debug: "<t t-esc="debug"/>",
+                        __session_info__: <t t-out="json.dumps(session_info)"/>,
+                        students: <t t-out="students"/>,
+                    };
+                </script>
+                <t t-call-assets="student_class.assets_standalone_app"/>
+            </head>
+            <body/>
+        </html>
+    </template>
+</odoo>

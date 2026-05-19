@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="sale_order_inherit" model="ir.ui.view">
+            <field name="name">sale order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='access_unit_ids']" position="after">
+                    <field name="is_to_print_subunit_pricing"/>
+                    <field name="total_of_exchange_products"/>
+                    <field name="select_all_lines"/>
+                    <field name="user"/>
+                    <field name="invoice_payment_state"/>
+                    <field name="has_exchange_product" invisible="1"/>
+                    <field name="contract_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <field name="is_purchase_order_created" invisible="1"/>
+                    <button string="Create Purchase order"  type="object" name="action_create_purchase_order" groups="purchase.group_purchase_user"
+                            invisible="is_purchase_order_created or state != 'sale'" />
+<!--                    invisible="['|',('is_purchase_order_created', '=', True ),('state', '!=', 'sale' )]"/>-->
+                </xpath>
+                <xpath expr="//button[@name='action_preview_sale_order']"
+                   position="before">
+                    <button name="view_related_purchase" type="object"
+                            class="oe_stat_button" icon="fa-file-text icon" groups="purchase.group_purchase_user"
+                            invisible="not is_purchase_order_created">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">Purchase Orders</span>
+                        </div>
+                    </button>
+                </xpath>
+<!--                <xpath expr="//field[@name='order_line']/tree/field[@name='name']"-->
+<!--                       position="after">-->
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_template_id']" position="after">
+                    <field name="vendor_id" groups="purchase.group_purchase_user"/>
+                    <field name="vendor_price" groups="purchase.group_purchase_user"/>
+                </xpath>
+<!--                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']"-->
+<!--                       position="after">-->
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_uom_qty']" position="after">
+                    <field name="config"/>
+                    <field name="id"/>
+                    <field name="is_exchange" widget="checkboxes"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='price_unit']"
+                       position="after">
+                    <field name="config"/>
+                    <field name="is_exchange" widget="checkboxes"/>
+                    <field name="vendor_id" groups="purchase.group_purchase_user"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_template_id']" position="replace">
+                    <field name="product_id"  string="Product"
+                                    readonly="not product_updatable"
+                                    required="not display_type and not is_downpayment"
+                                    force_save="1"
+                                    context="{
+                                        'partner_id': parent.partner_id,
+                                        'quantity': product_uom_qty,
+                                        'pricelist': parent.pricelist_id,
+                                        'uom':product_uom,
+                                        'company_id': parent.company_id,
+                                        'default_lst_price': price_unit,
+                                        'default_uom_id': product_uom,
+                                    }"
+                                    options="{
+                                        'no_open': True,
+                                    }"
+                                    column_invisible="0"
+                                    domain="[('sale_ok', '=', True)]"
+                                    widget="sol_product_many2one"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="readonly">state in ('done', 'cancel', 'sale')</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="sale_order_inherit_tree" model="ir.ui.view">
+            <field name="name">sale order tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="total_of_exchange_products"
+                           sum="Exchange values"/>
+                    <field name="invoice_payment_state"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale_order_inherit_tree_quotation" model="ir.ui.view">
+            <field name="name">sale order tree on quotations</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id"
+                   ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total']" position="before">
+                    <field name="total_of_exchange_products"
+                           sum="Exchange Values"/>
+                    <field name="invoice_payment_state"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

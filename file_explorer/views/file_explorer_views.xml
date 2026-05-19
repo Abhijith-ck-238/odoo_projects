@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+    ============================================================================
+    File: file_explorer_menu.xml
+
+    Purpose:
+        Defines the client action and menu entry for the File Explorer module.
+
+    Components Defined:
+        1. ir.actions.client  -> Registers a frontend client action
+        2. menuitem           -> Adds a menu entry linked to the action
+
+    Flow:
+        Menu Click
+            ↓
+        file_explorer_menu
+            ↓
+        file_explorer_action
+            ↓
+        Loads OWL Client Action (tag="file_explorer")
+
+    Requirements:
+        - A JS client action must be registered with the same tag:
+              registry.category("actions").add("file_explorer", ...)
+        - Proper access rights should be configured if needed.
+
+    Notes:
+        - This creates a top-level menu item.
+        - Add parent="<parent_menu_id>" if nesting is required.
+        - Sequence controls menu order.
+    ============================================================================
+    -->
+
+
+    <!--
+    ============================================================================
+    Client Action: File Explorer
+    Model: ir.actions.client
+
+    Description:
+        Registers a frontend client action that loads the OWL-based
+        File Explorer interface when triggered.
+
+    Fields:
+        name  -> Display name of the action
+        tag   -> Must match the JS registry tag
+    ============================================================================
+    -->
+    <record id="file_explorer_action" model="ir.actions.client">
+        <field name="name">File Explorer</field>
+        <field name="tag">file_explorer</field>
+    </record>
+
+
+    <!--
+    ============================================================================
+    Menu Item: FileExplorer
+
+    Description:
+        Adds a menu item in the Odoo backend that triggers
+        the File Explorer client action.
+
+    Fields:
+        name     -> Menu label shown in UI
+        id       -> Unique XML ID
+        sequence -> Menu ordering priority
+        action   -> Linked client action
+
+    Optional Enhancements:
+        - Add parent="base.menu_custom" to place under a parent menu
+        - Add groups="base.group_user" to restrict access
+    ============================================================================
+    -->
+    <menuitem name="FileExplorer"
+              id="file_explorer_menu"
+              sequence="1"
+              action="file_explorer_action"/>
+
+</odoo>

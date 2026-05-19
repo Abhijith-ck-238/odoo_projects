@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!-- explicit list view definition -->
+     <record id="sale_order_view_inherit" model="ir.ui.view">
+            <field name="name">sale_order_inh</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <notebook>
+                  <page name="offering_so_info" string="Offering SO Info">
+                     <group>
+                        <group align="right">
+                          <field name="warranty" />
+                          <field name="project_num" />   
+                          <field name="payment_by" />   
+                          <field name="import_licence" /> 
+                          <field name="port_of_shipment" />
+                          <field name="price_valid_for" />  
+                          <field name="delivery_period" />
+                          <field name="po_no" />   
+                          <field name="job_no"/>
+                          <field name="req"/>
+                          <field name="date"/>
+                          <field name="supplier"/>
+                          <field name="ship_to"/>
+                          <field name="shipping_marks"/>
+                          <field name="total_amount_written"/>
+                        </group> 
+
+                        <group align="left">
+                          <field name="payment" /> 
+                        </group>
+                      </group>
+                  </page>         
+                </notebook>
+            </field>
+        </record>
+</odoo>

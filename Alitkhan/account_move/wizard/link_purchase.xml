@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="link_purchase_wizard_view" model="ir.ui.view">
+            <field name="name">wizard for link bill to purchase order</field>
+            <field name="model">link.purchase</field>
+            <field name="arch" type="xml">
+                <form string="Link Purchase Order">
+                    <group>
+                        <group>
+                            <field name="bill_id" invisible="True"/>
+                            <field name="purchase_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="link_purchase_order" string="Link PO"
+                                type="object" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="link_purchase_order_wizard" model="ir.actions.act_window">
+            <field name="name">Link Purchase</field>
+            <field name="res_model">link.purchase</field>
+            <field name="view_id" ref="link_purchase_wizard_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+</odoo>

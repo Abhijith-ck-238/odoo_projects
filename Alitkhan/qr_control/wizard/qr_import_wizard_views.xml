@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="qr_import_view_form" model="ir.ui.view">
+            <field name="name">wizard for import</field>
+            <field name="model">qr.import.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Import Product">
+                    <group>
+                        <group>
+                            <field name="file" filename="name"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="import_xls" string="Import" class="oe_highlight" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_import_qr" model="ir.actions.act_window">
+            <field name="name">Import Q&amp;R</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">qr.import.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="qr_import_view_form"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+
+</odoo>

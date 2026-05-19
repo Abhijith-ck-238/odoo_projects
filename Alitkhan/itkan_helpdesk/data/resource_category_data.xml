@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="data_enginner" model="helpdedesk.resource.category">
+            <field name="name">Engineers</field>
+            <field name="type">human</field>
+        </record>
+
+        <record id="data_co_enginner" model="helpdedesk.resource.category">
+            <field name="name">Co Engineers</field>
+            <field name="type">human</field>
+        </record>
+
+        <record id="data_co_person" model="helpdedesk.resource.category">
+            <field name="name">Co Person</field>
+            <field name="type">human</field>
+        </record>
+
+        <record id="data_technicians" model="helpdedesk.resource.category">
+            <field name="name">Technicians</field>
+            <field name="type">human</field>
+        </record>
+
+        <record id="data_vehicles" model="helpdedesk.resource.category">
+            <field name="name">Vehicles</field>
+            <field name="type">vehicle</field>
+        </record>
+
+    </data>
+</odoo>

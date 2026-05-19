@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="res_users_status_tree" model="ir.ui.view">
+            <field name="name">res_users_status_tree</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="is_free" invisible="1"/>
+                    <button name="dummy_button" class="text-success" string="Free" invisible="not is_free" type="object"
+                            icon="fa-circle"/>
+                    <button name="dummy_button" string="On Job" class="text-danger" invisible="is_free" type="object"
+                            icon="fa-circle"/>
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id="res_users_status_tree" model="ir.ui.view">-->
+<!--            <field name="name">res_users_status_tree</field>-->
+<!--            <field name="model">res.users</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <tree string="" create="false">-->
+<!--                    <field name="name"/>-->
+<!--                    -->
+<!--                    <field name="is_free" invisible="1" />-->
+<!--                    -->
+<!--                    <button name="dummy_button"  class="text-success" string="Free" type="object" attrs="{'invisible': [('is_free', '=', False)]}"  icon="fa-circle" />-->
+<!--                    <button name="dummy_button" string="On Job" class="text-danger" type="object"  attrs="{'invisible': [('is_free', '=', True)]}"  icon="fa-circle" />-->
+<!--                    -->
+<!--                </tree>-->
+<!--            </field>-->
+<!--        </record>-->
+
+
+    </data>
+</odoo>

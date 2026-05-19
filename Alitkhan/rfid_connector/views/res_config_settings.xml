@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_sale_view_form_inherit" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.sales</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="35"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="RFID" string="RFID" name="rfid_printer">
+                        <block title="RFID Printer">
+                            <setting help="Enter the name of the printer to print the RFID tag.">
+                                <field name="rfid_printer_name"/>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

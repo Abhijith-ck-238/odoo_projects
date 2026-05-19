@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+	<t t-name="cyllo_studio.GraphOverall">
+		<br/>
+		<div class="mb-2">
+			<div class="cy-graph-container">
+				<!--						<span-->
+				<!--                              t-on-click="() => this.prevPage()"-->
+				<!--                              style="color: #ffffff;">-->
+				<!--							<i class="ri-arrow-left-s-line" />-->
+				<!--						</span>-->
+				<div class="cy-graph-selected d-flex align-items-center justify-content-center gap-1">
+					<t t-foreach="visibleGraphTypes" t-as="type"
+                       t-key="type">
+						<span class="cy-studio-graph-icon p-2 cy-status_bar_hover"
+                              t-on-click="(event) => this.onClickGraphIcon(event, type)">
+							<!--                                      t-on-click="() => this.props.envModel.model.updateMetaData({mode:type})"-->
+							<t t-log="'aaaaa',type"></t>
+							<i t-att-class="graphIcons[type] + (state.graph_type == type ? ' active-icon' : '')"
+
+                            />
+							<div class="default_type_icon" t-att-class="state.currentType == type? 'fa fa-circle' :''">
+								<!--										 <t t-if="state.defaultGraph == type">-->
+								<!--										</t>-->
+							</div>
+						</span>
+					</t>
+				</div>
+				<!--                        <span-->
+				<!--                              t-on-click="() => this.nextPage()" style="color: #ffffff;">-->
+				<!--							<i class="ri-arrow-right-s-line"/>-->
+				<!--						</span>-->
+			</div>
+		</div>
+		<!--        <div class="mb-2">-->
+		<!--					<div class="bcheckbox-can-create" t-ref="graph_types">-->
+		<!--						<label class="cy-navbar_label customCheckbox-label mr-2"-->
+		<!--                               for="typeSelect">Default Type</label>-->
+		<!--                        <div id="select-box"-->
+		<!--                             class="graph_select cy-navbar_label customCheckbox-label "-->
+		<!--                             t-on-click="() => this.state.options = ! this.state.options"-->
+		<!--                             style="background: #26261a;">-->
+		<!--							<div id="selected-value">-->
+		<!--&lt;!&ndash;								<span t-esc="capitalizeFirstLetter(state.defaultGraph)"/>&ndash;&gt;-->
+		<!--							</div>-->
+		<!--						</div>-->
+		<!--                        <div t-if="state.options">-->
+		<!--									<div class="cy-graph-default-type"-->
+		<!--                                         style="background-color: #2e2e2e; border-radius: 8px; padding: 0 5px;">-->
+		<!--                                        <div style="overflow: hidden;height:210px;">-->
+		<!--										<ul class="scroll-container"-->
+		<!--                                            style="max-height: 200px !important; padding-left: 0; padding-top: 10px;overflow-y: auto;">-->
+		<!--                                        &lt;!&ndash; Option #1 &ndash;&gt;-->
+		<!--                                            <t t-log="'StAte', state"/>-->
+		<!--                                            <t t-if="state.options"-->
+		<!--                                               t-foreach="state.allGraphs"-->
+		<!--                                               t-as="item" t-key="item">-->
+		<!--											<li class="hnk-dropdown__option cy-studio-view cy_studio_graph option">-->
+		<!--												<div class="hnk-dropdown__radio-container"-->
+		<!--                                                     target="list">-->
+		<!--													<input type="checkbox"-->
+		<!--                                                           t-att-checked="this.state.activeGraphs.includes(item) ? 'checked' : ''"-->
+		<!--                                                           t-att-id="item"-->
+		<!--                                                           t-att-target="item"-->
+		<!--                                                           name="item"-->
+		<!--                                                           t-on-click="(ev) => this.activateGraph(ev,item)"-->
+		<!--                                                           class="cy-dropdown__radio"/>-->
+		<!--                                                    <label class="cy-input-checkbox-label"-->
+		<!--                                                           t-att-for="item"/>-->
+		<!--												</div>-->
+		<!--                                                <div class="hnk-dropdown__label">-->
+		<!--													<i t-att-class="this.graphIcons[item]"/>-->
+		<!--                                                    <span class="hnk-dropdown__label-text"><span t-esc="capitalizeFirstLetter(item)" /></span>-->
+		<!--												</div>-->
+		<!--                                                <t t-if="state.activeGraphs.includes(item) and state.defaultGraph == item">-->
+		<!--														<i class="ri-pushpin-fill cy-pushpin-fill float-end"/>-->
+		<!--												</t>-->
+		<!--                                                <i t-elif="state.activeGraphs.includes(item)"-->
+		<!--                                                   class="cy-studio-graph-pin ri-pushpin-fill float-end"-->
+		<!--                                                   t-on-click="()=>this.updateMode(item)"/>-->
+		<!--											</li>-->
+		<!--										</t>-->
+		<!--                                    </ul>-->
+		<!--                                </div>-->
+		<!--                            </div>-->
+		<!--						</div>-->
+		<!--					</div>-->
+		<!--				</div>-->
+		<div class="m-3 graph_properties">
+
+
+<!--			                <div class="mb-2">-->
+<!--					<div class="bcheckbox-can-create" t-ref="graph_types">-->
+<!--						<label class="cy-navbar_label customCheckbox-label mr-2"-->
+<!--                               for="typeSelect">Default Type</label>-->
+<!--                        <div id="select-box"-->
+<!--                             class="graph_select cy-navbar_label customCheckbox-label "-->
+<!--                             t-on-click="() => this.state.options = ! this.state.options"-->
+<!--                             style="background: #26261a;">-->
+<!--							<div id="selected-value">-->
+<!--								<t t-log="'CptlzFrstLttr11', state"/>-->
+<!--								<span t-esc="capitalizeFirstLetter(state.currentType)"/>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--                        <div t-if="state.options">-->
+<!--									<div class="cy-graph-default-type"-->
+<!--                                         style="background-color: #2e2e2e; border-radius: 8px; padding: 0 5px;">-->
+<!--                                        <div style="overflow: hidden;height:210px;">-->
+<!--										<ul class="scroll-container"-->
+<!--                                            style="max-height: 200px !important; padding-left: 0; padding-top: 10px;overflow-y: auto;">-->
+<!--                                        &lt;!&ndash; Option #1 &ndash;&gt;-->
+<!--                                            <t t-log="'StAte', state"/>-->
+<!--                                            <t t-if="state.options"-->
+<!--                                               t-foreach="state.allGraphs"-->
+<!--                                               t-as="item" t-key="item">-->
+<!--											<li class="hnk-dropdown__option cy-studio-view cy_studio_graph option">-->
+<!--												<div class="hnk-dropdown__radio-container"-->
+<!--                                                     target="list">-->
+<!--													<input type="checkbox"-->
+<!--                                                           t-att-checked="this.state.activeGraphs.includes(item) ? 'checked' : ''"-->
+<!--                                                           t-att-id="item"-->
+<!--                                                           t-att-target="item"-->
+<!--                                                           name="item"-->
+<!--                                                           t-on-click="(ev) => this.activateGraph(ev,item)"-->
+<!--                                                           class="cy-dropdown__radio"/>-->
+<!--                                                    <label class="cy-input-checkbox-label"-->
+<!--                                                           t-att-for="item"/>-->
+<!--												</div>-->
+<!--                                                <div class="hnk-dropdown__label">-->
+<!--													<i t-att-class="this.graphIcons[item]"/>-->
+<!--                                                    <span class="hnk-dropdown__label-text"><span t-esc="capitalizeFirstLetter(item)" /></span>-->
+<!--												</div>-->
+<!--                                                <t t-if="state.activeGraphs.includes(item) and state.currentType == item">-->
+<!--														<i class="ri-pushpin-fill cy-pushpin-fill float-end"/>-->
+<!--												</t>-->
+<!--                                                <i t-elif="state.activeGraphs.includes(item)"-->
+<!--                                                   class="cy-studio-graph-pin ri-pushpin-fill float-end"-->
+<!--                                                   t-on-click="()=>this.updateMode(item)"/>-->
+<!--											</li>-->
+<!--										</t>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+
+
+
+			<div class="dropdown-checkbox-container">
+				<label class="cy-navbar_label customCheckbox-label" for="sorting">Default Type:</label>
+				<div class="cy-studio-custom-dropdown">
+					<CylloStudioDropdown
+                            options="chartTypes"
+                            onChange="(value) => this.updateDefaultType(value)"
+                            searchable="true"
+                            defaultValue="state.currentType"
+                    />
+				</div>
+			</div>
+			<div class="dropdown-checkbox-container">
+				<label class="cy-navbar_label customCheckbox-label" for="sorting">Sorting:</label>
+				<div class="cy-studio-custom-dropdown">
+					<CylloStudioDropdown
+                            options="sortGraph"
+                            onChange="(value) => this.updateOrder(value)"
+                            searchable="true"
+                            defaultValue="state.currentOrder"
+                    />
+				</div>
+			</div>
+			<div class="checkbox-item">
+				<input class="checkbox-input d-none ViewCheck" type="checkbox" t-model="state.stacked" id="stacked"
+                       name="checkbox4" t-on-click="()=>this.toggleStacked()"/>
+				<label class="checkbox-label" for="stacked">
+					<span class="checkbox-indicator">
+						<svg width="12px" height="9px" viewbox="0 0 12 9">
+							<polyline points="1 5 4 8 11 1"></polyline>
+						</svg>
+					</span>
+					<span class="label-text">Stacked Graph</span>
+				</label>
+			</div>
+			<div class="checkbox-item">
+				<input class="checkbox-input d-none ViewCheck" type="checkbox" id="link_to_record"
+                       name="checkbox4" t-model="state.link"
+                       t-on-click="({target})=>this.updateGraph('disable_linking', target.checked)"/>
+				<label class="checkbox-label" for="link_to_record">
+					<span class="checkbox-indicator">
+						<svg width="12px" height="9px" viewbox="0 0 12 9">
+							<polyline points="1 5 4 8 11 1"></polyline>
+						</svg>
+					</span>
+					<span class="label-text">Disable Link To Record</span>
+				</label>
+			</div>
+			<div class="d-flex mt-2">
+				<button t-if="state.New" class="plus_input"
+                        t-on-click="handleGroupBy">
+					<i class="fa fa-plus"/>
+				</button>
+				<label class="label-text" for="positionSelect">
+					<span>Group By:</span>
+				</label>
+			</div>
+			<t t-foreach="state.groupBy" t-as="field"
+               t-key="field_index">
+				<div class="check_box_color cy-input d-flex justify-content-between">
+					<span t-if="field"
+                          class="text-capitalize cy-graph-groupby-value">
+						<t t-esc="state.fields.find(f => f.name === state.groupBy[field_index].fieldName)?.string"/>
+						<t t-if="field.interval">-
+
+							<t
+                                    t-esc="field.interval"/></t>
+					</span>
+					<i t-on-click="() => this.removeGroupBy('measure', field)"
+                       class="cursor-pointer ri-delete-bin-2-fill"
+                       style="margin-top: 2px !important;"/>
+				</div>
+			</t>
+			<div t-if="!state.New"
+                 class="cy-input d-flex justify-content-between">
+				<t t-log="'asdfghj',state.New"></t>
+				<Dropdown
+                        togglerClass="'btn cy-studio-dropdown cy-select-back'"
+                        showCaret="true">
+					<t t-set-slot="toggler">
+						<span style="margin-left: -7px;">Select an option</span>
+					</t>
+					<t t-foreach="state.fields" t-as="field"
+                       t-key="field.name">
+						<AccordionItem
+                                t-if="field.type &amp;&amp; ['date', 'datetime'].includes(field.type)"
+                                description="field?.string">
+							<div t-on-click="()=>this.updateDimension(field.name, false, 'year')">
+								<a class="dropdown-item" href="#">Year</a>
+							</div>
+							<div t-on-click="()=>this.updateDimension(field.name, false, 'quarter')">
+								<a class="dropdown-item" href="#">Quarter</a>
+							</div>
+							<div t-on-click="()=>this.updateDimension(field.name, false, 'month')">
+								<a class="dropdown-item" href="#">Month</a>
+							</div>
+							<div t-on-click="()=>this.updateDimension(field.name, false, 'week')">
+								<a class="dropdown-item" href="#">Week</a>
+							</div>
+							<div t-on-click="()=>this.updateDimension(field.name, false, 'day')">
+								<a class="dropdown-item" href="#">Day</a>
+							</div>
+						</AccordionItem>
+						<t t-log="'lskdfjskdjfjdsfsdf',field"></t>
+						<DropdownItem
+                                onSelected="()=>this.updateDimensions(field.name)">
+							<span t-esc="field.string"/>
+						</DropdownItem>
+					</t>
+				</Dropdown>
+				<i t-on-click="() => this.removeGroupBy('measure', field)"
+                   class="mx-2 cursor-pointer ri-delete-bin-2-fill"/>
+			</div>
+		</div>
+	</t>
+</templates>

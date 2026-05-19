@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ir_rule_hr_expense_budget" model="ir.rule">
+            <field name="name">Budget</field>
+            <field name="model_id" ref="model_budget_analytic"/>
+            <field name="domain_force">['|','|','|','|',('user_id',
+                '=',user.id),('user_id.emp_id.budget_manager.user_id','=',user.id),
+                ('user_id.emp_id.director_id','=',user.id),
+                ('accounting_user_ids','in',user.id),('user_id.emp_id.budget_deputy.user_id','=',user.id)]
+            </field>
+            <field name="groups"
+                   eval="[(4, ref('hr_expense.group_hr_expense_team_approver'))]"/>
+        </record>
+        <record id="ir_rule_hr_expense_budget_for_expense_manager"
+                model="ir.rule">
+            <field name="name">View All Budgets</field>
+            <field name="model_id" ref="model_budget_analytic"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups"
+                   eval="[(4, ref('hr_expense.group_hr_expense_manager'))]"/>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'hr_expense'), ('name','=','ir_rule_hr_expense_sheet_employee')] "/>
+            </function>
+            <value eval=" {'noupdate': False} "/>
+        </function>
+
+<!--        <record id="ir_rule_hr_expense_sheet_employee" model="ir.rule">-->
+<!--            <field name="name">Employee Expense Sheet</field>-->
+<!--            <field name="model_id" ref="hr_expense.model_hr_expense_sheet"/>-->
+<!--            <field name="domain_force">['|',('employee_id.user_id', '=',-->
+<!--                user.id),('budget_reponsibles','=',user.id)]-->
+<!--            </field>-->
+<!--            <field name="groups" eval="[(4, ref('base.group_user'))]"/>-->
+<!--        </record>-->
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'hr_expense'), ('name','=','ir_rule_hr_expense_sheet_employee')]"/>
+            </function>
+            <value eval=" {'noupdate': True} "/>
+        </function>
+
+        <record id="ir_rule_hr_expense_sheet_approver" model="ir.rule">
+            <field name="name">Approver Expense Sheet</field>
+            <field name="model_id" ref="hr_expense.model_hr_expense_sheet"/>
+<!--            <field name="domain_force">[ '|', '|', '|',('message_partner_ids', 'in',-->
+<!--                user.id), ('user_id', '=', user.id),-->
+<!--                ('employee_id.user_id', '=', user.id),-->
+<!--                ('budget_reponsibles','=',user.id) ]-->
+
+<!--            </field>-->
+             <field name="domain_force">[ '|', '|',('message_partner_ids', 'in',
+                user.partner_id.ids), ('user_id', '=', user.id),
+                ('employee_id.user_id', '=', user.id)]
+
+            </field>
+
+            <field name="groups"
+                   eval="[(4, ref('hr_expense.group_hr_expense_team_approver'))]"/>
+        </record>
+
+
+        <!-- Record rule to allow expense managers to read all journals -->
+        <record id="hr_expense_journal_access_rule" model="ir.rule">
+            <field name="name">HR Expense Journal Access</field>
+            <field name="model_id" ref="account.model_account_journal"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('hr_expense.group_hr_expense_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+
+    </data>
+</odoo>

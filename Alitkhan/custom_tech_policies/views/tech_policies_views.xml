@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="tech_policies_view_tree" model="ir.ui.view">
+        <field name="name">tech.policies.list</field>
+        <field name="model">tech.policies</field>
+        <field name="arch" type="xml">
+            <list string="Channel" editable="bottom">
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="authorized_person"/>
+                <field name="example"/>
+                <field name="notes"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_tech_policies" model="ir.actions.act_window">
+        <field name="name">Tech Policies</field>
+        <field name="res_model">tech.policies</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="tech_policies_menu_root" name="Tech Policies"/>
+    <menuitem id="menu_tech_policies" name="Tech Policies" action="action_tech_policies" parent="tech_policies_menu_root" sequence="0"/>
+</odoo>

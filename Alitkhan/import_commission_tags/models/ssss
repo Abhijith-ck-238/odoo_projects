@@ -1,0 +1,56 @@
+
+    def sale_order(self, sheet):
+        for row in range(sheet.nrows):
+            if row >= 1:
+                row_values = sheet.row_values(row)
+                print(row_values)
+                object = self.env['sale.order'].search([('id', '=', row_values[0])])
+                object.is_to_print_subunit_pricing = row_values[1]
+                object.total_of_exchange_products = row_values[2]
+                object.select_all_lines = row_values[3]
+                print(object)
+
+    def sale_order_line(self, sheet):
+        for row in range(sheet.nrows):
+            if row >= 1:
+                row_values = sheet.row_values(row)
+                print(row_values)
+                object = self.env['sale.order.line'].search([('id', '=', row_values[0])])
+                object.config = row_values[1]
+                object.is_exchange = row_values[2]
+                print(object)
+    def stock_move(self,sheet):
+        for row in range(sheet.nrows):
+            if row >= 1:
+                row_values = sheet.row_values(row)
+                print(row_values)
+                object = self.env['stock.move'].search([('id', '=', row_values[0])])
+                object.sequence = row_values[1],
+                object.display_type =row_values[2]
+                print(object)
+    def stock_move_line(self,sheet):
+        for row in range(sheet.nrows):
+            if row >= 1:
+                row_values = sheet.row_values(row)
+                print(row_values)
+                object = self.env['stock.move.line'].search([('id', '=', row_values[0])])
+                object.name = row_values[1],
+                object.sequence = row_values[2]
+                object.display_type = row_values[3]
+                print(object)
+
+    def sale_report(self,sheet):
+        for row in range(sheet.nrows):
+            if row >= 1:
+                row_values = sheet.row_values(row)
+                print(row_values)
+                object = self.env['sale.report'].search([('id', '=', row_values[0])])
+                object.teams = row_values[1],
+                object.sequetotal_exchangence = row_values[2]
+                object.total_usd_price = row_values[3]
+                object.total_iqd_price = row_values[4]
+                object.total_eur_price = row_values[5]
+                object.untaxed_total_usd_price = row_values[6]
+                object.untaxed_total_iqd_price = row_values[7]
+                object.untaxed_total_eur_price = row_values[8]
+                print(object)

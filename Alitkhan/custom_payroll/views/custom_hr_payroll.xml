@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+          <record id="generate_batches_payslip" model="ir.actions.server">
+            <field name="name">Generate Batches</field>
+            <field name="model_id" ref="hr_payroll.model_hr_payslip_run"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.gen_batches()
+            </field>
+        </record>
+        <menuitem id="generate_batches_payslip_id"
+                  name="Generate Batches"
+                  action="generate_batches_payslip"
+                  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+                  sequence="65"
+        />
+       <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'hr_payroll'), ('name','=','menu_hr_payroll_employees_root')] "/>
+            </function>
+            <value eval=" {'noupdate': False} "/>
+        </function>
+        <record id="hr_payroll.menu_hr_payroll_employees_root" model="ir.ui.menu">
+            <field name="sequence">1</field>
+        </record>
+        <record id="hr_payroll.menu_hr_payroll_work_entries_root" model="ir.ui.menu">
+            <field name="sequence">1</field>
+        </record>
+        <record id="hr_work_entry_contract_enterprise.menu_hr_payroll_work_entries_root" model="ir.ui.menu">
+            <field name="sequence">1</field>
+        </record>
+        <record id="hr_payroll.menu_hr_payroll_dashboard_root" model="ir.ui.menu">
+            <field name="sequence">75</field>
+        </record>
+
+        <record id="hr_contract.action_hr_contract" model="ir.actions.act_window">
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem
+                id="menu_work_entry_conflicts"
+                name="Conflicts"
+                action="hr_work_entry.hr_work_entry_action_conflict"
+                parent="hr_work_entry_contract_enterprise.menu_hr_payroll_work_entries_root"
+                sequence="30"/>
+
+        <record id="open_view_employee_list_my" model="ir.actions.act_window">
+            <field name="name">Employees</field>
+            <field name="path">employees</field>
+            <field name="res_model">hr.employee</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="hr.view_employee_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Add a new employee
+                </p><p>
+                    Quickly find all the information you need for your employees such as contact data, job position, availability, etc.
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+                id="menu_hr_employee_user"
+                name="Employees"
+                action="open_view_employee_list_my"
+                parent="hr_payroll.menu_hr_payroll_employees_root"
+                sequence="1"/>
+
+
+        <record id="view_employee_tree_inherit_expense" model="ir.ui.view">
+            <field name="name">hr.employee.list.expense</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='first_contract_date']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='hr_presence_state_display']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='activity_ids']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='activity_date_deadline']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_hr_payslip_compute" model="ir.ui.view">
+            <field name="name">hr_payroll_payslip_employees</field>
+            <field name="model">compute.payslip</field>
+            <field name="arch" type="xml">
+                <form string="Compute Payslips">
+                    <group>
+                        <span colspan="4" nolabel="1">This wizard will compute payslips for all selected employee(s).</span>
+                    </group>
+                    <group colspan="2">
+<!--                        <separator string="Salary Structure" colspan="2"/>-->
+                        <newline/>
+                        <span class="text-muted">Choose Batches to compute Payslips.</span>
+                        <field name="batches" nolabel="1"/>
+                    </group>
+                    <group colspan="4" >
+                        <separator string="Employees" colspan="4"/>
+                        <newline/>
+                        <field name="employee_ids" nolabel="1"/>
+                    </group>
+                    <footer>
+                        <button icon="fa-cogs" string="Compute" name="compute_sheet" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_hr_payslip_compute" model="ir.actions.act_window">
+            <field name="name">Compute Payslips</field>
+            <field name="res_model">compute.payslip</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="view_hr_payslip_compute"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="compute_payslip_id"  name="Compute Sheet"
+                  action="action_hr_payslip_compute"
+                  sequence="68"
+                  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"/>
+   </data>
+</odoo>

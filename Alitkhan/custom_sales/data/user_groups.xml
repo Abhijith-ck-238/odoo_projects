@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="report_access_limited_users" model="res.groups">
+            <field name="name">Sales Users (Sales Report)</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_allow_export'))]"/>
+        </record>
+    </data>
+</odoo>

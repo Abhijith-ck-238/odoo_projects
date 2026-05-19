@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+    <record model="ir.ui.view" id="contracts.contract_province_form">
+      <field name="name">Contracts province Form</field>
+      <field name="model">contract.province</field>
+      <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="prov_number"/>
+                    </group>
+                    <field name="sites"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="contracts.contract_province_tree">
+      <field name="name">Contracts Province tree</field>
+      <field name="model">contract.province</field>
+      <field name="arch" type="xml">
+            <list>
+                    <field name="name"/>
+                    <field name="prov_number"/>
+            </list>
+        </field>
+    </record>
+    </data>
+</odoo>

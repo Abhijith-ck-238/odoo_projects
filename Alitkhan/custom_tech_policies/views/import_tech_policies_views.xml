@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="import_tech_policies_view_form" model="ir.ui.view">
+        <field name="name">import.tech.policies.form</field>
+        <field name="model">import.tech.policies</field>
+        <field name="arch" type="xml">
+            <form string="Import Tech Policies">
+                <sheet>
+                    <group>
+                            <field name="file"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_import_tech_policies" type="object" string="Import Tech Policies" class="btn btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_import_tech_policies" model="ir.actions.act_window">
+        <field name="name">Import Tech Policies</field>
+        <field name="res_model">import.tech.policies</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_import_tech_policies" name="Import Tech Policies" action="action_import_tech_policies" parent="tech_policies_menu_root" sequence="1"/>
+</odoo>

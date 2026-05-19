@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="contract_contract_view_form_inherit" model="ir.ui.view">
+        <field name="name">contracts.form.inherit.itkan.project</field>
+        <field name="model">contract.contract</field>
+        <field name="inherit_id" ref="custom_contract.contract_contract_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='related_offering_record']" position="after">
+                <field name="itkan_project_id" groups="custom_itkan_project.group_itkan_project_user,custom_itkan_project.group_itkan_project_administrator"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pledge_pledge,pledge.pledge,model_pledge_pledge,pledge_assets.pledge_user,1,1,1,1
+access_pledge_bank,pledge.bank,model_pledge_bank,pledge_assets.pledge_user,1,1,1,1
+access_pledge_extension,pledge.extension,model_pledge_extension,pledge_assets.pledge_user,1,1,1,1
+access_pledge_expense,pledge.expense,model_pledge_expense,pledge_assets.pledge_user,1,1,1,1
+access_pledge_expensenames,pledge.expensenames,model_pledge_expensenames,pledge_assets.pledge_user,1,1,1,1
+access_pledge_extension,pledge.extension,model_pledge_extension,pledge_assets.pledge_user,1,1,1,1

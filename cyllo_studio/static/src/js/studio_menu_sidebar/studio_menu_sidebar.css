@@ -1,0 +1,486 @@
+/* parent dialog */
+.btn_group_menu{
+    display:flex;
+    margin-left: 26px;
+    gap: 16px;
+}
+.icon-group.btn-secondary:not(:disabled):not(.disabled):active {
+    border-color: #a0a800 !important;
+}
+.icon-group.btn-secondary {
+    background-color: transparent !important;
+    border-radius: 25px !important;
+    color: #505050 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    /*    padding: 10px 20px !important;*/
+}
+.icon-group.btn-secondary:hover {
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2) !important;
+    background-color: #a0a800 !important;
+    border: 1px solid #a0a800 !important;
+    color: #fff !important;
+}
+
+.icon-group.btn-secondary:active {
+    background-color: #a0a800;
+}
+.icon-group.btn-secondary:hover svg path {
+    fill: #fff !important;
+}
+/* Drag and drop menu */
+
+.cy-left-menuLi1 {
+    left: -8px;
+    position: relative;
+    display: flex;
+    margin: 10px;
+    gap: 5px;
+}
+@media (max-width: 1470px) {
+    .menus-sidebar-arrows {
+        left: 2px !important;
+    }
+    .cy-left-menuLi1 .cy-drag-move-cust {
+        position: relative !important;
+        top: 2px !important;
+    }
+
+    .cy-left-menuLi1 .cy-menu_cust {
+        top: 10px !important;
+        position: relative !important;
+    }
+}
+
+@media (max-width: 1505px) {
+    .cy-left-menuLi1 {
+        left: -17px;
+        position: relative;
+        display: flex;
+        margin: 1px;
+    }
+}
+.sidebar_container_list:hover .cy-menu_cust, .sidebar_container_list:hover .cy-drag-move-cust {
+    opacity: 1;
+}
+.studio-context-menu {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(80, 80, 80, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    display: none;
+    border-radius: 12px; /* Rounded corners */
+    padding: 10px 15px; /* Padding inside the div */
+    color: #bcbba7;
+    font-family: Arial, sans-serif; /* Simple, clean font */
+    font-size: 14px; /* Font size similar to the image */
+    width: 300px;
+}
+.studio-context-menu .cy-studio-context-menu-a {
+    color: #fff !important;
+}
+
+
+.studio-context-menu > div {
+    display: flex; /* Align icon and text horizontally */
+    align-items: center; /* Vertically center the content */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.studio-context-menu i {
+    margin-right: 8px; /* Space between icon and text */
+    color: #fff; /* White color for the icon */
+}
+
+.studio-context-menu span {
+    font-size: 14px; /* Match the text size with the image */
+}
+
+.studio-context-menu:hover {
+    background-color: #444; /* Slightly lighter background on hover */
+}
+.studio-context-menu .handle-drag {
+    transform: unset !important; /* Ensure no transformation is applied */
+    transition: unset !important; /* Disable transition for the icon */
+    margin-top: 0px; /* Align the icon with the text */
+}
+
+.cy-menu_cust {
+    color: var(--text-color) !important;
+}
+
+.cy-menuLi {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.2rem;
+    border-radius: 7px;
+}
+
+.cy-menu_name {
+    color: #BCBBA7 !important;
+}
+
+/* icon hover */
+
+.cy-menu_cust {
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.cy-menuLi:hover .cy-menu_cust{
+    /*transition: all 0.3s 0.2s ease;*/
+    opacity: 1;
+}
+
+.cy-drag-move-cust{
+    color: var(--text-color) !important;
+    transition: all 0.3s ease;
+    opacity: 0;
+    font-size: 20px !important;
+}
+
+.cy-drag-move-cust.handle-drag {
+    cursor: grab !important;
+}
+
+.cy-menu_cust.handle-drag {
+    cursor: pointer !important;
+}
+
+.cy-menuLi:hover .cy-drag-move-cust{
+    opacity: 1;
+}
+
+.cy-studio-tooltip {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: transform 0.7s ease-in-out, opacity 0.3s ease-in-out;
+    font-size: 10px;
+    color: #9d9b8d;
+    font-weight: 900;
+}
+.cy-submenu-box:hover .cy-studio-tooltip{
+    opacity: 1;
+    transform: translateX(0);
+}
+.cy-studio-section .cy-submenu-box {
+    background-color: #26261a !important;
+    overflow-x: hidden;
+}
+.cy-submenu-box {
+    width: 85%;
+    height: 99vh !important;
+}
+.cy-submenu-box .element.style {
+    width: 0;
+}
+.cy-submenu-box .nav-link {
+    padding: unset !important;
+}
+
+.cy-submenu-box .nav-link.cy-sidebar-heading {
+    padding: 0.5rem 0.6rem !important;
+}
+
+.sidebar_container_list {
+    background-color: #26261a;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    height: 40px;
+}
+.left-sidebar_container_list {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+
+.cyst1 .nav-tabs .nav-item.show .nav-link,
+.cyst1 .nav-tabs .nav-link {
+    border: 3px solid;
+    border-color: #ffffff #ffffff #f0f1f3;
+    font-size: 16px;
+    font-weight: 700;
+    color: hsl(244, 11%, 29%);
+    padding-left: 0;
+    font-family: var(--inter-sans);
+
+}
+.cyst1 .nav-tabs .nav-item.show .nav-link,
+.cyst1 .nav-tabs .nav-link.active {
+    border: 3px solid;
+    border-color: #ffffff #ffffff #a0a67e;
+}
+.cyst1 .nav-tabs2 {
+    border-bottom: 1px solid #dee2e6;
+}
+.cyst1 .nav-tabs2 .nav-link {
+    border-color: transparent;
+    font-size: 16px;
+    font-weight: 700;
+    padding-left: 0;
+}
+.cyst1 .nav-tabs .nav-link:hover, .nav-tabs2 .nav-link:hover {
+    border-top-color: transparent;
+    /* border-bottom-color: transparent; */
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+.cyst1 .nav-tabs2 .nav-link.active {
+    color: #9EA700;
+}
+addMenu {
+    background-color: transparent !important;
+    display: flex;
+    color: #bcbba7 !important;
+
+}
+
+.addMenu:hover {
+    background-color: transparent !important;
+    color: #bcbba7 !important;
+    border: unset
+}
+.prevent-drag:hover {
+  border: 2px dotted #ADD8E6;
+}
+.draggableDiv {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.cy-drag_edit-btn.handle-drag {
+    cursor: grab !important;
+}
+.cy-icons {
+    color: #B9B8C3 !important;
+}
+
+.cy-submenu-lists {
+    overflow-y: unset !important;
+    position: relative !important;
+    width: 90%;
+}
+ul.nav.flex-column.cy-submenu-lists.d-flex > li:first-child {
+    width: 200px;
+}
+
+.cy-submenu-lists ul.nav.flex-column.cy-submenu-lists.d-flex > li:not(:first-child) {
+    width: 180px !important;
+}
+
+/*Media query for Big Screens*/
+
+@media (max-width: 4000px) {
+    ul.nav.flex-column.cy-submenu-lists.d-flex > li:first-child {
+        width: 480px;
+    }
+}
+
+@media (max-width: 3000px) {
+    ul.nav.flex-column.cy-submenu-lists.d-flex > li:first-child {
+        width: 356px;
+    }
+}
+
+@media (max-width: 2560px) {
+    ul.nav.flex-column.cy-submenu-lists.d-flex > li:first-child {
+        width: 300px;
+    }
+}
+
+@media (max-width: 2000px) {
+    ul.nav.flex-column.cy-submenu-lists.d-flex > li:first-child {
+        width: 215px;
+    }
+}
+
+@media (max-width: 1832px) {
+    ul.nav.flex-column.cy-submenu-lists.d-flex > li:first-child {
+        width: 200px;
+    }
+}
+/*Media query end for Big Screens*/
+
+
+@media (max-width: 1707px) {
+    ul.nav.flex-column.cy-submenu-lists.d-flex > li:first-child {
+        width: 187px;
+    }
+}
+
+@media (max-width: 1652px) {
+    ul.nav.flex-column.cy-submenu-lists.d-flex > li:first-child {
+        width: 175px;
+    }
+
+    .menus-sidebar-arrows {
+        left: -5px !important;
+    }
+}
+
+@media (max-width: 1550px) {
+    ul.nav.flex-column.cy-submenu-lists.d-flex > li:first-child {
+        width: 155px;
+    }
+}
+
+@media (max-width: 1500px) {
+    .cy-sidebar-heading {
+        width: 168px !important
+    }
+
+    .cy-submenu-lists ul.nav.flex-column.cy-submenu-lists.d-flex > li:not(:first-child) {
+        width: 140px !important;
+    }
+}
+
+
+/* menu creation */
+.cy-childEle .form-group {
+    margin-bottom: 16px;
+}
+.cy-childEle label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+    color: #555;
+}
+.form-group ul{
+    width: 246px;
+}
+.cyst1 .form-group {
+    margin-bottom: 1rem
+}
+.MenuName {
+    border-bottom: 1px solid #ddd !important;
+}
+.down-arrow {
+    position: relative;
+}
+
+.down-arrow:after {
+    position: absolute;
+    content: "";
+    width: 0.8rem;
+    height: 0.8rem;
+    background-image: url(./../img/arrow-down-s-line.svg);
+    right: 0;
+    top: 4px;
+}
+
+
+/* add child */
+.cy-addChild {
+    margin-top: 8px;
+}
+
+.childrenList {
+    padding: 0.5rem;
+    border: 2px dashed #BCBBA7;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+.childMenus {
+    margin-top: 0.3rem;
+    display: flex;
+    border: 1px solid #dfdfdf;
+    border-radius: 3px;
+    overflow: hidden;
+    padding: 0.3rem;
+}
+.eachChildMenu {
+    background-color: #f5f5f5;
+    margin: 0 0.2rem;
+    border-radius: 3px;
+    border: 1px solid #dfdfdf;
+}
+/* button css */
+.record-selector-container .o_input {
+    border: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    padding-left: 0 !important;
+}
+
+/* child menu edit */
+.form-check-input[type=checkbox] {
+    border-radius: .25em;
+    background-color: transparent;
+    border: 1px solid rgb(130, 129, 118);
+}
+.form-check-input:checked {
+    background-color: #9EA700;
+    border: #2A3779;
+}
+
+.form-check-input:checked[type=checkbox] {
+    background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e);
+}
+.cy-field__box {
+    border-right: 1px solid #dfdfdf;
+    width: 100%;
+    padding: 1rem;
+    height: 100%;
+}
+.cy-content-header-icon {
+    margin-bottom: 0.5rem;
+    color: #9EA700;
+    font-size: 1.2rem;
+}
+.cy-content_header {
+    font-size: 1rem;
+    font-weight: 600;
+}
+.o_input {
+    border: none
+}
+.SiblingMenu {
+    border: none !important;
+    border-bottom: 1px solid #ddd !important;
+    width: 34rem !important;
+}
+.cy-drag-input_container {
+    margin-top: 0.3rem;
+    display: flex;
+    border: 1px solid #dfdfdf;
+    border-radius: 3px;
+    overflow: hidden;
+    padding: 0.3rem;
+}
+.cy-drag-input_container .cy-draginput--box
+{
+    min-width: 58px;
+    overflow: auto;
+}
+.cy-drag_edit-btn {
+    border: 1px solid #dfdfdf;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.cy-drag_edit-btn.handle-drag {
+    cursor: grab !important;
+}
+.cy-draginput--box {
+
+    background-color: #f5f5f5;
+    margin: 0 0.2rem;
+    border-radius: 3px;
+    border: 1px solid #dfdfdf;
+}
+
+.cy-draginput--box:focus {
+
+    outline: none;
+}
+/* test case */
+.ri-drag-move-line {
+    max-height: 100vh;      /* Or any fixed height */
+    overflow-y: auto;
+    position: relative;
+}

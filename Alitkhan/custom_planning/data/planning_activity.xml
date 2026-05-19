@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail_activity_send_schedule" model="mail.activity.type">
+            <field name="name">Send Schedule</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">planning.slot</field>
+        </record>
+    </data>
+</odoo>

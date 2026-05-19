@@ -1,0 +1,171 @@
+<odoo>
+    <data>
+
+        <record id="access_unit_employee_inherit" model="ir.ui.view">
+            <field name="name">access_unit_employee_inherit.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="arch" type="xml">
+
+                <page name="hr_settings" position="after">
+                    <page name="access_units" string="Access Units" groups="access_units.administrator_users">
+                        <field name="access_units_line">
+                            <list editable="bottom">
+                                <field name="unit_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                                <field name="show_cost_price" width="200px"/>
+                                <field name="show_sales_price" width="200px"/>
+                            </list>
+                        </field>
+                    </page>
+                </page>
+
+            </field>
+        </record>
+
+        <record id="access_unit_product_inherit_1" model="ir.ui.view">
+            <field name="name">access_unit_product_inherit.form.2</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+
+                <field name="type" position="before">
+                    <field name="unit_id" options="{'no_create': True, 'no_create_edit':True}" groups="access_units.user_users"/>
+                    <field name="show_sales_price" invisible="1"/>
+                    <field name="show_cost_price" invisible="1"/>
+                </field>
+
+                <xpath expr="//label[@for='list_price']" position="attributes">
+<!--                    <attribute name="attrs">{'invisible': [('show_sales_price', '!=', True)]}</attribute>-->
+                    <attribute name="invisible">not show_sales_price</attribute>
+                </xpath>
+
+                <xpath expr="//div[@name='list_price_uom']" position="attributes">
+<!--                    <attribute name="attrs">{'invisible': [('show_sales_price', '!=', True)]}</attribute>-->
+                    <attribute name="invisible">not show_sales_price</attribute>
+                </xpath>
+
+                <xpath expr="//label[@for='standard_price']" position="attributes">
+<!--                    <attribute name="attrs">{'invisible': [('show_cost_price', '!=', True)]}</attribute>-->
+                    <attribute name="invisible">not show_cost_price</attribute>
+                </xpath>
+
+                <xpath expr="//div[@name='standard_price_uom']" position="attributes">
+<!--                    <attribute name="attrs">{'invisible': [('show_cost_price', '!=', True)]}</attribute>-->
+                    <attribute name="invisible">not show_cost_price</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="access_unit_product_inherit_2" model="ir.ui.view">
+            <field name="name">access_unit_product_inherit.form.2</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='lst_price']" position="attributes">
+<!--                    <attribute name="attrs">{'invisible': [('show_sales_price', '!=', True)]}</attribute>-->
+                    <attribute name="invisible">not show_sales_price</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_product_kanban_inherit_access_units" model="ir.ui.view">
+            <field name="name">product.product.kanban.access.units</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_kanban_view"/>
+            <field name="arch" type="xml">
+<!--                <field name="activity_state" position="after">-->
+<!--                    <field name="show_sales_price"/>-->
+<!--                </field>-->
+                <xpath expr="/kanban" position="inside">
+                    <field name="show_sales_price"/>
+                </xpath>
+                <xpath expr="//kanban//span[2]" position="attributes">
+                    <attribute name="t-if">record.show_sales_price.raw_value</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_kanban_inherit_access_units" model="ir.ui.view">
+            <field name="name">product.template.kanban.access.units</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view"/>
+            <field name="arch" type="xml">
+<!--                <field name="currency_id" position="after">-->
+<!--                    <field name="show_sales_price"/>-->
+<!--                </field>-->
+                <xpath expr="/kanban" position="inside">
+                    <field name="show_sales_price"/>
+                </xpath>
+                <xpath expr="//t[@t-name='card']//span[contains(text(), 'Price:')]" position="attributes">
+                    <attribute name="t-if">record.show_sales_price.raw_value</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_tree_inherit_access_units" model="ir.ui.view">
+            <field name="name">product.template.tree.access.units</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//list" position="inside">
+                    <field name="show_cost_price" invisible="1"/>
+                    <field name="show_sales_price" invisible="1"/>
+                </xpath>
+                <field name="standard_price" position="attributes">
+<!--                    <attribute name="attrs">{'invisible': [('show_cost_price', '!=', True)]}</attribute>-->
+                    <attribute name="invisible">not show_cost_price</attribute>
+                </field>
+                <field name="list_price" position="attributes">
+<!--                    <attribute name="attrs">{'invisible': [('show_sales_price', '!=', True)]}</attribute>-->
+                    <attribute name="invisible">not show_sales_price</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_product_tree_inherit_access_units" model="ir.ui.view">
+            <field name="name">product.product.tree.access.units</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//list" position="inside">
+                    <field name="show_cost_price" invisible="1"/>
+                    <field name="show_sales_price" invisible="1"/>
+                </xpath>
+                <field name="standard_price" position="attributes">
+<!--                    <attribute name="attrs">{'invisible': [('show_cost_price', '!=', True)]}</attribute>-->
+                    <attribute name="invisible">not show_cost_price</attribute>
+                </field>
+                <field name="lst_price" position="attributes">
+<!--                    <attribute name="attrs">{'invisible': [('show_sales_price', '!=', True)]}</attribute>-->
+                    <attribute name="invisible">not show_sales_price</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="access_unit_sales_inherit" model="ir.ui.view">
+            <field name="name">access_unit_sales_inherit.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+
+                <field name="payment_term_id" position="after">
+                    <field name="access_unit_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}" groups="access_units.user_users"/>
+                </field>
+
+            </field>
+        </record>
+
+        <record id="access_unit_purchase_inherit" model="ir.ui.view">
+            <field name="name">access.unit.purchase.inherit.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+                <field name="partner_ref" position="after">
+                    <field name="access_unit_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}" groups="access_units.user_users"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

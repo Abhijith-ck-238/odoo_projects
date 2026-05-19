@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="tac_ks_ticket_view_tree" model="ir.ui.view">
+        <field name="name">tac.ks.ticket.list</field>
+        <field name="model">tac.ks.ticket</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="user_ids" widget="many2many_tags"/>
+                <field name="partner_id"/>
+                <field name="serial_number_id"/>
+                <field name="ticket_type_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="tac_ks_ticket_view_form" model="ir.ui.view">
+        <field name="name">tac.ks.ticket.form</field>
+        <field name="model">tac.ks.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <header>
+                    <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible ="active == True"/>
+                    <div class="oe_title">
+                        <label for="name">Task Description</label>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="user_ids" widget="many2many_tags"/>
+                            <field name="product_id" options="{'no_open':true,'no_create':true}"/>
+                            <field name="serial_number_id"/>
+                            <field name="ticket_type_id"/>
+                            <label for="start_date" string="Task Range"/>
+                            <div class="w-100">
+                                <div class="o_row">
+                                    <field name="start_date" widget="daterange" options="{&quot;related_end_date&quot;: &quot;end_date&quot;}"/>
+                                    <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                                    <field name="end_date" widget="daterange" options="{&quot;related_start_date&quot;: &quot;start_date&quot;}"/>
+                                </div>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="work_done"/>
+                            <field name="backup_installed"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="notes" placeholder="Add a note..."/>
+                    <notebook>
+                        <page string="Costing">
+                            <group>
+                                <group>
+                                    <field name="offer_currency_id"/>
+                                    <field name="offer_cost" widget="monetary" options="{'currency_field': 'offer_currency_id'}"/>
+                                </group>
+                                <group>
+                                    <field name="vendor_currency_id"/>
+                                    <field name="vendor_cost" widget="monetary" options="{'currency_field': 'vendor_currency_id'}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+        <record id="tac_ks_ticket_view_kanban" model="ir.ui.view">
+        <field name="name">tac.ks.ticket.kanban</field>
+        <field name="model">tac.ks.ticket</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id"
+                    class="o_kanban_small_column o_kanban_training_ticket"
+                    quick_create="false"
+                    default_order="create_date desc">
+                <field name="name"/>
+                <field name="serial_number_id"/>
+                <field name="ticket_type_id"/>
+                <field name="color"/>
+                <field name="active"/>
+                <field name="message_needaction_counter"/>
+                <field name="activity_ids"/>
+                <field name="activity_state"/>
+                <progressbar field="activity_state"
+                             colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+
+                <templates>
+                    <t t-name="menu">
+                        <t t-if="widget.editable">
+                            <a role="menuitem" type="open"
+                               class="dropdown-item">Edit
+                            </a>
+                        </t>
+                        <t t-if="widget.deletable">
+                            <a role="menuitem" type="delete"
+                               class="dropdown-item">Delete
+                            </a>
+                        </t>
+                        <a role="menuitem" type="object" name="toggle_active"
+                           class="dropdown-item">
+                            <t t-if="record.active.raw_value">Archive</t>
+                            <t t-else="">Restore</t>
+                        </a>
+                        <field name="color" widget="kanban_color_picker"/>
+                    </t>
+                    <t t-name="card">
+                        <div class="oe_kanban_content">
+                            <field class="fw-bold fs-5" name="name"/>
+                            (#<field name="id"/>)
+
+                            <div class="mt-2">
+                                <field name="serial_number_id"
+                                       class="text-truncate"/>
+                            </div>
+                            <div class="mt-2">
+                                <strong>Type:</strong>
+                                <field name="ticket_type_id"
+                                       class="text-truncate"/>
+                            </div>
+
+                            <div class="mt-2">
+                                <field name="activity_ids"
+                                       widget="kanban_activity"/>
+                                <t t-if="record.message_needaction_counter.raw_value">
+                                    <span class="o_kanban_counter">
+                                        <i class="fa fa-comments"/>
+                                        <t t-out="record.message_needaction_counter.raw_value"/>
+                                    </span>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="tac_ks_ticket_view_search" model="ir.ui.view">
+        <field name="name">tac.ks.ticket.search</field>
+        <field name="model">tac.ks.ticket</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+<!--    <record id="tac_ks_view_search_inherit" model="ir.ui.view">-->
+<!--        <field name="name">tac.ks.view.search.inherit</field>-->
+<!--        <field name="model">tac.ks.ticket</field>-->
+<!--        <field name="inherit_id" ref="studio_customization.odoo_studio_default__d7916737-ee09-4564-b328-ec3ecf7adc70"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//search" position="inside">-->
+<!--                 <filter string="Stage" name="stage_id" domain="[]" context="{'group_by':'stage_id'}"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="component_product_view_form" model="ir.ui.view">
+        <field name="name">component.product.form</field>
+        <field name="model">component.product</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <sheet>
+                    <group>
+                        <group>
+                             <field name="ticket_id" invisible="1"/>
+                            <field name="product_ids" invisible="1"/>
+                            <field name="product_id"/>
+                            <field name="serial_number_id"/>
+                            <field name="progress" widget="progressbar"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="tac_ks_view_form_inherit"
+            model="ir.ui.view">
+        <field name="name">tac.ks.view.form.inherit</field>
+        <field name="model">tac.ks.ticket</field>
+        <field name="inherit_id" ref="custom_tac_ks.tac_ks_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page" position="after">
+                <page name="product_checklist" string="Technical Awareness">
+                    <field name="product_line_ids">
+                        <list editable="bottom">
+                            <field name="ticket_id" invisible="1"/>
+                            <field name="product_ids" invisible="1"/>
+                            <field name="product_id"/>
+                            <field name="serial_number_id"/>
+                            <button name="action_show_checklist" class="btn btn-primary" string="Show Checklist" type="object"/>
+                            <field name="progress" widget="progressbar"/>
+                            <field name="images" widget="many2many_binary"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_tac_ka_ticket" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">tac.ks.ticket</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <menuitem id="menu_tac_ks_tickets" name="Tickets" action="action_tac_ka_ticket" parent="tac_ks_menu_root" sequence="0"/>
+</odoo>

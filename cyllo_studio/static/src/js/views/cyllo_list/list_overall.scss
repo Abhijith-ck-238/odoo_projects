@@ -1,0 +1,17 @@
+.studioTree{
+    .checkbox-item {
+        margin: 6px 0 10px 5px;
+    }
+    .cy-studio-custom-dropdown{
+        margin-top:2%;
+    }
+    .checkbox-input:not(:checked) + .checkbox-label .checkbox-indicator svg{
+            stroke: transparent;
+    }
+    .checkbox-input:checked + .checkbox-label .checkbox-indicator svg{
+        width: 12px;
+        left: 1px;
+        stroke-dasharray: 14px;
+    }
+
+}

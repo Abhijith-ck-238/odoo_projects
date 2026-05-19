@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="res_users_view_extend" model="ir.ui.view">
+                    <field name="name">Extend res users</field>
+                    <field name="model">res.users</field>
+                    <field name="inherit_id" ref="hr.res_users_view_form_simple_modif"/>
+                    <field name="arch" type="xml">
+                        <xpath expr="//notebook/page[@name='public']" position="after">
+                                <page name="documents" string="Documents">
+                                <group>
+                                    <group>
+                                      <field name="passport" readonly="0" />
+                                        <field name="photo" readonly="0" />
+                                       <field name="marriage_certificate" readonly="0" />
+                                      <field name="old_schengen_visa" readonly="0" />
+                                      <field name="sanad" readonly="0" />
+
+                                    </group>
+                                    <group>
+                                        <field name="bank_statement" readonly="0" />
+                                      <field name="driving_license" readonly="0" />
+                                      <field name="graduation_certificate" readonly="0" />
+                                      <field name="housing_card" readonly="0" />
+                                      <field name="ration_card" readonly="0" />
+                                    </group>
+                                </group>
+                                     <group>
+                                    <group >
+                                      <field name="unified_card_nationality" widget="many2many_binary" readonly="0" />
+                                      <field name="family_ids" widget="many2many_binary" readonly="0" />
+                                    </group>
+                                    <group>
+                                    <field name="family_passports" widget="many2many_binary" readonly="0" />
+                                    </group>
+                                </group>
+                            </page>
+                      </xpath>
+                    </field>
+                </record>
+    </data>
+     </odoo>

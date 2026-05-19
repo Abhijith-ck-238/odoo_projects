@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="service_interval_view_inherit" model="ir.ui.view">
+        <field name="name">service.interval.inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="itkan_fleet_customization.fleet_vehicle_inh_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='service_lines']/field[@name='service_lines']/list/field[@name='service_type']"
+                   position="after">
+                <field name="odometer_value" column_invisible="True"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.kanban.inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="itkan_fleet_customization.fleet_vehicle_inh_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//table[hasclass('table-sm')]" position="replace">
+                <field name="service_lines" widget="Fleet_one2Many"/>
+<!--                <table class="table table-sm o_main_table">-->
+<!--                    <thead>-->
+<!--                        <tr style="">-->
+<!--                            <td style="font-weight=bold;" name="th_minimum">Type</td>-->
+<!--                            <td style="font-weight=bold;" name="th_maximum">Next Service</td>-->
+<!--                            <td style="font-weight=bold;" name="th_maximum">Left to next service</td>-->
+
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td> <t t-esc="record.service_lines.raw_value"/> </td>-->
+<!--                        </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+
+<!--                        <t t-foreach="record.service_lines.raw_value" t-as="o">-->
+<!--                            <tr style="">-->
+<!--&lt;!&ndash;                                <span>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <t t-out="o.next_service"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </span>&ndash;&gt;-->
+<!--                                <td style="">-->
+<!--                                    <t t-out="o.service_type[1]" t-if="o.service_type"/>-->
+<!--                                </td>-->
+<!--                                <td style="">-->
+<!--                                    <t t-out="o.next_service"/>-->
+<!--                                </td>-->
+<!--                                <td style="">-->
+<!--                                    <t t-esc="o.km_left"/>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </t>-->
+
+<!--                    </tbody>-->
+
+<!--                </table>-->
+            </xpath>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_view_kanban" model="ir.ui.view">
+        <field name="name">fleet.vehicle.kanban.inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='vehicle_details']" position="replace">
+                <div>
+                    <label for="seats"><strong>Seats:</strong></label>
+                    <field name="seats"/>
+                    <label for="doors"><strong>/Doors:</strong></label>
+                    <field name="doors"/>
+                </div>
+                 <div>
+                     <label for="odometer"><strong>Odometer:</strong></label>
+                    <field name="odometer"/>
+                 </div>
+            </xpath>
+<!--             <xpath expr="//kanban[1]/templates[1]/t[1]/div[1]/div[6]" position="after">-->
+<!--                 <div>-->
+<!--                     <label for="odometer"><strong>Odometer:</strong></label>-->
+<!--                    <field name="odometer"/>-->
+<!--                 </div>-->
+<!--             </xpath>-->
+            <xpath expr="//field[@name='driver_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='driver_id']" position="after">
+                <field name="license_plate"/>
+            </xpath>
+            <xpath expr="//t[@t-if='record.license_plate.raw_value']" position="replace">
+                <field name="car_tag"/> :
+            </xpath>
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="default_order">car_tag asc</attribute>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="fleet_vehicle_view_kanban" model="ir.ui.view">-->
+<!--        <field name="name">fleet.vehicle.kanban.inherit</field>-->
+<!--        <field name="model">fleet.vehicle</field>-->
+<!--        <field name="inherit_id" ref="fleet.fleet_vehicle_view_kanban"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//main" position="replace">-->
+<!--                <main>-->
+<!--                    <div class="d-flex">-->
+<!--                        <aside class="d-flex align-items-center me-2">-->
+<!--                            <field name="image_128" widget="image" options="{'img_class': 'object-fit-contain'}"/>-->
+<!--                        </aside>-->
+<!--                        <div>-->
+<!--                            <div>-->
+<!--                                <t t-if="record.license_plate.raw_value">-->
+<!--                                    <field class="fw-bolder fs-5" name="license_plate"/>:-->
+<!--                                </t>-->
+<!--                                <field class="fw-bolder fs-5" name="model_id"/>-->
+<!--                            </div>-->
+<!--                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
+<!--                            <field t-if="record.driver_id.raw_value" name="driver_id" widget="many2one_avatar"-->
+<!--                                   options="{'display_avatar_name': True}" class="small pt-1 pb-1"/>-->
+<!--                            <div class="small">-->
+<!--                                <t t-if="record.future_driver_id.raw_value">Future Driver :-->
+<!--                                    <field name="future_driver_id"/>-->
+<!--                                </t>-->
+<!--                            </div>-->
+<!--                            <t t-if="record.location.raw_value">-->
+<!--                                <small>-->
+<!--                                    <i class="fa fa-map-marker" title="Location"/>-->
+<!--                                    <field name="location"/>-->
+<!--                                </small>-->
+<!--                            </t>-->
+<!--                            <field name="vehicle_properties" widget="properties"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <footer class="pt-0 mt-0" t-if="!selection_mode">-->
+<!--                        <div class="d-flex fs-6">-->
+<!--                            <a t-if="record.contract_count.raw_value&gt;0" type="object" name="return_action_to_open"-->
+<!--                               href="#"-->
+<!--                               data-context="{&quot;xml_id&quot;:&quot;fleet_vehicle_log_contract_action&quot;}">-->
+<!--                                <field name="contract_count"/>-->
+<!--                                Contract(s)-->
+<!--                                <span t-if="record.contract_renewal_due_soon.raw_value and !record.contract_renewal_overdue.raw_value"-->
+<!--                                      class="fa fa-exclamation-triangle text-warning" role="img"-->
+<!--                                      aria-label="Warning: renewal due soon" title="Warning: renewal due soon">-->
+<!--                                </span>-->
+<!--                                <span t-if="record.contract_renewal_overdue.raw_value"-->
+<!--                                      class="fa fa-exclamation-triangle text-danger" role="img"-->
+<!--                                      aria-label="Attention: renewal overdue" title="Attention: renewal overdue">-->
+<!--                                </span>-->
+<!--                            </a>-->
+<!--                            <field name="activity_ids" widget="kanban_activity" class="ms-2"/>-->
+<!--                        </div>-->
+<!--                    </footer>-->
+<!--                    <div class="o_kanban_inline_block">-->
+<!--                        <field name="car_status" invisible="1"/>-->
+<!--                        <img src="/itkan_fleet_customization/static/src/img/1.png" width="20px" height="20px"-->
+<!--                             alt="" invisible="car_status != '1'"/>-->
+<!--                        <img src="/itkan_fleet_customization/static/src/img/2.png" width="20px" height="20px"-->
+<!--                             alt="" invisible="car_status != '2'"/>-->
+<!--                        <img src="/itkan_fleet_customization/static/src/img/3.png" width="20px" height="20px"-->
+<!--                             alt="" invisible="car_status != '3'"/>-->
+<!--                        <img src="/itkan_fleet_customization/static/src/img/4.png" width="20px" height="20px"-->
+<!--                             alt="" invisible="car_status != '4'"/>-->
+<!--                        &lt;!&ndash;                    <img t-att-src="kanban_image('fleet.vehicle', 'category_image', record.id.raw_value)"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                         width="20px" height="20px" alt=""/>&ndash;&gt;-->
+<!--                        <img t-attf-src="/web/image/fleet.vehicle/{{ record.id.raw_value }}/category_image"-->
+<!--                             width="20px" height="20px" alt=""/>-->
+<!--                    </div>-->
+<!--                    <div class="vehicle_details">-->
+<!--                        <label for="car_tag">-->
+<!--                            <small>Tag:</small>-->
+<!--                        </label>-->
+<!--                        <field name="car_tag"/>-->
+<!--                        <label for="seats">-->
+<!--                            <small>/Seats:</small>-->
+<!--                        </label>-->
+<!--                        <field name="seats"/>-->
+<!--                        <label for="doors">-->
+<!--                            <small>/Doors:</small>-->
+<!--                        </label>-->
+<!--                        <field name="doors"/>-->
+<!--                    </div>-->
+<!--                </main>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

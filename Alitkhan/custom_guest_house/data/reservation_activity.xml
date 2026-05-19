@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail_activity_bed_reserved" model="mail.activity.type">
+            <field name="name">Bed Reserved</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">bed.reservation</field>
+        </record>
+        <record id="mail_activity_reservation_cancelled" model="mail.activity.type">
+            <field name="name">Reservation Cancelled</field>
+            <field name="icon">fa-tasks</field>
+            <field name="res_model">bed.reservation</field>
+        </record>
+    </data>
+</odoo>

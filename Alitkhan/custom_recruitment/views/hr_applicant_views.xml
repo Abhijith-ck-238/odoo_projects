@@ -1,0 +1,1144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_applicant_form_inherit" model="ir.ui.view">
+            <field name="name">hr_applicant.view.form.inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='candidate_id']" position="before">
+                    <label for="partner_name"/>
+                    <field name="partner_name"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_name']" position="attributes">
+                    <attribute name="string">Subject / Application Name</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='email_from']" position="attributes">
+                    <attribute name="invisible">not email_from and not is_fields_visible</attribute>
+                </xpath>
+
+                <!--                <xpath expr="//field[@name='email_cc']" position="attributes">-->
+                <!--                    <attribute name="attrs">{'invisible':[('email_cc', '=', False),('is_fields_visible', '=', False)]}</attribute>-->
+                <!--                </xpath>-->
+                <xpath expr="//field[@name='partner_phone']" position="attributes">
+                    <attribute name="invisible">not partner_phone and not is_fields_visible</attribute>
+                </xpath>
+                <!--                <xpath expr="//field[@name='partner_mobile']" position="attributes">-->
+                <!--                    <attribute name="invisible">not partner_mobile and not is_fields_visible</attribute>-->
+                <!--                </xpath>-->
+
+
+                <xpath expr="//field[@name='categ_ids']" position="attributes">
+                    <attribute name="invisible">not categ_ids and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">not user_id and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='categ_ids']" position="after">
+                    <field name="priority" position="move"/>
+                </xpath>
+
+                <xpath expr="//field[@name='priority']" position="attributes">
+                    <attribute name="invisible">not priority and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='job_id']" position="attributes">
+                    <attribute name="invisible">not job_id and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='department_id']" position="attributes">
+                    <attribute name="invisible">not department_id and not is_fields_visible</attribute>
+                </xpath>
+
+                <!--                <xpath expr="//field[@name='company_id']" position="attributes">-->
+                <!--                    <attribute name="invisible">not company_id and not is_fields_visible</attribute>-->
+                <!--                </xpath>-->
+
+                <!--                <xpath expr="//form/sheet/group/group[15]" position="attributes">-->
+                <!--                    <attribute name="attrs">{'invisible':[('job_id', '=', False),('department_id', '=', False),('company_id', '=', False),('is_fields_visible', '=', False)]}</attribute>-->
+                <!--                </xpath>-->
+
+                <xpath expr="//form/sheet/group/group[3]" position="attributes">
+                    <attribute name="invisible">not father_profession and not mother_profession and not first_name and
+                        not profession and not first_name_0 and not profession_0 and not first_name_1 and not
+                        profession_1 and not first_name_2 and not profession_2 and not first_name_3 and not profession_3
+                        and not is_fields_visible
+                    </attribute>
+                </xpath>
+
+
+                <xpath expr="//label[@for='salary_expected']" position="attributes">
+                    <attribute name="invisible">not salary_expected and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='salary_expected']" position="attributes">
+                    <attribute name="invisible">not salary_expected and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='salary_expected_extra']" position="attributes">
+                    <attribute name="invisible">not salary_expected_extra and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//label[@for='salary_proposed']" position="attributes">
+                    <attribute name="invisible">not salary_proposed and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='salary_proposed']" position="attributes">
+                    <attribute name="invisible">not salary_proposed and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='salary_proposed_extra']" position="attributes">
+                    <attribute name="invisible">not salary_proposed_extra and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='availability']" position="attributes">
+                    <attribute name="invisible">not availability and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//form/sheet/group/group[4]" position="attributes">
+                    <attribute name="invisible">not salary_expected and not salary_expected_extra and not
+                        salary_proposed and not availability and not is_fields_visible
+                    </attribute>
+                </xpath>
+
+                <!--                <xpath expr="//field[@name='description']" position="attributes">-->
+                <!--                    <attribute name="invisible">not description and not is_fields_visible</attribute>-->
+                <!--                </xpath>-->
+
+
+                <xpath expr="/form/sheet/group/group[2]" position="after">
+                    <group colspan="2" col="2" string="Emergency Contact"
+                           invisible="not emergency_contact_name and not emergency_contact_relation and not past_interview_date and not is_fields_visible">
+                        <!--                           attrs="{'invisible': [('emergency_contact_name', '=', False),('emergency_contact_phone', '=', False),('emergency_contact_relation', '=', False),-->
+                        <!--                           ('past_interview_date', '=', False),('is_fields_visible', '=', False)]}">-->
+                        <div class="border border-dark" style="margin:10px; padding:10px;">
+                            <group invisible="not emergency_contact_name and not emergency_contact_phone and not emergency_contact_relation and not is_fields_visible">
+                                <!--                                    attrs="{'invisible': [('emergency_contact_name', '=', False),('emergency_contact_phone', '=', False),('emergency_contact_relation', '=', False),-->
+                                <!--                            ('is_fields_visible', '=', False)]}">-->
+                                <span>Emergency contact person (Family member preferable):</span>
+                                <field name="emergency_contact_name"
+                                       invisible="not emergency_contact_name and not is_fields_visible"/>
+                                <field name="emergency_contact_phone"
+                                       invisible="not emergency_contact_phone and not is_fields_visible"/>
+                                <field name="emergency_contact_relation"
+                                       invisible="not emergency_contact_relation and not is_fields_visible"/>
+                            </group>
+                            <group invisible="not past_interview_date and not is_fields_visible">
+                                <span>If You have been Interviewed Earlier by ALITKAN, Please Provide the date:</span>
+                                <field name="past_interview_date"/>
+                            </group>
+                        </div>
+                    </group>
+                    <group colspan="2" col="2" string="Networking Skills"
+                           invisible="not cabling_system and not cabling_system_skill_level and not network_device and                     not wireless_network and not wireless_network_skill_level and not wireless_device and not is_fields_visible">
+                        <!--                           attrs="{'invisible': [('cabling_system', '=', False), ('cabling_system_skill_level', '=', False),('network_device', '=', False),-->
+                        <!--                           ('wireless_network', '=', False),('wireless_network_skill_level', '=', False),('wireless_device', '=', False),('is_fields_visible', '=', False)]}">-->
+                        <div class="border border-dark" style="margin:10px; padding:10px;">
+                            <group>
+                                <field style="padding-bottom: 28px;" name="cabling_system"
+                                       invisible="not cabling_system and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="cabling_system_skill_level"
+                                       invisible="not cabling_system_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="network_device"
+                                       invisible="not network_device and not is_fields_visible"/>
+                            </group>
+                            <group>
+                                <field style="padding-bottom: 28px;" name="wireless_network"
+                                       invisible="not wireless_network and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="wireless_network_skill_level"
+                                       invisible="not wireless_network_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="wireless_device"
+                                       invisible="not wireless_device and not is_fields_visible"/>
+                            </group>
+                        </div>
+                    </group>
+                    <group colspan="2" col="2" string="Computer Skills"
+                           invisible="not ms_dos_skill_level and not ms_windows_skill_level and not windows_server_skill_level and not ms_word_skill_level                             and not ms_excel_skill_level and not ms_power_point_skill_level and not autocad_skill_level and not adobe_skill_level and not sql_skill_level and not backend_dev_skill_level                                and not frontend_dev_skill_level and not c_skill_erp and not c_skill_other and not is_fields_visible">
+                        <!--                           -->
+                        <!--                           attrs="{'invisible': [('ms_dos_skill_level', '=', False),('ms_windows_skill_level', '=', False),('windows_server_skill_level', '=', False),-->
+                        <!--                           ('ms_word_skill_level', '=', False),('ms_excel_skill_level', '=', False),('ms_power_point_skill_level', '=', False),('autocad_skill_level', '=', False),-->
+                        <!--                           ('adobe_skill_level', '=', False),('sql_skill_level', '=', False),('backend_dev_skill_level', '=', False),('frontend_dev_skill_level', '=', False),-->
+                        <!--                           ('c_skill_erp', '=', False),('c_skill_other', '=', False),('is_fields_visible', '=', False)]}">-->
+
+                        <div class="border border-dark" style="margin:10px; padding:10px;">
+                            <group>
+                                <field style="padding-bottom: 28px;" name="ms_dos_skill_level"
+                                       invisible="not ms_dos_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="ms_windows_skill_level"
+                                       invisible="not ms_windows_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="windows_server_skill_level"
+                                       invisible="not windows_server_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="ms_word_skill_level"
+                                       invisible="not ms_word_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="ms_excel_skill_level"
+                                       invisible="not ms_excel_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="ms_power_point_skill_level"
+                                       invisible="not ms_power_point_skill_level and not is_fields_visible"/>
+                            </group>
+                            <group>
+                                <field style="padding-bottom: 28px;" name="autocad_skill_level"
+                                       invisible="not autocad_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="adobe_skill_level"
+                                       invisible="not adobe_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="sql_skill_level"
+                                       invisible="not sql_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="backend_dev_skill_level"
+                                       invisible="not backend_dev_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="frontend_dev_skill_level"
+                                       invisible="not frontend_dev_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="c_skill_erp"
+                                       invisible="not c_skill_erp and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="c_skill_other"
+                                       invisible="not c_skill_other and not is_fields_visible"/>
+                            </group>
+                        </div>
+                    </group>
+                    <group colspan="2" col="2" string="Personal Skills"
+                           invisible="not team_work_skill_level and not work_under_pressure_skill_level and not long_distance_travel_skill_level                            and not effective_communication_skill_level and not customer_relation_skill_level and not problem_solving_skill_level and not is_fields_visible">
+
+                        <!--                           attrs="{'invisible': [('team_work_skill_level', '=', False),('work_under_pressure_skill_level', '=', False),('long_distance_travel_skill_level', '=', False),-->
+                        <!--                           ('effective_communication_skill_level', '=', False),('customer_relation_skill_level', '=', False),('problem_solving_skill_level', '=', False),-->
+                        <!--                           ('is_fields_visible', '=', False)]}">-->
+
+                        <div class="border border-dark" style="margin:10px; padding:10px;">
+                            <group>
+                                <field style="padding-bottom: 28px;" name="team_work_skill_level"
+                                       invisible="not team_work_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="work_under_pressure_skill_level"
+                                       invisible="not work_under_pressure_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="long_distance_travel_skill_level"
+                                       invisible="not long_distance_travel_skill_level and not is_fields_visible"/>
+                            </group>
+                            <group>
+                                <field style="padding-bottom: 28px;" name="effective_communication_skill_level"
+                                       invisible="not effective_communication_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="customer_relation_skill_level"
+                                       invisible="not customer_relation_skill_level and not is_fields_visible"/>
+                                <field style="padding-bottom: 28px;" name="problem_solving_skill_level"
+                                       invisible="not problem_solving_skill_level and not is_fields_visible"/>
+                            </group>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+
+        </record>
+
+        <record id="ITK_form_inherit" model="ir.ui.view">
+            <field name="name">hr_applicant.view.form.inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="al-itkan.ITK"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='border border-dark']" position="attributes">
+                    <attribute name="invisible">not arabic_name and not surname and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='surname']" position="attributes">
+                    <attribute name="invisible">not surname and not is_fields_visible</attribute>
+                </xpath>
+                <!--                <xpath expr="//label[@for='surname']" position="attributes">-->
+                <!--                    <attribute name="invisible">not surname and not is_fields_visible</attribute>-->
+                <!--                </xpath>--><!--                 <xpath expr="//label[@for='arabic_name']" position="attributes">--><!--                    <attribute name="invisible">not arabic_name and not is_fields_visible</attribute>-->
+                <!--                </xpath>-->
+                <xpath expr="//field[@name='arabic_name']" position="attributes">
+                    <attribute name="invisible">not arabic_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='address']" position="attributes">
+                    <attribute name="invisible">not address and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='hai']" position="attributes">
+                    <attribute name="invisible">not hai and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='st']" position="attributes">
+                    <attribute name="invisible">not st and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='sec']" position="attributes">
+                    <attribute name="invisible">not sec and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='house']" position="attributes">
+                    <attribute name="invisible">not house and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='nearest']" position="attributes">
+                    <attribute name="invisible">not nearest and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='citizenship']" position="attributes">
+                    <attribute name="invisible">not citizenship and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='social_status']" position="attributes">
+                    <attribute name="invisible">not social_status and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skype_id']" position="attributes">
+                    <attribute name="invisible">not skype_id and not is_fields_visible</attribute>
+                    <attribute name="string">Skype ID-f</attribute>
+                </xpath>
+                <xpath expr="//field[@name='external_ref']" position="attributes">
+                    <attribute name="invisible">not external_ref and not is_fields_visible</attribute>
+                </xpath>
+                <!--<xpath expr="//form[1]/sheet[1]/group[1]/group[1]" position="attributes">-->
+                <!--    <attribute name="invisible">not partner_name and not surname and not arabic_name and not partner_id and not refuse_reason_id and not email_from and not partner_phone and not social_status and not skype_id and not external_ref and not is_fields_visible</attribute>-->
+                <!--</xpath>-->
+                <xpath expr="//field[@name='birthdate']" position="attributes">
+                    <attribute name="invisible">not birthdate and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='place_of_birth']" position="attributes">
+                    <attribute name="invisible">not place_of_birth and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='gender']" position="attributes">
+                    <attribute name="invisible">not gender and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='height']" position="attributes">
+                    <attribute name="invisible">not height and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='weight']" position="attributes">
+                    <attribute name="invisible">not weight and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='religion']" position="attributes">
+                    <attribute name="invisible">not religion and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='filling_time']" position="attributes">
+                    <attribute name="invisible">not filling_time and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]" position="attributes">
+                    <attribute name="invisible">not birthdate and not place_of_birth and not gender and not height and
+                        not weight and not religion and not filling_time and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='father_profession']" position="attributes">
+                    <attribute name="invisible">not father_profession and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='mother_profession']" position="attributes">
+                    <attribute name="invisible">not mother_profession and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='first_name']" position="attributes">
+                    <attribute name="invisible">not first_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='profession']" position="attributes">
+                    <attribute name="invisible">not profession and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='first_name_0']" position="attributes">
+                    <attribute name="invisible">not first_name_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='profession_0']" position="attributes">
+                    <attribute name="invisible">not profession_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='first_name_1']" position="attributes">
+                    <attribute name="invisible">not first_name_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='profession_1']" position="attributes">
+                    <attribute name="invisible">not profession_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='first_name_2']" position="attributes">
+                    <attribute name="invisible">not first_name_2 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='profession_2']" position="attributes">
+                    <attribute name="invisible">not profession_2 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='first_name_3']" position="attributes">
+                    <attribute name="invisible">not first_name_3 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='profession_3']" position="attributes">
+                    <attribute name="invisible">not profession_3 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[3]" position="attributes">
+                    <attribute name="invisible">not father_profession and not mother_profession and not first_name and
+                        not profession and not first_name_0 and not profession_0 and not first_name_1 and not
+                        profession_1 and not first_name_2 and not profession_2 and not first_name_3 and not profession_3
+                        and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='health_status']" position="attributes">
+                    <attribute name="invisible">not health_status and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='disease']" position="attributes">
+                    <attribute name="invisible">not disease and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='limitaions']" position="attributes">
+                    <attribute name="invisible">not limitaions and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='limitaions_travel']" position="attributes">
+                    <attribute name="invisible">not limitaions_travel and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/div[1]" position="attributes">
+                    <attribute name="invisible">not health_status and not disease and not limitaions and not
+                        limitaions_travel and not is_fields_visible
+                    </attribute>
+                    <!--                        {'invisible':[('health_status', '=', False),('disease', '=', False),('limitaions', '=', False),('limitaions_travel', '=', False),-->
+                    <!--                        ('is_fields_visible', '=', False)]}</attribute>-->
+                </xpath>
+                <xpath expr="//field[@name='referral_source']" position="attributes">
+                    <attribute name="invisible">not referral_source and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_referral_source']" position="attributes">
+                    <attribute name="invisible">not other_referral_source and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='preffered_fow']" position="attributes">
+                    <attribute name="invisible">not preffered_fow and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='preferred_cp']" position="attributes">
+                    <attribute name="invisible">not preferred_cp and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/div[2]" position="attributes">
+                    <attribute name="invisible">not referral_source and not other_referral_source and not preffered_fow
+                        and not preferred_cp and not is_fields_visible
+                    </attribute>
+                    <!--                        {-->
+                    <!--                        'invisible':[('referral_source', '=', False),('other_referral_source', '=', False),('preffered_fow', '=', False),-->
+                    <!--                        ('preferred_cp', '=', False),('is_fields_visible', '=', False)]}</attribute>-->
+                </xpath>
+                <xpath expr="//field[@name='ar_r']" position="attributes">
+                    <attribute name="invisible">not ar_r and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ar_w']" position="attributes">
+                    <attribute name="invisible">not ar_w and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ar_s']" position="attributes">
+                    <attribute name="invisible">not ar_s and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ar_u']" position="attributes">
+                    <attribute name="invisible">not ar_u and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ar_o']" position="attributes">
+                    <attribute name="invisible">not ar_o and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[4]/div[1]/group[1]" position="attributes">
+                    <attribute name="invisible">not ar_r and not ar_w and not ar_s and not ar_u and not ar_o and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='en_r']" position="attributes">
+                    <attribute name="invisible">not en_r and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='en_w']" position="attributes">
+                    <attribute name="invisible">not en_w and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='en_s']" position="attributes">
+                    <attribute name="invisible">not en_s and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='en_u']" position="attributes">
+                    <attribute name="invisible">not en_u and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='en_o']" position="attributes">
+                    <attribute name="invisible">not en_o and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[4]/div[1]/group[2]" position="attributes">
+                    <attribute name="invisible">not en_r and not en_w and not en_s and not en_u and not en_o and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_name_0']" position="attributes">
+                    <attribute name="invisible">not other_name_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_r_0']" position="attributes">
+                    <attribute name="invisible">not other_r_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_w_0']" position="attributes">
+                    <attribute name="invisible">not other_w_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_s_0']" position="attributes">
+                    <attribute name="invisible">not other_s_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_u_0']" position="attributes">
+                    <attribute name="invisible">not other_u_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_o_0']" position="attributes">
+                    <attribute name="invisible">not other_o_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[4]/div[1]/group[3]" position="attributes">
+                    <attribute name="invisible">not other_name_0 and not other_r_0 and not other_w_0 and not other_s_0
+                        and not other_u_0 and not other_o_0 and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_name_1']" position="attributes">
+                    <attribute name="invisible">not other_name_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_r_1']" position="attributes">
+                    <attribute name="invisible">not other_r_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_w_1']" position="attributes">
+                    <attribute name="invisible">not other_w_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_s_1']" position="attributes">
+                    <attribute name="invisible">not other_s_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_u_1']" position="attributes">
+                    <attribute name="invisible">not other_u_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_o_1']" position="attributes">
+                    <attribute name="invisible">not other_o_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[4]/div[1]/group[4]" position="attributes">
+                    <attribute name="invisible">not other_name_1 and not other_r_1 and not other_w_1 and not other_s_1
+                        and not other_u_1 and not other_o_1 and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[4]" position="attributes">
+                    <attribute name="invisible">not ar_r and not ar_w and not ar_s and not ar_u and not ar_o and not
+                        en_r and not en_w and not en_s and not en_u and not en_o and not other_name_0 and not other_r_0
+                        and not other_w_0 and not other_s_0 and not other_u_0 and not other_o_0 and not other_name_1 and
+                        not other_r_1 and not other_w_1 and not other_s_1 and not other_u_1 and not other_o_1 and not
+                        is_fields_visible
+                    </attribute>
+
+                </xpath>
+                <xpath expr="//field[@name='primary_name']" position="attributes">
+                    <attribute name="invisible">not primary_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='primary_years']" position="attributes">
+                    <attribute name="invisible">not primary_years and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='primary_avg']" position="attributes">
+                    <attribute name="invisible">not primary_avg and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[5]/div[1]/group[1]" position="attributes">
+                    <attribute name="invisible">not primary_name and not primary_years and not primary_avg and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='Intermediate_name']" position="attributes">
+                    <attribute name="invisible">not Intermediate_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='Intermediate_years']" position="attributes">
+                    <attribute name="invisible">not Intermediate_years and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='Intermediate_avg']" position="attributes">
+                    <attribute name="invisible">not Intermediate_avg and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[5]/div[1]/group[2]" position="attributes">
+                    <attribute name="invisible">
+                        not Intermediate_name and not Intermediate_years and not Intermediate_avg and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='secondary_name']" position="attributes">
+                    <attribute name="invisible">not secondary_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='secondary_years']" position="attributes">
+                    <attribute name="invisible">not secondary_years and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='secondary_avg']" position="attributes">
+                    <attribute name="invisible">not secondary_avg and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[5]/div[1]/group[3]" position="attributes">
+                    <attribute name="invisible">
+                        not secondary_name and not secondary_years and not secondary_avg and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='college_name']" position="attributes">
+                    <attribute name="invisible">not college_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='college_major']" position="attributes">
+                    <attribute name="invisible">not college_major and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='college_years']" position="attributes">
+                    <attribute name="invisible">not college_years and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='college_avg']" position="attributes">
+                    <attribute name="invisible">not college_avg and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[5]/div[1]/group[4]" position="attributes">
+                    <attribute name="invisible">not college_name and not college_major and not college_years and not
+                        college_avg and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_0_name']" position="attributes">
+                    <attribute name="invisible">not other_0_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_0_years']" position="attributes">
+                    <attribute name="invisible">not other_0_years and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_0_avg']" position="attributes">
+                    <attribute name="invisible">not other_0_avg and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[5]/div[1]/group[5]" position="attributes">
+                    <attribute name="invisible">not other_0_name and not other_0_years and not other_0_avg and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_1_name']" position="attributes">
+                    <attribute name="invisible">not other_1_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_1_years']" position="attributes">
+                    <attribute name="invisible">not other_1_years and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='other_1_avg']" position="attributes">
+                    <attribute name="invisible">not other_1_avg and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[5]/div[1]/group[6]" position="attributes">
+                    <attribute name="invisible">not other_1_name and not other_1_years and not other_1_avg and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='highest_acad']" position="attributes">
+                    <attribute name="invisible">not highest_acad and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='major']" position="attributes">
+                    <attribute name="invisible">not major and not is_fields_visible</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='highest_grad_year']" position="attributes">
+                    <attribute name="invisible">not highest_grad_year and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='highest_uni']" position="attributes">
+                    <attribute name="invisible">not highest_uni and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='highest_country']" position="attributes">
+                    <attribute name="invisible">not highest_country and not is_fields_visible</attribute>
+                </xpath>
+
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[5]/div[1]/group[7]" position="attributes">
+                    <attribute name="invisible">not highest_acad and not major and not highest_grad_year and not
+                        highest_uni and not highest_country and not is_fields_visible
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[5]" position="attributes">
+                    <attribute name="invisible">
+                        not primary_name and not primary_years and not primary_avg and not Intermediate_name and not
+                        Intermediate_years and not Intermediate_avg and not secondary_name and not secondary_years and
+                        not secondary_avg and not college_name and not college_major and not college_years and not
+                        other_0_avg and not other_1_name and not other_1_years and not other_1_avg and not highest_acad
+                        and not major and not highest_grad_year and not highest_uni and not highest_country and not
+                        is_fields_visible
+                    </attribute>
+
+                </xpath>
+
+                <xpath expr="//field[@name='skill_0_Desc']" position="attributes">
+                    <attribute name="invisible">not skill_0_Desc and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_1_Desc']" position="attributes">
+                    <attribute name="invisible">not skill_1_Desc and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_2_Desc']" position="attributes">
+                    <attribute name="invisible">not skill_2_Desc and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_3_Desc']" position="attributes">
+                    <attribute name="invisible">not skill_3_Desc and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_4_Desc']" position="attributes">
+                    <attribute name="invisible">not skill_4_Desc and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_5_Desc']" position="attributes">
+                    <attribute name="invisible">not skill_5_Desc and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_0_level']" position="attributes">
+                    <attribute name="invisible">not skill_0_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_1_level']" position="attributes">
+                    <attribute name="invisible">not skill_1_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_2_level']" position="attributes">
+                    <attribute name="invisible">not skill_2_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_3_level']" position="attributes">
+                    <attribute name="invisible">not skill_3_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_4_level']" position="attributes">
+                    <attribute name="invisible">not skill_4_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='skill_5_level']" position="attributes">
+                    <attribute name="invisible">not skill_5_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[6]" position="attributes">
+                    <attribute name="invisible">
+                        not skill_0_Desc and not skill_1_Desc and not skill_2_Desc and not skill_3_Desc and not
+                        skill_4_Desc and not skill_5_Desc and not skill_0_level and not skill_1_level and not
+                        skill_2_level and not skill_3_level and not skill_4_level and not skill_5_level and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='business_correspondence_skill_level']" position="attributes">
+                    <attribute name="invisible">not business_correspondence_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='effective_communication_skill_level']" position="attributes">
+                    <attribute name="invisible">not effective_communication_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='customer_service_skill_level']" position="attributes">
+                    <attribute name="invisible">not customer_service_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='team_work_skill_level']" position="attributes">
+                    <attribute name="invisible">not team_work_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='Internet_and_research_skill_level']" position="attributes">
+                    <attribute name="invisible">not Internet_and_research_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='ms_office_and_outlook_skill_level']" position="attributes">
+                    <attribute name="invisible">not ms_office_and_outlook_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='office_machine_skill_level']" position="attributes">
+                    <attribute name="invisible">not office_machine_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='typing_skill_level']" position="attributes">
+                    <attribute name="invisible">not typing_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='time_management_skill_level']" position="attributes">
+                    <attribute name="invisible">not time_management_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='attention_to_detail_level']" position="attributes">
+                    <attribute name="invisible">not attention_to_detail_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='goal_oriented_skill_level']" position="attributes">
+                    <attribute name="invisible">not goal_oriented_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='multi_tasking_skill_level']" position="attributes">
+                    <attribute name="invisible">not multi_tasking_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='follow_up_skill_level']" position="attributes">
+                    <attribute name="invisible">not follow_up_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employee_relation_skill_level']" position="attributes">
+                    <attribute name="invisible">not employee_relation_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='supervision_skill_level']" position="attributes">
+                    <attribute name="invisible">not supervision_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[7]" position="attributes">
+                    <attribute name="invisible">
+                        not business_correspondence_skill_level and not effective_communication_skill_level and not
+                        customer_service_skill_level and not team_work_skill_level and not
+                        Internet_and_research_skill_level and not ms_office_and_outlook_skill_level and not
+                        office_machine_skill_level and not office_machine_skill_level and not typing_skill_level and not
+                        time_management_skill_level and not attention_to_detail_level and not goal_oriented_skill_level
+                        and not multi_tasking_skill_level and not follow_up_skill_level and not
+                        employee_relation_skill_level and not supervision_skill_level and not is_fields_visible
+                    </attribute>
+
+                </xpath>
+                <xpath expr="//field[@name='relationship_building_skill_level']" position="attributes">
+                    <attribute name="invisible">not relationship_building_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='time_management_skill_level']" position="attributes">
+                    <attribute name="invisible">not time_management_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='research_information_gathering_skill_level']" position="attributes">
+                    <attribute name="invisible">not research_information_gathering_skill_level and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='medical_product_knowledge_skill_level']" position="attributes">
+                    <attribute name="invisible">not medical_product_knowledge_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='business_communication_skill_level']" position="attributes">
+                    <attribute name="invisible">not business_communication_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='client_engagement_skill_level']" position="attributes">
+                    <attribute name="invisible">not client_engagement_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='sales_presentations_demos_skill_level']" position="attributes">
+                    <attribute name="invisible">not sales_presentations_demos_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='contract_negotiation_skill_level']" position="attributes">
+                    <attribute name="invisible">not contract_negotiation_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='closing_skills_skill_level']" position="attributes">
+                    <attribute name="invisible">not closing_skills_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='self_motivated_ambitious_skill_level']" position="attributes">
+                    <attribute name="invisible">not self_motivated_ambitious_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='adaptability_skill_level']" position="attributes">
+                    <attribute name="invisible">not adaptability_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='responsibility_skill_level']" position="attributes">
+                    <attribute name="invisible">not responsibility_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='goal_oriented_skill_level']" position="attributes">
+                    <attribute name="invisible">not goal_oriented_skill_level and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='passionate_about_selling_skill_level']" position="attributes">
+                    <attribute name="invisible">not passionate_about_selling_skill_level and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[8]" position="attributes">
+                    <attribute name="invisible">
+                        not relationship_building_skill_level and not time_management_skill_level and not
+                        research_information_gathering_skill_level and not medical_product_knowledge_skill_level and not
+                        business_communication_skill_level and not client_engagement_skill_level and not
+                        sales_presentations_demos_skill_level and not contract_negotiation_skill_level and not
+                        closing_skills_skill_level and not self_motivated_ambitious_skill_level and not
+                        adaptability_skill_level and not responsibility_skill_level and not goal_oriented_skill_level
+                        and not passionate_about_selling_skill_level and not is_fields_visible
+                    </attribute>
+
+                </xpath>
+                <xpath expr="//field[@name='t0']" position="attributes">
+                    <attribute name="invisible">not t0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t0_year']" position="attributes">
+                    <attribute name="invisible">not t0_year and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t0_awarded_by']" position="attributes">
+                    <attribute name="invisible">not t0_awarded_by and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t0_country_city']" position="attributes">
+                    <attribute name="invisible">not t0_country_city and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t1']" position="attributes">
+                    <attribute name="invisible">not t1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t1_year']" position="attributes">
+                    <attribute name="invisible">not t1_year and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t1_awarded_by']" position="attributes">
+                    <attribute name="invisible">not t1_awarded_by and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t1_country_city']" position="attributes">
+                    <attribute name="invisible">not t1_country_city and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t2']" position="attributes">
+                    <attribute name="invisible">not t2 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t2_year']" position="attributes">
+                    <attribute name="invisible">not t2_year and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t2_awarded_by']" position="attributes">
+                    <attribute name="invisible">not t2_awarded_by and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t2_country_city']" position="attributes">
+                    <attribute name="invisible">not t2_country_city and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t3']" position="attributes">
+                    <attribute name="invisible">not t3 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t3_year']" position="attributes">
+                    <attribute name="invisible">not t3_year and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t3_awarded_by']" position="attributes">
+                    <attribute name="invisible">not t3_awarded_by and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t3_country_city']" position="attributes">
+                    <attribute name="invisible">not t3_country_city and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t4']" position="attributes">
+                    <attribute name="invisible">not t4 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t4_year']" position="attributes">
+                    <attribute name="invisible">not t4_year and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t4_awarded_by']" position="attributes">
+                    <attribute name="invisible">not t4_awarded_by and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t4_country_city']" position="attributes">
+                    <attribute name="invisible">not t4_country_city and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t5']" position="attributes">
+                    <attribute name="invisible">not t5 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t5_year']" position="attributes">
+                    <attribute name="invisible">not t5_year and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t5_awarded_by']" position="attributes">
+                    <attribute name="invisible">not t5_awarded_by and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='t5_country_city']" position="attributes">
+                    <attribute name="invisible">not t5_country_city and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[9]" position="attributes">
+                    <attribute name="invisible">
+                        not t0 and not t0_year and not t0_awarded_by and not t0_country_city and not t1 and not t1_year
+                        and not t1_awarded_by and not t1_country_city and not t2 and not t2_year and not t2_awarded_by
+                        and not t2_country_city and not t3 and not t3_year and not t3_awarded_by and not t3_country_city
+                        and not t4 and not t4_year and not t4_awarded_by and not t4_country_city and not t5 and not
+                        t5_year and not t5_awarded_by and not t5_country_city and not is_fields_visible
+                    </attribute>
+
+                </xpath>
+                <xpath expr="//field[@name='employer_name']" position="attributes">
+                    <attribute name="invisible">not employer_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='job_title']" position="attributes">
+                    <attribute name="invisible">not job_title and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employer_address']" position="attributes">
+                    <attribute name="invisible">not employer_address and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employer_province']" position="attributes">
+                    <attribute name="invisible">not employer_province and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='from_date']" position="attributes">
+                    <attribute name="invisible">not from_date and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='to_date']" position="attributes">
+                    <attribute name="invisible">not to_date and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='starting_slry']" position="attributes">
+                    <attribute name="invisible">not starting_slry and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ending_slry']" position="attributes">
+                    <attribute name="invisible">not ending_slry and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='supervisor']" position="attributes">
+                    <attribute name="invisible">not supervisor and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='super_phone']" position="attributes">
+                    <attribute name="invisible">not super_phone and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='reason_for_leaving']" position="attributes">
+                    <attribute name="invisible">not reason_for_leaving and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employer_name_0']" position="attributes">
+                    <attribute name="invisible">not employer_name_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='job_title_0']" position="attributes">
+                    <attribute name="invisible">not job_title_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employer_address_0']" position="attributes">
+                    <attribute name="invisible">not employer_address_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employer_province_0']" position="attributes">
+                    <attribute name="invisible">not employer_province_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='from_date_0']" position="attributes">
+                    <attribute name="invisible">not from_date_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='to_date_0']" position="attributes">
+                    <attribute name="invisible">not to_date_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='starting_slry_0']" position="attributes">
+                    <attribute name="invisible">not starting_slry_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ending_slry_0']" position="attributes">
+                    <attribute name="invisible">not ending_slry_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='supervisor_0']" position="attributes">
+                    <attribute name="invisible">not supervisor_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='super_phone_0']" position="attributes">
+                    <attribute name="invisible">not super_phone_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='reason_for_leaving_0']" position="attributes">
+                    <attribute name="invisible">not reason_for_leaving_0 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employer_name_1']" position="attributes">
+                    <attribute name="invisible">not employer_name_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='job_title_1']" position="attributes">
+                    <attribute name="invisible">not job_title_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employer_address_1']" position="attributes">
+                    <attribute name="invisible">not employer_address_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='employer_province_1']" position="attributes">
+                    <attribute name="invisible">not employer_province_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='from_date_1']" position="attributes">
+                    <attribute name="invisible">not from_date_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='to_date_1']" position="attributes">
+                    <attribute name="invisible">not to_date_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='starting_slry_1']" position="attributes">
+                    <attribute name="invisible">not starting_slry_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ending_slry_1']" position="attributes">
+                    <attribute name="invisible">not ending_slry_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='supervisor_1']" position="attributes">
+                    <attribute name="invisible">not supervisor_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='super_phone_1']" position="attributes">
+                    <attribute name="invisible">not super_phone_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='reason_for_leaving_1']" position="attributes">
+                    <attribute name="invisible">not reason_for_leaving_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='union_member']" position="attributes">
+                    <attribute name="invisible">not union_member and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='union_member_date']" position="attributes">
+                    <attribute name="invisible">not union_member_date and not is_fields_visible</attribute>
+                    <!--                        {'invisible':['|',('union_member', '!=', 'yes'),('union_member_date', '=', False),('is_fields_visible', '=', False)]}</attribute>-->
+                </xpath>
+                <xpath expr="//field[@name='driver_license']" position="attributes">
+                    <attribute name="invisible">not driver_license and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='driver_license_date']" position="attributes">
+                    <attribute name="invisible">not driver_license_date and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='means_of_transport']" position="attributes">
+                    <attribute name="invisible">not means_of_transport and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='good_appoint']" position="attributes">
+                    <attribute name="invisible">not good_appoint and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='smoking']" position="attributes">
+                    <attribute name="invisible">not smoking and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='long_hours']" position="attributes">
+                    <attribute name="invisible">not long_hours and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='start_date']" position="attributes">
+                    <attribute name="invisible">not start_date and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='planning_to_study']" position="attributes">
+                    <attribute name="invisible">not planning_to_study and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='presently_employed']" position="attributes">
+                    <attribute name="invisible">not presently_employed and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='contact_employer']" position="attributes">
+                    <attribute name="invisible">not contact_employer and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_name']" position="attributes">
+                    <attribute name="invisible">not ref_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_relation']" position="attributes">
+                    <attribute name="invisible">not ref_relation and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_phone']" position="attributes">
+                    <attribute name="invisible">not ref_phone and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_name_1']" position="attributes">
+                    <attribute name="invisible">not ref_name_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_relation_1']" position="attributes">
+                    <attribute name="invisible">not ref_relation_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_phone_1']" position="attributes">
+                    <attribute name="invisible">not ref_phone_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[12]" position="attributes">
+                    <attribute name="invisible">not ref_name and not ref_relation and not ref_phone and not ref_name_1
+                        and not ref_relation_1 and not ref_phone_1 and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_r_name']" position="attributes">
+                    <attribute name="invisible">not ref_r_name and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_r_relation']" position="attributes">
+                    <attribute name="invisible">not ref_r_relation and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_r_phone']" position="attributes">
+                    <attribute name="invisible">not ref_r_phone and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_r_name_1']" position="attributes">
+                    <attribute name="invisible">not ref_r_name_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_r_relation_1']" position="attributes">
+                    <attribute name="invisible">not ref_r_relation_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ref_r_phone_1']" position="attributes">
+                    <attribute name="invisible">not ref_r_phone_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[13]" position="attributes">
+                    <attribute name="invisible">not ref_r_name and not ref_r_relation and not ref_r_phone and not
+                        ref_r_name_1 and not ref_r_relation_1 and not ref_r_phone_1 and not is_fields_visible
+                    </attribute>
+
+                </xpath>
+                <xpath expr="//field[@name='photo']" position="attributes">
+                    <attribute name="invisible">not photo and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='national_id']" position="attributes">
+                    <attribute name="invisible">not national_id and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='citizenship_cert']" position="attributes">
+                    <attribute name="invisible">not citizenship_cert and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='accomodation_id']" position="attributes">
+                    <attribute name="invisible">not accomodation_id and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='uni_degree']" position="attributes">
+                    <attribute name="invisible">not uni_degree and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='medical']" position="attributes">
+                    <attribute name="invisible">not medical and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='no_crim_req']" position="attributes">
+                    <attribute name="invisible">not no_crim_req and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='letter_rec_1']" position="attributes">
+                    <attribute name="invisible">not letter_rec_1 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='letter_rec_2']" position="attributes">
+                    <attribute name="invisible">not letter_rec_2 and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='cv']" position="attributes">
+                    <attribute name="invisible">not cv and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[14]" position="attributes">
+                    <attribute name="invisible">not photo and not national_id and not citizenship_cert and not
+                        accomodation_id and not uni_degree and not medical and not no_crim_req and not letter_rec_1 and
+                        not letter_rec_2 and not cv and not is_fields_visible
+                    </attribute>
+
+                </xpath>
+                <xpath expr="//field[@name='signature']" position="attributes">
+                    <attribute name="invisible">not signature and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//field[@name='sig_date']" position="attributes">
+                    <attribute name="invisible">not sig_date and not is_fields_visible</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/div[3]" position="attributes">
+                    <attribute name="invisible">not signature and not sig_date and not is_fields_visible</attribute>
+                </xpath>
+
+                <field name="contact_employer" position="after">
+                    <field help="Are any of your relatives or friends Employed in our company?"
+                           style="padding-bottom: 28px;" name="related_employee"
+                           invisible="not related_employee and not is_fields_visible"/>
+                    <field help="Relative Name" style="padding-bottom: 28px;" name="related_employee_name"
+                           invisible="not related_employee_name and not is_fields_visible"/>
+                    <field help="Relation" style="padding-bottom: 28px;" name="related_employee_relation"
+                           invisible="not related_employee_relation and not related_employee_relation"/>
+                </field>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[11]" position="attributes">
+                    <attribute name="invisible">not union_member and not union_member_date and not driver_license and
+                        not driver_license_date and not means_of_transport and not good_appoint and not smoking and not
+                        long_hours and not start_date and not planning_to_study and not presently_employed and not
+                        contact_employer and not related_employee and not related_employee_name and not
+                        related_employee_relation and not is_fields_visible
+                    </attribute>
+
+                </xpath>
+                <field name="employer_province" position="after">
+                    <field name="job_responsibilities" invisible="not job_responsibilities and not is_fields_visible"/>
+                </field>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[10]/group[1]" position="attributes">
+                    <attribute name="invisible">not contact_disclaimer and not employer_name and not is_fields_visible
+                    </attribute>
+                </xpath>
+                <field name="employer_province_0" position="after">
+                    <field name="job_responsibilities_0"
+                           invisible="not job_responsibilities_0 and not is_fields_visible"/>
+                </field>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[10]/group[2]" position="attributes">
+                    <attribute name="invisible">not contact_disclaimer and not employer_name_0 and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <field name="employer_province_1" position="after">
+                    <field name="job_responsibilities_1"
+                           invisible="not job_responsibilities_1 and not is_fields_visible"/>
+                </field>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[10]/group[3]" position="attributes">
+                    <attribute name="invisible">not contact_disclaimer and not employer_name_1 and not
+                        is_fields_visible
+                    </attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[10]" position="attributes">
+                    <attribute name="invisible">not contact_disclaimer and not is_fields_visible</attribute>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

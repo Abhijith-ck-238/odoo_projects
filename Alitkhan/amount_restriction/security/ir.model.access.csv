@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_expense_budget_policy_user,access.hr.expense.budget.policy.user,model_hr_expense_budget_policy,base.group_user,1,1,1,1
+access_hr_expense_budget_consumption_user,access.hr.expense.budget.consumption.user,model_hr_expense_budget_consumption,base.group_user,1,1,1,1
+access_budget_policy_tag_user,access.budget.policy.tag.user,model_budget_policy_tag,base.group_user,1,1,1,1

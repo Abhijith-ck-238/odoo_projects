@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="project_task_type_form_itkan_helpdesk" model="ir.ui.view">
+            <field name="name">project.task.type.form.itkan.helpdesk</field>
+            <field name="model">project.task.type</field>
+            <field name="inherit_id" ref="project.task_type_edit" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='project_ids']/.." position="after">
+                    <group string="Field Service Fields">
+                        <field name="modality_stage"/>
+                        <field name="ticket_must_be_invalid"/>
+                        <field name="auto_create_service_report"/>
+                        <field name="require_service_report"/>
+                        <field name="helpdesk_stage_id"/>
+                        <field name="limited_users" widget="many2many_tags"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

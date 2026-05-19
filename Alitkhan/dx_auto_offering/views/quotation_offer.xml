@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="auto_offering_tree" model="ir.ui.view">
+            <field name="name">auto_offering.tree</field>
+            <field name="model">quotation.offer</field>
+            <field name="arch" type="xml">
+                <list string="Offers">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="iq_number"/>
+                    <field name="reference"/>
+                    <field name="offer_date" optional="show"/>
+                    <field name="total_net_price" widget="monetary"
+                           optional="show"/>
+                    <field name="package_policy" widget="monetary"
+                           optional="show"/>
+                    <field name="profit" widget="monetary" optional="show"/>
+                    <field name="total_offer_price" widget="monetary"
+                           optional="show"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="status"/>
+                </list>
+            </field>
+        </record>
+
+
+        <record id="auto_offering_form" model="ir.ui.view">
+            <field name="name">auto_offering.form</field>
+            <field name="model">quotation.offer</field>
+            <field name="arch" type="xml">
+                <form string="Auto Offering Form">
+                    <header>
+                        <button name="action_confirm" type="object"
+                                string="Confirm" class="oe_highlight"
+                                confirm="Are you sure you want to confirm this offer ?"
+                                invisible="status != 'draft'"/>
+                        <button name="action_cancel" type="object"
+                                string="Cancel"
+                                confirm="Are you sure you want to cancel this offer ?"
+                                invisible="status != 'draft'"/>
+                        <button name="action_draft" type="object"
+                                string="Reset to Draft"
+                                invisible="status != 'confirmed' and status != 'canceled'"/>
+                        <field name="status" widget="statusbar"
+                               statusbar_visible="draft,confirmed,canceled"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="customer_id"
+                                       readonly="status != 'draft'"/>
+                                <field name="offer_date"
+                                       readonly="status != 'draft'"/>
+                                <field name="exchange" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="reference"
+                                       readonly="status != 'draft'"/>
+                                <field name="iq_number"
+                                       readonly="status != 'draft'"/>
+                                <field name="currency_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name='offer_line' string='Products'>
+                                <field name="line_ids"
+                                       readonly="status != 'draft'"
+                                       context="{'default_currency_id': currency_id, 'default_offer_currency_id': currency_id}">
+                                    <list editable="bottom">
+                                        <field name="product_category"
+                                               width="100px"/>
+                                        <field name="product_id" width="150px"
+                                               domain="[('categ_id','=',product_category)]"/>
+                                        <field name="part_number" width="100px"
+                                               optional="show" readonly="1"/>
+                                        <field name="description" width="100px"
+                                               optional="show"/>
+                                        <field name="offer_currency_id"
+                                               width="100px" optional="1"/>
+                                        <field name="currency_id" width="100px"
+                                               optional="1"/>
+                                        <field name="exchange_rate"
+                                               width="100px" optional="1"/>
+                                        <field name="quantity" width="70px"/>
+                                        <field name="policy" width="70px"/>
+                                        <field name="discount" width="70px"
+                                               optional="show"/>
+                                        <field name="unit_net_price"
+                                               optional="show" width="120px"
+                                               style="background-color: #FA9696;"/>
+                                        <field name="total_net_price"
+                                               optional="show" width="120px"
+                                               style="background-color: #FA9696;"/>
+                                        <field name="unit_price_bd"
+                                               optional="show" width="140px"
+                                               style="background-color: #F7FAB8;"/>
+                                        <field name="total_price_bd"
+                                               optional="show" width="140px"
+                                               style="background-color: #F7FAB8;"/>
+                                        <field name="offer_unit_price"
+                                               optional="show" width="120px"
+                                               style="background-color: #C1FABE;"/>
+                                        <field name="offer_total_price"
+                                               optional="show" width="120px"
+                                               style="background-color: #C1FABE;"/>
+                                    </list>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right"
+                                       colspan="2" name="sale_total">
+                                    <field name="package_policy"/>
+                                    <field name="total_net_price"
+                                           widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="total_offer_price"
+                                           widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="profit"/>
+                                    </div>
+                                    <field name="profit" nolabel="1"
+                                           class="oe_subtotal_footer_separator"
+                                           widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                            </page>
+
+                            <page string="Printing">
+                                <group>
+                                    <group>
+                                        <field name="subject"/>
+                                        <field name="sincerely_ids"
+                                               widget="many2many_tags"
+                                               options="{'no_create_edit': True}"/>
+                                    </group>
+                                    <group>
+                                        <field name="template_id"/>
+                                    </group>
+                                </group>
+                                <field name="printing_string" widget="html"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="auto_offering_pivot" model="ir.ui.view">
+            <field name="name">auto_offering.pivot</field>
+            <field name="model">quotation.offer</field>
+            <field name="arch" type="xml">
+                <pivot string="Offerint">
+                    <field name="package_policy" type="measure"/>
+                    <field name="total_net_price" type="measure"/>
+                    <field name="total_offer_price" type="measure"/>
+                    <field name="profit" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

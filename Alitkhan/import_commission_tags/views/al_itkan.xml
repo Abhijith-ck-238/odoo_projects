@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="al_itkan_model_view" model="ir.ui.view">
+            <field name="name">al.itkan.model.model</field>
+            <field name="model">al.itkan.model</field>
+            <field name="arch" type="xml">
+                <form string="al itkan model">
+                    <group>
+                    </group>
+                    <group>
+                         <field name="file_to_upload" />
+                         <field name="select_value" widget="radio"></field>
+                    </group>
+                    <footer>
+                        <button string="Import" name="action_custom_expense_models" type="object"/>
+                        <button string="Generate Xlsx" name="cron_al_itkan_models" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_al_itkan_model" model="ir.actions.act_window">
+            <field name="name">Al Itkan </field>
+            <field name="res_model">al.itkan.model</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+<!--        <menuitem action="action_al_itkan_model" id="Al Itkan" parent="hr_expense.menu_hr_expense_my_expenses"/>-->
+        <menuitem action="action_al_itkan_model" id="menu_al_itkan" parent="hr_expense.menu_hr_expense_my_expenses"/>
+
+    </data>
+</odoo>

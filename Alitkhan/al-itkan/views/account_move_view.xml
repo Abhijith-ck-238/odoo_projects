@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="account_move_form_itkan_extention" model="ir.ui.view">
+            <field name="name">account.move.form.itkan.extention</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <field name="company_report_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                </field>
+                <field name="contract_category" position="after">
+                    <field name="expense_sheet_id" groups="account.group_account_manager"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

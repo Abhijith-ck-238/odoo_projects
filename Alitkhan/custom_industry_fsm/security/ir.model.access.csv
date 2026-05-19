@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_project_lmited_user,project.project,project.model_project_project,custom_industry_fsm.group_project_user_limited,1,0,0,0
+
+access_project_task_type_project_lmited_user,project.task.type.project.user,project.model_project_task_type,custom_industry_fsm.group_project_user_limited,1,0,0,0
+
+access_project_task_lmited_user,project.task,project.model_project_task,custom_industry_fsm.group_project_user_limited,1,1,0,0
+
+access_partner_task_lmited_user,base.res.partner user,base.model_res_partner,custom_industry_fsm.group_project_user_limited,1,0,0,0
+
+access_resource_calendar_lmited_user,project.resource_calendar user,resource.model_resource_calendar,custom_industry_fsm.group_project_user_limited,1,0,0,0
+
+access_resource_calendar_attendance_lmited_user,project.resource_calendar_attendance user,resource.model_resource_calendar_attendance,custom_industry_fsm.group_project_user_limited,1,0,0,0
+
+access_resource_calendar_leaves_lmited_user,resource.calendar.leaves user,resource.model_resource_calendar_leaves,custom_industry_fsm.group_project_user_limited,1,1,1,1
+
+access_account_analytic_account_lmited_user,account.analytic.account,analytic.model_account_analytic_account,custom_industry_fsm.group_project_user_limited,1,0,0,0
+

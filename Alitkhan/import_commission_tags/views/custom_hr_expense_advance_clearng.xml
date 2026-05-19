@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="custom_hr_expense_advance_clearng_view" model="ir.ui.view">
+            <field name="name">custom.hr.expense.advance.clearng.model</field>
+            <field name="model">custom.hr.expense.advance.clearng.model</field>
+            <field name="arch" type="xml">
+                <form string="Custom Hr Expense Advance Clearng  Model">
+                    <group>
+                    </group>
+                    <group>
+                         <field name="file_to_upload" />
+                         <field name="select_value" widget="radio"></field>
+                    </group>
+
+                    <footer>
+                        <button string="Import" name="action_custom_expense_models" type="object"/>
+                        <button string="Generate Xlsx" name="cron_custom_expense_models" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_custom_hr_expense_advance_clearng" model="ir.actions.act_window">
+            <field name="name">Custom Expense Advance</field>
+            <field name="res_model">custom.hr.expense.advance.clearng.model</field>
+
+
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+<!--        <menuitem action="action_custom_hr_expense_advance_clearng" id="Custom Hr Expense Advance Clearng  Model" parent="hr_expense.menu_hr_expense_my_expenses"/>-->
+        <menuitem action="action_custom_hr_expense_advance_clearng" id="menu_custom_hr_expense_advance_clearng" parent="hr_expense.menu_hr_expense_my_expenses"/>
+
+    </data>
+</odoo>

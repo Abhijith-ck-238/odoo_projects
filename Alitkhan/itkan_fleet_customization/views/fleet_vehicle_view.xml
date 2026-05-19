@@ -1,0 +1,241 @@
+<odoo>
+    <!-- default form inheritance and modifications -->
+    <record id="fleet_vehicle_inh_form" model="ir.ui.view">
+        <field name="name">fleet_vehicle_inh.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vehicle_properties']" position="after">
+                <group name="registration_documents" string="Registration Information"
+                       groups="fleet.fleet_group_manager">
+                    <field name="car_registration" widget="many2many_binary"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//field[@name='location']" position="attributes">
+                <attribute name="groups">fleet.fleet_group_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='next_assignation_date']" position="attributes">
+                <attribute name="groups">fleet.fleet_group_manager</attribute>
+            </xpath>
+
+            <!-- Hiding individual field from the vehicle group from users -->
+
+            <xpath expr="//field[@name='acquisition_date']" position="attributes">
+                <attribute name="groups">fleet.fleet_group_manager</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='vin_sn']" position="attributes">
+                <attribute name="groups">fleet.fleet_group_manager</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='car_value']" position="attributes">
+                <attribute name="groups">fleet.fleet_group_manager</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='net_car_value']" position="attributes">
+                <attribute name="groups">fleet.fleet_group_manager</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='residual_value']" position="attributes">
+                <attribute name="groups">fleet.fleet_group_manager</attribute>
+            </xpath>
+
+
+            <!-- start of controlling visible fields by user -->
+            <xpath expr="//field[@name='model_id']" position="attributes">
+                <attribute name="readonly">not current_user_is_admin</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='license_plate']" position="attributes">
+                <attribute name="readonly">not current_user_is_admin</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="readonly">not current_user_is_admin</attribute>
+            </xpath>
+            <!-- end of controlling visible fields by user -->
+
+
+            <xpath expr="//field[@name='model_id']" position="after">
+                <h1>
+                    <field name="car_tag" placeholder="Car Tag"
+                           readonly="not current_user_is_admin"/>
+                </h1>
+            </xpath>
+            <xpath expr="//field[@name='residual_value']" position="after">
+                <field name="car_status"/>
+                <field name="sequence" options='{"type": "number", "step": 1}'/>
+                <field name="has_access_service" invisible="1"/>
+                <field name="current_user_is_admin" invisible="1"/>
+                <field name="vehicle_category_id" readonly="not current_user_is_admin"/>
+            </xpath>
+            <button name='return_action_to_open' position="after">
+                <button name="redirect_to_service" type="object" class="oe_stat_button"
+                        icon="fa-history icon" groups="fleet.fleet_group_manager">
+                    <div class="o_field_widget o_stat_info">
+                        <field name="trips_count" widget="statinfo" string="Trips"/>
+                    </div>
+                </button>
+            </button>
+            <xpath expr="//page[@name='page_tax_info']" position="after">
+                <page string="Service Lines" name="service_lines"
+                      invisible="not has_access_service">
+                    <field name="service_lines">
+                        <list editable="top">
+                            <field name="service_type"/>
+                            <field name="service_interval"/>
+                            <field name="next_service" readonly="True"/>
+                            <field name="km_left"/>
+                            <field name="display_kanban"/>
+                            <button name="reset_next_service" string="Reset" type="object" icon="fa-refresh"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- new limited form for limited user -->
+
+    <record id="fleet_vehicle_view_form_limited_form" model="ir.ui.view">
+        <field name="name">fleet_vehicle_view_form_limited.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="arch" type="xml">
+            <form string="Fleet Vehicle Technicians Form">
+                <header>
+                </header>
+                <sheet>
+                    <field name="currency_id" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="return_action_to_open" type="object" class="oe_stat_button"
+                                icon="fa-tachometer" context="{'xml_id':'fleet_vehicle_odometer_action'}"
+                                help="show the odometer logs for this vehicle">
+                            <field name="odometer_count" widget="statinfo" string="Odometer"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="model_id" class="oe_edit_only"/>
+                        <h1>
+                            <field name="model_id" placeholder="e.g. Model S"/>
+                        </h1>
+                        <label for="license_plate" class="oe_edit_only"/>
+                        <h2>
+                            <field name="license_plate" class="oe_inline" placeholder="e.g. PAE 326"/>
+                        </h2>
+                        <h2>
+                            <field name="car_tag" class="oe_inline" placeholder="e.g. PAE 326"/>
+                        </h2>
+                        <field name="car_status"/>
+                    </div>
+                    <group string="Vehicle">
+                        <label for="odometer"/>
+                        <div class="o_row">
+                            <field name="odometer"/>
+                            <field name="odometer_unit"/>
+                        </div>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='fleet.fleet_vehicle_action' model='ir.actions.act_window'>
+        <field name="context">{}</field>
+    </record>
+    <record id="fleet_vehicle_inh_kanban" model="ir.ui.view">
+        <field name="name">fleet_vehicle_inh.kanban</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_kanban"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//main/div[1]" position="attributes">
+                <attribute name="class">model_data</attribute>
+            </xpath>
+            <xpath expr="//div[@class='model_data']" position="before">
+                <div class="custom_path d-flex gap-4">
+                    <div></div>
+                </div>
+            </xpath>
+            <xpath expr="//div[@class='custom_path d-flex gap-4']/div" position="before">
+                <xpath expr="//aside" position="move"/>
+            </xpath>
+
+            <xpath expr="//div[@class='custom_path d-flex gap-4']/div" position="inside">
+                    <xpath expr="//div[@class='model_data']" position="move"/>
+                    <xpath expr="//field[@name='tag_ids']" position="move"/>
+                    <xpath expr="//field[@name='driver_id']" position="move"/>
+                    <xpath expr="//field[@name='license_plate']" position="move"/>
+                    <xpath expr="//main/div[@class='small']" position="move"/>
+                    <xpath expr="//t[@t-if='record.location.raw_value']" position="move"/>
+                    <xpath expr="//field[@name='vehicle_properties']" position="move"/>
+            </xpath>
+            <xpath expr="//kanban[1]" position="attributes">
+                <attribute name="default_order">car_tag asc</attribute>
+                <attribute name="default_group_by"></attribute>
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" position="after">
+                <div class="o_kanban_inline_block">
+                    <field name="car_status" invisible="1"/>
+                    <img src='/itkan_fleet_customization/static/src/img/1.png' width="20px" height="20px" alt=""
+                         invisible="car_status != '1'"/>
+                    <img src='/itkan_fleet_customization/static/src/img/2.png' width="20px" height="20px" alt=""
+                         invisible="car_status != '2'"/>
+                    <img src='/itkan_fleet_customization/static/src/img/3.png' width="20px" height="20px" alt=""
+                         invisible="car_status != '3'"/>
+                    <img src='/itkan_fleet_customization/static/src/img/4.png' width="20px" height="20px" alt=""
+                         invisible="car_status != '4'"/>
+<!--                    <img t-att-src="kanban_image('fleet.vehicle', 'category_image', record.id.raw_value)"-->
+<!--                         width="20px" height="20px" alt=""/>-->
+                    <img t-attf-src="/web/image/fleet.vehicle/{{ record.id.raw_value }}/category_image"
+                         width="20px" height="20px" alt=""/>
+                </div>
+            </xpath>
+            <xpath expr="//footer[@class='pt-0 mt-0']" position="after">
+
+                <div class="vehicle_details">
+                    <label for="car_tag">
+                        <small>Tag:</small>
+                    </label>
+                    <field name="car_tag"/>
+                    <label for="seats">
+                        <small>/Seats:</small>
+                    </label>
+                    <field name="seats"/>
+                    <label for="doors">
+                        <small>/Doors:</small>
+                    </label>
+                    <field name="doors"/>
+                </div>
+                <div style="border:1px solid grey;margin-top:10px;"></div>
+                <table class="table table-sm o_main_table">
+                    <tbody>
+                        <tr style="display: flex; justify-content: space-between;font-size:10px">
+                            <td style="flex: 1; text-align: left; margin-right: -62px;" name="th_minimum">Type</td>
+                            <td style="flex: 1; text-align: left; margin-right: -22px;" name="th_maximum">Next Service
+                            </td>
+                            <td style="flex: 1; text-align: left;" name="th_maximum">Left to next service</td>
+                        </tr>
+                        <tr style="display: flex; justify-content: space-between; font-size:10px">
+                            <t t-foreach="record.service_lines.raw_value" t-as="o" t-if="o.display_kanban">
+                                <td style="flex: 1; text-align: center;">
+                                    <t t-esc="o.service_type[1]"/>
+                                </td>
+                                <td style="flex: 1; text-align: center;">
+                                    <t t-esc="o.next_service"/>
+                                </td>
+                                <td style="flex: 1; text-align: center;">
+                                    <t t-esc="o.km_left"/>
+                                </td>
+                            </t>
+                        </tr>
+                    </tbody>
+                </table>
+            </xpath>
+            <xpath expr="//t[@class='flex-row']" position="attributes">
+                <attribute name="style">margin-bottom:10px;</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

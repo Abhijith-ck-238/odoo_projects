@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Override the domain for 'My Tasks' Action (FSM Projects <= 1) -->
+    <record id="industry_fsm.project_task_action_fsm2" model="ir.actions.act_window">
+        <field name="domain">[('is_fsm', '=', True), ('project_id', '!=', False)]</field>
+    </record>
+</odoo>

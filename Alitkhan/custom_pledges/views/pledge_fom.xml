@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pledge_pledge_view_form" model="ir.ui.view">
+        <field name="name">pledge.pledge.view.form</field>
+        <field name="model">pledge.pledge</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+               <header>
+                    <button name="confirm" type="object" string="Confirm" invisible="status != 'draft'" confirm="You will not be able to delete this record after confirmation"/>
+                    <button name="reset_draft" type="object" string="Reset to draft" invisible="status != 'confirmed'" confirm="Are you sure you want to reset this record to draft "/>
+                    <button name="deduct" type="object" string="deduct" invisible="status == 'draft' or status == 'cleared'" confirm="You will be redirected to create a new pledge"/>
+                    <button name="clear_lc" type="object" string="Clear" invisible="status == 'draft' or status == 'cleared'" confirm="Are you sure you want to clear this record"/>
+                    <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                    <field name="status" invisible="1"/>
+                </header>
+                <sheet>
+                    <h3><field name="name" placeholder="Name"/></h3>
+                    <group>
+                        <group>
+                            <field name="is_partner_id_edit" invisible="1"/>
+                            <field name="partner_id" readonly="is_partner_id_edit != True or status != 'draft'" />
+                            <field name="is_lca_type_edit" invisible="1"/>
+                            <field name="lca_type" readonly="is_lca_type_edit != True or status != 'draft'"/>
+                            <field name="is_lc_type_edit" invisible="1"/>
+                            <field name="lc_type" invisible="lca_type != 'letter of credit'" readonly="is_lc_type_edit != True or status != 'draft'"/>
+                            <field name="is_related_contract_edit" invisible="1"/>
+                            <field name="related_contract" readonly="is_related_contract_edit != True" invisible="lca_type == 'bid bond'"/>
+                            <field name="is_bid_ref_edit" invisible="1"/>
+                            <field name="bid_ref" readonly="is_bid_ref_edit != True or status != 'draft'" invisible="lca_type != 'bid bond'"/>
+                            <field name="is_payment_method_edit" invisible="1"/>
+                            <field name="payment_method" invisible="lca_type == 'bid bond'" readonly="is_payment_method_edit != True or status != 'draft'"/>
+                            <field name="is_issuing_bank_name_edit" invisible="1"/>
+                            <field name="issuing_bank_name" invisible="payment_method == 'cash'" readonly="is_issuing_bank_name_edit != True or status != 'draft'"/>
+                            <field name="is_benefeciary_bank_edit" invisible="1"/>
+                            <field name="benefeciary_bank" readonly="is_benefeciary_bank_edit != True"/>
+                            <field name="is_currency_id_edit" invisible="1"/>
+                            <field name="currency_id" readonly="is_currency_id_edit != True"/>
+                            <field name="is_amount_edit" invisible="1"/>
+                            <field name="amount" class="oe_inline" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="is_amount_edit != True or status != 'draft'"/>
+                            <field name="is_paid_amount_edit" invisible="1"/>
+                            <field name="paid_amount" class="oe_inline" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="is_paid_amount_edit != True"/>
+                            <field name="is_parent_pledge_edit" invisible="1"/>
+                            <field name="parent_pledge" readonly="is_parent_pledge_edit != True"/>
+                        </group>
+                     <group>
+                            <field name="is_acceptance_date_edit" invisible="1"/>
+                            <field name="acceptance_date" readonly="is_acceptance_date_edit != True"/>
+                        </group>
+                        <group>
+                            <field name="is_issuing_bank_ref_edit" invisible="1"/>
+                            <field name="issuing_bank_ref" readonly="is_issuing_bank_ref_edit != True or status != 'draft'"/>
+                            <field name="is_attachment_ids_edit" invisible="1"/>
+                            <field name="attachment_ids" widget="many2many_binary" class="oe_inline" readonly="is_attachment_ids_edit != True or status != 'draft'"/>
+                            <button name="re_confirm" type="object" string="extend" invisible="status != 'expired'" confirm="You are about to reconfirm an expired pledge, please make sure the date is correct, this step is irreversible"/>
+                        </group>
+                        <group>
+                    </group>
+                    <notebook>
+                        <page name="validity_lines" string="Validity Lines">
+                        <field name="is_validity_lines_edit" invisible="1"/>
+                        <field name="validity_lines" readonly="is_validity_lines_edit != True or status == 'cleared'">
+                            <list editable="top">
+                                <field name="issuing_date"/>
+                                <field name="expiration_date"/>
+                            </list>
+                        </field>
+                        </page>
+                        <page name="expenses_tab" string="Expenses Information">
+                         <field name="is_expense_lines_edit" invisible="1"/>
+                            <field name="expense_lines" readonly="is_validity_lines_edit != True">
+                                    <list editable="top">
+                                        <field name="name"/>
+                                        <field name="amount"/>
+                                        <field name="currency"/>
+                                    </list>
+                            </field>
+                        </page>
+                       <page name="clearance_info" string="Clearance Information" invisible="status == 'draft'">
+                            <group>
+                                <field name="is_clearance_amount_edit" invisible="1"/>
+                                <field name="clearance_amount" readonly="status == 'cleared' or is_clearance_amount_edit != True"/>
+                                <field name="is_clearance_attachments_edit" invisible="1"/>
+                                <field name="clearance_attachement" readonly="status == 'cleared' or is_clearance_attachments_edit != True"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                    </group>
+                    <field name="is_notes_edit" invisible="1"/>
+                    <field name="notes" readonly="is_notes_edit != True"/>
+                </sheet>
+                    <chatter/>
+            </form>
+        </field>
+    </record>
+
+   <record id="pledge_pledge_view_form_inherit" model="ir.ui.view">
+        <field name="name">pledge.pledge.view.form.inherit</field>
+        <field name="model">pledge.pledge</field>
+        <field name="inherit_id" ref="custom_pledges.pledge_pledge_view_form"/>
+        <field name="arch" type="xml" >
+            <xpath expr="//field[@name='related_contract']" position="after">
+                <field name="is_contract_type_edit" invisible="1"/>
+                <field name="contract_type" readonly="is_contract_type_edit != True"/>
+                <field name="active" invisible="1"/>
+                <field name="is_count_pending_amendments_edit" invisible="1"/>
+                <field name="count_pending_amendments" readonly="is_count_pending_amendments_edit != True"/>
+            </xpath>
+            <xpath expr="//field[@name='issuing_bank_ref']" position="after">
+                <field name="is_lc_type_id_edit" invisible="1"/>
+                <field name="lc_type_id" readonly="is_lc_type_id_edit != True"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pledge_pledge_view_form_inherit_studio" model="ir.ui.view">
+        <field name="name">pledge.pledge.view.form.inherit.studio</field>
+        <field name="model">pledge.pledge</field>
+        <field name="inherit_id" ref="custom_pledges.pledge_pledge_view_form"/>
+        <field name="arch" type="xml" >
+             <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='amount']" position="after">
+                <field name="is_x_studio_amount_coverage_edit" invisible="1"/>
+                <field name="x_studio_amount_coverage" string="Amount Coverage" widget="monetary" readonly="is_x_studio_amount_coverage_edit != True"/>
+            </xpath>
+            <xpath expr="//field[@name='acceptance_date']" position="before">
+                <field name="is_x_studio_opining_date_edit" invisible="1"/>
+                <field name="x_studio_opining_date" string="Opining date" readonly="is_x_studio_opining_date_edit != True"/>
+            </xpath>
+            <xpath expr="//field[@name='acceptance_date']" position="after">
+                <field name="is_x_studio_expire_date_edit" invisible="1"/>
+                <field name="x_studio_expire_date" string="Expire Date" readonly="is_x_studio_expire_date_edit != True"/>
+            </xpath>
+            <xpath expr="//field[@name='expiration_date']" position="attributes">
+                <attribute name="string">Expiration Date Notification</attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/notebook[1]" position="inside">
+                <page name="studio_page_3hQrw" string="Deadlines">
+                    <field name="deadline_ids">
+                        <list>
+                            <field name="pledge_id" invisible="1"/>
+                            <field name="deadline_entity"/>
+                            <field name="deadline"/>
+                            <field name="alarm_entity"/>
+                        </list>
+                        <form>
+                            <group name="studio_group_ead25f">
+                                <group name="studio_group_2271ed">
+                                    <field name="pledge_id" invisible="1"/>
+                                    <field name="deadline_entity"/>
+                                </group>
+                                <group name="studio_group_557e9f">
+                                    <field name="deadline"/>
+                                    <field name="alarm_entity"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+                <page name="amendments" string="Amendments">
+                    <field name="amendment_ids">
+                        <list>
+                            <field name="pledge_id" invisible="1"/>
+                            <field name="description"/>
+                            <field name="status"/>
+                        </list>
+                        <form>
+                            <group name="studio_group_0e46a1">
+                                <group name="studio_group_fee269">
+                                    <field name="pledge_id" invisible="1"/>
+                                    <field name="description"/>
+                                </group>
+                                <group name="studio_group_50e6b1">
+                                    <field name="status"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+               <page name="payment_installation_ids" string="Payment Instalments">
+                    <field name="is_payment_installation_ids_edit" invisible="1"/>
+                    <field name="payment_installation_ids" readonly="is_payment_installation_ids_edit != True">
+                        <list editable="top">
+                            <field name="pledge_id" invisible="1"/>
+                            <field name="payment_type"/>
+                            <field name="payment_amount"/>
+                            <field name="currency_id"/>
+                            <field name="payment_date"/>
+                        </list>
+                        <form>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pledge_pledge_view_form_inherit_studio_inherit" model="ir.ui.view">
+        <field name="name">pledge.pledge.view.form.inherit.studio.inherit</field>
+        <field name="model">pledge.pledge</field>
+        <field name="inherit_id" ref="custom_pledges.pledge_pledge_view_form_inherit_studio"/>
+        <field name="arch" type="xml" >
+            <xpath expr="//page[@name='studio_page_3hQrw']" position="replace">
+                <page name="studio_page_3hQrw" string="Deadlines">
+                    <field name="is_deadline_ids_edit" invisible="1"/>
+                    <field name="deadline_ids" readonly="is_deadline_ids_edit != True">
+                        <list>
+                            <field name="pledge_id" invisible="1"/>
+                            <field name="deadline_entity"/>
+                            <field name="deadline"/>
+                            <field name="alarm_entity"/>
+                        </list>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="pledge_id" invisible="1"/>
+                                    <field name="deadline_entity"/>
+                                </group>
+                                <group>
+                                    <field name="deadline"/>
+                                    <field name="alarm_entity"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='amendments']" position="replace">
+                <page name="amendments" string="Amendments">
+                    <field name = "is_amendment_ids_edit" invisible="1"/>
+                    <field name="amendment_ids" readonly="is_amendment_ids_edit != True">
+                        <list>
+                            <field name="pledge_id" invisible="1"/>
+                            <field name="description"/>
+                            <field name="status"/>
+                        </list>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="pledge_id" invisible="1"/>
+                                    <field name="description"/>
+                                </group>
+                                <group>
+                                    <field name="status"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="pledge_pledge_view_form_inherit_studio_inherit2" model="ir.ui.view">
+        <field name="name">pledge.pledge.view.form.inherit.studio.inherit2</field>
+        <field name="model">pledge.pledge</field>
+        <field name="inherit_id" ref="custom_pledges.pledge_pledge_view_form_inherit_studio"/>
+        <field name="arch" type="xml" >
+            <xpath expr="//field[@name='x_studio_expire_date']" position="after">
+                <field name="is_date_of_extension_edit" invisible="1"/>
+                <field name="date_of_extension" readonly="is_date_of_extension_edit != True"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

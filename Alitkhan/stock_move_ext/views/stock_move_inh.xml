@@ -1,0 +1,23 @@
+<odoo> 
+    <data>
+
+        <record id="stock_move_line_inh_tree" model="ir.ui.view">
+            <field name="name">stock_move_line_inh.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_id']" position="before">
+                    <field name="origin"/>
+                    <field name="partner_id"/>
+                    <field name="life_date"/>
+                    <field name="on_hand"/>
+                    <field name="out_going"/>
+                    <field name="forcasted"/>
+                    
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

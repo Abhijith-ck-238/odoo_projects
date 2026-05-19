@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Main Custom Equipment Filter Menu Template -->
+    <t t-name="custom_equipment.CustomEquipmentFilterMenu" owl="1">
+        <div class="o_custom_equipment_filters">
+            <!-- Acquirers Filter -->
+            <div class="dropdown-divider"/>
+            <button type="button"
+                    class="dropdown-item o_acquirers_filter"
+                    t-on-click="toggleAcquirersMenu">
+                <i class="fa fa-users me-2"/>
+                Acquirers
+                <i t-if="state.acquirersMenuOpen" class="fa fa-chevron-up float-end"/>
+                <i t-else="" class="fa fa-chevron-down float-end"/>
+            </button>
+
+            <div t-if="state.acquirersMenuOpen" class="dropdown-item-text p-3">
+                <div class="d-flex flex-column">
+                    <label class="form-label mb-2">Employee Name:</label>
+                    <input type="text"
+                           class="form-control mb-3"
+                           placeholder="Enter employee name"
+                           t-model="state.employeeName"
+                           t-on-input="onEmployeeNameChange"
+                           t-on-keydown="(ev) => this.onKeydown(ev, 'acquirers')"
+                           autocomplete="off"/>
+                    <div class="d-flex gap-2">
+                        <button type="button"
+                                class="btn btn-primary btn-sm"
+                                t-on-click="applyAcquirersFilter"
+                                t-att-disabled="!state.employeeName.trim()">
+                            <i class="fa fa-check me-1"/>Apply
+                        </button>
+                        <button type="button"
+                                class="btn btn-secondary btn-sm"
+                                t-on-click="toggleAcquirersMenu">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Acquirers Filter -->
+            <button type="button"
+                    class="dropdown-item o_current_acquirers_filter"
+                    t-on-click="toggleCurrentAcquirersMenu">
+                <i class="fa fa-user-check me-2"/>
+                Current Acquirers
+                <i t-if="state.currentAcquirersMenuOpen" class="fa fa-chevron-up float-end"/>
+                <i t-else="" class="fa fa-chevron-down float-end"/>
+            </button>
+
+            <div t-if="state.currentAcquirersMenuOpen" class="dropdown-item-text p-3">
+                <div class="d-flex flex-column">
+                    <label class="form-label mb-2">Employee Name:</label>
+                    <input type="text"
+                           class="form-control mb-3"
+                           placeholder="Enter employee name"
+                           t-model="state.employeeNameCurrent"
+                           t-on-input="onEmployeeNameCurrentChange"
+                           t-on-keydown="(ev) => this.onKeydown(ev, 'current')"
+                           autocomplete="off"/>
+                    <div class="d-flex gap-2">
+                        <button type="button"
+                                class="btn btn-primary btn-sm"
+                                t-on-click="applyCurrentAcquirersFilter"
+                                t-att-disabled="!state.employeeNameCurrent.trim()">
+                            <i class="fa fa-check me-1"/>Apply
+                        </button>
+                        <button type="button"
+                                class="btn btn-secondary btn-sm"
+                                t-on-click="toggleCurrentAcquirersMenu">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Previous Acquirers Filter -->
+            <button type="button"
+                    class="dropdown-item o_previous_acquirers_filter"
+                    t-on-click="togglePreviousAcquirersMenu">
+                <i class="fa fa-user-times me-2"/>
+                Previous Acquirers
+                <i t-if="state.previousAcquirersMenuOpen" class="fa fa-chevron-up float-end"/>
+                <i t-else="" class="fa fa-chevron-down float-end"/>
+            </button>
+
+            <div t-if="state.previousAcquirersMenuOpen" class="dropdown-item-text p-3">
+                <div class="d-flex flex-column">
+                    <label class="form-label mb-2">Employee Name:</label>
+                    <input type="text"
+                           class="form-control mb-3"
+                           placeholder="Enter employee name"
+                           t-model="state.employeeNamePrevious"
+                           t-on-input="onEmployeeNamePreviousChange"
+                           t-on-keydown="(ev) => this.onKeydown(ev, 'previous')"
+                           autocomplete="off"/>
+                    <div class="d-flex gap-2">
+                        <button type="button"
+                                class="btn btn-primary btn-sm"
+                                t-on-click="applyPreviousAcquirersFilter"
+                                t-att-disabled="!state.employeeNamePrevious.trim()">
+                            <i class="fa fa-check me-1"/>Apply
+                        </button>
+                        <button type="button"
+                                class="btn btn-secondary btn-sm"
+                                t-on-click="togglePreviousAcquirersMenu">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <!-- Patch template for the SearchBarMenu -->
+    <t t-name="web.SearchBarMenu" t-inherit="web.SearchBarMenu" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_searchview_autocomplete')]" position="after">
+            <t t-if="isEquipmentModel">
+                <CustomEquipmentFilterMenu onApplyFilter.bind="applyCustomFilter"/>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

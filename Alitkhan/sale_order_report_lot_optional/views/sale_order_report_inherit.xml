@@ -1,0 +1,28 @@
+<odoo>
+    <template id="sale_order_report_mod" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//table[contains(@class, 'o_main_table')]//th[@name='th_description']" position="after">
+            <th t-if="doc.print_lot" class="text-left">Lot Number</th>
+            <th t-if="doc.print_exp" class="text-left">Lot Expiration</th>
+            <th t-if="doc.print_note" class="text-left">Lot Note</th>
+        </xpath>
+
+        <xpath expr="//table[contains(@class, 'o_main_table')]//td[@name='td_name']" position="after">
+            <td t-if="doc.print_lot"><span t-field="line.lot_id"/></td>
+            <td t-if="doc.print_exp"><span t-field="line.lot_id.expiration_date"/></td>
+            <td t-if="doc.print_note"><span t-field="line.lot_id.note"/></td>
+        </xpath>
+
+         <xpath expr="//p[@id='fiscal_position_remark']" position="after">
+             <td t-if="doc.add_temp_footer"><span>Please visit the below link for all the details about how to use this product:<br/>
+             يرجى زيارة الموقع ادناه لكل المعلومات الخاصه بكيفية استخدام هذ المنتج<br/>
+             https://doclib.siemens-healthineers.com/documents<br/>
+             for more application details please contact us on :<br/>
+             +964 782 713 4000<br/>
+             +964 781 394 4455</span></td>
+
+
+         </xpath>
+
+         
+    </template>
+</odoo>

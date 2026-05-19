@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_travelling_data,travelling.data,model_travelling_data,helpdesk.group_helpdesk_manager,1,1,1,1
+access_travelling_data_users,travelling.data,model_travelling_data,helpdesk.group_helpdesk_user,1,0,0,0
+limited_access_service_report_company,service.report.company,model_service_report_company,custom_service_reports.group_service_report_company_limited_user,1,0,0,0
+limited_access_service_report,service.report,model_service_report,custom_service_reports.group_service_report_company_limited_user,1,1,1,0
+service_reports.access_service_report,service.report,model_service_report,base.group_user,1,1,1,0

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rfid_tags,access.rfid.tags,model_rfid_tag_epc,base.group_user,1,1,1,1
+access_rfid_transfer,access.rfid.transfer,model_rfid_transfer,base.group_user,1,1,1,1
+access_rfid_transfer_line,access.rfid.transfer.line,model_rfid_transfer_line,base.group_user,1,1,1,1
+access_extra_rfid_quantity,access.extra.rfid.quantity,model_extra_rfid_quantity,base.group_user,1,1,1,1
+access_done_confirm_wizard,access.done.confirm.wizard,model_done_confirm_wizard,base.group_user,1,1,1,1
+access_fetch_confirm_wizard,access.fetch.confirm.wizard,model_fetch_confirm_wizard,base.group_user,1,1,1,1
+access_scan_confirm_wizard,scan.confirm.wizard,model_scan_confirm_wizard,base.group_user,1,1,1,1
+access_rfid_out_transfer,rfid.out.transfer,model_rfid_out_transfer,base.group_user,1,1,1,1

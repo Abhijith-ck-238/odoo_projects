@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_budget_analytic_team_approver,budget.analytic,custom_expense.model_budget_analytic,hr_expense.group_hr_expense_team_approver,1,1,1,1
+access_budget_analytic_expense_manager,budget.analytic,custom_expense.model_budget_analytic,hr_expense.group_hr_expense_manager,1,1,1,1
+access_budget_line,budget.line,account_budget.model_budget_line,hr_expense.group_hr_expense_team_approver,1,1,1,1
+access_budget_line_team_approver,budget.line,account_budget.model_budget_line,hr_expense.group_hr_expense_team_approver,1,1,1,1
+hr_expense_access_account_analytic_line_user,account.analytic.line.user,analytic.model_account_analytic_line,hr_expense.group_hr_expense_team_approver,1,1,1,0
+hr_timesheet_access_account_analytic_line_user,analytic.account.analytic.line.timesheet.user,analytic.model_account_analytic_line,hr_timesheet.group_hr_timesheet_user,1,1,1,0
+analytic_access_account_analytic_line,analytic.access_account_analytic_line,analytic.model_account_analytic_line,analytic.group_analytic_accounting,1,1,1,0
+project_access_account_analytic_line_project,account.analytic.line project,analytic.model_account_analytic_line,project.group_project_manager,1,1,1,0

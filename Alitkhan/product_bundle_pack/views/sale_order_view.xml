@@ -1,0 +1,36 @@
+<odoo>
+  <data>
+
+    <record id="sale_order_form_pack" model="ir.ui.view">
+      <field name="name">sale.order.form.pack</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='order_line']//list//field[@name='name']" position="after">
+          <field name="sale_pack_id" domain="[('product_id', '=', product_id)]" optional="hide"/>
+        </xpath>
+
+        <xpath expr="//field[@name='order_line']//form//div[@name='invoice_lines']" position="replace">
+          <notebook>
+            <page name="invoice_lines" string="Invoice Lines" groups="base.group_no_one" invisible="display_type">
+              <field name="invoice_lines"/>
+            </page>
+            <page name="product_pack" string="Product Pack" invisible="not sale_pack_id">
+              <field name="sale_pack_id" invisible="1"/>
+              <field name="sale_pack_lines">
+                <list>
+                  <field name="product_id" width="2"/>
+                  <field name="qty_uom" width="1"/>
+                  <field name="unit_price" width="1" sum="Unit Price"/>
+                  <field name="total_price" width="1" sum="Total Price"/>
+                </list>
+              </field>
+            </page>
+          </notebook>
+        </xpath>
+
+      </field>
+    </record>
+
+  </data>
+</odoo>

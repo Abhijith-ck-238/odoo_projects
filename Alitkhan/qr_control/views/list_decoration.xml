@@ -1,0 +1,7 @@
+<odoo>
+    <template id="list_decoration" name="list_decoration" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link href="/qr_control/static/src/css/decoration.css" rel="stylesheet" type="text/css"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,28 @@
+<odoo>
+  <data>
+
+    <record model="ir.actions.act_window" id="shipment_tracker.action_window">
+      <field name="name">Shipments</field>
+      <field name="res_model">logistics.shipment</field>
+      <field name="view_mode">kanban</field>
+      <field name="context">{"kanban_view_ref":"logistics.logistics_shipment_kanban_readonly"}</field>
+    </record>
+
+
+    <menuitem 
+      name="Shipment Tracker" 
+      id="shipment_tracker.menu_root"
+      groups="shipment_tracker.group_tracking_access"
+      web_icon="shipment_tracker,static/src/img/icon.png"
+    /> 
+
+    <menuitem 
+      name="Shipment Tracker" 
+      id="shipment_tracker.tracker_menu" 
+      parent="shipment_tracker.menu_root" 
+      action="shipment_tracker.action_window"
+    />
+
+
+  </data>
+</odoo>

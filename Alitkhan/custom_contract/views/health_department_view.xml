@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="health_department_tree_view" model="ir.ui.view">
+            <field name="name">health.department.tree.view</field>
+            <field name="model">health.department</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="health_department_view" model="ir.ui.view">
+            <field name="name">health.department.view</field>
+            <field name="model">health.department</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="health_department_action_window"
+                model="ir.actions.act_window">
+            <field name="name">Health Department</field>
+            <field name="res_model">health.department</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Health Department
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Health Department" parent="contracts.menu_settings"
+                  id="menu_health_department"
+                  action="health_department_action_window"
+                  groups="contracts.user_group"/>
+
+    </data>
+</odoo>

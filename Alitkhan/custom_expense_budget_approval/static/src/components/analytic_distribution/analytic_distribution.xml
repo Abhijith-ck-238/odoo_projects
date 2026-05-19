@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="custom_expense.AnalyticDistributionPopup"
+       t-inherit="analytic.AnalyticDistributionPopup">
+        <xpath expr="//thead" position="replace">
+            <thead>
+                <tr class="border-bottom">
+                    <th>Analytic Account</th>
+                    <th class="numeric_column_width">Percentage</th>
+                    <th t-if="valueColumnEnabled" class="numeric_column_width"
+                        t-out="props.record.fields[props.amount_field].string"/>
+                    <th class="deleteColumn w-20px"/>
+                </tr>
+            </thead>
+        </xpath>
+
+        <xpath expr="//tbody" position="replace">
+            <tbody>
+                <tr t-foreach="state.formattedData" t-as="line" t-key="line.id" t-att-id="line_index"
+                    t-att-name="'line_' + line_index">
+                    <Record t-props="recordProps(line)" t-slot-scope="data">
+                        <td t-foreach="Object.keys(data.record.fields).filter((f) => f.startsWith('x_plan'))"
+                            t-as="field" t-key="field">
+                            <Field id="field" name="field" record="data.record"
+                                   canOpen="false" canCreate="false"
+                                   canCreateEdit="false"
+                                   canQuickCreate="false"/>
+                        </td>
+                        <td></td>
+                        <td class="numeric_column_width">
+                            <Field id="'percentage'" name="'percentage'" record="data.record"/>
+                        </td>
+                        <td t-if="valueColumnEnabled" class="numeric_column_width">
+                            <Field id="props.amount_field" name="props.amount_field"
+                                   record="data.record"/>
+                        </td>
+                        <td class="w-20px">
+                            <span class="fa fa-trash-o cursor-pointer"
+                                  t-on-click.stop="() => this.deleteLine(line_index)"/>
+                        </td>
+                    </Record>
+                </tr>
+
+                <tr>
+                    <td t-on-click.stop.prevent="addLine"
+                        class="o_field_x2many_list_row_add"
+                        t-att-colspan="allPlans.length + 2 + valueColumnEnabled">
+                        <a href="#" t-ref="addLineButton" tabindex="0">Add a Line</a>
+                    </td>
+                </tr>
+            </tbody>
+        </xpath>
+    </t>
+
+      <t t-name="custom_expense.AnalyticDistribution"
+                t-inherit="analytic.AnalyticDistribution"
+                t-inherit-mode="extension">
+                 <xpath expr="//div[contains(@class, 'o_input_dropdown')]//t[@t-call='analytic.AnalyticDistributionPopup']" position="replace">
+                    <t t-call="custom_expense.AnalyticDistributionPopup"/>
+                </xpath>
+            </t>
+
+</templates>

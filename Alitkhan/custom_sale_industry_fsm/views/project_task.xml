@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="project_task_sale_order_replace" model="ir.ui.view">
+            <field name="name">project.task.sale_order</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_order_id']" position="replace">
+                    <field name="sale_order_id" groups="logistics.logistics_manager"/>
+                </xpath>
+                <xpath expr="//field[@name='related_helpdesk_ticket']" position="after">
+                    <field name="sale_order_char"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project_task_view_helpdesk_user" model="ir.ui.view">
+            <field name="name">project.task.helpdesk_user</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <field name="brand_id" position="replace">
+                    <field name="brand_id" readonly="1"/>
+                </field>
+                <field name="vehicle_ids" position="replace">
+                    <field name="vehicle_ids" readonly="1"
+                           widget="many2many_tags"/>
+                </field>
+                <field name="co_user_ids" position="replace">
+                    <field name="co_user_ids" readonly="1"
+                           widget="many2many_tags"/>
+                </field>
+                <field name="user_id" position="replace">
+                    <field name="user_id" readonly="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

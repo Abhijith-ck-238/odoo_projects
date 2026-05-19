@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="field_access_view_tree" model="ir.ui.view">
+        <field name="name">field.access.list</field>
+        <field name="model">field.access</field>
+        <field name="arch" type="xml">
+            <list string="Channel" editable="bottom">
+                <field name="field_id"/>
+                <field name="user_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="field_access_view_search" model="ir.ui.view">
+        <field name="name">field.access.search</field>
+        <field name="model">field.access</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="field_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_field_access" model="ir.actions.act_window">
+        <field name="name">Field Access</field>
+        <field name="res_model">field.access</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_field_access" name="Field Access" action="action_field_access" parent="pledge_configuration" sequence="3"/>
+</odoo>

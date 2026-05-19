@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Employee View -->
+    <record id="approval_direct_manager_hr_employee_view_form" model="ir.ui.view">
+        <field name="name">direct.manager.hr.employee.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="replace">
+                <field name="direct_manager_id"/>
+                <field name="second_direct_manager_id"/>
+                <field name="parent_id"/>
+                <field name="director_id"/>
+            </xpath>
+
+              <xpath expr="//field[@name='image_1920']" position="attributes">
+                <attribute name="options">{"zoom":true,"preview_image":"image_128","size":[0,270]}</attribute>
+              </xpath>
+
+              <xpath expr="//field[@name='company_id']" position="after">
+                <field invisible="1" name="x_studio_field_Qmo9K_filename"/>
+              </xpath>
+
+              <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+                <group name="studio_group_WH65U">
+                  </group>
+              </xpath>
+
+             <xpath expr="//field[@name='employee_skill_ids']" position="inside">
+                <form string="Skills">
+                  <sheet name="studio_sheet_bd908c">
+                    <group name="studio_group_2b80f0">
+                      <group name="studio_group_c1a447">
+                        <field name="skill_type_id"/>
+                        <field name="skill_id" domain="[('skill_type_id', '=', skill_type_id)]" options="{'no_create_edit':True}"/>
+                      </group>
+                      <group name="studio_group_2ec4bb">
+                        <field name="skill_level_id" domain="[('skill_type_id', '=', skill_type_id)]"/>
+                        <field name="level_progress" widget="progressbar"/>
+                      </group>
+                    </group>
+                  </sheet>
+                </form>
+              </xpath>
+
+              <xpath expr="//field[@name='address_id']" position="after">
+                <field name="related_partner_id"/>
+              </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="view_hr_holidays_filter_inherit_all_approver" model="ir.ui.view">
+        <field name="name">hr.holidays.filter.inherit.all.approver</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='approve']" position="replace">
+                <filter domain="[('state','in',('confirm','validate1','direct_manager', '2direct_manager' ,'manager','director','hr'))]"
+                        string="To Approve" name="approve"/>
+            </xpath>
+            <xpath expr="//filter[@name='approve']" position="replace">
+                <filter domain="[('state','in',('confirm','validate1','direct_manager', '2direct_manager' ,'manager','director','hr'))]" string="To Approve" name="approve"/>
+            </xpath>
+             <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="manager_id"/>
+            </xpath>
+
+            <xpath expr="//filter[@name='group_employee']" position="before">
+                <filter name="studio_group_by_hDx49" string="Department" context="{'group_by': 'department_id'}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="hr_holidays.hr_leave_action_action_approve_department" model="ir.actions.act_window">
+        <field name="domain">['|','|','|','|',('employee_id.leave_manager_id', '=',
+            uid),('employee_id.direct_manager_id', '=', uid),('employee_id.second_direct_manager_id', '=', uid),
+            ('employee_id.director_id', '=', uid),('employee_id.parent_id.user_id', '=', uid)]
+        </field>
+    </record>
+
+    <!--    Leave Type view-->
+    <record id="edit_holiday_status_form_inherit" model="ir.ui.view">
+        <field name="name">hr.leave.type.form</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='configuration']/field[@name='responsible_ids']" position="replace">
+                <field name="responsible_ids"
+                       invisible="leave_validation_type in ['no_validation', 'manager','direct_director']"
+                       required="leave_validation_type in ['hr', 'both']"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_leave_view_form_manager_inheritt" model="ir.ui.view">
+        <field name="name">hr.leave.view.form.manager</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form_manager"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='holiday_status_id']" position="after">
+                <field name="validation_type" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+<!--    <record id="hr_leave_view_form_manager_approve_inherit" model="ir.ui.view">-->
+<!--        <field name="name">hr.leave.form</field>-->
+<!--        <field name="model">hr.leave</field>-->
+<!--                //"hr_leave_view_form_manager_approve no such record"-->
+<!--        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form_manager_approve"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--&lt;!&ndash;            <xpath expr="//field[@name='department_id']" position="after">&ndash;&gt;-->
+<!--&lt;!&ndash;                <field name="validation_type" invisible="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            </xpath>&ndash;&gt;-->
+<!--            <field name="department_id" position="after">-->
+<!--                <field name="validation_type" invisible="1"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+    <!--    HR LEAVE VIEW-->
+    <record id="hr_leave_view_form_inherit_approval" model="ir.ui.view">
+        <field name="name">hr.leave.form</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+        <field name="arch" type="xml">
+            <field name="holiday_status_id" position="after">
+                <field name="validation_type" invisible="1"/>
+            </field>
+            <xpath expr="//header/button[@name='action_approve']" position="after">
+                <button string="Send For Approval" name="send_for_approval"
+                        invisible="validation_type not in ['direct_director'] or state not in ['draft','confirm']"
+                        type="object" class="oe_highlight" />
+                <button string="Approve" name="direct_manager_approve"
+                        invisible="state not in ['direct_manager']"
+                        type="object" class="oe_highlight"/>
+
+                <button string="Approve" name="second_direct_manager_approve"
+                        invisible="state not in ['2direct_manager']"
+                        type="object" class="oe_highlight"/>
+
+                <button string="Approve" name="manager_approve"
+                        invisible="state not in ['manager']"
+                        type="object" class="oe_highlight"/>
+
+                <button string="Approve" name="director_approve"
+                        invisible="state not in ['director']"
+                        type="object" class="oe_highlight"/>
+
+                <button string="Approve" name="hr_officer_approve"
+                        invisible="state not in  ['hr']"
+                        type="object" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//header/button[@name='action_refuse']" position="replace">
+                                <button string="Refuse" name="action_refuse" type="object" invisible="not can_approve or state not in ['confirm','validate','validate1', 'direct_manager', '2direct_manager', 'manager', 'director', 'hr']"/>
+
+<!--                <button string="Refuse" name="action_refuse"-->
+<!--                        type="object"-->
+<!--                        invisible = "not can_approve or state not in  ('confirm','validate','validate1', 'direct_manager', '2direct_manager', 'manager', 'director', 'hr')"/>-->
+            </xpath>
+            <xpath expr="//header/button[@name='action_approve']" position="replace">
+                <button string="Approve" name="action_approve"
+                        type="object"
+                        class="oe_highlight"
+                        invisible = "validation_type in 'direct_director' or not can_approve or state != 'confirm'"/>
+            </xpath>
+            <field name="request_date_from" position="replace">
+                <field name="request_date_from" class="oe_inline"
+                       readonly = "state not in  ('draft', 'confirm','direct_manager', '2direct_manager', 'manager', 'director', 'hr')"/>
+            </field>
+
+            <field name="request_date_to" position="replace">
+                <field name="request_date_to" class="oe_inline"
+                       readonly ="state not in ('draft', 'confirm', 'direct_manager', '2direct_manager', 'manager', 'director', 'hr')"
+                       invisible="request_unit_half or request_unit_hours"/>
+            </field>
+
+<!--            <field name="request_date_from_period" position="replace">-->
+<!--                <field name="request_date_from_period" class="oe_inline"-->
+<!--                       string="In"-->
+<!--                       options="{'horizontal': True}"-->
+<!--                       readonly="state not in ('draft', 'confirm','direct_manager', '2direct_manager', 'manager', 'director', 'hr')"-->
+<!--                       required ='request_unit_half'-->
+<!--                       invisible="not request_unit_half"/>-->
+
+<!--            </field>-->
+            <!-- Domain need to be given after confirming the allocation type """domain="['&amp;', ('virtual_remaining_leaves', '&gt;', 0), '|', ('allocation_type', 'in', ['fixed_allocation', 'no']),'&amp;',('allocation_type', '=', 'fixed'), ('max_leaves', '>', '0')]"-->
+<!--                                   domain="['&amp;', ('virtual_remaining_leaves', '&gt;', 0), '|', ('allocation_validation_type', 'in', ['fixed_allocation', 'no']),'&amp;',('allocation_validation_type', '=', 'fixed'), ('max_leaves', '>', '0')]"
+-->
+            <field name="holiday_status_id" position="replace">
+                    <field name="holiday_status_id" force_save="1"
+                                domain="[
+                                    '|',
+                                        ('requires_allocation', '=', 'no'),
+                                        '&amp;',
+                                            ('has_valid_allocation', '=', True),
+                                            '|',
+                                                ('allows_negative', '=', True),
+                                                '&amp;',
+                                                    ('virtual_remaining_leaves', '&gt;', 0),
+                                                    ('allows_negative', '=', False),
+                                ]"
+                                context="{'employee_id': employee_id, 'default_date_from': date_from, 'default_date_to': date_to}"
+                                options="{'no_create': True, 'no_open': True, 'request_type': 'leave'}"
+                                readonly="state in ['cancel', 'refuse', 'validate', 'validate1']"/>
+            </field>
+            <field name="request_unit_half" position="replace">
+                <field name="request_unit_half" class="oe_inline" invisible="leave_type_request_unit == 'day'" readonly="state not in ['confirm','draft']"/>
+            </field>
+
+            <field name="name" position="replace">
+                 <field name="name" readonly="state not in ['confirm','draft']" widget="text" placeholder="Add a description..." />
+            </field>
+
+
+
+
+<!--                <field name="holiday_status_id"-->
+<!--                       readonly="state not in ('draft', 'confirm','direct_manager', '2direct_manager', 'manager', 'director', 'hr')"-->
+<!--                       context="{'employee_id':employee_id, 'default_date_from':date_from}"-->
+<!--                       options="{'no_create': True, 'no_open': True}"-->
+<!--                       domain="['&amp;', ('virtual_remaining_leaves', '&gt;', 0), '|', ('allocation_validation_type', 'in', ['fixed_allocation', 'no']),'&amp;',('allocation_validation_type', '=', 'fixed'), ('max_leaves', '>', '0')]"-->
+<!--                       class="col-9 pl-0" nolabel="1"/>-->
+
+        </field>
+    </record>
+</odoo>

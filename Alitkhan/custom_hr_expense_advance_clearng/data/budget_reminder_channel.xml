@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record model="discuss.channel" id="general_budget_reminder_channel">
+            <field name="name">General Budget Reminder</field>
+<!--            <field name="public">groups</field>-->
+            <field name="group_public_id" ref="hr_expense.group_hr_expense_team_approver"/>
+            <field name="group_ids"
+                   eval="[(4, ref('hr_expense.group_hr_expense_team_approver'))]"/>
+            <field name="description">Budget Reminder channel
+            </field>
+        </record>
+
+        <record model="discuss.channel" id="technical_budget_reminder_channel">
+            <field name="name">Technical Budget Reminder</field>
+<!--            <field name="public">groups</field>-->
+            <field name="group_public_id" ref="hr_expense.group_hr_expense_team_approver"/>
+            <field name="group_ids"
+                   eval="[(4, ref('hr_expense.group_hr_expense_team_approver'))]"/>
+            <field name="description">Technical Division Employees - Budget Reminder channel
+            </field>
+        </record>
+
+    </data>
+</odoo>
