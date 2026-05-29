@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="field_service_task_xlsx_report_view" model="ir.ui.view">
+        <field name="name">Example xlsx Report</field>
+        <field name="model">field.service.task.xlsx.report</field>
+        <field name="arch" type="xml">
+            <form string="Xlsx Report">
+                <separator string="Excel Report"/>
+                <group>
+                    <group>
+                        <field name="user_id"/>
+                        <field name="old_version_report"/>
+                    </group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                </group>
+
+                <footer>
+                    <button name="print_xlsx" string="PRINT" type="object" default_focus="1" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_field_service_task_xlsx_report" model="ir.actions.act_window">
+        <field name="name">Excel</field>
+        <field name="res_model">field.service.task.xlsx.report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_fs_ticket_excel_report" name="Excel Report" parent="helpdesk.menu_helpdesk_root"
+              action="action_field_service_task_xlsx_report"/>
+</odoo>

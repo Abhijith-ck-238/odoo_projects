@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_fleet_project_task_list" model="ir.ui.view">
+        <field name="name">fleet.project.task.list</field>
+        <field name="model">project.task</field>
+        <field eval="7" name="priority"/>
+        <field name="arch" type="xml">
+            <list string="Technical Jobs" create="false" edit="false" delete="false">
+                <field name="site_id"/>
+                <field name="province"/>
+                <field name="user_ids" widget="many2many_tags"/>
+                <field name="vehicle_ids" widget="many2many_tags"/>
+                <field name="planned_date_begin"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fleet_project_task_search" model="ir.ui.view">
+            <field name="name">fleet.project.task.search</field>
+            <field name="model">project.task</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Tomorrow Jobs"
+                            name="tomorrow_jobs"
+                            domain="[('planned_date_begin', '=', (context_today() + datetime.timedelta(days=1)).strftime('%Y/%m/%d'))]"/>
+                </search>
+            </field>
+        </record>
+
+    <record id="action_fleet_project_task"
+            model="ir.actions.act_window">
+        <field name="name">Technical Jobs</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.task</field>
+        <field name="context">{'search_default_tomorrow_jobs':1}</field>
+        <field name="domain">[('vehicle_ids','!=', False)]</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_fleet_project_task_list"/>
+        <field name="search_view_id" ref="custom_fleet.view_fleet_project_task_search"/>
+    </record>
+    <menuitem id="menu_fleet_project_task_list"
+              name="Technical Jobs"
+              action="action_fleet_project_task"
+              parent="fleet.menu_root"/>
+</odoo>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_itkan_project_report_tree" model="ir.ui.view">
+         <field name="name">itkan.project.report.tree</field>
+         <field name="model">itkan.project.report</field>
+         <field name="arch" type="xml">
+             <list string="Itkan Project Analysis">
+                    <field name="project_id"/>
+             </list>
+         </field>
+    </record>
+
+    <record id="view_itkan_project_report_pivot" model="ir.ui.view">
+         <field name="name">itkan.project.report.pivot</field>
+         <field name="model">itkan.project.report</field>
+         <field name="arch" type="xml">
+             <pivot string="Itkan Project Analysis" disable_linking="True">
+                 <field name="project_id" type="row"/>
+                 <field name="department_id" type="row"/>
+                 <field name="progress" type="measure"/>
+                 <field name="done_checklist" type="measure"/>
+                 <field name="pending_tasks" type="measure"/>
+                 <field name="late_steps" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="view_itkan_project_report_pivot_inherit" model="ir.ui.view">
+        <field name="name">view.itkan.project.report.pivot.inherit.itkan.project</field>
+        <field name="model">itkan.project.report</field>
+        <field name="inherit_id" ref="custom_itkan_project.view_itkan_project_report_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pending_tasks']" position="after">
+                <field name="late_steps" type="measure"/>
+                <field name="project_type_id" type="row"/>
+                <field name="checklist_name" type="row"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_itkan_project_report_graph" model="ir.ui.view">
+         <field name="name">itkan.project.report.graph</field>
+         <field name="model">itkan.project.report</field>
+         <field name="arch" type="xml">
+             <graph string="Itkan Project Analysis" type="line">
+                 <field name="progress" type="measure"/>
+                 <field name="done_checklist" type="measure"/>
+                 <field name="pending_tasks" type="measure"/>
+                 <field name="late_steps" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+<!--    <record id="itkan_project_report_view_dashboard" model="ir.ui.view">-->
+<!--        <field name="name">itkan.project.report.view.dashboard</field>-->
+<!--        <field name="model">itkan.project.report</field>-->
+<!--        <field name="mode">primary</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <dashboard>-->
+<!--                <view type="graph" ref="custom_itkan_project.view_itkan_project_report_graph"/>-->
+<!--                <group>-->
+<!--                     <aggregate name="done_steps"-->
+<!--                           string="Done Steps" field="done_checklist"/>-->
+<!--                    <aggregate name="pending_steps"-->
+<!--                           string="Pending Steps" field="pending_tasks"/>-->
+<!--                    <aggregate name="late_steps"-->
+<!--                           string="Late Steps" field="late_steps"/>-->
+<!--                </group>-->
+<!--                <view type="pivot" ref="custom_itkan_project.view_itkan_project_report_pivot"/>-->
+<!--            </dashboard>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="view_itkan_project_report_search" model="ir.ui.view">
+        <field name="name">itkan.project.report.search</field>
+        <field name="model">itkan.project.report</field>
+        <field name="arch" type="xml">
+            <search string="Itkan Project Analysis">
+                <group expand="1" string="Group By">
+                    <filter string="Project" name="Project" context="{'group_by':'project_id'}"/>
+                     <filter string="Department" name="Department" context="{'group_by':'department_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_itkan_project_report" model="ir.actions.act_window">
+        <field name="name">Itkan Project Analysis</field>
+        <field name="res_model">itkan.project.report</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_itkan_project_report_search"/>
+        <field name="help">This report performs analysis on your Itkan Projects.</field>
+    </record>
+
+    <menuitem
+            id="menu_itkan_reporting"
+            name="Reporting"
+            parent="custom_itkan_project.itkan_project_menu_root"
+            sequence="50" groups="group_itkan_project_administrator"/>
+        <menuitem
+            id="menu_itkan_projectn_report"
+            name="Itkan Project"
+            parent="menu_itkan_reporting"
+            action="custom_itkan_project.action_itkan_project_report"
+            sequence="10"/>
+
+</odoo>

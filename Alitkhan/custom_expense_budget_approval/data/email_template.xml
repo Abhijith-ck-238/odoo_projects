@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_template_budget_notification" model="mail.template">
+        <field name="name">Budget Notification</field>
+        <field name="email_from">${object.company_id.email or ''}</field>
+        <field name="email_to">${object.user_id.partner_id.email or ''}</field>
+        <field name="subject">${ctx.get('subject', 'Budget: Approval Notification')}</field>
+        <field name="model_id" ref="custom_expense_budget_approval.model_budget_analytic"/>
+        <field name="body_html" type="html">
+            <div>
+                <p>Dear <t t-esc="ctx.get('user_name', object.user_id.name)"/>,</p>
+                <p t-esc="ctx.get('message', 'You have a budget notification.')"/>
+                <p>
+                    <a t-att-href="'%s/web#id=%s&amp;action=%s&amp;model=budget.analytic&amp;view_type=form' % (ctx.get('base_url', object.env['ir.config_parameter'].sudo().get_param('web.base.url')), object.id, ctx.get('action_id', object.env.ref('custom_expense_budget_approval.hr_expense_actions_my_budget').id))"
+                       style="background-color:#875A7B; padding: 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                        View Details
+                    </a>
+                </p>
+                <p>Best regards,</p>
+                <p t-esc="object.company_id.name"/>
+            </div>
+        </field>
+    </record>
+</odoo>

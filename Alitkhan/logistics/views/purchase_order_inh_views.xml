@@ -1,0 +1,31 @@
+<odoo> 
+         <record id="purchase_order_shipment_inherit_view" model="ir.ui.view">
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">            
+                <xpath expr="//notebook" postition="inside" groups="logistics.logistics_manager">
+                    <page name="shipment_info" string="Shipment Details" >
+                        <group>
+                            <field name="related_shipment_id"/>
+                            <field name="type_id"/>
+                            <field name="location_id"/>
+                            <field name="location_dest_id"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_order_shipment_inherit_view_tree" model="ir.ui.view">
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">            
+                <xpath expr="//field[@name='date_planned']" position="after" >
+                    <field name="related_shipment_id"/>
+                    <field name="type_id"/>
+                    <field name="location_id" />
+                    <field name="location_dest_id"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>

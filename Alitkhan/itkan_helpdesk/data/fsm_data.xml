@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="fsm_time_product_1" model="product.product">
+            <field name="name">Service on Timesheet</field>
+            <field name="type">service</field>
+            <field name="list_price">40</field>
+            <field name="uom_id" ref="uom.product_uom_hour"/>
+            <field name="uom_po_id" ref="uom.product_uom_hour"/>
+            <field name="service_policy">delivered_timesheet</field>
+            <field name="image_1920" type="base64" file="itkan_helpdesk/static/src/img/img.png"/>
+        </record>
+    </data>
+</odoo>

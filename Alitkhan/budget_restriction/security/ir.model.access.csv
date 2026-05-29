@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_hr_expense_budget_policy_user,access.hr.expense.budget.policy.user,model_hr_expense_budget_policy,base.group_user,1,0,0,0
+access_hr_expense_budget_consumption_user,access.hr.expense.budget.consumption.user,model_hr_expense_budget_consumption,base.group_user,1,0,0,0
+access_budget_policy_tag_user,access.budget.policy.tag.user,model_budget_policy_tag,base.group_user,1,0,0,0
+
+access_hr_expense_budget_policy_manager,access.hr.expense.budget.policy.manager,model_hr_expense_budget_policy,account.group_account_manager,1,1,1,1
+access_hr_expense_budget_consumption_manager,access.hr.expense.budget.consumption.manager,model_hr_expense_budget_consumption,account.group_account_manager,1,1,1,1
+access_budget_policy_tag_manager,access.budget.policy.tag.manager,model_budget_policy_tag,account.group_account_manager,1,1,1,1
+
+access_hr_expense_budget_policy_team_approver,access.hr.expense.budget.policy.team.approver,model_hr_expense_budget_policy,hr_expense.group_hr_expense_team_approver,1,1,0,0
+access_hr_expense_budget_consumption_team_approver,access.hr.expense.budget.consumption.team.approver,model_hr_expense_budget_consumption,hr_expense.group_hr_expense_team_approver,1,1,0,0
+

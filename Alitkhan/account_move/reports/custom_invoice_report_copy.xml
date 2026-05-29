@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="invoice_report_header_new">
+        <div class="header">
+            <div class="row">
+                <div style="width: 100%;">
+                    <img src="/account_move/static/src/img/logo.png"
+                         style="height: 70px; width: 300px;margin-left: 250px;"/>
+                </div>
+            </div>
+            <div class="row">
+                <div style="width:100%;height:2px;"/>
+            </div>
+            <div class="row">
+                <div style="border-bottom:1px solid black;width:100%;height:1px;"/>
+            </div>
+            <div class="row">
+                <div>
+                    <p>
+                        <span style="font-family: Yu Gothic UI;font-size:medium;font-weight:700;">
+                            AL-ITKAN SUPPLIER COMPANY FOR IMPORT AND EXPORT
+                        </span>
+                        <br/>
+                        <span style="font-family: Yu Gothic UI; font-size:small;font-weight:700">
+                            AMMAN-SWEFIEH-.AL MONSOUR BUILDING
+                        </span>
+                        <br/>
+                        <span style="font-family: Yu Gothic UI; font-size:small;font-weight:700">
+                            OFFICE NUMBER 101
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="invoice_report_footer_new">
+        <div class="footer o_standard_footer">
+            <div style="width: 100%;">
+                <img src="/account_move/static/src/img/Layer 2.png"
+                     style="width:100%"/>
+            </div>
+             <div t-if="report_type == 'pdf'" class="text-muted">
+                                Page:
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+             </div>
+        </div>
+    </template>
+
+    <template id="invoice_report_custom_external_layout_new">
+        <!-- Multicompany -->
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+
+        <t t-call="account_move.invoice_report_header_new"/>
+        <div class="article o_report_layout_standard"
+             t-att-data-oe-model="o and o._name"
+             t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-raw="0"/>
+        </div>
+        <div>
+        <t t-call="account_move.invoice_report_footer_new"/>
+        </div>
+    </template>
+
+
+    <template id="report_invoice_document_new">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.move_type in ('in_invoice', 'in_refund') else o.partner_id.lang"/>
+
+                <!-- Custom external layout -->
+                <t t-call="account_move.invoice_report_custom_external_layout_new">
+
+                     <div class="mb-4">
+                            <div style="margin-bottom: 5px;"><strong>Customer Name:</strong></div>
+                            <div style="margin-bottom: 5px;"><span t-field="o.partner_id.name"/></div>
+                            <!--<address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;street&quot;], &quot;no_marker&quot;: True}"/>-->
+                            <span t-field="o.partner_id.street" style="margin-bottom: 10px;"/>
+                            <div t-if="o.partner_id.vat" style="margin-bottom: 10px;">
+                                <strong>
+                                    <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label"/>
+                                    <t t-else="">Tax ID</t>:
+                                </strong>
+                                <span t-field="o.partner_id.vat"/>
+                            </div>
+                     </div>
+                    <t t-call="web.address_layout">
+                        <t t-set="address">
+                            <address/>
+                            <!--<div t-if="o.partner_id.vat" class="mt16">-->
+                            <!--    <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label"/>-->
+                            <!--    <t t-else="">Tax ID</t>:-->
+                            <!--    <span t-field="o.partner_id.vat"/>-->
+                            <!--</div>-->
+                        </t>
+                    </t>
+                    <div class="page">
+                        <h2>
+                            <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">
+                                Invoice
+                            </span>
+                            <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">
+                                Draft Invoice
+                            </span>
+                            <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">
+                                Cancelled Invoice
+                            </span>
+                            <span t-if="o.move_type == 'out_refund'">Credit
+                                Note
+                            </span>
+                            <span t-if="o.move_type == 'in_refund'">Vendor
+                                Credit Note
+                            </span>
+                            <span t-if="o.move_type == 'in_invoice'">Vendor
+                                Bill
+                            </span>
+                            <span t-if="o.name != '/'" t-field="o.name"/>
+                        </h2>
+
+                        <div id="informations" class="row mt32 mb32 col-12">
+                            <div class="col-2 mw-100 mb-2" t-if="o.invoice_date" name="invoice_date">
+                                <strong>Invoice Date:</strong>
+                                <p class="m-0" t-field="o.invoice_date"/>
+                            </div>
+                            <div class="col-2 mw-100 mb-2" t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" name="due_date">
+                                <strong>Due Date:</strong>
+                                <p class="m-0" t-field="o.invoice_date_due"/>
+                            </div>
+                            <div class="col-2 mw-100 mb-2" t-if="o.invoice_origin" name="origin">
+                                <strong>Source:</strong>
+                                <p class="m-0" t-field="o.invoice_origin"/>
+                            </div>
+                            <div class="col-2 mw-100 mb-2" t-if="o.partner_id.ref" name="customer_code">
+                                <strong>Customer Code:</strong>
+                                <p class="m-0" t-field="o.partner_id.ref"/>
+                            </div>
+                            <div class="col-2 mw-100 mb-2" t-if="o.ref" name="reference">
+                                <strong>Reference:</strong>
+                                <p class="m-0" t-field="o.ref"/>
+                            </div>
+                        </div>
+
+                        <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+
+                        <table class="table table-borderless" name="invoice_line_table">
+                            <thead>
+                                <!--<tr>-->
+                                    <!-- TODO: remove in master -->
+                                <!--    <t t-set="colspan" t-value="6"/>-->
+                                <!--    <th name="th_description" class="text-left">-->
+                                <!--        <span>Description</span>-->
+                                <!--    </th>-->
+                                <!--    <th name="th_source" class="d-none text-left">-->
+                                <!--        <span>Source Document</span>-->
+                                <!--    </th>-->
+                                <!--    <th name="th_quantity" class="text-right">-->
+                                <!--        <span>Quantity</span>-->
+                                <!--    </th>-->
+                                <!--    <th name="th_priceunit" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">-->
+                                <!--        <span>Unit Price</span>-->
+                                <!--    </th>-->
+                                <!--    <th name="th_taxes" t-attf-class="text-left {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">-->
+                                <!--        <span>Taxes</span>-->
+                                <!--    </th>-->
+                                <!--    <th name="th_subtotal" class="text-right">-->
+                                <!--        <span>-->
+                                <!--            Amount-->
+                                <!--        </span>-->
+                                <!--    </th>-->
+                                <!--</tr>-->
+                                <tr style="border-top:1px solid #dee2e6;border-bottom:1px solid #dee2e6;">
+                                    <th class="text-left" style="width: 48%;font-weight:bold">Description</th>
+                                    <th class="text-right" style="width: 13%;font-weight:bold">Quantity</th>
+                                    <th class="text-right" style="width: 13%;font-weight:bold">Unit Price</th>
+                                    <th class="text-right" style="width: 13%;font-weight:bold">Disc.%</th>
+                                    <th class="text-left" style="width: 13%;font-weight:bold">Taxes</th>
+                                    <th class="text-right" style="width: 13%;font-weight:bold">
+                                        <!--<span groups="not account.group_show_line_subtotals_tax_excluded">Amount</span>-->
+                                        <span class="text-right">Amount</span>
+                                    <span class="text-right" groups="account.group_show_line_subtotals_tax_included">Total Price</span>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <t t-foreach="o.invoice_line_ids" t-as="line">
+                                    <tr style="border-bottom:1px solid #dee2e6;">
+                                        <td>
+                                            <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.quantity"/>
+                                            <span t-field="line.product_uom_id" groups="uom.group_uom"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.price_unit"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.discount"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="line.price_subtotal"/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                            </tbody>
+                        </table>
+
+                        <div class="clearfix">
+                            <div id="total" class="row" style="float:right">
+                                <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                                    <!--<table style="border: none;">-->
+                                    <!--    <tr class="o_subtotal" style="border-bottom: 1px solid #000; border: none;">-->
+                                    <!--        <td style="padding:6px;border: none;">-->
+                                    <!--            Subtotal-->
+                                    <!--        </td>-->
+                                    <!--        <td class="text-right" style="padding:8px;border: none;">-->
+                                    <!--            <span t-field="o.amount_untaxed"/>-->
+                                    <!--        </td>-->
+                                    <!--    </tr>-->
+
+                                    <!--    <tr class="o_total" style="border: none;">-->
+                                    <!--        <td style="padding:6px;border: none;">-->
+                                    <!--            Total-->
+                                    <!--        </td>-->
+                                    <!--        <td class="text-right" style="padding:8px;border: none;">-->
+                                    <!--            <span t-field="o.amount_total"/>-->
+                                    <!--        </td>-->
+                                    <!--    </tr>-->
+                                    <!--</table>-->
+                                     <table class="table table-borderless table-sm">
+                                    <tr style="border-top: 1px solid black;">
+                                        <td style="padding: 10px !important;color: #7b7b7b;font-weight:bolder;">Subtotal</td>
+                                        <td style="text-align:right;padding: 10px !important;">
+                                            <span t-field="o.amount_untaxed"/>
+                                        </td>
+                                    </tr>
+                                     <tr style="border-top: 1px solid black;">
+                                        <td style="padding: 10px !important;color: #7b7b7b;font-weight:bolder;">Total</td>
+                                        <td class="text-right" style="text-align:right;padding: 10px !important;">
+                                            <span t-field="o.amount_total"/>
+                                        </td>
+                                    </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p t-if="o.move_type in ('out_invoice', 'in_refund')">
+                            Please use the following communication for your
+                            payment :
+                            <b>
+                                <span t-field="o.payment_reference"/>
+                            </b>
+                        </p>
+                        <p t-if="o.narration" name="comment">
+                            <span t-field="o.narration"/>
+                        </p>
+                        <p t-if="o.invoice_payment_term_id" name="payment_term">
+                            <span t-field="o.invoice_payment_term_id.note"/>
+                        </p>
+                        <p t-if="o.fiscal_position_id.note" name="note">
+                            <span t-field="o.fiscal_position_id.note"/>
+                        </p>
+                        <div id="qrcode" t-if="(o.company_id.qr_code) and (o.currency_id.name == 'EUR') and (o.partner_bank_id.acc_number != False)">
+                            <p t-if="(o.partner_bank_id.qr_code_valid)">
+                                <strong class="text-center">Scan me with
+                                    your banking app.
+                                </strong>
+                                <br/>
+                                <br/>
+                                <img class="border border-dark rounded" t-att-src="o.partner_bank_id.build_qr_code_url(o.amount_residual,(o.ref) if (o.ref) else o.name)"/>
+                            </p>
+                            <p t-if="(o.partner_bank_id.qr_code_valid == False)">
+                                <strong class="text-center">The SEPA QR
+                                    Code informations are not set
+                                    correctly.
+                                </strong>
+                                <br/>
+                            </p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+    <template id="report_invoice_document_inherit_sale_new"
+              inherit_id="account_move.report_invoice_document_new">
+        <xpath expr="//address" position="attributes">
+            <attribute name="groups">!sale.group_delivery_invoice_address
+            </attribute>
+        </xpath>
+        <xpath expr="//address" position="before">
+            <t t-if="o.partner_shipping_id and (o.partner_shipping_id != o.partner_id)">
+                <t t-set="information_block">
+                    <div groups="sale.group_delivery_invoice_address">
+                        <strong>Shipping Address:</strong>
+                        <div t-field="o.partner_shipping_id"
+                             t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+                    </div>
+                </t>
+            </t>
+            <div t-field="o.partner_id"
+                 t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"
+                 groups="sale.group_delivery_invoice_address"/>
+        </xpath>
+    </template>
+
+    <template id="sale_stock_report_invoice_document_new"
+              inherit_id="account_move.report_invoice_document_new">
+        <xpath expr="//div[@id='total']" position="after">
+            <t t-set="lot_values" t-value="o._get_invoiced_lot_values()"/>
+            <t t-if="lot_values">
+                <br/>
+                <table groups="sale_stock.group_lot_on_invoice"
+                       class="table table-sm" style="width: 50%;"
+                       name="invoice_snln_table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span>Product</span>
+                            </th>
+                            <th class="text-right">
+                                <span>Quantity</span>
+                            </th>
+                            <th class="text-right">
+                                <span>SN/LN</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="lot_values" t-as="snln_line">
+                            <tr>
+                                <td>
+                                    <t t-esc="snln_line['product_name']"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-esc="snln_line['quantity']"/>
+                                    <t t-esc="snln_line['uom_name']"
+                                       groups="uom.group_uom"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-esc="snln_line['lot_name']"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="report_invoice_document_fc_new"
+              inherit_id="account_move.report_invoice_document_new">
+        <xpath expr="//div[hasclass('page')]/h2" position="replace">
+            <h4>
+                <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">
+                    Invoice
+                </span>
+                <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">
+                    Draft Invoice
+                </span>
+                <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">
+                    Cancelled Invoice
+                </span>
+                <span t-if="o.move_type == 'out_refund'">Credit Note</span>
+                <span t-if="o.move_type == 'in_refund'">Debit Note</span>
+                <span t-if="o.move_type == 'in_invoice'">Vendor Bill</span>
+                <span t-if="o.name != '/'" t-field="o.name"/>
+            </h4>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="after">
+            <table class="table table-bordered table-sm"
+                   style="width:40%; font-size: x-small; float: right;">
+                <tr class="text-bold ">
+                    <td class="" style="background: lightgray;">
+                        Bank:
+                    </td>
+                    <td class="" style="width: 239px;">
+                        <p class="m-0"
+                           t-field="o.partner_bank_id.bank_id.name"/>
+                    </td>
+                </tr>
+                <tr class="text-bold ">
+                    <td class="" style="background: lightgray;">
+                        IBAN:
+                    </td>
+                    <td class="" style="width: 239px;">
+                        <p class="m-0"
+                           t-field="o.partner_bank_id.bank_id.bic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="" style="background: lightgray;">
+                        Account Holder Name:
+                    </td>
+                    <td class="" style="width: 239px;">
+                        <p class="m-0"
+                           t-field="o.partner_bank_id.acc_holder_name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="" style="background: lightgray;">
+                        Account Number:
+                    </td>
+                    <td class="" style="width: 239px;">
+                        <p class="m-0"
+                           t-field="o.partner_bank_id.acc_number"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="" style="background: lightgray;">
+                        Swift:
+                    </td>
+                    <td class="" style="width: 239px;">
+                        <p class="m-0"
+                           t-field="o.partner_bank_id.swift"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="" style="background: lightgray;">
+                        Currency:
+                    </td>
+                    <td class="" style="width: 239px;">
+                        <p class="m-0"
+                           t-field="o.partner_bank_id.currency_id.name"/>
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+    </template>
+    <template id="invoice_report_template_new"
+              inherit_id="account_move.report_invoice_document_new">
+    </template>
+    <template id="report_invoice_document_fc_new_inherit"
+              inherit_id="account_move.report_invoice_document_fc_new">
+        <xpath expr="//table/tr[1]" position="after">
+            <tr class="text-bold ">
+                <td class="" style="background: lightgray;">
+                    Bank Address:
+                </td>
+                <td class="">
+                    <t t-if="o.partner_bank_id.bank_id.street">
+                        <p class="m-0" t-field="o.partner_bank_id.bank_id.street"/>
+                    </t>
+                    <t t-if="o.partner_bank_id.bank_id.street2">
+                        <p  class="m-0" t-field="o.partner_bank_id.bank_id.street2"/>
+                    </t>
+                    <t t-if="o.partner_bank_id.bank_id.city">
+                        <p  class="m-0" t-field="o.partner_bank_id.bank_id.city"/>
+                    </t>
+                    <t t-if="o.partner_bank_id.bank_id.state">
+                        <p  class="m-0" t-field="o.partner_bank_id.bank_id.state.name"/>
+                    </t>
+                    <t t-if="o.partner_bank_id.bank_id.zip">
+                        <p  class="m-0" t-field="o.partner_bank_id.bank_id.zip"/>
+                    </t>
+                    <t t-if="o.partner_bank_id.bank_id.country">
+                        <p  class="m-0" t-field="o.partner_bank_id.bank_id.country.name"/>
+                    </t>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+
+    <record id="paperformat_invoice_custom"
+            model="report.paperformat">
+        <field name="name">Custom Invoice(copy)</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">50</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">43</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="invoice_report_new" model="ir.actions.report">
+        <field name="name">Supplier Invoice</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_move.invoice_report_template_new</field>
+        <field name="report_file">account_move.invoice_report_template_new</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="account_move.paperformat_invoice_custom"/>
+
+    </record>
+</odoo>

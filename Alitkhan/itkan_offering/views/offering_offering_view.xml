@@ -1,0 +1,242 @@
+<odoo>
+    <record id="offering_offering_form" model="ir.ui.view">
+        <field name="name">offering.offering.form</field>
+        <field name="model">offering.offering</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <field name="purchase_order_created" invisible="1"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,cancelled"/>
+                    <button type="object" name="create_sale_order" string="Create Sale Order"
+                            groups="itkan_offering.offering_manager"
+                            invisible="related_sale_order or state != 'approved'"/>
+                    <button type="object" name="create_purchase_order" string="Create Purchase Order"
+                            groups="itkan_offering.offering_manager"
+                            invisible="purchase_order_created or state != 'approved'"/>
+                    <button type="object" name="create_contract" string="Create Contract"
+                            groups="itkan_offering.offering_manager"
+                            invisible="related_contract or state != 'approved'"/>
+                    <button type="object" name="approve_offer" string="Approve Offer"
+                            groups="itkan_offering.offering_manager"
+                            invisible="state != 'draft'"
+                            class="btn-primary"/>
+                    <button type="object" name="cancel_offer" string="Cancel Offer"
+                            groups="itkan_offering.offering_manager"
+                            invisible="state != 'approved'"/>
+                    <button type="object" name="reset_to_draft" string="Reset to draft"
+                            groups="itkan_offering.offering_manager"
+                            invisible="state != 'cancelled'"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <field name="purchase_order_ids" invisible="1"/>
+                        <button name="view_purchase_orders" type="object" class="oe_stat_button"
+                                icon="fa-shopping-cart icon"
+                                invisible="not purchase_order_ids"
+                                groups="purchase.group_purchase_user">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Purchase</span>
+                                <span class="o_stat_text">Orders</span>
+                            </div>
+                        </button>
+                        <button name="view_contracts" type="object" class="oe_stat_button" icon="fa-file-text icon"
+                                invisible="not related_contract"
+                                groups="contracts.user_group">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Contracts</span>
+                            </div>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name" placeholder="Name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="category"/>
+                            <field name="customer" readonly="state == 'cancelled'"/>
+                            <!-- <field name="vendor"/> -->
+                            <field name="ref_number" readonly="state == 'cancelled'"/>
+                            <field name="iq" readonly="state == 'cancelled'"/>
+                            <field name="region" readonly="state == 'cancelled'"/>
+                            <field name="sp_and_labor" readonly="state == 'cancelled'"/>
+                            <field name="labor" readonly="state == 'cancelled'"/>
+                            <field name="site_prep" readonly="state == 'cancelled'"/>
+                            <field name="access_unit_ids" widget="many2many_tags"
+                                   options="{'no_create': True, 'no_create_edit':True}"
+                                   groups="access_units.administrator_users"/>
+                        </group>
+
+                        <group>
+                            <field name="managerial_approval" invisible="1"/>
+                            <field name="training"  readonly="state == 'cancelled'"/>
+                            <field name="payment_method"  readonly="state == 'cancelled'"/>
+                            <field name="offer_currency"/>
+                            <field name="price_list" domain="[('currency_id','=',offer_currency)]"/>
+                            <field name="incoterms"  readonly="state == 'cancelled'"/>
+                            <field name="additional"  readonly="state == 'cancelled'"/>
+                            <field name="sale_order_created" invisible="1"/>
+                            <field name="related_sale_order"
+                                    invisible="not related_sale_order"/>
+                            <field name="summary"/>
+                        </group>
+
+
+                        <group string="Contract Details (Required to create a contract)" name="contract_details">
+                            <field name="contract_no" readonly="state == 'cancelled'"/>
+                            <field name="sign_date" readonly="state == 'cancelled'"/>
+                            <field name="signed_by" readonly="state == 'cancelled'"/>
+                            <field name="contract_type" readonly="state == 'cancelled'"/>
+                            <field name="contract_created" invisible="1"/>
+                            <field name="related_contract" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="product_lines" string="Product Lines">
+                            <field name="product_lines" readonly="state == 'cancelled'">
+                                <list editable="top">
+                                    <button name="edit_calculation_action" type="object"
+                                            width="10px"/>
+                                    <field name="optional_product" width="80px" optional="1"/>
+                                    <field name="hide_from_offer_report" width="75px" optional="1"/>
+                                    <field name="name" width="200px" optional="1"/>
+                                    <field name="product_id" width="150px"/>
+                                    <field name="vendor" width="75px" optional="1"/>
+                                    <field name="config" domain="[('state','=','confirm')]" width="75px"
+                                           optional="show"/>
+                                    <field name="vendor_price" width="125px" optional="1"/>
+                                    <field name="config_net_price" width="125px" optional="1"/>
+                                    <field name="config_currency" invisible="1"/>
+                                    <field name="currency"
+                                           readonly="config_currency"/>
+                                    <field name="exchange_rate_1"/>
+                                    <field name="qty" sum="Total Quantity" force_save="1"/>
+                                    <field name="config_policy_defined" invisible="1"/>
+                                    <field name="policy" force_save="1"
+                                           readonly="config_policy_defined"/>
+                                    <field name="exchange_rate"/>
+                                    <field name="unit_price" sum="Total Unit Prices"
+                                           style="background-color: #ffe699;" force_save="1" optional="show"
+                                           width="130px"/>
+                                    <field name="total_price" optional="1" style="background-color: #ffe699;"
+                                           sum="Total Amount" force_save="1" width="130px"/>
+                                    <field name="discount" optional="1" style="" force_save="1"/>
+                                    <field name="price_unit_after_discount" optional="1" width="170px"
+                                           style="background-color: #c6e0b4;" sum="Total unit after discount"
+                                           force_save="1"/>
+                                    <field name="price_total_after_discount" optional="1" width="170px"
+                                           style="background-color: #c6e0b4;" sum="Total unit after discount"
+                                           force_save="1"/>
+                                    <field name="offer_unit_price" optional="1" width="170px"
+                                           style="background-color: #f8cbad;" sum="Total unit offer"
+                                           force_save="1"/>
+                                    <field name="offer_total_price" optional="1" width="170px"
+                                           style="background-color: #f8cbad;" sum="Total unit offer"
+                                           force_save="1"/>
+                                    <field name="offer_unit_iqd" optional="1" width="170px"
+                                           style="background-color: #b4c6e7;" sum="Total unit offer IQD"
+                                           force_save="1"/>
+                                    <field name="offer_total_iqd" optional="1" width="170px"
+                                           style="background-color: #b4c6e7;" sum="Total unit offer IQD"
+                                           force_save="1"/>
+                                    <field name="misc" optional="1" style=""/>
+                                    <field name="final_unit_price_usd" optional="1" width="170px"
+                                           style="background-color: #c6e0b4;" sum="Total unit final"
+                                           force_save="1"/>
+                                    <field name="final_total_price_usd" optional="1" width="170px"
+                                           style="background-color: #c6e0b4;" sum="Total final" force_save="1"/>
+                                    <field name="final_unit_price_iqd" optional="1" width="170px"
+                                           style="background-color: #e2edfc;" sum="Total unit final IQD"
+                                           force_save="1"/>
+                                    <field name="final_total_price_iqd" optional="1" width="170px"
+                                           style="background-color: #e2edfc;" sum="Total  final IQD"
+                                           force_save="1"/>
+                                    <field name="budget_unit_price" optional="1" width="170px"
+                                           style="background-color: #ffff00;" sum="Total unit budget "
+                                           force_save="1"/>
+                                    <field name="budget_total_price" optional="1" width="170px"
+                                           style="background-color: #ffff00;" sum="Total  budget " force_save="1"/>
+                                </list>
+                            </field>
+
+                            <h4>
+                                <label for="total_cost"/>
+                                <field name="total_cost" style="font-weight: bold;"/>
+                            </h4>
+                            <h4>
+                                <label for="project_policy"/>
+                                <field name="project_policy" style="font-weight: bold;"/>
+                            </h4>
+                        </page>
+
+                        <page name="report_details" string="Report Details">
+                            <group>
+                                <group>
+                                    <field name="company_report"/>
+                                    <field name="vendor_id"/>
+                                    <field name="project_name"/>
+                                    <field name="project_subject"/>
+                                    <field name="tendor_no"/>
+                                    <field name="ifb_no"/>
+                                    <field name="offer_date"/>
+                                </group>
+                                <group>
+                                    <field name="include_section_id"/>
+                                    <field name="terms_and_conditions_section_id"
+                                           context="{'default_sections': 'terms_and_conditions'}"/>
+                                    <field name="sincerely_ids" widget="many2many_tags"/>
+                                    <field name="add_conditions_and_warranty"/>
+                                    <field name="add_refer_to_our_enclosed_offer"/>
+                                </group>
+                            </group>
+                            <label for="report_template_lines" string="Cover Letter"/>
+                            <field name="report_template_lines" readonly="state == 'cancelled'">
+                                <list editable="bottom" decoration-danger="template_id == False" >
+                                    <field name="sections" optional="show"/>
+                                    <field name="name"/>
+                                    <field name="template_id" domain="[('sections', '=', sections)]"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="template_id"/>
+                                        </group>
+
+                                        <group>
+                                            <field name="sections"/>
+                                        </group>
+                                    </group>
+                                    <field name="template_body"/>
+                                </form>
+                            </field>
+                        </page>
+
+
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="offering_offering_tree" model="ir.ui.view">
+        <field name="name">offering.offering.form</field>
+        <field name="model">offering.offering</field>
+        <field name="arch" type="xml">
+
+            <list string="Offering">
+                <field name="customer"/>
+                <field name="summary"/>
+                <field name="ref_number"/>
+                <field name="iq"/>
+                <field name="region"/>
+                <field name="region"/>
+                <field name="create_uid"/>
+                <field name="state"/>
+            </list>
+
+        </field>
+    </record>
+</odoo>

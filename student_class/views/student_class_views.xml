@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_student_class_tree" model="ir.ui.view">
+        <field name="name">student.class.tree</field>
+        <field name="model">student.class</field>
+        <field name="arch" type="xml">
+            <tree string="Students">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_student_class_form" model="ir.ui.view">
+        <field name="name">student.class.form</field>
+        <field name="model">student.class</field>
+        <field name="arch" type="xml">
+            <form string="Student">
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Information" name="info">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_student_class" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">student.class</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_student_class_root" name="Standalone App Test" sequence="10"/>
+    <menuitem id="menu_student_class" name="Students" parent="menu_student_class_root" action="action_student_class" sequence="10"/>
+</odoo>

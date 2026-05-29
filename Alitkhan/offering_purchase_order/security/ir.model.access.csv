@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_delivery_condition,purchase.delivery.condition,model_purchase_delivery_condition,base.group_user,1,1,1,1
+access_purchase_shipping_type,purchase.shipping.type,model_purchase_shipping_type,base.group_user,1,1,1,1
+access_purchase_required_documents,purchase.required.documents,model_purchase_required_documents,base.group_user,1,1,1,1

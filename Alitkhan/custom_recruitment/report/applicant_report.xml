@@ -1,0 +1,2281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <template id="custom_external_layout_recruitment">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+            <t t-if="company.external_report_layout_id" t-call="{{company.external_report_layout_id.key}}">
+                <t t-out="0"/>
+            </t>
+            <t t-else="else" t-call="web.external_layout_standard">
+                <t t-out="0"/>
+            </t>
+        </template>
+
+        <template id="print_hr_applicant_report_pdf">
+            <t t-call="web.html_container">
+                <t t-set="o" t-value="docs"/>
+                <t t-call="custom_recruitment.custom_external_layout_recruitment">
+                    <div style="padding:20px;">
+                        <div class="page h-100">
+                            <style>
+                                table, th,td{
+                                border: 1px solid #333 !important;
+                                }
+                                th,td{
+                                padding: 8px 10px !important;
+                                text-align: center;
+                                }
+                                th{
+                                font-weight:bold
+                                }
+                                div{
+                                font-size: 26px;
+                                }
+                                * {
+                                box-sizing: border-box;
+                                }
+
+                                .box {
+                                float: left;
+                                width: 33.33%;
+                                padding: 50px;
+                                }
+
+                                .clearfix::after {
+                                content: "";
+                                clear: both;
+                                display: table;
+                                }
+                                .rotate-text {
+                                transform: rotate(-90deg);
+                                }
+                                .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+
+                            </style>
+                            <!-- Header Section -->
+
+                            <div class="row" style="line-height: 45px;">
+                                <div class="col-md-5">
+                                    <span style="text-decoration: underline;">
+                                        <br/>
+                                        <b>1 st Interview Date:</b>
+                                    </span>
+                                    ……………………<b>Time</b>……………………<b>With</b>……………………
+                                    <br/>
+                                    <span style="text-decoration: underline;">
+                                        <b>2 nd Interview Date:</b>
+                                    </span>
+                                    ……………………<b>Time</b>……………………<b>With</b>……………………
+                                    <br/>
+                                    <span style="text-decoration: underline;">
+                                        <b>3 rd Interview Date:</b>
+                                    </span>
+                                    ……………………<b>Time</b>……………………<b>With</b>……………………
+                                    <br/>
+                                </div>
+                                <div class="col-md-3" style="position: absolute;right: -1200px;top: 0px;">
+                                    <img t-att-src="image_data_uri(o.photo)" style="height:250px;width:250px;"/>
+                                </div>
+                            </div>
+                            <!-- Section 1 -->
+                            <div style="margin-top: 48px;">
+                                <h2 style="text-align:center;text-decoration: underline;">
+                                    <b>PERSONAL DETAILS</b>
+                                </h2>
+                                <div>
+                                    <p style="line-height: 35px;margin: 0;">
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Surname:</span>
+                                            <span t-esc="o.surname" style="min-width:150px; color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Quadruple name:</span>
+                                            <span t-esc="o.partner_name" style="min-width:150px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Telephone Number:</span>
+                                            <span t-esc="o.partner_phone" style="min-width:150px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Email Address:</span>
+                                            <span t-esc="o.email_from" style="min-width:150px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Address:</span>
+                                            <span t-esc="o.address" style="min-width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Hai:</span>
+                                            <span t-esc="o.hai" style="min-width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Sec:</span>
+                                            <span t-esc="o.sec" style="min-width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">St:</span>
+                                            <span t-esc="o.st" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">House:</span>
+                                            <span t-esc="o.house" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Nearest Point of Reference:</span>
+                                            <span t-esc="o.nearest" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Date of Birth:Day:</span>
+                                            <span t-esc="o.birth_day" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Month:</span>
+                                            <span t-esc="o.birth_month" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Year:</span>
+                                            <span t-esc="o.birth_year" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Place of Birth:</span>
+                                            <span t-esc="o.place_of_birth" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Nationality:</span>
+                                            <span style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Religion:</span>
+                                            <span t-esc="o.religion" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Gender:</span>
+                                            <span t-esc="o.gender" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Height:</span>
+                                            <span t-esc="o.height" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Weight:</span>
+                                            <span t-esc="o.weight" style="width:100px;color:blue;"/>
+                                        </span>
+                                        <span style="margin:0px 4px 0px 2px;">
+                                            <span style="">Marital Status:</span>
+                                            <span t-esc="o.social_status" style="width:100px;color:blue;"/>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Section 2 -->
+                            <div style="margin-top: 15px;">
+
+                                <p style="line-height: 35px;margin: 0;">
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <b>Emergency contact person(Family member preferable):</b>
+                                        <span style="border-bottom: 1px dotted;min-width:150px;"/>
+                                    </span>
+                                    <br/>
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <span>Full name:</span>
+                                        <span t-esc="o.emergency_contact_name"
+                                              style="border-bottom: 1px dotted;width:100px;"/>
+                                    </span>
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <span>Phone No:</span>
+                                        <span t-esc="o.emergency_contact_phone"
+                                              style="border-bottom: 1px dotted;width:100px;"/>
+                                    </span>
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <span>Relation:</span>
+                                        <span t-esc="o.emergency_contact_relation"
+                                              style="border-bottom: 1px dotted;width:100px;"/>
+                                    </span>
+                                    <br/>
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <b>If you have been interviewed earlier by <i>ALITKAN</i>, please provide the
+                                            date:
+                                        </b>
+                                        <span t-esc="o.past_interview_date"
+                                              style="border-bottom: 1px dotted;min-width:150px;"/>
+                                    </span>
+                                </p>
+
+                                <p>
+                                    <span>
+                                        How is your Health Status?
+                                    </span>
+                                    <span>
+                                        <t t-if="o.health_status == 'excellent'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.health_status == 'excellent'">
+                                            <span style="color:blue;">Excellent</span>
+                                        </t>
+                                        <t t-else="">
+                                            Excellent
+                                        </t>
+
+                                    </span>
+                                    <span>
+                                        <t t-if="o.health_status == 'good'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.health_status == 'good'">
+                                            <span style="color:blue;">Good</span>
+                                        </t>
+                                        <t t-else="">
+                                            Good
+                                        </t>
+                                    </span>
+                                    <span>
+                                        <t t-if="o.health_status == 'average'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.health_status == 'average'">
+                                            <span style="color:blue;">Average</span>
+                                        </t>
+                                        <t t-else="">
+                                            Average
+                                        </t>
+                                    </span>
+                                    <span>
+                                        <t t-if="o.health_status == 'below average'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.health_status == 'below average'">
+                                            <span style="color:blue;">Below Average</span>
+                                        </t>
+                                        <t t-else="">
+                                            Below Average
+                                        </t>
+                                    </span>
+                                    <span>
+                                        <t t-if="o.health_status == 'poor'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.health_status == 'poor'">
+                                            <span style="color:blue;">Poor</span>
+                                        </t>
+                                        <t t-else="">
+                                            Poor
+                                        </t>
+                                    </span>
+                                    <span>
+                                        <t t-if="o.health_status == 'very poor'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.health_status == 'very poor'">
+                                            <span style="color:blue;">Very Poor</span>
+                                        </t>
+                                        <t t-else="">
+                                            Very Poor
+                                        </t>
+                                    </span>
+                                </p>
+
+                                <p>
+                                    <span>Are there any limitations on your ability to perform in your prospective field
+                                        of work?
+                                    </span>
+                                    <span>
+                                        <t t-if="o.limitaions == 'yes'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.limitaions == 'yes'">
+                                            <span style="color:blue;">Yes /</span>
+                                        </t>
+                                        <t t-else="">
+                                            Yes /
+                                        </t>
+                                        <t t-if="o.limitaions == 'no'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.limitaions == 'no'">
+                                            <span style="color:blue;">No</span>
+                                        </t>
+                                        <t t-else="">
+                                            No
+                                        </t>
+                                    </span>
+                                </p>
+
+                                <p>
+                                    <span>Are there any limitations on your ability to engage in all types of travel?
+                                        Inside
+                                        or
+                                        outside Iraq
+                                    </span>
+                                    <span>
+                                        <t t-if="o.limitaions_travel == 'yes'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.limitaions_travel == 'yes'">
+                                            <span style="color:blue;">Yes /</span>
+                                        </t>
+                                        <t t-else="">
+                                            Yes /
+                                        </t>
+                                        <t t-if="o.limitaions_travel == 'no'">
+                                            <input type="checkbox" checked="checked" style="color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-if="o.limitaions_travel == 'no'">
+                                            <span style="color:blue;">No</span>
+                                        </t>
+                                        <t t-else="">
+                                            No
+                                        </t>
+                                    </span>
+                                </p>
+
+                            </div>
+                            <!-- Section 3 -->
+                            <div style="margin-top: 48px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>EDUCATION</b>
+                                </h2>
+                                <table border="1" width="100%" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center; background-color:#ADD8E6;">Level of
+                                                Education
+                                            </th>
+                                            <th style="text-align:center;background-color:#ADD8E6;">Name of School /
+                                                University &amp; Location(Branch)
+                                            </th>
+                                            <th style="text-align:center;background-color:#ADD8E6;">Year of</th>
+                                            <th style="text-align:center;background-color:#ADD8E6;">Baccalaureate
+                                                Average (%)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;">Secondary</td>
+                                            <td style="text-align:center;">
+                                                <t t-esc="o.secondary_name"/>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <t t-esc="o.secondary_years"/>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <t t-esc="o.secondary_avg"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">College or Institute</td>
+                                            <td style="text-align:center;">
+                                                <p>Name:
+                                                    <span t-esc="o.college_name"/>
+                                                    | Major:
+                                                    <span t-esc="o.college_major"/>
+                                                </p>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <t t-esc="o.college_years"/>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <t t-esc="o.college_avg"/>
+                                            </td>
+                                        </tr>
+                                        <t t-if="o.other_0_name">
+                                            <tr>
+                                                <td style="text-align:center;">Other</td>
+                                                <td style="text-align:center;">
+                                                    <p>Name:
+                                                        <span t-esc="o.other_0_name"/>
+                                                        | Major:
+                                                        <span t-esc="o.other_0_major"/>
+                                                    </p>
+                                                </td>
+                                                <td style="text-align:center;">
+                                                    <t t-esc="o.other_0_years"/>
+                                                </td>
+                                                <td style="text-align:center;">
+                                                    <t t-esc="o.other_0_avg"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.other_0_name">
+                                            <tr>
+                                                <td style="text-align:center;">Other</td>
+                                                <td style="text-align:center;">
+                                                    <p>Name:
+                                                        <span t-esc="o.other_1_name"/>
+                                                        | Major:
+                                                        <span t-esc="o.other_1_major"/>
+                                                    </p>
+                                                </td>
+                                                <td style="text-align:center;">
+                                                    <t t-esc="o.other_1_years"/>
+                                                </td>
+                                                <td style="text-align:center;">
+                                                    <t t-esc="o.other_1_avg"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <br/>
+                                <p>
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <b>Highest Academic Qualification:</b>
+                                        <span t-esc="o.highest_acad"
+                                              style="border-bottom: 1px dotted;min-width:150px;"/>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <b>Academic Major:</b>
+                                        <span t-esc="o.major" style="border-bottom: 1px dotted;min-width:150px;"/>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <b>Graduation Year:</b>
+                                        <span t-esc="o.highest_grad_year"
+                                              style="border-bottom: 1px dotted;min-width:150px;"/>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <b>University:</b>
+                                        <span t-esc="o.highest_uni" style="border-bottom: 1px dotted;min-width:150px;"/>
+                                    </span>
+                                </p>
+                                <p>
+                                    <span style="margin:0px 4px 0px 2px;">
+                                        <b>Country:</b>
+                                        <span t-esc="o.highest_country"
+                                              style="border-bottom: 1px dotted;min-width:150px;"/>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="pagebreak"/>
+                            <!-- Section 4 -->
+                            <div style="margin-top: 15px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>TRAININGS AND CERTIFICATIONS</b>
+                                </h2>
+
+                                <table border="1" width="100%" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color:#ADD8E6;">Training / Certification</th>
+                                            <th style="background-color:#ADD8E6;">Year</th>
+                                            <th style="background-color:#ADD8E6;">Awarded by</th>
+                                            <th style="background-color:#ADD8E6;">Country / City</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <t t-esc="o.t0"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.t0_year"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.t0_awarded_by"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.t0_country_city"/>
+                                            </td>
+                                        </tr>
+                                        <t t-if="o.t1">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="o.t1"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t1_year"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t1_awarded_by"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t1_country_city"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.t2">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="o.t2"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t2_year"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t2_awarded_by"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t2_country_city"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.t3">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="o.t3"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t3_year"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t3_awarded_by"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t3_country_city"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.t4">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="o.t4"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t4_year"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t4_awarded_by"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t4_country_city"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.t5">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="o.t5"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t5_year"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t5_awarded_by"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.t5_country_city"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Section 5 -->
+                            <div style="margin-top: 48px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>YOUR EMPLOYMENT HISTORY</b>
+                                </h2>
+                                <p>
+                                    <span>
+                                        List names of employers with present or last employer listed first:
+                                    </span>
+                                    <br/>
+                                    <span>
+                                        <b>May we contact current employers before you are offered a position?</b>
+                                    </span>
+                                    <span>
+                                        <t t-if="o.contact_disclaimer">
+                                            Yes
+                                        </t>
+                                        <t t-else="">
+                                            No
+                                        </t>
+                                    </span>
+                                </p>
+                                <table border="1" width="100%" style="border-collapse: collapse;">
+                                    <tbody>
+                                        <!--                                    <tr>-->
+                                        <!--                                        <td colspan="2">List names of employers</td>-->
+                                        <!--                                    </tr>-->
+                                        <tr>
+                                            <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                <b>Employer:</b>
+                                                <t t-esc="o.employer_name"/>
+                                            </td>
+                                            <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                <b>Address:</b>
+                                                <t t-esc="o.employer_address"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                <b>Dates of Employment:</b>
+                                                <p>
+                                                    <b>
+                                                        <span>From:</span>
+                                                    </b>
+                                                    <span t-esc="o.from_date"/>
+                                                    <br/>
+                                                    <b>
+                                                        <span>To:</span>
+                                                    </b>
+                                                    <span t-esc="o.to_date"/>
+                                                </p>
+                                            </td>
+                                            <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                <b>Salary:</b>
+                                                <p>
+                                                    <b>
+                                                        <span>Starting Pay:</span>
+                                                    </b>
+                                                    <span t-esc="o.starting_slry"/>
+                                                    <br/>
+                                                    <b>
+                                                        <span>Ending pay:</span>
+                                                    </b>
+                                                    <span t-esc="o.ending_slry"/>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                <b>Supervisor Contact:</b>
+                                                <t t-esc="o.super_phone"/>
+                                            </td>
+                                            <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                <b>Reason for Leaving:</b>
+                                                <t t-esc="o.reason_for_leaving"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="height: 50px;vertical-align: top;text-align: left;">
+                                                <span>
+                                                    <b>Job Title:</b>
+                                                    <span t-esc="o.job_title"/>
+                                                </span>
+                                                <br/>
+                                                <span>
+                                                    <b>Responsibilities:</b>
+                                                    <span t-esc="o.job_responsibilities"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br/>
+                                <t t-if="o.employer_name_0">
+                                    <table border="1" width="100%" style="border-collapse: collapse;">
+                                        <tbody>
+                                            <!--                                    <tr>-->
+                                            <!--                                        <td colspan="2">List names of employers</td>-->
+                                            <!--                                    </tr>-->
+                                            <tr>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Employer:</b>
+                                                    <t t-esc="o.employer_name_0"/>
+                                                </td>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Address:</b>
+                                                    <t t-esc="o.employer_address_0"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Dates of Employment:</b>
+                                                    <p>
+                                                        <b>
+                                                            <span>From:</span>
+                                                        </b>
+                                                        <span t-esc="o.from_date_0"/>
+                                                        <br/>
+                                                        <b>
+                                                            <span>To:</span>
+                                                        </b>
+                                                        <span t-esc="o.to_date_0"/>
+                                                    </p>
+                                                </td>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Salary:</b>
+                                                    <p>
+                                                        <b>
+                                                            <span>Starting Pay:</span>
+                                                        </b>
+                                                        <span t-esc="o.starting_slry_0"/>
+                                                        <br/>
+                                                        <b>
+                                                            <span>Ending pay:</span>
+                                                        </b>
+                                                        <span t-esc="o.ending_slry_0"/>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Supervisor Contact:</b>
+                                                    <t t-esc="o.super_phone_0"/>
+                                                </td>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Reason for Leaving:</b>
+                                                    <t t-esc="o.reason_for_leaving_0"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"
+                                                    style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <span>
+                                                        <b>Job Title:</b>
+                                                        <span t-esc="o.job_title_0"/>
+                                                    </span>
+                                                    <br/>
+                                                    <span>
+                                                        <b>Responsibilities:</b>
+                                                        <span t-esc="o.job_responsibilities_0"/>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <br/>
+                                <t t-if="o.employer_name_1">
+                                    <table border="1" width="100%" style="border-collapse: collapse;">
+                                        <tbody>
+                                            <!--                                    <tr>-->
+                                            <!--                                        <td colspan="2">List names of employers</td>-->
+                                            <!--                                    </tr>-->
+                                            <tr>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Employer:</b>
+                                                    <t t-esc="o.employer_name_1"/>
+                                                </td>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Address:</b>
+                                                    <t t-esc="o.employer_address_1"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Dates of Employment:</b>
+                                                    <p>
+                                                        <b>
+                                                            <span>From:</span>
+                                                        </b>
+                                                        <span t-esc="o.from_date_1"/>
+                                                        <br/>
+                                                        <b>
+                                                            <span>To:</span>
+                                                        </b>
+                                                        <span t-esc="o.to_date_1"/>
+                                                    </p>
+                                                </td>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Salary:</b>
+                                                    <p>
+                                                        <b>
+                                                            <span>Starting Pay:</span>
+                                                        </b>
+                                                        <span t-esc="o.starting_slry_1"/>
+                                                        <br/>
+                                                        <b>
+                                                            <span>Ending pay:</span>
+                                                        </b>
+                                                        <span t-esc="o.ending_slry_1"/>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Supervisor Contact:</b>
+                                                    <t t-esc="o.super_phone_1"/>
+                                                </td>
+                                                <td style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <b>Reason for Leaving:</b>
+                                                    <t t-esc="o.reason_for_leaving_1"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2"
+                                                    style="height: 50px;vertical-align: top;text-align: left;">
+                                                    <span>
+                                                        <b>Job Title:</b>
+                                                        <span t-esc="o.job_title_1"/>
+                                                    </span>
+                                                    <br/>
+                                                    <span>
+                                                        <b>Responsibilities:</b>
+                                                        <span t-esc="o.job_responsibilities_1"/>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </t>
+                            </div>
+                            <div class="pagebreak"/>
+                            <!-- Section 6 -->
+                            <div style="margin-top: 15px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>LANGUAGES &amp; LEVEL OF PROFICIENCY</b>
+                                </h2>
+                                <p style="line-height: 158%;">Please Rate your Language Skills on the following scale:
+                                </p>
+                                <p style="line-height: 158%;">
+                                    <span>(7) Excellent</span>
+                                    <span>(6) Very Good</span>
+                                    <span>(5) Good</span>
+                                    <span>(4) Average</span>
+                                    <span>(3) Below Average</span>
+                                    <span>(2) Poor</span>
+                                    <span>(1) Very Poor</span>
+                                </p>
+                                <table border="1" width="100%" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color:#ADD8E6;">LANGUAGES</th>
+                                            <th style="background-color:#ADD8E6;">READ</th>
+                                            <th style="background-color:#ADD8E6;">WRITE</th>
+                                            <th style="background-color:#ADD8E6;">SPEAK</th>
+                                            <th style="background-color:#ADD8E6;">UNDERSTAND</th>
+                                            <th style="background-color:#ADD8E6;">OVERALL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>ARABIC</td>
+                                            <td>
+                                                <t t-esc="o.ar_r"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.ar_w"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.ar_s"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.ar_u"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.ar_o"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ENGLISH</td>
+                                            <td>
+                                                <t t-esc="o.en_r"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.en_w"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.en_s"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.en_u"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.en_o"/>
+                                            </td>
+                                        </tr>
+                                        <t t-if="other_name_0">
+                                            <tr>
+                                                <td t-esc="o.other_name_0">OTHER</td>
+                                                <td>
+                                                    <t t-esc="o.other_r_0"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.other_w_0"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.other_s_0"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.other_u_0"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.other_o_0"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="other_name_1">
+                                            <tr>
+                                                <td t-esc="o.other_name_1">OTHER</td>
+                                                <td>
+                                                    <t t-esc="o.other_r_1"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.other_w_1"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.other_s_1"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.other_u_1"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="o.other_o_1"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Section 7 -->
+                            <div style="margin-top: 15px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>COMPUTER SKILLS</b>
+                                </h2>
+                                <p style="line-height: 158%;">Please list your Computer Skills &amp; Level of
+                                    Proficiency using the Following Scale:
+                                </p>
+                                <p style="line-height: 158%;">
+                                    <span>(5) Expert</span>
+                                    <span>(4) Advanced</span>
+                                    <span>(3) Intermediate</span>
+                                    <span>(2) Beginner</span>
+                                    <span>(1) Not Familiar</span>
+                                </p>
+                                <table border="1" width="100%" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color:#ADD8E6;">Operating System</th>
+                                            <th style="background-color:#ADD8E6;">Level</th>
+                                            <th style="background-color:#ADD8E6;">Software</th>
+                                            <th style="background-color:#ADD8E6;">Level</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ms-dos</td>
+                                            <td>
+                                                <t t-esc="o.ms_dos_skill_level"/>
+                                            </td>
+                                            <td>
+                                                Ms word
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.ms_word_skill_level"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ms-windows</td>
+                                            <td>
+                                                <t t-esc="o.ms_windows_skill_level"/>
+                                            </td>
+                                            <td>
+                                                Ms excel
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.ms_excel_skill_level"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Windows Server</td>
+                                            <td>
+                                                <t t-esc="o.windows_server_skill_level"/>
+                                            </td>
+                                            <td>
+                                                Ms Powerpoint
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.ms_power_point_skill_level"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background-color:#ADD8E6;">
+                                                <b>Programming Languages</b>
+                                            </td>
+                                            <td style="background-color:#ADD8E6;">
+                                                <b>Level</b>
+                                            </td>
+                                            <td>
+                                                Autocad
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.autocad_skill_level"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>SQL</td>
+                                            <td>
+                                                <t t-esc="o.sql_skill_level"/>
+                                            </td>
+                                            <td>
+                                                Adobe Creative Cloud (Ps, Ai)
+                                            </td>
+                                            <td>
+                                                <t t-esc="o.adobe_skill_level"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Back-end development</td>
+                                            <td>
+                                                <t t-esc="o.backend_dev_skill_level"/>
+                                            </td>
+                                            <td>
+                                                Erp:
+                                            </td>
+                                            <td>
+                                                <!--                                            <t t-esc="o.adobe_skill_level"/>-->
+                                                <span t-esc="o.c_skill_erp"
+                                                      style="border-bottom: 1px dotted;min-width:150px;"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Front-end development</td>
+                                            <td>
+                                                <t t-esc="o.frontend_dev_skill_level"/>
+                                            </td>
+                                            <td>
+                                                Other:
+                                            </td>
+                                            <td>
+                                                <!--                                            <t t-esc="o.adobe_skill_level"/>-->
+                                                <span t-esc="o.c_skill_other"
+                                                      style="border-bottom: 1px dotted;min-width:150px;"/>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Section 8 -->
+                            <div style="margin-top: 48px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>NETWORKING SKILLS</b>
+                                </h2>
+                                <p>
+                                    <li style="list-style-type: circle;">
+                                        <span>
+                                            <b>Have You implemented a structured cabling system?</b>
+                                        </span>
+                                        <span>
+                                            <t t-if="o.cabling_system == 'yes'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.cabling_system == 'yes'">
+                                                <span style="color:blue;">Yes /</span>
+                                            </t>
+                                            <t t-else="">
+                                                Yes /
+                                            </t>
+                                            <t t-if="o.cabling_system == 'no'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.cabling_system == 'no'">
+                                                <span style="color:blue;">No</span>
+                                            </t>
+                                            <t t-else="">
+                                                No
+                                            </t>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <b>If yes please classify your skills:</b>
+                                        </span>
+                                        <span>
+                                            <t t-if="o.cabling_system_skill_level == 'beginner'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.cabling_system_skill_level == 'beginner'">
+                                                <span style="color:blue;">Beginner</span>
+                                            </t>
+                                            <t t-else="">
+                                                Beginner
+                                            </t>
+                                            <t t-if="o.cabling_system_skill_level == 'intermediate'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.cabling_system_skill_level == 'intermediate'">
+                                                <span style="color:blue;">Intermediate</span>
+                                            </t>
+                                            <t t-else="">
+                                                Intermediate
+                                            </t>
+                                            <t t-if="o.cabling_system_skill_level == 'advanced'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.cabling_system_skill_level == 'advanced'">
+                                                <span style="color:blue;">Advanced</span>
+                                            </t>
+                                            <t t-else="">
+                                                Advanced
+                                            </t>
+                                            <t t-if="o.cabling_system_skill_level == 'expert'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.cabling_system_skill_level == 'expert'">
+                                                <span style="color:blue;">Expert</span>
+                                            </t>
+                                            <t t-else="">
+                                                Expert
+                                            </t>
+                                        </span>
+                                    </li>
+                                    <li style="list-style-type: circle;">
+                                        <span>
+                                            <b>Please select the network devices you are familiar with:</b>
+                                        </span>
+                                        <span>
+                                            <t t-if="o.network_device == 'hub'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.network_device == 'hub'">
+                                                <span style="color:blue;">Hub</span>
+                                            </t>
+                                            <t t-else="">
+                                                Hub
+                                            </t>
+                                            <t t-if="o.network_device == 'switch'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.network_device == 'switch'">
+                                                <span style="color:blue;">Switch</span>
+                                            </t>
+                                            <t t-else="">
+                                                Switch
+                                            </t>
+                                            <t t-if="o.network_device == 'router'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.network_device == 'router'">
+                                                <span style="color:blue;">Router</span>
+                                            </t>
+                                            <t t-else="">
+                                                Router
+                                            </t>
+                                            <t t-if="o.network_device == 'firewall'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.network_device == 'firewall'">
+                                                <span style="color:blue;">Firewall</span>
+                                            </t>
+                                            <t t-else="">
+                                                Firewall
+                                            </t>
+                                        </span>
+                                    </li>
+                                    <li style="list-style-type: circle;">
+                                        <span>
+                                            <b>Have you implemented a wireless network?</b>
+                                        </span>
+                                        <span>
+                                            <t t-if="o.wireless_network == 'yes'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_network == 'yes'">
+                                                <span style="color:blue;">Yes /</span>
+                                            </t>
+                                            <t t-else="">
+                                                Yes /
+                                            </t>
+                                            <t t-if="o.wireless_network == 'no'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_network == 'no'">
+                                                <span style="color:blue;">No</span>
+                                            </t>
+                                            <t t-else="">
+                                                No
+                                            </t>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <b>If yes please classify your skills:</b>
+                                        </span>
+                                        <span>
+                                            <t t-if="o.wireless_network_skill_level == 'beginner'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_network_skill_level == 'beginner'">
+                                                <span style="color:blue;">Beginner</span>
+                                            </t>
+                                            <t t-else="">
+                                                Beginner
+                                            </t>
+                                            <t t-if="o.wireless_network_skill_level == 'intermediate'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_network_skill_level == 'intermediate'">
+                                                <span style="color:blue;">Intermediate</span>
+                                            </t>
+                                            <t t-else="">
+                                                Intermediate
+                                            </t>
+                                            <t t-if="o.wireless_network_skill_level == 'advanced'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_network_skill_level == 'advanced'">
+                                                <span style="color:blue;">Advanced</span>
+                                            </t>
+                                            <t t-else="">
+                                                Advanced
+                                            </t>
+                                            <t t-if="o.wireless_network_skill_level == 'expert'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_network_skill_level == 'expert'">
+                                                <span style="color:blue;">Expert</span>
+                                            </t>
+                                            <t t-else="">
+                                                Expert
+                                            </t>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span>
+                                            <b>Please select the wireless devices you are familiar with:</b>
+                                        </span>
+                                        <span>
+                                            <t t-if="o.wireless_device == 'wireless lan card'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_device == 'wireless lan card'">
+                                                <span style="color:blue;">Wireless LAN card</span>
+                                            </t>
+                                            <t t-else="">
+                                                Wireless LAN card
+                                            </t>
+                                            <t t-if="o.wireless_device == 'access point'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_device == 'access point'">
+                                                <span style="color:blue;">Access point</span>
+                                            </t>
+                                            <t t-else="">
+                                                Access point
+                                            </t>
+                                            <t t-if="o.wireless_device == 'wireless router'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_device == 'wireless router'">
+                                                <span style="color:blue;">Wireless router</span>
+                                            </t>
+                                            <t t-else="">
+                                                Wireless router
+                                            </t>
+                                            <t t-if="o.wireless_device == 'outdoor antena'">
+                                                <input type="checkbox" checked="checked" style="color:blue;"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input type="checkbox"/>
+                                            </t>
+                                            <t t-if="o.wireless_device == 'outdoor antena'">
+                                                <span style="color:blue;">Outdoor antenna</span>
+                                            </t>
+                                            <t t-else="">
+                                                Outdoor antenna
+                                            </t>
+                                        </span>
+                                    </li>
+                                </p>
+                            </div>
+                            <div class="pagebreak"/>
+                            <!-- Section 9 -->
+                            <div style="margin-top: 15px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>PERSONAL SKILLS</b>
+                                </h2>
+                                <!--                            <p>Please <b>check</b> your competency level on the following table:-->
+                                <!--                            </p>-->
+                                <table border="1" width="100%" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="background-color:#ADD8E6;">Skill Rate</th>
+                                            <!--                                        <th style="background-color:#ADD8E6;">Not Familiar</th>-->
+                                            <th style="background-color:#ADD8E6;">Beginner</th>
+                                            <th style="background-color:#ADD8E6;">Intermediate</th>
+                                            <th style="background-color:#ADD8E6;">Advanced</th>
+                                            <th style="background-color:#ADD8E6;">Expert</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Team work capability</td>
+                                            <!--                                        <td>-->
+                                            <!--                                            <t t-if="o.team_work_skill_level == 'not familiar'">-->
+                                            <!--                                                True-->
+                                            <!--                                            </t>-->
+                                            <!--                                            <t t-else="">-->
+                                            <!--                                                - -->
+                                            <!--                                            </t>-->
+                                            <!--                                        </td>-->
+                                            <td>
+                                                <t t-if="o.team_work_skill_level == 'beginner'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.team_work_skill_level == 'intermediate'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.team_work_skill_level == 'advanced'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.team_work_skill_level == 'expert'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Working under pressure</td>
+                                            <!--                                        <td>-->
+                                            <!--                                            <t t-if="o.work_under_pressure_skill_level == 'not familiar'">-->
+                                            <!--                                                True-->
+                                            <!--                                            </t>-->
+                                            <!--                                            <t t-else="">-->
+                                            <!--                                                - -->
+                                            <!--                                            </t>-->
+                                            <!--                                        </td>-->
+                                            <td>
+                                                <t t-if="o.work_under_pressure_skill_level == 'beginner'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.work_under_pressure_skill_level == 'intermediate'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.work_under_pressure_skill_level == 'advanced'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.work_under_pressure_skill_level == 'expert'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Long distances traveling</td>
+                                            <!--                                        <td>-->
+                                            <!--                                            <t t-if="o.long_distance_travel_skill_level == 'not familiar'">-->
+                                            <!--                                                True-->
+                                            <!--                                            </t>-->
+                                            <!--                                            <t t-else="">-->
+                                            <!--                                                - -->
+                                            <!--                                            </t>-->
+                                            <!--                                        </td>-->
+                                            <td>
+                                                <t t-if="o.long_distance_travel_skill_level == 'beginner'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.long_distance_travel_skill_level == 'intermediate'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.long_distance_travel_skill_level == 'advanced'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.long_distance_travel_skill_level == 'expert'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Effective Communication</td>
+                                            <!--                                        <td>-->
+                                            <!--                                            <t t-if="o.effective_communication_skill_level == 'not familiar'">-->
+                                            <!--                                                True-->
+                                            <!--                                            </t>-->
+                                            <!--                                            <t t-else="">-->
+                                            <!--                                                - -->
+                                            <!--                                            </t>-->
+                                            <!--                                        </td>-->
+                                            <td>
+                                                <t t-if="o.effective_communication_skill_level == 'beginner'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.effective_communication_skill_level == 'intermediate'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.effective_communication_skill_level == 'advanced'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.effective_communication_skill_level == 'expert'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Customer Relation</td>
+
+                                            <td>
+                                                <t t-if="o.customer_relation_skill_level == 'beginner'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.customer_relation_skill_level == 'intermediate'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.customer_relation_skill_level == 'advanced'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.customer_relation_skill_level == 'expert'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Problem solving</td>
+                                            <!--                                        <td>-->
+                                            <!--                                            <t t-if="o.problem_solving_skill_level == 'not familiar'">-->
+                                            <!--                                                True-->
+                                            <!--                                            </t>-->
+                                            <!--                                            <t t-else="">-->
+                                            <!--                                                - -->
+                                            <!--                                            </t>-->
+                                            <!--                                        </td>-->
+                                            <td>
+                                                <t t-if="o.problem_solving_skill_level == 'beginner'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.problem_solving_skill_level == 'intermediate'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.problem_solving_skill_level == 'advanced'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-if="o.problem_solving_skill_level == 'expert'">
+                                                    True
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p>
+                                    <li style="list-style-type: circle;">
+                                        <span style="border-bottom: 1px solid;">
+                                            <b>If you have any additional more skills please describe below:</b>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="border-bottom: 1px dotted;min-width:150px;"/>
+                                    </li>
+                                </p>
+                            </div>
+                            <!-- Section 10 -->
+                            <div style="margin-top: 48px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>HOBBIES &amp; INTERESTS</b>
+                                </h2>
+                                <p>
+                                    <li style="list-style-type: circle;">
+                                        <span>Please list your Main Hobbies and Areas of interest (Give some brief
+                                            details on two of them):
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span style="border-bottom: 1px dotted;min-width:150px;"/>
+                                    </li>
+                                </p>
+                            </div>
+                            <!-- Section 11 -->
+                            <div style="margin-top: 15px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>FAMILY INFORMATION</b>
+                                </h2>
+                                <p style="line-height: 158%;">The Profession of your Father?
+                                    <span t-esc="o.father_profession"
+                                          style="border-bottom: 1px dotted;min-width:100px;"/>
+                                    <br/>
+                                    The Profession of your Mother?
+                                    <span t-esc="o.mother_profession"
+                                          style="border-bottom: 1px dotted;min-width:100px;"/>
+                                    <br/>
+                                </p>
+                                <p>
+                                    List the <b>1 st Name</b> and profession of <b>your brothers and sisters</b> (Including <b>
+                                    Yourself</b>) in <b>chronological</b> order:
+                                </p>
+                                <table border="1" width="100%" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center; background-color:#ADD8E6;">#</th>
+                                            <th style="border-bottom: 1px solid; background-color:#ADD8E6;">First Name
+                                            </th>
+                                            <th style="border-bottom: 1px solid; background-color:#ADD8E6;">Profession
+                                            </th>
+                                            <th style="text-align:center; background-color:#ADD8E6;">#</th>
+                                            <th style="border-bottom: 1px solid; background-color:#ADD8E6;">First Name
+                                            </th>
+                                            <th style="border-bottom: 1px solid; background-color:#ADD8E6;">Profession
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;">1</td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.first_name"/>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.profession"/>
+                                            </td>
+                                            <td style="text-align:center;">5</td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.first_name_2"/>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.profession_2"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">2</td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.first_name_0"/>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.profession_0"/>
+                                            </td>
+                                            <td style="text-align:center;">6</td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.first_name_3"/>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.profession_3"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">3</td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.first_name_1"/>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.profession_1"/>
+                                            </td>
+                                            <td style="text-align:center;">7</td>
+                                            <td style="text-align:center;"/>
+                                            <td style="text-align:center;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">4</td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.first_name_1"/>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <span t-esc="o.profession_1"/>
+                                            </td>
+                                            <td style="text-align:center;">8</td>
+                                            <td style="text-align:center;"/>
+                                            <td style="text-align:center;"/>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="pagebreak"/>
+                            <!-- Section 10 -->
+                            <div style="margin-top: 48px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>ADDITIONAL INFORMATION</b>
+                                </h2>
+                                <ul>
+                                    <li>Are you a Member of The Iraqi Engineers Union?
+                                        <t t-if="o.union_member == 'yes'">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid; color:blue;"/>
+                                            <span style="color:blue;">YES</span>
+                                            <input type="checkbox" style="border: 1px solid;"/>NO
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>YES
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid; color:blue;"/>
+                                            <span style="color:blue;">NO</span>
+                                        </t>
+                                        (Reg. # / Date? ………...…….....)
+                                    </li>
+                                    <li>Do You Have a valid Driver’s License?
+                                        <t t-if="o.driver_license == 'yes'">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">YES</span>
+                                            <input type="checkbox" style="border: 1px solid;"/>NO
+                                            (If yes, Since When?)
+                                            <t t-esc="o.driver_license_date"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>YES
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">NO</span>
+                                            (If yes, Since When? ...................)
+                                        </t>
+                                    </li>
+                                    <li>What is your means of transportation to
+                                        work?
+                                        <t t-esc="o.means_of_transport"/>
+                                    </li>
+                                    <li>Are you good in Keeping Appointments?
+                                        <t t-if="o.good_appoint == 'yes'">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">YES</span>
+                                            <input type="checkbox" style="border: 1px solid;"/>NO
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>YES
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">NO</span>
+                                        </t>
+                                    </li>
+                                    <li>Smoking?
+                                        <t t-if="o.smoking == 'yes'">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">YES</span>
+                                            <input type="checkbox" style="border: 1px solid;"/>NO
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>YES
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">NO</span>
+                                        </t>
+                                    </li>
+                                    <li>Can you Work in long working hours?
+                                        <t t-if="o.long_hours == 'yes'">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">YES</span>
+                                            <input type="checkbox" style="border: 1px solid;"/>NO
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>YES
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">NO</span>
+                                        </t>
+                                    </li>
+                                    <li>Are you presently enrolled in or planning for study?
+                                        <t t-if="o.planning_to_study == 'yes'">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">YES</span>
+                                            <input type="checkbox" style="border: 1px solid;"/>NO
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>YES
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">NO</span>
+                                        </t>
+                                    </li>
+                                    <li>When you can begin work?
+                                        <t t-esc="o.start_date"/>
+                                    </li>
+                                    <li>Are any of your relatives or friends Employed in our company?
+                                        <t t-if="o.related_employee == 'yes'">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">YES</span>
+                                            <input type="checkbox" style="border: 1px solid;"/>NO
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>YES
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                            <span style="color:blue;">NO</span>
+                                        </t>
+                                        <!--                                </li>-->
+                                        <br/>
+                                        If yes please give their name
+                                        <t t-esc="o.related_employee_name"/>
+                                        Relation:
+                                        <t t-esc="o.related_employee_relation"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Section 11 -->
+                            <div style="margin-top: 15px;">
+                                <h2 style="text-align:left;text-decoration: underline;margin-bottom: 36px;">
+                                    Requirements:
+                                </h2>
+                                <ul>
+                                    <li>
+                                        <t t-if="o.national_id">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>
+                                        </t>
+                                        <t t-if="o.national_id">
+                                            <span style="color:blue;">National Card</span>
+                                        </t>
+                                        <t t-else="">
+                                            National Card
+                                        </t>
+                                    </li>
+                                    <li>
+                                        <t t-if="o.photo">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>
+                                        </t>
+                                        <t t-if="o.photo">
+                                            <span style="color:blue;">Passport</span>
+                                        </t>
+                                        <t t-else="">
+                                            Passport
+                                        </t>
+                                    </li>
+                                    <li>
+                                        <t t-if="o.accomodation_id">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>
+                                        </t>
+                                        <t t-if="o.accomodation_id">
+                                            <span style="color:blue;">Residence Card</span>
+                                        </t>
+                                        <t t-else="">
+                                            Residence Card
+                                        </t>
+                                    </li>
+                                    <li>
+                                        <t t-if="o.cv">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>
+                                        </t>
+                                        <t t-if="o.cv">
+                                            <span style="color:blue;">CV</span>
+                                        </t>
+                                        <t t-else="">
+                                            CV
+                                        </t>
+                                    </li>
+                                    <li>
+                                        <t t-if="o.uni_degree">
+                                            <input type="checkbox" checked="checked"
+                                                   style="border: 1px solid;color:blue;"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input type="checkbox" style="border: 1px solid;"/>
+                                        </t>
+                                        <t t-if="o.uni_degree">
+                                            <span style="color:blue;">University Degree</span>
+                                        </t>
+                                        <t t-else="">
+                                            University Degree
+                                        </t>
+                                    </li>
+                                </ul>
+                                <p>
+                                    <span>
+                                        <span style="border-bottom: 1px solid;">
+                                            <b>I Here by Sign to Certify that all the Information given is True:</b>
+                                        </span>
+                                        <span style="border-bottom: 1px dotted;min-width:150px;" t-esc="o.signature"/>
+                                        <span>
+                                            <b>Date:</b>
+                                        </span>
+                                        <span style="border-bottom: 1px dotted;min-width:150px;" t-esc="o.sig_date"/>
+                                    </span>
+
+                                </p>
+                            </div>
+                            <div class="pagebreak"/>
+                            <!-- Section 12 -->
+                            <div style="margin-top: 15px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>TO BE FILLED BY COMPANY</b>
+                                </h2>
+                                <p style="line-height: 158%;">Please rate the candidate skills on the following scale:
+                                </p>
+                                <p style="line-height: 158%;">
+                                    <span>(1) Excellent</span>
+                                    <span>(2) Very Good</span>
+                                    <span>(3) Good</span>
+                                    <span>(4) Average</span>
+                                    <span>(5) Below Average</span>
+                                    <span>(6) Poor</span>
+                                    <span>(7) Very Poor</span>
+                                </p>
+                                <table border="1" width="100%" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center; background-color:#ADD8E6;height: 100px;">
+                                                Interviewer Name
+                                            </th>
+                                            <th style="background-color:#ADD8E6;height: 100px;">
+                                                <div class="rotate-text">
+                                                    <p>English</p>
+                                                </div>
+                                            </th>
+                                            <th style="text-align:center; background-color:#ADD8E6;height: 100px;">
+                                                <div class="rotate-text">
+                                                    <p>Computer</p>
+                                                </div>
+                                            </th>
+                                            <th style="text-align:center; background-color:#ADD8E6;height: 100px;">
+                                                <div class="rotate-text">
+                                                    <p>Personality</p>
+                                                </div>
+                                            </th>
+                                            <th style="text-align:center; background-color:#ADD8E6;height: 100px;">
+                                                <div class="rotate-text">
+                                                    <p>Look</p>
+                                                </div>
+                                            </th>
+                                            <th style="text-align:center; background-color:#ADD8E6;height: 100px;">
+                                                <div class="rotate-text">
+                                                    <p>Logic</p>
+                                                </div>
+                                            </th>
+                                            <th style="text-align:center; background-color:#ADD8E6;height: 100px;">
+                                                <div class="rotate-text">
+                                                    <p>IQ test</p>
+                                                </div>
+                                            </th>
+                                            <th style="text-align:center; background-color:#ADD8E6;height: 100px;">Notes
+                                                and Recommendation for
+                                                Department and Unit)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                            <td style="text-align:center;height: 50px;"/>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p style="line-height: 158%;">
+                                    <b>If approved to be hired:</b>
+                                </p>
+                                <p style="line-height: 158%;">
+                                    <b>Position:</b>
+                                    ………………………………………………<b>Salary:</b>………………………………………………
+                                </p>
+                                <p style="line-height: 158%;">
+                                    <b>Contract Period:</b>
+                                    ………………………………………………<b>Starting Date:</b>………………………………………………
+                                </p>
+                                <p style="line-height: 158%;">
+                                    <b>Department::</b>
+                                    ………………………………………………<b>Unit:</b>………………………………………………
+                                </p>
+                            </div>
+                            <div class="pagebreak"/>
+                            <!-- Section 13 -->
+                            <div style="margin-top: 15px;">
+                                <h2 style="text-align:center;text-decoration: underline;margin-bottom: 36px;">
+                                    <b>TO BE FILLED BY DIRECT MANAGER OR DEPARTMENT MANAGER</b>
+                                </h2>
+                                <table border="1" width="100%" style="border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center; background-color:#ADD8E6;">SERVICE</th>
+                                            <th style="text-align:center; background-color:#ADD8E6;">Yes</th>
+                                            <th style="text-align:center; background-color:#ADD8E6;">Date to be
+                                                provided
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align:center;">E-mail address</td>
+                                            <td style="text-align:center;"/>
+                                            <td style="text-align:center;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">Riyada service</td>
+                                            <td style="text-align:center;"/>
+                                            <td style="text-align:center;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">Careem account</td>
+                                            <td style="text-align:center;"/>
+                                            <td style="text-align:center;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">Odoo account</td>
+                                            <td style="text-align:center;"/>
+                                            <td style="text-align:center;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">Bank account</td>
+                                            <td style="text-align:center;"/>
+                                            <td style="text-align:center;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">Tools Kit</td>
+                                            <td style="text-align:center;"/>
+                                            <td style="text-align:center;"/>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;">Others:</td>
+                                            <td style="text-align:center;"/>
+                                            <td style="text-align:center;"/>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="clearfix">
+                                    <div class="box">
+                                        <p style="text-decoration: underline;">
+                                            <b>Direct Manager</b>
+                                        </p>
+                                        <p>
+                                            <b>Date:</b>
+                                        </p>
+                                        <p>
+                                            <b>Signature:</b>
+                                        </p>
+                                        <p>
+                                            <b>Name/ Title:</b>
+                                        </p>
+                                    </div>
+                                    <div class="box">
+                                    </div>
+                                    <div class="box">
+                                        <p style="text-decoration: underline;">
+                                            <b>Managing Director</b>
+                                        </p>
+                                        <p>
+                                            <b>Date:</b>
+                                        </p>
+                                        <p>
+                                            <b>Signature:</b>
+                                        </p>
+                                        <p>
+                                            <b>Name/ Title:</b>
+                                        </p>
+                                        <p>
+                                            <b>
+                                                <i>Sinan Nahab</i>
+                                            </b>
+                                        </p>
+                                        <p>
+                                            <b>
+                                                <i>Managing Director</i>
+                                            </b>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <t t-if="not company">
+                        <!-- Multicompany -->
+                        <t t-if="company_id">
+                            <t t-set="company" t-value="company_id"/>
+                        </t>
+                        <t t-elif="o and 'company_id' in o">
+                            <t t-set="company" t-value="o.company_id.sudo()"/>
+                        </t>
+                        <t t-else="else">
+                            <t t-set="company" t-value="res_company"/>
+                        </t>
+                    </t>
+                    <div class="footer o_standard_footer">
+                        <div class="text-center" style="border-top: 1px solid black;">
+                            <ul class="list-inline mb4">
+                                <li t-if="company.phone" class="list-inline-item d-inline">Phone:
+                                    <span t-field="company.phone"/>
+                                </li>
+                                <li t-if="company.email" class="list-inline-item d-inline">Email:
+                                    <span t-field="company.email"/>
+                                </li>
+                                <li t-if="company.website" class="list-inline-item d-inline">Web:
+                                    <span t-field="company.website"/>
+                                </li>
+                                <li t-if="company.vat" class="list-inline-item d-inline"><t
+                                        t-esc="company.country_id.vat_label or 'Tax ID'"/>:
+                                    <span t-field="company.vat"/>
+                                </li>
+                            </ul>
+
+                            <div name="financial_infos">
+                                <span t-field="company.report_footer"/>
+                            </div>
+
+                            <div t-if="report_type == 'pdf'" class="text-muted">
+                                Page:
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="print_hr_applicant_report_pdf_record" model="ir.actions.report">
+            <field name="name">HR Applicantr</field>
+            <field name="model">hr.applicant</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">custom_recruitment.print_hr_applicant_report_pdf</field>
+            <field name="report_file">custom_recruitment.print_hr_applicant_report_pdf</field>
+            <field name="print_report_name">'%s - %s' % (object.partner_name, object.external_ref)</field>
+            <field name="binding_type">report</field>
+             <field name="binding_model_id" ref="hr_recruitment.model_hr_applicant"/>
+        </record>
+
+
+
+        <!--        <record id="paperformat_hr_applicant" model="report.paperformat">-->
+        <!--            <field name="name">HR Applicant Paper format</field>-->
+        <!--            <field name="default" eval="True" />-->
+        <!--            <field name="format">A4</field>-->
+        <!--            <field name="page_height">0</field>-->
+        <!--            <field name="page_width">0</field>-->
+        <!--            <field name="orientation">Portrait</field>-->
+        <!--            <field name="margin_top">4</field>-->
+        <!--            <field name="margin_bottom">4</field>-->
+        <!--            <field name="margin_left">4</field>-->
+        <!--            <field name="margin_right">4</field>-->
+        <!--            <field name="header_line" eval="False" />-->
+        <!--            <field name="header_spacing">4</field>-->
+        <!--            <field name="dpi">90</field>-->
+        <!--        </record>-->
+
+        <!--        <record id="custom_recruitment.print_hr_applicant_report_pdf_record" model="ir.actions.report.xml">-->
+        <!--            <field name="paperformat_id" ref="custom_recruitment.paperformat_hr_applicant" />-->
+        <!--        </record>-->
+
+    </data>
+</odoo>

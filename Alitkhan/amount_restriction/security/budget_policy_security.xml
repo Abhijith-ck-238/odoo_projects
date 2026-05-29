@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Admin rule - see everything -->
+    <record id="budget_policy_rule_admin" model="ir.rule">
+        <field name="name">Budget Policy - Admin Access</field>
+        <field name="model_id" ref="model_hr_expense_budget_policy"/>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <!-- Regular user rule - see only their policies -->
+    <record id="budget_policy_rule_user" model="ir.rule">
+        <field name="name">Budget Policy - User Access</field>
+        <field name="model_id" ref="model_hr_expense_budget_policy"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">['|',
+            ('scope_employee_ids', '=', False),
+            ('scope_employee_ids', 'in', [user.employee_id.id])
+        ]</field>
+    </record>
+
+    <!-- Regular user rule - see consumption records for their policies -->
+    <record id="budget_consumption_rule_user" model="ir.rule">
+        <field name="name">Budget Consumption - User Access</field>
+        <field name="model_id" ref="model_hr_expense_budget_consumption"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">['|',
+            ('policy_id.scope_employee_ids', '=', False),
+            ('policy_id.scope_employee_ids', 'in', [user.employee_id.id])
+        ]</field>
+    </record>
+
+</odoo>

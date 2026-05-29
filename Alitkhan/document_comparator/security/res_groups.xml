@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+
+        <record id="groups_user" model="res.groups" >
+            <field name="name">Comparator User</field>
+            <field name="category_id" ref="base.module_category_documents"/>
+        </record>
+
+        <record id="groups_manager" model="res.groups" >
+            <field name="name">Comparator Manager</field>
+            <field name="category_id" ref="base.module_category_documents"/>
+            <field name="implied_ids" eval="(4, ref('document_comparator.groups_user') )"/>
+            <field name="users" eval="[(4, 2)]"/>
+            <field name="comment">Only member from this group can see the comparator prices</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,25 @@
+<odoo> 
+        <record id="approval_request_inh_form" model="ir.ui.view">
+            <field name="name">approval_request_inh.form</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_request_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form//group" position="inside">
+                    <group string="Employee info">
+                        <field name="employee_name" readonly="partner_id"/>
+                        <field name="job_title" readonly="partner_id"/>
+                        <field name="work_email" readonly="partner_id"/>
+                        <field name="Work_phone_number" readonly="partner_id"/>
+                        <field name="division" readonly="partner_id"/>
+                        <field name="department" readonly="partner_id"/>
+                        <field name="unit" readonly="partner_id"/>
+                        <field name="direct_manager" readonly="partner_id"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('is_company', '=', False)]</attribute>
+                </xpath>
+            </field>
+        </record>
+</odoo>

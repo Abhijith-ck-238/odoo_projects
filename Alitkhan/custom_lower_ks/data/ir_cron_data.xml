@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_ticket_convert_to_task" model="ir.actions.server">
+        <field name="name">DateTime to Date in lower ks</field>
+        <field name="model_id" ref="custom_lower_ks.model_lower_ks_ticket"/>
+        <field name="binding_model_id" ref="custom_lower_ks.model_lower_ks_ticket"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_move_datetime_date()</field>
+    </record>
+</odoo>

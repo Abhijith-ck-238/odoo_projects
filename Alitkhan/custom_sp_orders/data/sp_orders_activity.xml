@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_activity_sp_orders"
+                model="mail.activity.type">
+            <field name="name">SP Orders</field>
+            <field name="icon">fa-bars</field>
+            <field name="res_model" ref="custom_sp_orders.model_sp_order"/>
+        </record>
+</odoo>

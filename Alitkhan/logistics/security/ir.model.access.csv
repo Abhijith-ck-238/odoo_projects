@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_logistics_shipment,logistics.shipment,model_logistics_shipment,base.group_user,1,1,1,1
+access_logistics_shipment_line,logistics.shipment.line,model_logistics_shipment_line,base.group_user,1,1,1,1
+access_logistics_shipment_tags,logistics.shipment.tags,model_logistics_shipment_tags,base.group_user,1,1,1,1
+access_logistics_shipment_transtypes,logistics.shipment.transtypes,model_logistics_shipment_transtypes,base.group_user,1,1,1,1
+access_shipment_route,shipment.route,model_shipment_route,base.group_user,1,1,1,1
+access_shipment_stage,shipment.stage,model_shipment_stage,base.group_user,1,1,1,1
+access_shipment_document,shipment.document,model_shipment_document,base.group_user,1,1,1,1

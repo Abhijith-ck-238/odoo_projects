@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record model="ir.actions.act_window" id="dx_auto_offering.qu_action_window">
+        <field name="name">R.F.Qu</field>
+        <field name="res_model">quotation.offer</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="dx_auto_offering.or_action_window">
+        <field name="name">R.F.Or</field>
+        <field name="res_model">quotation.offer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="dx_auto_offering.inventory_action_window">
+        <field name="name">Inventory</field>
+        <field name="res_model">quotation.offer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem 
+        name="Auto Offering"
+        id="dx_auto_offering.menu_root"
+        web_icon="dx_auto_offering,static/src/img/icon.png"
+        groups="dx_auto_offering.group_dx_offering_user"
+    /> 
+
+    <menuitem 
+        name="R.F.Qu"
+        id="dx_auto_offering.qu_menu"
+        parent="dx_auto_offering.menu_root"
+        action="dx_auto_offering.qu_action_window"
+    />
+
+    <menuitem 
+        name="R.F.Or"
+        id="dx_auto_offering.or_menu"
+        parent="dx_auto_offering.menu_root"
+        action="dx_auto_offering.or_action_window"
+    />
+
+    <menuitem 
+        name="Inventory"
+        id="dx_auto_offering.inventory_menu"
+        parent="dx_auto_offering.menu_root"
+        action="dx_auto_offering.inventory_action_window"
+    />
+
+  </data>
+</odoo>

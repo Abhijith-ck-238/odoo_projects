@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="peripherals_form" model="ir.ui.view">
+            <field name="name">peripheral.peripheral.form</field>
+            <field name="model">peripheral.peripheral</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="part_number"/>
+                            </group>
+                            <group>
+                                <field name="serial_no"/>
+                            </group>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="peripherals_tree" model="ir.ui.view">
+            <field name="name">peripheral.peripheral.tree</field>
+            <field name="model">peripheral.peripheral</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="part_number"/>
+                    <field name="serial_no"/>
+                </list>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_peripherals">
+            <field name="name">Peripherals and Accessories</field>
+            <field name="res_model">peripheral.peripheral</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem name="Peripherals" id="menu_peripherals"
+                  parent="contracts.menu_settings"
+                  action="action_peripherals" groups="contracts.user_group"/>
+    </data>
+</odoo>

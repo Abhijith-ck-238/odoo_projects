@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail_activity_training_budget_approval"
+                model="mail.activity.type">
+            <field name="name">Reminder for Training Budget Approval</field>
+            <field name="res_model">budget.analytic</field>
+
+        </record>
+
+        <record id="mail_activity_training_notify_user"
+                model="mail.activity.type">
+            <field name="name">Notification for Training Ticket</field>
+            <field name="res_model">training.ticket</field>
+
+        </record>
+
+        <record id="mail_activity_purchase_order_create"
+                model="mail.activity.type">
+            <field name="name">Purchase for Training Ticket</field>
+            <field name="res_model">training.ticket</field>
+        </record>
+    </data>
+</odoo>

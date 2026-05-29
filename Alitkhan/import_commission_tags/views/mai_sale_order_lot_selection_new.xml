@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="custom_mai_sale_order_lot_selection_model" model="ir.ui.view">
+            <field name="name">'mai.sale.order.lot.selection.model</field>
+            <field name="model">mai.sale.order.lot.selection.model</field>
+            <field name="arch" type="xml">
+                <form string="Sale extend">
+                    <group>
+                    </group>
+                    <group>
+                         <field name="file_to_upload" />
+                         <field name="select_value" widget="radio"></field>
+                    </group>
+                    <footer>
+                        <button string="Import" name="action_custom_sale_order" type="object"/>
+                        <button string="Generate Xlsx" name="cron_custom_sale_order" type="object"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mai_sale_order_lot_selection_model" model="ir.actions.act_window">
+            <field name="name">Sale extend </field>
+            <field name="res_model">mai.sale.order.lot.selection.model</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+<!--        <menuitem action="action_mai_sale_order_lot_selection_model" id=" mai_sale_order_lot_selection_model" parent="hr_expense.menu_hr_expense_my_expenses"/>-->
+        <menuitem action="action_mai_sale_order_lot_selection_model" id="menu_mai_sale_order_lot_selection_model" parent="hr_expense.menu_hr_expense_my_expenses"/>
+
+    </data>
+</odoo>

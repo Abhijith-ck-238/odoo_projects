@@ -1,0 +1,97 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+
+        <record id="module_qr_control_category" model="ir.module.category">
+            <field name="name">Q&amp;R Control</field>
+            <field name="description">Category For Q&amp;R Control</field>
+            <field name="sequence">17</field>
+        </record>
+
+        <record id="group_qr_control_users" model="res.groups">
+            <field name="name">Q&amp;R Control Users</field>
+            <field name="category_id" ref="module_qr_control_category"/>
+        </record>
+
+        <record id="group_qr_control_manager" model="res.groups">
+            <field name="name">Q&amp;R Control Administrator</field>
+            <field name="implied_ids" eval="[(4, ref('group_qr_control_users'))]"/>
+            <field name="category_id" ref="module_qr_control_category"/>
+        </record>
+
+    </data>
+
+    <data noupdate="1">
+        <!--        qr_import_rules-->
+        <record model="ir.rule" id="qr_import_user_rule">
+            <field name="name">qr.control.user.rule</field>
+            <field name="model_id" ref="model_qr_import"/>
+            <field name="domain_force">[('create_uid','=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_users'))]"/>
+        </record>
+
+        <record model="ir.rule" id="qr_import_manager_rule">
+            <field name="name">qr.control.manager.rule</field>
+            <field name="model_id" ref="model_qr_import"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_manager'))]"/>
+        </record>
+        <!--        qr_product_rules-->
+        <record model="ir.rule" id="qr_product_user_rule">
+            <field name="name">qr.product.user.rule</field>
+            <field name="model_id" ref="model_qr_product"/>
+            <field name="domain_force">[('create_uid','=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_users'))]"/>
+        </record>
+
+        <record model="ir.rule" id="qr_product_manager_rule">
+            <field name="name">qr.product.manager.rule</field>
+            <field name="model_id" ref="model_qr_product"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_manager'))]"/>
+        </record>
+        <!--        reserved_product_rules-->
+        <record model="ir.rule" id="reserved_product_user_rule">
+            <field name="name">reserved.product.user.rule</field>
+            <field name="model_id" ref="model_reserved_product"/>
+            <field name="domain_force">[('create_uid','=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_users'))]"/>
+        </record>
+
+        <record model="ir.rule" id="reserved_product_manager_rule">
+            <field name="name">reserved.product.manager.rule</field>
+            <field name="model_id" ref="model_reserved_product"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_manager'))]"/>
+        </record>
+        <!--        reserved_product_line_rules-->
+        <record model="ir.rule" id="reserved_product_line_user_rule">
+            <field name="name">reserved.product.line.user.rule</field>
+            <field name="model_id" ref="model_reserved_product_line"/>
+            <field name="domain_force">[('create_uid','=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_users'))]"/>
+        </record>
+
+        <record model="ir.rule" id="reserved_product_line_manager_rule">
+            <field name="name">reserved.product.line.manager.rule</field>
+            <field name="model_id" ref="model_reserved_product_line"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_manager'))]"/>
+        </record>
+        <!--        reserve_operation_rules-->
+        <record model="ir.rule" id="reserve_operation_user_rule">
+            <field name="name">reserve.operation.user.rule</field>
+            <field name="model_id" ref="model_reserve_operation"/>
+            <field name="domain_force">[('create_uid','=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_users'))]"/>
+        </record>
+
+        <record model="ir.rule" id="reserve_operation_manager_rule">
+            <field name="name">reserve.operation.manager.rule</field>
+            <field name="model_id" ref="model_reserve_operation"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('group_qr_control_manager'))]"/>
+        </record>
+
+    </data>
+</odoo>

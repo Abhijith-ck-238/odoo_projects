@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_offering_offering_search" model="ir.ui.view">
+            <field name="name">offering.offering.search</field>
+            <field name="model">offering.offering</field>
+            <field name="arch" type="xml">
+                <search string="Search Offering">
+                    <field name="iq"/>
+                    <field name="customer"/>
+                    <field name="related_sale_order"/>
+                    <field name="summary"/>
+                    <field name="ref_number"/>
+                    <field name="region"/>
+                    <field name="purchase_order_ids"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Related Sale Order"
+                                name="related_sale_order"
+                                context="{'group_by': 'related_sale_order'}"></filter>
+                        <filter string="Customer" name="customer"
+                                context="{'group_by': 'customer'}"></filter>
+                        <filter string="Iq" name="iq"
+                                context="{'group_by': 'iq'}"></filter>
+                        <filter string="Summary" name="summary"
+                                context="{'group_by': 'summary'}"></filter>
+                        <filter string="Reference Number" name="ref_number"
+                                context="{'group_by': 'ref_number'}"></filter>
+                        <filter string="Region" name="region"
+                                context="{'group_by': 'region'}"></filter>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window"
+                id="itkan_offering.offering_action_window">
+            <field name="name">Offering Window</field>
+            <field name="res_model">offering.offering</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id"
+                   ref="view_offering_offering_search"></field>
+        </record>
+    </data>
+</odoo>

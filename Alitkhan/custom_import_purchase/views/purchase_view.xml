@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="gen_purchase_with_lot_wizard_view" model="ir.ui.view">
+            <field name="name">Wizard for import PO xls file</field>
+            <field name="model">gen.purchase_with_lot</field>
+            <field name="arch" type="xml">
+                <form string="Import Purchase">
+                    <group>
+                        <group>
+                            <field name="import_option" widget='radio'/>
+                            <field name="file" filename="name"/>
+                        </group>
+                        <group>
+                            <field name="stage" widget='radio'/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="sequence_opt"/>
+                    </group>
+                    <group>
+                        <field name="import_prod_option" widget='radio'/>
+                    </group>
+                    <footer>
+                        <button name="import_xls_of_po_with_lot" string="Import" class="oe_highlight" type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="gen_pur_with_lot_wizard" model="ir.actions.act_window">
+            <field name="name">Import Purchase With Lot</field>
+            <field name="res_model">gen.purchase_with_lot</field>
+            <field name="view_id" ref="gen_purchase_with_lot_wizard_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="gen_pur_with_lot_wizard"
+                  id="gen_pur_with_lot_wizard_import" sequence="8"
+                  parent="purchase.menu_procurement_management"/>
+
+    </data>
+</odoo>

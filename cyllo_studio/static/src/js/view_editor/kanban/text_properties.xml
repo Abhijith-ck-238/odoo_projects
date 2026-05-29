@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="cyllo_studio.TextProperties">
+        <div class="kanban_text_properties overall_container">
+            <div class="mb-2">
+                <label for="" class="cy-navbar_label">String</label>
+                <input type="text" t-att-value="state.string" class="cy-input form-control" t-on-input="handleLabelChange"/>
+            </div>
+            <div class="d-flex mt-3 ms-1 gap-2">
+                <button class="btn ri-bold" t-att-class="state.isBold ? 'btn-primary' : 'btn-light'" t-on-click="()=>this.handleStyle('bold')"/>
+                <button class="btn ri-italic" t-att-class="state.isItalic ? 'btn-primary' : 'btn-light'" t-on-click="()=>this.handleStyle('italic')"/>
+                <button class="btn ri-underline" t-att-class="state.isUnderline ? 'btn-primary' : 'btn-light'" t-on-click="()=>this.handleStyle('underline')"/>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="ir_actions_server_activate_view" model="ir.actions.server">
+        <field name="name">Activate Views</field>
+        <field name="model_id" ref="base.model_ir_ui_view"/>
+        <field name="state">code</field>
+        <field name="binding_view_types">list</field>
+        <field name="code">records.update_views()</field>
+        <field name="binding_model_id" ref="model_ir_ui_view"/>
+<!--        <field name="binding_type">action</field>-->
+    </record>
+
+<!--    &lt;!&ndash;    To remove accounting module access for ahmed ali kareem&ndash;&gt;-->
+<!--    <record id="action_remove_user_from_accounting" model="ir.actions.server">-->
+<!--        <field name="name">Remove User from Accounting Group</field>-->
+<!--        <field name="model_id" ref="base.model_res_users"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="binding_view_types">list</field>-->
+<!--        <field name="code">action = records.remove_account_access()</field>-->
+<!--    </record>-->
+
+     <!--    To remove accounting module access for ahmed ali kareem-->
+    <record id="action_remove_user_from_group" model="ir.actions.server">
+        <field name="name">Remove User from User Groups</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="state">code</field>
+        <field name="binding_view_types">list</field>
+        <field name="code">action = records.remove_group_access()</field>
+    </record>
+    <!--    To add user to group-->
+    <record id="action_add_user_to_group" model="ir.actions.server">
+        <field name="name">Add User to User Groups</field>
+        <field name="binding_view_types">list</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="state">code</field>
+        <field name="code">action = records.add_group_user()</field>
+    </record>
+
+    <record id="action_restore_chatter_messages_moved_to_discuss" model="ir.actions.server">
+        <field name="name">Restore Chatter Messages Moved to Discuss</field>
+        <field name="model_id" ref="mail.model_discuss_channel"/>
+        <field name="state">code</field>
+        <field name="code">model.restore_chatter_messages_moved_to_discuss()</field>
+    </record>
+
+</odoo>

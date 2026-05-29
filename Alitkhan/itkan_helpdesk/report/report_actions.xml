@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_product_list_xlsx" model="ir.actions.server">
+            <field name="name">Product List</field>
+            <field name="model_id" ref="model_project_task"/>
+            <field name="binding_model_id" ref="model_project_task"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="binding_type">report</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.action_product_list_report_excel()
+            </field>
+        </record>
+
+    </data>
+</odoo>

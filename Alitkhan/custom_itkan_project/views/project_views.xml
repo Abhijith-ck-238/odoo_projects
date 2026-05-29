@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="itkan_project_view_tree" model="ir.ui.view">
+        <field name="name">itkan.project.list</field>
+        <field name="model">itkan.project</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="project_manager"/>
+                <field name="project_committee_users" widget="many2many_tags"/>
+                <field name="project_type_id"/>
+                <field name="starting_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="itkan_project_view_form" model="ir.ui.view">
+        <field name="name">itkan.project.form</field>
+        <field name="model">itkan.project</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <header>
+                    <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name">Project Description</label>
+                        <h1>
+                            <field name="name" readonly="True"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_manager" readonly="True"/>
+                            <field name="sales_project_manager" readonly="True"/>
+                            <field name="project_type_id" readonly="True"/>
+                            <field name="contract_id" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="project_committee_users" widget="many2many_tags" readonly="True"/>
+                            <field name="project_duration" readonly="True"/>
+                            <field name="starting_date" readonly="True"/>
+                            <field name="ending_date" readonly="True"/>
+                            <field name="progress" widget="progressbar"/>
+                            <field name="is_manager" invisible="1"/>
+                            <field name="is_committee" invisible="1"/>
+                            <field name="show_checklist" widget="boolean_toggle" groups="custom_itkan_project.group_itkan_project_user" invisible="is_manager"/>
+                            <field name="hide_checklist" widget="boolean_toggle" groups="custom_itkan_project.group_itkan_project_user" invisible="is_committee"/>
+                            <field name="hide_checklist_default" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Checklist">
+                            <field name="checklist_line_ids">
+                                <list editable="bottom">
+                                    <button name="action_checklist_line_form" type="object" icon="fa-list" width="30px"/>
+                                    <field name="checklist_name" readonly="True"/>
+                                    <field name="checklist_id" column_invisible="1"/>
+                                    <field name="is_checked"/>
+                                    <field name="members" column_invisible="1"/>
+                                    <field name="notify_before_days" column_invisible="1"/>
+                                    <field name="note"/>
+                                    <field name="deadline" readonly="True"/>
+                                    <field name="have_sub_checklist" column_invisible="1"/>
+                                    <field name="progress" widget="progressbar" invisible="not have_sub_checklist"/>
+                                    <field name="attachment_ids"/>
+                                </list>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="checklist_name"/>
+                                                <field name="is_checked"/>
+                                                <field name="note"/>
+                                                <field name="deadline"/>
+                                            </group>
+                                        </group>
+                                        <field name="subtask_ids">
+                                            <list editable="bottom">
+                                                <field name="name"/>
+                                                <field name="user_ids" widget="many2many_tags"/>
+                                            </list>
+                                        </field>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="itkan_project_view_kanban" model="ir.ui.view">
+        <field name="name">itkan.project.kanban</field>
+        <field name="model">itkan.project</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_training_ticket" quick_create="false" default_order="create_date desc">
+                <field name="name"/>
+                <field name="project_manager"/>
+                <field name="starting_date"/>
+                <field name="project_type_id"/>
+                <field name="color"/>
+                <field name="active"/>
+                 <field name="message_needaction_counter"/>
+                 <field name="activity_ids"/>
+                <field name="activity_state"/>
+                <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                <templates>
+                    <t t-name="menu" >
+                        <div class="container">
+                            <div class="row">
+                                <div name="card_menu_view" class="col-6">
+                                    <div role="menuitem" t-if="widget.editable">
+                                        <a type="edit" class="dropdown-item" role="menuitem">Edit</a>
+                                    </div>
+                                    <div role="menuitem" t-if="widget.deletable">
+                                        <a type="delete" class="dropdown-item" role="menuitem">Delete</a>
+                                    </div>
+                                    <div role="menuitem" t-if="!record.active.raw_value">
+                                         <a name="toggle_active" type="object" class="dropdown-item" role="menuitem">Restore</a>
+                                    </div>
+                                    <div role="menuitem" t-if="record.active.raw_value">
+                                         <a name="toggle_active" type="object" class="dropdown-item" role="menuitem">Archive</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-name="card">
+                        <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''} oe_kanban_global_click">
+                            <span class="oe_kanban_color_help" t-attf-title="In #{kanban_getcolorname(record.color.raw_value)}" role="img" t-attf-aria-label="In #{kanban_getcolorname(record.color.raw_value)}"/>
+                            <div class="oe_kanban_content">
+                                <div>
+                                    <strong><field name="name"/> (#<field name="id"/>)</strong>
+                                </div>
+                                <div>
+                                    <field name="project_manager"/>
+                                </div>
+                                <div>
+                                    <field name="starting_date"/>
+                                </div>
+                                <div>
+                                    <field name="project_type_id"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_right">
+                                        <t t-if="record.message_needaction_counter.raw_value">
+                                            <span class='oe_kanban_mail_new' title='Important Messages'><i class='fa fa-comments' role="img" aria-label="Messages"/><t t-out="record.message_needaction_counter.raw_value"/></span>
+                                        </t>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="itkan_project_view_search" model="ir.ui.view">
+        <field name="name">itkan.project.search</field>
+        <field name="model">itkan.project</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+                <group>
+                    <filter string="Stage" name="stage_id" domain="[]" context="{'group_by':'stage_id'}"/>
+                    <filter string="Project Type" name="project_type_id" domain="[]" context="{'group_by':'project_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_project_checklist_line_form" model="ir.ui.view">
+        <field name="name">view.project.checklist.line.form</field>
+        <field name="model">project.checklist.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="checklist_name" readonly="True"/>
+                            <field name="is_checked"/>
+                            <field name="note"/>
+                            <field name="deadline" readonly="True"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </group>
+                    </group>
+                    <field name="subtask_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="is_checked"/>
+                            <field name="user_ids" widget="many2many_tags"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_project_checklist_line_form_inherit" model="ir.ui.view">
+        <field name="name">view.project.checklist.line.form.inherit.itkan.project</field>
+        <field name="model">project.checklist.line</field>
+        <field name="inherit_id" ref="custom_itkan_project.view_project_checklist_line_form" />
+<!--        <field name="groups_id" eval="[(4, ref('custom_itkan_project.group_itkan_project_edit_deadline_user'))]"/>-->
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='deadline']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='deadline']" position="after">
+                <field name="deadline" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='checklist_name']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='checklist_name']" position="after">
+                <field name="deadline" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="itkan_project_view_form_inherit" model="ir.ui.view">
+        <field name="name">itkan.project.view.form.inherit.itkan.project</field>
+        <field name="model">itkan.project</field>
+        <field name="inherit_id" ref="custom_itkan_project.itkan_project_view_form"/>
+        <!--        <field name="groups_id" eval="[(4, ref('custom_itkan_project.group_itkan_project_edit_deadline_user'))]"/>-->
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='checklist_line_ids']/list/field[@name='deadline']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='checklist_line_ids']/list/field[@name='deadline']" position="after">
+                <field name="deadline" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='checklist_line_ids']/list/field[@name='checklist_name']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+             <xpath expr="//field[@name='checklist_line_ids']/list/field[@name='checklist_name']" position="after">
+                 <field name="checklist_name" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+             </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="name" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='project_manager']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='project_manager']" position="after">
+                <field name="project_manager" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='sales_project_manager']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sales_project_manager']" position="after">
+                <field name="sales_project_manager" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='project_type_id']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='project_type_id']" position="after">
+                <field name="project_type_id" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='contract_id']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='contract_id']" position="after">
+                <field name="contract_id" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='project_committee_users']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='project_committee_users']" position="after">
+                <field name="project_committee_users" readonly="True" widget="many2many_tags" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='starting_date']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='starting_date']" position="after">
+                <field name="starting_date" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='ending_date']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='ending_date']" position="after">
+                <field name="ending_date" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+            <xpath expr="//field[@name='project_duration']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="groups">custom_itkan_project.group_itkan_project_edit_deadline_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='project_duration']" position="after">
+                <field name="project_duration" readonly="True" groups="!custom_itkan_project.group_itkan_project_edit_deadline_user"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_itkan_project" model="ir.actions.act_window">
+        <field name="name">Project</field
+        >
+        <field name="res_model">itkan.project</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <menuitem id="itkan_project_menu_root" name="ALITKAN Project" groups="group_itkan_project_administrator,group_itkan_project_user"/>
+    <menuitem id="menu_itkan_project" name="Project" parent="itkan_project_menu_root" sequence="0"/>
+    <menuitem id="menu_itkan_project_child" name="Project" action="action_itkan_project" parent="menu_itkan_project"/>
+</odoo>

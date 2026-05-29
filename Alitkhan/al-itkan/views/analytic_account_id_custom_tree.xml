@@ -1,0 +1,16 @@
+<odoo> 
+    <data>
+        <record id="analytic_account_custom_tree" model="ir.ui.view">
+            <field name="name">analytic_account_custom.tree</field>
+            <field name="model">account.analytic.account</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <list string="Contacts">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="partner_id"/>
+                </list>
+            </field>
+        </record>
+    </data>
+</odoo>

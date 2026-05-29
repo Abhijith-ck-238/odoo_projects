@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="lc_bank_tree" model="ir.ui.view">
+        <field name="name">lc_bank_tree</field>
+        <field name="model">pledge.bank</field>
+        <field name="arch" type="xml">
+            <list string="tree View Name">
+                <field name="bank_name"/>
+            </list>
+        </field>
+    </record>
+</odoo>

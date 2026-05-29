@@ -1,0 +1,12 @@
+<odoo>
+      <record id="res_company_form_offer" model="ir.ui.view">
+        <field name="name">res.company.form.offer</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+          <field name="color" position="after">
+            <field name="footer_image"/>
+          </field>
+        </field>
+      </record>
+</odoo>

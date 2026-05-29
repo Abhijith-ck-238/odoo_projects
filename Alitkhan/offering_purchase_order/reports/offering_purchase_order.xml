@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="offering_purchase_order.purchase_order_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <!-- <t t-call="web.internal_layout"> -->
+
+                    <!-- Custom external layout -->
+                    <t t-call="offering_purchase_order.offering_po_custom_external_layout">
+
+                        <style>
+                            .address-block h6 {
+                            margin-bottom: 0.4rem !important;
+                            }
+
+                        </style>
+                        <div class="page" style="font-size:22px;">
+
+                            <div class="row">
+                                <div class="col-9">
+                                    <p style="font-size:20px;">To :
+                                        <span style="font-weight:bold;" t-field="doc.partner_id.name"/>
+                                    </p>
+                                </div>
+                                <div class="col-3">
+                                    <p style="font-size:20px;">Date :
+                                        <span style="font-size:22px;"
+                                              t-esc="doc.date_order.date().strftime('%d/%m/%Y')"/>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12" style="border-bottom: 2px solid black;margin-bottom:5px;"/>
+                            </div>
+
+                            <div class="row" style="font-family:'Arial';font-size:18px;">
+                                <div class="col-12">
+                                    <table class="table table-sm o_main_table">
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Purchase Order Number
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.name"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Contract No.
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.contract_id.name"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Project No.
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.project_no"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Order Value
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.amount_total"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Product Specification
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.product_specification"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Payment term
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <div t-field="doc.payment_term"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Delivery time /date
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.delivery_time_Date"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Partial shipment
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.partial_shipment"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Transshipment
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.transshipment"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Shipment by
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.shipment_by"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;font-weight:600;font-size:20px;padding:5px;">
+                                                Consignee name
+                                            </td>
+                                            <td class="" style="border:1px solid black;font-size:20px;padding:5px;">
+                                                <span t-field="doc.consignee_name"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;font-family:'Arial';font-size:18px;">
+                                <div class="col-12">
+                                    <table class="table table-sm o_main_table" style="">
+                                        <tr style="border:1px solid black;">
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;max-height:50px;font-weight:600;font-size:18px;padding:5px;">
+                                                Dispatch address:
+                                            </td>
+                                            <td class=""
+                                                style="border:1px solid black;line-height:10px;font-size:18px;">
+                                                <div class="address-block" t-field="doc.dispatch_address"/>
+                                            </td>
+                                        </tr>
+                                        <tr style="border:1px solid black;">
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;max-height:50px;font-weight:600;font-size:18px;padding:5px;">
+                                                End user address:
+                                            </td>
+                                            <td class=""
+                                                style="border:1px solid black;line-height:10px;font-size:20px;">
+                                                <div class="address-block" t-field="doc.end_user_address"/>
+                                            </td>
+                                        </tr>
+                                        <tr style="border:1px solid black;">
+                                            <td class=""
+                                                style="background:lightgray;width:30%;border:1px solid black;max-height:50px;font-weight:600;font-size:18px;padding:5px;">
+                                                Invoice address:
+                                            </td>
+                                            <td class=""
+                                                style="border:1px solid black;line-height:10px;font-size:20px;">
+                                                <div class="address-block" t-field="doc.invoice_address"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-12" style="border:1px solid black;margin-bottom:10px;margin-top:30px;"/>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>Delivery Condition:</p>
+                                </div>
+                                <div class="col-8">
+                                    <t t-foreach="doc.delivery_conditions" t-as="condition">
+                                        <span style="border:1px solid black;margin:5px;padding:5px;"
+                                              t-field="condition.name"/>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12" style="border:1px solid black;margin-bottom:5px;margin-top:5px;"/>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>Type of Shipping:</p>
+                                </div>
+                                <div class="col-12">
+                                    <t t-foreach="doc.type_of_shipping" t-as="type">
+                                        <span style="border:1px solid black;margin:5px;padding:5px;"
+                                              t-field="type.name"/>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12" style="border:1px solid black;margin-bottom:5px;margin-top:5px;"/>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-4">
+                                    <p>Required documents:</p>
+                                </div>
+                                <div class="col-8">
+                                    <t t-foreach="doc.required_documents" t-as="document">
+                                        <span style="margin:5px;padding:5px;" t-esc="document.name + ' ' + '-' + ' ' "/>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-12" style="border:1px solid black;margin-top:5px;"/>
+                            </div>
+
+
+                            <div class="row" style="justify-content:space-between;width:100%;">
+                                <div class="col-6 text-left " style="text-align: left;">
+                                    <p style="font-weight:bold;">Authorized
+                                        Signature
+                                    </p>
+                                </div>
+                                <div style="font-weight:bold;text-align: right;" class="col-6 text-right ">
+                                    <p>Account Manager Signature</p>
+                                </div>
+                            </div>
+
+                            <div t-if="doc.add_notes" class="row" style="page-break-before:always;"
+                                 t-field="doc.extra_notes">
+                            </div>
+
+                            <table class="table table-borderless o_main_table"
+                                   style="page-break-before:always; width:100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="border-bottom:1px solid #d3d3d3;border-top:1px solid #d3d3d3;">
+                                        <th style="text-align:left; border-bottom:1px solid black;font-weight:bold;"
+                                            name="th_part_num">
+                                            Part Number
+                                        </th>
+                                        <th style="text-align:left; border-bottom:1px solid black;font-weight:bold;"
+                                            name="th_state">
+                                            State
+                                        </th>
+                                        <th style="text-align:center; border-bottom:1px solid black;font-weight:bold;"
+                                            name="th_qty">
+                                            Qty
+                                        </th>
+                                        <th style="text-align:center; border-bottom:1px solid black;font-weight:bold;"
+                                            name="th_usd">Unit
+                                            Price
+                                        </th>
+                                        <th style="text-align:center; border-bottom:1px solid black;font-weight:bold;"
+                                            name="th_amount">
+                                            <strong>Amount</strong>
+                                        </th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                    <t t-foreach="doc.order_line" t-as="line">
+                                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''"
+                                            style="border-top:1px solid #d3d3d3;">
+                                            <td style="text-align:left;" name="th_part_num">
+                                                <span t-field="line.product_id.default_code"
+                                                      style="overflow-wrap: normal;"/>
+                                            </td>
+                                            <td style="text-align:left;" name="th_state">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <td t-if="line.display_type not in ['line_section','line_note']"
+                                                style="text-align:center;" name="th_qty">
+                                                <span t-esc="int(line.product_qty)"/>
+                                            </td>
+                                            <td t-if="line.display_type not in ['line_section','line_note']"
+                                                style="text-align:center;" name="th_usd">
+                                                <span t-field="line.price_unit"/>
+                                            </td>
+                                            <td t-if="line.display_type not in ['line_section','line_note']"
+                                                style="text-align:center;" name="td_subtotal">
+                                                <p t-field="line.price_subtotal"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <div id="total" class="row justify-content-end">
+                                <div class="col-4">
+                                    <table class="table table-borderless" style="width:100%; border-collapse:collapse;">
+                                        <tr class="o_total" style="border-top:1px solid black;">
+                                            <td name="td_amount_total_label" style="font-weight:bold;color: #7b7b7b">
+                                                Total
+                                            </td>
+                                            <td style="text-align:right">
+                                                <span t-field="doc.amount_total"
+                                                      t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <!-- </t> -->
+                </t>
+            </t>
+        </template>
+        <record id="paperformat_offering_purchase_order"
+                model="report.paperformat">
+            <field name="name">European A4</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">43</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <!--        <report id="offering_purchase_order"-->
+        <!--                string="Custom Purchase Order 1 - English"-->
+        <!--                model="purchase.order"-->
+        <!--                report_type="qweb-pdf"-->
+        <!--                name="offering_purchase_order.purchase_order_template"-->
+        <!--                file="PO-%s' % (object.id)"-->
+        <!--                />-->
+        <!-- paperformat="paperformat_offering_purchase_order" -->
+
+
+        <record id="offering_purchase_order" model="ir.actions.report">
+            <field name="name">Custom Purchase Order 1 - English</field>
+            <field name="model">purchase.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">offering_purchase_order.purchase_order_template</field>
+            <field name="report_file">offering_purchase_order.purchase_order_template</field>
+            <!--        <field name="paperformat_id" ref="hr.paperformat_hr_employee_badge"/>-->
+            <field name="print_report_name">'PO - %s' % (object.name).replace('/', '')</field>
+            <field name="binding_model_id" ref="model_purchase_order"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

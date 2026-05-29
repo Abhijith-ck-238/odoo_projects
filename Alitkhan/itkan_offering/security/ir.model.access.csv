@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_offering_offering,offering.offering,model_offering_offering,itkan_offering.offering_user,1,1,1,1
+access_offering_config,offering.config,model_offering_config,itkan_offering.offering_config_user,1,1,1,1
+access_offering_config_line,offering.config.line,model_offering_config_line,itkan_offering.offering_config_user,1,1,1,1
+access_offering_offering_line,offering.offering.line,model_offering_offering_line,itkan_offering.offering_user,1,1,1,1
+access_offering_template,offering.template,model_offering_template,itkan_offering.offering_user,1,1,1,1
+access_offering_template_line,offering.template.line,model_offering_template_line,itkan_offering.offering_user,1,1,1,1
+access_offering_region,offering.region,model_offering_region,itkan_offering.offering_user,1,1,1,1
+access_offering_exchangerate,see.offering.exchangerate,model_offering_exchangerate,itkan_offering.offering_config_user,1,0,0,0
+access_offering_exchangerate_manager,full.access.offering.exchangerate,model_offering_exchangerate,itkan_offering.offering_manager,1,1,1,1
+access_product_pack_manager,product.bundle.manager,product_bundle_pack.model_product_pack,itkan_offering.offering_user,1,1,1,1
+access_product_packs_lines,product.packs.line,product_bundle_pack.model_product_packs_line,itkan_offering.offering_user,1,1,1,1

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_report_invoice_document" inherit_id="account.report_invoice_document">
+
+<!--         <xpath expr="//div[@class='page mb-4']" position="before">-->
+<!--            <div class="text-start">-->
+<!--                <strong>Customer Name:</strong><br/>-->
+<!--                <span t-field="o.partner_id.name" style="margin-bottom:50px;"/>-->
+<!--                <p t-if="o.partner_id.vat">-->
+<!--                    <t t-if="o.company_id.account_fiscal_country_id.vat_label"-->
+<!--                        t-out="o.company_id.account_fiscal_country_id.vat_label"/>-->
+<!--                    <t t-else="">Tax ID</t>:-->
+<!--                    <span t-field="o.partner_id.vat"/>-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </xpath>-->
+
+        <xpath expr="//div[@class='page mb-4']" position="before">
+            <div class="text-start" style="margin-top:-20px; margin-bottom:20px; line-height:1.6;">
+                <strong style="display:block; margin-bottom:4px;">Customer Name:</strong>
+                <span t-field="o.partner_id.name" style="display:block; margin-bottom:10px; font-weight:500;"/>
+                <p t-if="o.partner_id.vat" style="margin:0;">
+                    <t t-if="o.company_id.account_fiscal_country_id.vat_label" t-out="o.company_id.account_fiscal_country_id.vat_label"/>
+                    <t t-else="">Tax ID</t>:
+                    <span t-field="o.partner_id.vat"/>
+                </p>
+            </div>
+        </xpath>
+
+        <!-- Add border style to each invoice line row -->
+        <xpath expr="//tbody[@class='invoice_tbody']/t[@t-foreach='lines']/tr" position="attributes">
+            <attribute name="style">border-bottom:1px solid #dee2e6;</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='address_not_same_as_shipping']" position="replace"/>
+        <xpath expr="//div[@name='address_same_as_shipping']" position="replace"/>
+        <xpath expr="//div[@name='no_shipping']" position="replace"/>
+
+        <xpath expr="//div[hasclass('invoice_main')]" position="before">
+                <div style="height:50px;"/>
+        </xpath>
+<!--        <xpath expr="//div[hasclass('invoice_main')]" position="after">-->
+<!--            <t t-call="account_move.invoice_report_footer_new"/>-->
+<!--        </xpath>-->
+<!--        space added to remove name overlap issue-->
+<!--        <xpath expr="//table[@name='invoice_line_table']" position="before">-->
+<!--            <div style="margin-top: 20px;"></div>-->
+<!--        </xpath>-->
+
+        <xpath expr="//div[contains(@class,'page')]" position="inside">
+            <div class="footer">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    <ul class="list-inline mb4">
+                        <li t-if="docs.company_id.phone" class="list-inline-item d-inline">
+                            Phone: <span t-field="docs.company_id.phone"/>
+                        </li>
+                        <li t-if="docs.company_id.email" class="list-inline-item d-inline">
+                            Email: <span t-field="docs.company_id.email"/>
+                        </li>
+                        <li t-if="docs.company_id.website" class="list-inline-item d-inline">
+                            Web: <span t-field="docs.company_id.website"/>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-6">
+                            <span t-field="docs.company_id.report_footer"/>
+                        </div>
+                    </div>
+                    <div t-if="report_type == 'pdf'" class="text-muted">
+                                Page:
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+                    </div>
+
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

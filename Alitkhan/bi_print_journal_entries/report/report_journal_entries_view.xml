@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="journal_entry_template_report_view">
+            <t t-call="web.external_layout">
+                <t t-set="o"
+                   t-value="o.with_context({'lang':o.partner_id.lang})"/>
+
+                <div class="page">
+                    <br/>
+                    <div class="oe_structure"/>
+                    <div style="text-align:center; margin-bottom:16px;">
+                        <h2 style="font-family:Lato; font-size:20px; font-weight:bold; margin-bottom:8px;color: black;">
+                            Journal Entry
+                        </h2>
+                    </div>
+                    <br/>
+                    <table class="table table-borderless" style="width:100%;margin:0px auto;background:white;font-family:Lato;">
+                        <tbody>
+                        <tr>
+                            <td style="font-size:12px;">
+                                <strong>Journal Entry :</strong><br/>
+                                <span t-field="o.name" style="font-size:12px;"/>
+                            </td>
+                            <td style="min-width:250px;"></td>
+                            <td style="font-size:12px;">
+                                <strong>Journal :</strong><br/>
+                                <span t-field="o.journal_id" style="font-size:12px;"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:12px;">
+                                <strong>Date :</strong><br/>
+                                <span t-field="o.date" style="font-size:12px;"/>
+                            </td>
+                            <td style="min-width:250px;"></td>
+                            <td style="font-size:12px;">
+                                <strong>Reference :</strong><br/>
+                                <span t-field="o.ref" style="font-size:12px;"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <br/>
+                    <table class="table table-borderless" style="width:100%;margin:0px auto;background:white;font-family:Lato; font-size:12px;">
+                        <thead>
+                            <tr>
+                                <td colspan="8" style="border-top:1px solid #e1e1e1; padding:0;"></td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #e1e1e1;">
+                                <th style="padding:6px 4px;font-weight:bold;">Partner</th>
+                                <th style="padding:6px 4px;font-weight:bold;">Account</th>
+                                <th style="padding:6px 4px;font-weight:bold;">Label</th>
+                                <th style="padding:6px 4px;font-weight:bold;">Due Date</th>
+                                <th style="padding:6px 4px;font-weight:bold;">Analytic Account
+                                </th>
+                                <th style="padding:6px 4px;font-weight:bold;">Taxes(%)</th>
+                                <th style="padding:6px 4px;font-weight:bold;">Debit</th>
+                                <th style="padding:6px 4px;font-weight:bold;">Credit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="total" t-value="0.0"/>
+                            <t t-set="total1" t-value="0.0"/>
+                            <t t-foreach="o.line_ids" t-as="line">
+                                <tr style="border-bottom:1px solid #e1e1e1;">
+                                    <td style="padding:4px; white-space:normal;">
+                                        <span t-field="line.partner_id"/>
+                                    </td>
+                                    <td style="padding:4px; white-space:normal;">
+                                        <span t-field="line.account_id"/>
+                                    </td>
+                                    <td style="padding:4px; white-space:normal;">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <td style="padding:4px; white-space:nowrap;">
+                                        <span t-field="line.date_maturity"/>
+                                    </td>
+                                    <td style="padding:4px; white-space:nowrap;">
+                                        <t t-if="line.analytic_distribution">
+                                            <div t-foreach="line.analytic_distribution"
+                                                 t-as="distribution">
+                                                <t t-set="distributions"
+                                                   t-value="distribution.split(',')"/>
+                                                <t t-foreach="distributions"
+                                                   t-as="dist">
+                                                    <t t-if="line.env['account.analytic.account'].browse(int(dist)).partner_id">
+                                                        <t t-esc="line.env['account.analytic.account'].browse(int(dist)).name"/>
+                                                        -
+                                                        <t t-esc="line.env['account.analytic.account'].browse(int(dist)).partner_id.name"/>
+                                                        :
+                                                        <t t-esc="line.analytic_distribution.get(dist)"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-esc="line.env['account.analytic.account'].browse(int(dist)).name"/>
+                                                        :
+                                                        <t t-esc="line.analytic_distribution.get(dist)"/>
+                                                    </t>
+                                                    <br/>
+                                                </t>
+                                            </div>
+                                        </t>
+                                    </td>
+                                    <td style="padding:4px; white-space:nowrap;">
+                                        <span t-field="line.tax_ids"/>
+                                    </td>
+                                    <td style="padding:4px; white-space:nowrap;">
+                                        <span t-field="line.debit"/>
+                                    </td>
+                                    <td style="padding:4px; white-space:nowrap;">
+                                        <span t-field="line.credit"/>
+                                    </td>
+                                </tr>
+                                <t t-set="total" t-value="total + line.debit"/>
+                                <t t-set="total1"
+                                   t-value="total1 + line.credit"/>
+                            </t>
+                            <!-- Total Row -->
+                            <tr>
+                                <td colspan="5"/>
+                                <td style="font-weight:bold;">Total:</td>
+                                <td style="font-weight:bold;">
+                                    <span>
+                                        <t t-esc="total"/>
+                                    </span>
+                                </td>
+                                <td style="font-weight:bold;">
+                                    <span>
+                                        <t t-esc="total1"/>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="footer">
+                        <div class="text-center"
+                             style="border-top: 1px solid black;">
+                            <ul class="list-inline mb4">
+                                <li t-if="o.company_id.phone"
+                                    class="list-inline-item d-inline">
+                                    Phone:
+                                    <span t-field="o.company_id.phone"/>
+                                </li>
+                                <li t-if="o.company_id.email"
+                                    class="list-inline-item d-inline">
+                                    Email:
+                                    <span t-field="o.company_id.email"/>
+                                </li>
+                                <li t-if="o.company_id.website"
+                                    class="list-inline-item d-inline">
+                                    Web:
+                                    <span t-field="o.company_id.website"/>
+                                </li>
+                            </ul>
+                            <div class="row">
+                                <div class="col-6">
+                                    <span t-field="o.company_id.report_footer"/>
+                                </div>
+                            </div>
+                            <div class="text-center mt-3" style="color: #666; font-size: 12px;">
+                                Page: <span class="page"/> / <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="journal_entry_report_template_id">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="bi_print_journal_entries.journal_entry_template_report_view"
+                       t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

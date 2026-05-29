@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="attendees_attendees_view_tree" model="ir.ui.view">
+        <field name="name">attendees.attendees.list</field>
+        <field name="model">attendees.attendees</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="job_position_id"/>
+                <field name="work_location_id"/>
+                <field name="phone" widget="phone"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="attendees_attendees_view_form" model="ir.ui.view">
+        <field name="name">attendees.attendees.form</field>
+        <field name="model">attendees.attendees</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="job_position_id"/>
+                            <field name="work_location_id"/>
+                            <field name="phone" widget="phone"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="attendees_attendees_view_search" model="ir.ui.view">
+        <field name="name">attendees.attendees.search</field>
+        <field name="model">attendees.attendees</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+                <field name="job_position_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_attendees_attendees" model="ir.actions.act_window">
+        <field name="name">Attendees</field>
+        <field name="res_model">attendees.attendees</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_merge_attendees" model="ir.actions.server">
+            <field name="name">Merge Attendees</field>
+            <field name="model_id" ref="custom_training.model_attendees_attendees"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.merge_attendees()
+            </field>
+            <field name="binding_model_id" ref="custom_training.model_attendees_attendees"/>
+        </record>
+
+    <menuitem id="menu_attendees_attendees" name="Attendees" action="action_attendees_attendees" parent="training_configuration" sequence="2"/>
+</odoo>

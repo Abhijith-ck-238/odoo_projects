@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="custom_fleet.FleetOne2Many">
+                        <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr style="">
+                            <td style="font-weight=bold;" name="th_minimum">Type</td>
+                            <td style="font-weight=bold;" name="th_maximum">Next Service</td>
+                            <td style="font-weight=bold;" name="th_maximum">Left to next service</td>
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+                        <t t-foreach="this.record" t-as="o" t-key="o.id">
+                            <tr style="">
+<!--                                <span>-->
+<!--                                    <t t-out="o.next_service"/>-->
+<!--                                </span>-->
+                                <td style="">
+                                    <t t-out="o.service_type[1]" t-if="o.service_type"/>
+                                </td>
+                                <td style="">
+                                    <t t-out="o.next_service"/>
+                                </td>
+                                <td style="">
+                                    <t t-esc="o.km_left"/>
+                                </td>
+                            </tr>
+                        </t>
+
+                    </tbody>
+
+                </table>
+
+    </t>
+
+</templates>

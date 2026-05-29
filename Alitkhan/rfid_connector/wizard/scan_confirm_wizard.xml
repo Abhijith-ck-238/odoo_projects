@@ -1,0 +1,74 @@
+<odoo>
+    <record id="scan_confirm_wizard_view" model="ir.ui.view">
+        <field name="name">Confirmation</field>
+        <field name="model">scan.confirm.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Warning">
+                <group>
+                    <field name="msg" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="yes" string="Ok" type="object" class="oe_highlight"/>
+                    <button name="no" string="Cancel" type="object" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="fetch_confirm_wizard_view" model="ir.ui.view">
+        <field name="name">Confirmation</field>
+        <field name="model">fetch.confirm.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Warning">
+                <group>
+                    <field name="msg" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="yes" string="Ok" type="object" class="oe_highlight"/>
+                    <button name="no" string="Cancel" type="object" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="done_confirm_wizard_view" model="ir.ui.view">
+        <field name="name">Confirmation</field>
+        <field name="model">done.confirm.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Warning">
+                <group>
+                    <field name="msg" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="yes" string="Ok" type="object" class="oe_highlight"/>
+                    <button name="no" string="Cancel" type="object" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="scan_confirm_wizard_action" model="ir.actions.act_window">
+        <field name="name">Confirmation</field>
+        <field name="res_model">scan.confirm.wizard</field>
+        <field name="view_id" ref="scan_confirm_wizard_view"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="fetch_confirm_wizard_action" model="ir.actions.act_window">
+        <field name="name">Confirmation</field>
+        <field name="res_model">fetch.confirm.wizard</field>
+        <field name="view_id" ref="fetch_confirm_wizard_view"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="done_confirm_wizard_action" model="ir.actions.act_window">
+        <field name="name">Confirmation</field>
+        <field name="res_model">done.confirm.wizard</field>
+        <field name="view_id" ref="done_confirm_wizard_view"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

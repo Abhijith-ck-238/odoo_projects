@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_remove_product_lines" model="ir.actions.server">
+            <field name="name">Remove product lines</field>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="contracts.model_contract_contract"/>
+            <field name="binding_model_id"
+                   ref="contracts.model_contract_contract"/>
+            <field name="code">records.action_remove_product_lines()</field>
+            <field name="groups_id"
+                   eval="[(4,ref('__export__.res_groups_116_fde76310'))]"/>
+        </record>
+
+        <record id="action_merge_sites" model="ir.actions.server">
+            <field name="name">Merge Sites</field>
+            <field name="model_id" ref="contracts.model_contract_site"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.merge_sites()
+            </field>
+            <field name="binding_model_id" ref="contracts.model_contract_site"/>
+        </record>
+
+    </data>
+</odoo>

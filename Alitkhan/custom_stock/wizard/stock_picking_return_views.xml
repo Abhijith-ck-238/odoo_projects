@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+<!--        <record id="view_stock_return_picking_form" model="ir.ui.view">-->
+<!--            <field name="name">view.stock.return.picking.form.inherit.custom.stock</field>-->
+<!--            <field name="model">stock.return.picking</field>-->
+<!--            <field name="inherit_id" ref="stock.view_stock_return_picking_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='product_return_moves']/list/field[@name='product_id']" position="after">-->
+<!--                    <field name="lot_id" options="{'no_create': True, 'no_open': True}" force_save="1"/>-->
+
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

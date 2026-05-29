@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="custom_attachment_preview.AttachmentPreviewField">
+    <div class="w-100 d-inline-flex gap-2 align-items-center">
+
+      <!--  File Name -->
+        <span t-if="props.record.data[props.name]" class="o_filename pe-2">
+        <t t-esc="fileName"/>
+      </span>
+
+        <!-- Preview Button -->
+        <button type="button"
+                class="btn btn-link btn-sm lh-1 fa fa-eye"
+                t-on-click="onPreviewClick"
+                data-tooltip="Preview"
+                aria-label="Preview"
+                t-att-disabled="!props.record.data[props.name]">
+      </button>
+
+        <!-- Download Button -->
+        <t t-if="props.record.resId and !props.record.dirty">
+        <button type="button"
+                class="btn btn-link btn-sm lh-1 fa fa-download"
+                t-on-click="onFileDownload"
+                data-tooltip="Download"
+                aria-label="Download">
+        </button>
+      </t>
+
+        <!--  Edit (via FileUploader) -->
+        <FileUploader acceptedFileExtensions="props.acceptedFileExtensions"
+                      onUploaded.bind="update">
+        <t t-set-slot="toggler">
+          <button type="button"
+                  class="btn btn-link btn-sm lh-1 fa fa-pencil"
+                  data-tooltip="Edit"
+                  aria-label="Edit">
+          </button>
+        </t>
+      </FileUploader>
+
+        <!-- Clear Button -->
+        <button type="button"
+                class="btn btn-link btn-sm lh-1 fa fa-trash"
+                t-on-click="onClearClick"
+                data-tooltip="Clear"
+                aria-label="Clear"
+                t-att-disabled="!props.record.data[props.name]">
+      </button>
+
+    </div>
+  </t>
+</templates>

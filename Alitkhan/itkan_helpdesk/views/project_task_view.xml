@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="project_task_inh_form_itkan_fsm" model="ir.ui.view">
+            <field name="name">project.task_inh.form.itkan</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+
+                 <xpath expr="//field[@name='related_helpdesk_ticket']" position="after">
+<!--                    <field name="related_helpdesk_ticket" string="Related Helpdesk Ticket" options="{'no_create': True, 'no_create_edit':True}"-->
+<!--                           readonly="1"/>-->
+                    <field name="service_report_doc"/>
+
+                </xpath>
+
+
+<!--                <field name="email_cc" position="after">-->
+<!--                    <field name="related_helpdesk_ticket" options="{'no_create': True, 'no_create_edit':True}"-->
+<!--                           readonly="1"/>-->
+<!--                    <field name="service_report_doc"/>-->
+<!--                </field>-->
+
+<!--                <xpath expr="//div[@name='button_box']//button[@name='action_fsm_view_material']//field[@name='material_line_total_price']" position="attributes">-->
+<!--                    <attribute name="groups">purchase.group_purchase_user</attribute>-->
+<!--                </xpath>-->
+
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <field name="service_report_id" invisible="1"/>
+                    <button name="view_service_report" type="object" class="oe_stat_button" icon="fa-file-text" invisible = "not service_report_id">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Service</span>
+                            <span class="o_stat_text">Report</span>
+                        </div>
+                    </button>
+                </xpath>
+
+                <field name="stage_id" position="replace"/>
+
+                <xpath expr="//header" position="inside">
+                    <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}"/>
+                </xpath>
+
+                <field name='partner_id' position='after'>
+                    <field name="co_user_ids" widget="many2many_tags"/>
+                    <field name="vehicle_ids" widget="many2many_tags"/>
+                    <field name="brand_id"/>
+                </field>
+
+<!--                <xpath expr="//field[@name='project_id']" position="before">-->
+<!--                    <field name="sale_order_id" readonly="1" invisible=" not sale_order_id"-->
+<!--                           groups="access_units.sale_ignore_access_units"/>-->
+<!--                </xpath>-->
+
+            </field>
+        </record>
+
+        <record id="project_task_inh_form_itkan_2" model="ir.ui.view">
+            <field name="name">project.task_inh.form.itkan.2</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2" />
+            <field name="arch" type="xml">
+
+                <!-- Remove Blocked By page -->
+                <xpath expr="//page[@name='task_dependencies']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- Remove Extra Info page -->
+                <xpath expr="//page[@name='extra_info']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='sub_tasks_page']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@id='timesheets_tab']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <field name="tag_ids" position="after">
+                    <field name="is_fsm" invisible="1"/>
+                    <field name="related_helpdesk_ticket" options="{'no_create': True, 'no_create_edit':True}"
+                           invisible="not is_fsm" readonly="1"/>
+                    <field name="sale_order_id" invisible="not sale_order_id or not is_fsm"
+                           groups="sales_team.group_sale_salesman" readonly="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="field_service_control_panel_inherit" model="ir.ui.view">
+            <field name="name">project.task.field.service.control.panel</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="industry_fsm.project_task_view_search_fsm"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="brand_id" invisible="1"/>
+                </field>
+                <filter name="my_tasks" position="replace">
+                    <filter string="My Tasks" name="my_tasks" domain="['|', ('user_ids', '=', uid), ('co_user_ids', 'in', uid)]"/>
+                </filter>
+            </field>
+        </record>
+
+    </data>
+</odoo>

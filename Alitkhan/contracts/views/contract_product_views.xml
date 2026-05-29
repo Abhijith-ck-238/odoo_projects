@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+        <record id="contract_product_form" model="ir.ui.view">
+            <field name="name">contract.product.form</field>
+            <field name="model">contract.product</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_char" invisible="product_char == False"/>
+                                <field name="product_id" invisible="product_char != False"/>
+                                <field name="sn"/>
+                                <field name="qty"/>
+                                <field name="price"/>
+                                <field name="site"/>
+                                <field name="supplier"/>
+                                <field name="modality"/>
+                                <field name="password_validity"/>
+                                <field name="password_validity_date"/>
+                                <field name="functional_location"/>
+                            </group>
+                            <group>
+                                <field name="contract_type"/>
+                                <field name="maintainence"/>
+                                <field name="starting_date"/>
+                                <field name="pac_date"/>
+                                <field name="eoc_date"/>
+                                <field name="warranty"/>
+                                <field name="contract_id"/>
+                            </group>
+                        </group>   
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

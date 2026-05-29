@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="calendar_event_inh_form" model="ir.ui.view">
+            <field name="name">calendar_event_inh.form</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location']" position="after">
+                    <field name="do_not_notify"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

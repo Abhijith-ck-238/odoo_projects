@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <template id="offering_po_header">
+            <div class="header" style="margin-top:50px;">
+                <div class="row">
+                    <div  class="col-12" >
+                        <span style="font-family: 'Times New Roman', Times, serif;font-style:italic;font-style:italic;font-weight:bold;color:#909090;font-size:56px;">AL ITKAN</span>
+                    </div>
+                </div>
+                <div class="row mb-10"> 
+                    <div  class="col-12 text-center">
+                        <p style="font-family: 'Times New Roman', Times, serif;font-style:italic;font-size:36px;color:#909090;">Purchase Order <span style="font-family: 'Times New Roman', Times, serif;font-style:italic;font-size:36px;" t-field="doc.name" /></p>
+                    </div> 
+                </div>
+                <div class="row " >
+                    <div class="col-12" style="border:1px solid black;"/>
+                </div>
+            </div>
+        </template>
+    </data>
+</odoo>

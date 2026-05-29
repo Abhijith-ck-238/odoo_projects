@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_template_deadline_pledge" model="mail.template">
+        <field name="name">Deadline Reminder</field>
+        <field name="model_id" ref="pledge_assets.model_pledge_pledge"/>
+        <field name="email_from">{{ ctx.get('email_from') }}</field>
+        <field name="email_to">{{ ctx.get('email_to') }}</field>
+        <field name="subject">Deadline Reminder</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Dear All,</p>
+                <p>This email to remind you that a deadline will be met on</p>
+                <a t-att-href="ctx['url']"
+                   style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                    <strong>
+                        <t t-out="ctx['pledge_name']"/>
+                    </strong>
+                </a>
+
+                <p style="margin-top: 10px;">regarding
+                    <strong>
+                        <t t-out="ctx['deadline_entity']"/>
+                    </strong>
+                    within
+                    <strong>
+                        <t t-out="ctx['notify_before']"/>
+                    </strong>
+                    Day for your information and actions.
+                </p>
+            </div>
+        </field>
+    </record>
+
+    <record id="mail_template_amendment_reminder" model="mail.template">
+        <field name="name">Amendment Reminder</field>
+        <field name="model_id" ref="pledge_assets.model_pledge_pledge"/>
+        <field name="email_from">{{ object.email_from }}</field>
+        <field name="email_to">{{ object.email_to }}</field>
+        <field name="subject">{{ object.subject }}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Dear All,</p>
+                <p>These are all the pending amendments :</p>
+                <div>
+                    % set pledges = context.get('pledges', [])
+                    <table width="80%"
+                           style="color: #454748; font-size: 12px; border-spacing: 0px 4px;border-style: solid; border-color: #875A7B; padding: 5px; border-spacing: 5px;">
+                        <thead>
+                            <tr style="border-style: solid; border-color: #454748;text-align: center;">
+                                <th style="font-size:13px;">Contract</th>
+                                <th style="font-size:13px;">Iq</th>
+                                <th style="font-size:13px;">Total Pending Amendments</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            % for line in pledges:
+                            <tr style="border-style: solid; border-color: #875A7B;text-align: center;">
+                                <td style="padding: 10px;">{{ line["contract"] }}</td>
+                                <td style="padding: 10px;">{{ line["iq"] }}</td>
+                                <td style="padding: 10px;">{{ line["pending_amendments"] }}</td>
+                                <td style="padding: 10px;">
+                                    <a href="{{ line['url'] }}"
+                                       style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                                        <strong>{{ line['pledge_name'] }}</strong>
+                                    </a>
+                                </td>
+                            </tr>
+                            % endfor
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>

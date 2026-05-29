@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_reservation_report_tree" model="ir.ui.view">
+         <field name="name">reservation.report.tree</field>
+         <field name="model">reservation.report</field>
+         <field name="arch" type="xml">
+             <list string="Reservation Analysis">
+                 <field name="name"/>
+                 <field name="date"/>
+                 <field name="product_id"/>
+                 <field name="qty_reserved"/>
+                 <field name="partner_id"/>
+                 <field name="user_id"/>
+                 <field name="reserved_product_id"/>
+                 <field name="state"/>
+             </list>
+         </field>
+    </record>
+
+    <record id="view_reservation_report_pivot" model="ir.ui.view">
+         <field name="name">reservation.report.pivot</field>
+         <field name="model">reservation.report</field>
+         <field name="arch" type="xml">
+             <pivot string="Reservation Analysis" disable_linking="True">
+                 <field name="user_id" type="col"/>
+                 <field name="date" interval="month" type="row"/>
+                 <field name="qty_reserved" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="view_reservation_report_graph" model="ir.ui.view">
+         <field name="name">reservation.report.graph</field>
+         <field name="model">reservation.report</field>
+         <field name="arch" type="xml">
+             <graph string="Reservation Analysis" type="line">
+                 <field name="date" type="row" interval="day"/>
+                 <field name="qty_reserved" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+    <record id="view_reservation_report_search" model="ir.ui.view">
+        <field name="name">reservation.report.search</field>
+        <field name="model">reservation.report</field>
+        <field name="arch" type="xml">
+            <search string="Reservation Analysis">
+                <field name="date"/>
+                <filter string="Date" name="year" invisible="1" date="date" default_period="year"/>
+                <filter name="Confirmed" string="Confirmed" domain="[('state','=', 'done')]"/>
+                <separator/>
+                <field name="user_id"/>
+                <field name="product_id"/>
+                <field name="partner_id"/>
+                <group expand="1" string="Group By">
+                    <filter string="Salesperson" name="User" context="{'group_by':'user_id'}"/>
+                    <filter string="Customer" name="Customer" context="{'group_by':'partner_id'}"/>
+                    <filter string="Product" name="Product" context="{'group_by':'product_id'}"/>
+                    <filter name="status" string="Status" context="{'group_by':'state'}"/>
+                    <separator/>
+                    <filter string="Order Date" name="date" context="{'group_by':'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_qr_reservation_report" model="ir.actions.act_window">
+        <field name="name">Reservation Analysis</field>
+        <field name="res_model">reservation.report</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_reservation_report_search"/>
+        <field name="help">This report performs analysis on your reservations.</field>
+    </record>
+
+</odoo>

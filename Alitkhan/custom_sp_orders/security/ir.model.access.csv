@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_sp_orders_administrator,access_sp_orders,model_sp_order,group_sp_orders_administrator,1,1,1,1
+access_sp_order_user,access_sp_order,model_sp_order,group_sp_order_user,1,1,1,1
+access_sp_order_base,access_sp_order,model_sp_order,base.group_user,1,0,0,0
+access_product_lines_administrator,access_product_lines,model_sp_order_product_lines,group_sp_orders_administrator,1,1,1,1
+access_product_lines_user,access_product_lines,model_sp_order_product_lines,group_sp_order_user,1,1,1,1

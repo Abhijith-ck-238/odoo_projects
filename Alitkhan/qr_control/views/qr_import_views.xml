@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="qr_imports_form" model="ir.ui.view">
+            <field name="name">qr.imports.form</field>
+            <field name="model">qr.import</field>
+            <field name="arch" type="xml">
+                <form string="Q&amp;R Imports">
+                    <header>
+                        <field name="reserved" invisible="1"/>
+                        <button name="reserve_all" string="Reserve All" type="object" class="oe_highlight" invisible="product_reservation_ids"/>
+<!--                        <button name="reserve_all" string="Reserve All" type="object" class="oe_highlight" attrs="{'invisible': [('product_reservation_ids','!=',[])]}"/>-->
+                        <button name="unreserve_all" string="Unreserve All" type="object" class="oe_highlight" invisible="not product_reservation_ids"/>
+<!--                        <button name="unreserve_all" string="Unreserve All" type="object" class="oe_highlight" attrs="{'invisible': [('product_reservation_ids','=',[])]}"/>-->
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <field name="product_reservation_ids" invisible="1"/>
+                            <button class="oe_stat_button" name="button_reservation_entries"
+                                    string="Reservation Items" type="object"
+                                    invisible="not product_reservation_ids"
+                                    icon="fa-bars"/>
+<!--                            <button class="oe_stat_button" name="button_reservation_entries"-->
+<!--                                    string="Reservation Items" type="object"-->
+<!--                                    attrs="{'invisible':[('product_reservation_ids','=',[])]}" icon="fa-bars"/>-->
+                        </div>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="number" string="Reference"/>
+                            <h1><field name="number" placeholder="Reference"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="user_id"/>
+                            </group>
+                            <group>
+                                <field name="datetime" widget="datetime"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="qr_products" string="Products">
+                                <field name="qr_product_ids">
+                                    <list string="Products" decoration-success="virtual_reservation_line_id != False">
+                                        <field name="product_id"/>
+                                        <field name="default_code" optional="hide"/>
+                                        <field name="virtual_reservation_line_id" invisible="1"/>
+                                        <field name="qty_required"/>
+                                        <field name="required_partner_id"/>
+                                        <field name="qty_available" optional="show"/>
+                                        <field name="virtual_available" optional="hide"/>
+                                        <field name="free_available_qty" optional="show"/>
+                                        <field name="reserved_qty" optional="show"/>
+                                        <field name="incoming_qty" optional="show"/>
+                                        <field name="in_picking_ids" widget="many2many_tags" options="{'not_delete': True}" optional="show"/>
+                                        <field name="out_picking_ids" widget="many2many_tags" options="{'not_delete': True}" optional="show"/>
+                                        <field name="picking_ids" widget="many2many_tags" options="{'not_delete': True}" optional="hide"/>
+                                        <field name="production_ids" widget="many2many_tags" options="{'not_delete': True}" optional="hide"/>
+                                        <button name="reserve_product" string="Reserve" type="object" invisible="virtual_reservation_line_id"/>
+<!--                                        <button name="reserve_product" string="Reserve" type="object" attrs="{'invisible': [('virtual_reservation_line_id','!=',False)]}"/>-->
+                                        <button name="unreserve_product" string="Unreserve" type="object" invisible="not virtual_reservation_line_id"/>
+<!--                                        <button name="unreserve_product" string="Unreserve" type="object" attrs="{'invisible': [('virtual_reservation_line_id','==',False)]}"/>-->
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+<!--                    <div class="oe_chatter">-->
+<!--                        <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                        <field name="activity_ids" widget="mail_activity"/>-->
+<!--                        <field name="message_ids" widget="mail_thread"/>-->
+<!--                    </div>-->
+                </form>
+            </field>
+        </record>
+
+        <record id="qr_imports_tree" model="ir.ui.view">
+            <field name="model">qr.import</field>
+            <field name="arch" type="xml">
+                <list string="Q&amp;R Imports">
+                    <field name="number"/>
+                    <field name="user_id"/>
+                    <field name="datetime"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_qr_imports" model="ir.actions.act_window">
+            <field name="name">Q&amp;R Imports</field>
+            <field name="res_model">qr.import</field>
+            <field name="view_mode">list,form</field>
+             <field name="help">Q&amp;R Import Records</field>
+        </record>
+
+        <record id="qr_products_form" model="ir.ui.view">
+            <field name="name">qr.products.form</field>
+            <field name="model">qr.product</field>
+            <field name="arch" type="xml">
+                <form string="Q&amp;R Products">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="default_code"/>
+                                <field name="qty_required"/>
+                                <field name="required_partner_id"/>
+                            </group>
+                            <group>
+                                <field name="qty_available"/>
+                                <field name="virtual_available" invisible="1"/>
+                                <field name="free_available_qty"/>
+                                <field name="reserved_qty"/>
+                                <field name="incoming_qty"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="reserved_operations" string="Reserved Operations">
+                                <field name="reserved_operation_ids">
+                                    <list string="Reserved Operations">
+                                        <field name="operation_type"/>
+                                        <field name="picking_id"/>
+                                        <field name="mo_id"/>
+                                        <field name="user_id"/>
+                                        <field name="partner_id"/>
+                                        <field name="qty_reserved"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="in_pickings" string="Incoming Pickings">
+                                <field name="incoming_operation_ids">
+                                    <list string="Incoming Pickings">
+                                        <field name="name"/>
+                                        <field name="location_id"/>
+                                        <field name="location_dest_id"/>
+                                        <field name="partner_id"/>
+                                        <field name="scheduled_date"/>
+                                        <field name="state"/>
+                                        <field name="qty_reserved" string="Quantity"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="reserve_operation_form" model="ir.ui.view">
+            <field name="name">reserve.operation.form</field>
+            <field name="model">reserve.operation</field>
+            <field name="arch" type="xml">
+                <form string="Reserve Operation">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="operation_type"/>
+                                <field name="partner_id"/>
+                                <field name="qty_reserved"/>
+                            </group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="picking_id" invisible="not picking_id"/>
+<!--                                <field name="picking_id" attrs="{'invisible': [('picking_id', '=', False)]}"/>-->
+                                <field name="mo_id" invisible="not mo_id"/>
+<!--                                <field name="mo_id" attrs="{'invisible': [('mo_id', '=', False)]}"/>-->
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<odoo>  
+    <data>
+        <record id="fleet_vehicle_log_service_inh_form" model="ir.ui.view">
+            <field name="name">fleet_vehicle_log_service_inh.form</field>
+            <field name="model">fleet.vehicle.log.services</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vendor_id']" position="after">
+                    <field name="irregular_service"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

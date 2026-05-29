@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="cyllo_studio.ButtonBox" t-inherit="web.Form.ButtonBox">
+        <div position="attributes">
+            <attribute name="t-att-cy-xpath">props.cyXpath</attribute>
+            <attribute name="t-ref">cy-ButtonBox</attribute>
+            <attribute name="class" add="flex-wrap" separator=" "/>
+<!--            <attribute name="t-if">!state.isX2Many</attribute>-->
+         </div>
+        <div  position="inside">
+<!--            <t t-if="state.addSmartButtonIcon and !state.isX2Many">-->
+                <button  class="btn oe_stat_button flex-grow-1 flex-lg-grow-0 cy-add-smart-button border-0 opacity-50-hover position-relative" t-on-click="addSmartButton">
+                     <div class="cy-studio-blink-container position-absolute top-50 start-50 translate-middle">
+                        <i class="ri-add-line position-absolute top-50 start-50 translate-middle text-primary fw-bolder"></i>
+                        <div class="cy-studio-blink-anim"></div>
+                    </div>
+                    <i class="o_button_icon fa fa-fw fa-file-text-o me-1" style="opacity: 0.2;"></i>
+                    <div class="o_field_widget o_readonly_modifier o_field_statinfo" style="opacity: 0.2;"><span class="o_stat_text">Smart Button</span><span class="o_stat_info o_stat_value">0</span></div>
+                </button>
+<!--            </t>-->
+        </div>
+
+    </t>
+</templates>
+
+<!--<templates xml:space="preserve">-->
+<!--    <t t-name="cyllo_studio.ButtonBox" t-inherit="web.Form.ButtonBox" t-inherit-mode="extension">-->
+<!--        &lt;!&ndash; Add flex-wrap class &ndash;&gt;-->
+<!--        <xpath expr="//div[hasclass('dilsha')]" position="attributes">-->
+<!--            <attribute name="class" add="flex-wrap" separator=" "/>-->
+<!--        </xpath>-->
+
+<!--        &lt;!&ndash; Add smart button at the end of button box &ndash;&gt;-->
+<!--        <xpath expr="//div[hasclass('dilsha')]" position="inside">-->
+<!--            <button class="btn oe_stat_button cy-add-smart-button"-->
+<!--                    t-on-click="() => this.addSmartButton()">-->
+<!--                <i class="ri-add-line me-1"/>-->
+<!--                <span>Smart Button</span>-->
+<!--            </button>-->
+<!--        </xpath>-->
+<!--    </t>-->
+<!--</templates>-->
+

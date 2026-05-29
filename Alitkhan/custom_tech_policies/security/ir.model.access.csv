@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tech_policies_user,access.tech.policies.user,custom_tech_policies.model_tech_policies,custom_tech_policies.group_tech_policies_user,1,0,0,0
+access_tech_policies_admin,access.tech.policies.admin,custom_tech_policies.model_tech_policies,custom_tech_policies.group_tech_policies_administrator,1,1,1,1
+access_import_tech_policies_admin,access.import.tech.policies.admin,custom_tech_policies.model_import_tech_policies,custom_tech_policies.group_tech_policies_administrator,1,1,1,1

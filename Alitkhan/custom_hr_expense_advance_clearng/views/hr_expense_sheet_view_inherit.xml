@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="expense_view_account_analytic_account_kanban" model="ir.ui.view">
+            <field name="name">expense.account.analytic.account.kanban</field>
+            <field name="model">account.analytic.account</field>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="display_name"/>
+                    <field name="balance" invisible="1"/>
+                    <field name="currency_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div t-attf-class="#{!selection_mode ? 'text-center' : ''}">
+                                    <strong>
+                                        <span>
+                                            <field name="display_name"/>
+                                        </span>
+                                    </strong>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="hr_expense_sheet_view_inheritt" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.inherit</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id"
+                   ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+<!--                removing the widget expense_lines_widget-->
+                <field name="expense_line_ids" position="replace">
+            <field name="expense_line_ids"
+                    nolabel="1"
+                    mode="list,kanban"
+                    domain="[
+                        ('sheet_id', '=', False),
+                        ('employee_id', '=', employee_id),
+                        ('company_id', '=', company_id),
+                        ('payment_mode', '=?', payment_mode),
+                    ]"
+                    options="{'reload_on_button': True}"
+                    context="{
+                        'form_view_ref' : 'hr_expense.hr_expense_view_form_without_header',
+                        'kanban_view_ref' : 'hr_expense.hr_expense_kanban_view_minimal',
+                        'default_company_id': company_id,
+                        'default_employee_id': employee_id,
+                        'default_payment_mode': payment_mode or 'own_account',
+                        'check_total_amount_not_zero': True,
+                    }"
+                    readonly="not is_editable"/>
+        </field>
+                <field name="clearing_residual" position="after">
+                    <field name="clearng_amount" invisible="1"/>
+                    <field name="is_sheet_checked" invisible="1"/>
+                </field>
+
+
+
+                <field name="analytic_account_id" position="after">
+<!--                    <field name="remaining_budget"-->
+<!--                           groups="hr_expense.group_hr_expense_manager"/>-->
+                    <field name="budget_reponsibles" widget="many2many_tags" invisible="1"/>
+                </field>
+                <field name="analytic_account_id" position="replace">
+                    <field name="analytic_account_id"
+                           options="{'no_create': True}"
+                           context="{'tree_view_ref': 'al-itkan.analytic_account_custom_tree',
+                           'kanban_view_ref': 'custom_hr_expense_advance_clearng.expense_view_account_analytic_account_kanban'}"/>
+                </field>
+                <field name="analytic_account_id" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="hr_expense_view_inheritt" model="ir.ui.view">
+            <field name="name">hr.expense.inherit</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id"
+                   ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+                <field name="analytic_account_id" position="after">
+<!--                    <field name="remaining_budget"-->
+<!--                           groups="hr_expense.group_hr_expense_manager"/>-->
+                </field>
+                <field name="analytic_account_id" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+            </field>
+        </record>
+
+<!--        <record id="account_analytic_account_inheritt" model="ir.ui.view">-->
+<!--            <field name="name">account.analytic.account.inherit</field>-->
+<!--            <field name="model">account.analytic.account</field>-->
+<!--            <field name="inherit_id"-->
+<!--                   ref="analytic.view_account_analytic_account_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="partner_id" position="after">-->
+<!--                    <field name="remaining_budget_amount"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="account_analytic_account_inherit_tree" model="ir.ui.view">-->
+<!--            <field name="name">account.analytic.account.inherit.tree</field>-->
+<!--            <field name="model">account.analytic.account</field>-->
+<!--            <field name="inherit_id"-->
+<!--                   ref="analytic.view_account_analytic_account_list"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="balance" position="after">-->
+<!--                    <field name="remaining_budget_amount"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="account_analytic_line_inheritt" model="ir.ui.view">
+            <field name="name">account.analytic.line.inherit</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id"
+                   ref="analytic.view_account_analytic_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount']" position="after">
+                    <field name="x_studio_residual"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_analytic_line_tree_inheritt" model="ir.ui.view">
+            <field name="name">account.analytic.line.tree.inherit</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id"
+                   ref="analytic.view_account_analytic_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount']" position="after">
+                    <field name="x_studio_residual"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_expense.action_hr_expense_sheet_my_all" model="ir.actions.act_window">
+            <field name="name">My Expense Reports</field>
+            <field name="res_model">hr.expense.sheet</field>
+            <field name="view_mode">list,kanban,form,pivot,graph,activity</field>
+            <field name="search_view_id" ref="hr_expense_advance_clearing.hr_expense_sheet_view_search"/>
+            <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+            <field name="context">{'search_default_my_reports': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new expense report
+                </p>
+                <p>
+                    Once you have created your expense, submit it to your manager who will validate it.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="dx_invoice_footer">
+            <div class="footer o_standard_footer">
+                <div class="row" style="border:1px solid black;margin-top:30px;margin-bottom:10px;"/>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <span>Al-Itkan Hai Al-wahda Area: 904 - St: 19 - House: 59B - Baghdad - Iraq</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <span>Mob.: +964 7901808080</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-right me-3" style="text-align:right;">
+                        <span>Tel.: +964 1 7192929</span>
+                    </div>
+                    <div class="col-6 text-left ms-3" style="text-align:left;">
+                        <span>Fax: +964 1 7190344</span>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </data>
+</odoo>

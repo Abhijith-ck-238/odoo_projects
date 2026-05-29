@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+
+        <record id="offering_group_category" model="ir.module.category">
+            <field name="name">Offering</field>            
+        </record>
+
+        <record id="offering_config_user" model="res.groups">
+            <field name="name">Configuration User</field>
+            <field name="category_id" ref="itkan_offering.offering_group_category"/>
+            <field name="implied_ids" eval="[(4, ref('access_units.user_users'))]"/>
+        </record>
+
+        <record id="offering_user" model="res.groups">
+            <field name="name">Offering Regular User</field>
+            <field name="category_id" ref="itkan_offering.offering_group_category"/>
+            <field name="implied_ids" eval="[(4, ref('itkan_offering.offering_config_user')) ]"/>
+        </record>
+
+        <record id="offering_manager" model="res.groups">
+            <field name="name">Offering Manager</field>
+            <field name="category_id" ref="itkan_offering.offering_group_category"/>
+            <field name="implied_ids" eval="[(4, ref('itkan_offering.offering_user') ) ]"/>
+            <field name="comment">Only Memebrs from this group can approve or cancel an offer</field>
+        </record>
+
+        <record id="offering_admin" model="res.groups">
+            <field name="name">Offering Admin</field>
+            <field name="category_id" ref="itkan_offering.offering_group_category"/>
+            <field name="users" eval="[(4, 2)]"/>
+            <field name="implied_ids" eval="[(4, ref('itkan_offering.offering_manager') )]"/>
+        </record>
+
+        <record id="rule_presonal_config_only" model="ir.rule">
+            <field name="name">Only See Personal Configurations</field>
+            <field name="model_id" ref="itkan_offering.model_offering_config"/>
+            <field name="groups" eval="[(4 , ref('itkan_offering.offering_config_user') )]"/>
+            <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        </record>
+
+        <record id="rule_all_config" model="ir.rule">
+            <field name="name">Sea All Configurations</field>
+            <field name="model_id" ref="itkan_offering.model_offering_config"/>
+            <field name="groups" eval="[(4 , ref('itkan_offering.offering_admin') )]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="itkan_report_mod.list">
+      <field name="name">itkan_report_mod list</field>
+      <field name="model">itkan_report_mod.itkan_report_mod</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="itkan_report_mod.action_window">
+      <field name="name">itkan_report_mod window</field>
+      <field name="res_model">itkan_report_mod.itkan_report_mod</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="itkan_report_mod.action_server">
+      <field name="name">itkan_report_mod server</field>
+      <field name="model_id" ref="model_itkan_report_mod_itkan_report_mod"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="itkan_report_mod" id="itkan_report_mod.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="itkan_report_mod.menu_1" parent="itkan_report_mod.menu_root"/>
+    <menuitem name="Menu 2" id="itkan_report_mod.menu_2" parent="itkan_report_mod.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="itkan_report_mod.menu_1_list" parent="itkan_report_mod.menu_1"
+              action="itkan_report_mod.action_window"/>
+    <menuitem name="Server to list" id="itkan_report_mod" parent="itkan_report_mod.menu_2"
+              action="itkan_report_mod.action_server"/>
+-->
+  </data>
+</odoo>

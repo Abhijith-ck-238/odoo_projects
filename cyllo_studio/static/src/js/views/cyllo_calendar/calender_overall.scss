@@ -1,0 +1,57 @@
+.CalenderOverall{
+    input {
+            color: #dedede !important;
+    }
+    .calenderDropdown{
+//         .cy-drop-down{
+//             .w-100{
+//             width:65% !important;
+//             }
+//         }
+
+        .cy-studio-custom-dropdown .d-flex {
+             width:auto !important;
+             margin:0.25rem;
+             height: 20px;
+        }
+        .cy-drop-down button{
+            background-color:unset;
+            color:white;
+            width: 100%;
+            display: inherit;
+
+        }
+        .badge.rounded-pill{
+            height:30px;
+        }
+        .cy-studio-custom-dropdown i{
+            margin-top: 3px;
+            color: #BCBBA7 !important;
+            margin-right: 3px;
+        }
+        .dropdown-menu{
+
+//             margin-left: -6%;
+    /* margin-right: 0; */
+//         margin-top: -132%;
+
+        top: 116% !important;
+        left: -2% !important;
+        width: 104%;
+        position: absolute !important;
+        background-color: #5f6057;
+        color: #c7c4b5;
+
+            }
+
+        .cy-input .o-dropdown{
+            width: 100%;
+//             margin-left: 50%;
+//             height: 32%;
+        }
+        .dropdown-toggle::after {
+            margin-left: 90%;
+        }
+    }
+
+}

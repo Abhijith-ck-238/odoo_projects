@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view"
+                id="budget_analytic_view_tree">
+            <field name="name">budget.analytic.view.tree.expense</field>
+            <field name="model">budget.analytic</field>
+            <field name="arch" type="xml">
+                <list string="Budget">
+                    <field name="name" colspan="1"/>
+                    <field name="date_from"/>
+                    <field name="expense_state"/>
+                    <field name="date_to"/>
+                    <field name="company_id" options="{'no_create': True}"/>
+                    <field name="user_id"/>
+                    <field name="remaining_budget"/>
+                    <field name="state"/>
+                    <field name="activity_exception_decoration"
+                           widget="activity_exception"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="crossovered_budget_view_form_inherit" model="ir.ui.view">
+            <field name="name">crossovered.budget.view.form.inherit</field>
+            <field name="model">budget.analytic</field>
+            <field name="priority" eval="10"/>
+            <field name="groups_id"
+                   eval="[(6,0,[ref('hr_expense.group_hr_expense_team_approver'),ref('hr_expense.group_hr_expense_manager')])]"/>
+            <field name="arch" type="xml">
+                <form string="Budget">
+                    <header>
+                        <button string="Check Budget"
+                                name="action_check_budget"
+                                type="object"
+                                invisible="expense_state != 'draft_budget'"
+                                class="oe_highlight"
+                                groups="hr_expense.group_hr_expense_team_approver"/>
+
+                        <button string="Submit Budget"
+                                name="action_budget_confirm_team_approver"
+                                type="object"
+                                invisible="expense_state != 'budget_check'"
+                                class="oe_highlight"
+                                groups="hr_expense.group_hr_expense_team_approver"/>
+
+                        <button string="Reset to Draft"
+                                name="action_reset_to_draft"
+                                type="object"
+                                invisible="expense_state != 'cancel' or not is_user"
+                                class="oe_highlight"
+                                groups="hr_expense.group_hr_expense_team_approver"/>
+                        <button string="Approve" name="action_approve_dm"
+                                type="object"
+                                invisible="expense_state != 'dm_approval' or not is_dm or not is_user"
+                                class="oe_highlight"/>
+                        <button string="Refuse" name="action_reject_dm"
+                                type="object"
+                                invisible="expense_state != 'dm_approval' or not is_dm or is_user != False"
+                                class="oe_highlight"/>
+                        <button string="Approve" name="action_approve_gm"
+                                type="object"
+                                invisible="expense_state != 'gm_approval' or not is_gm or is_user != False"
+                                class="oe_highlight"/>
+                        <button string="Refuse" name="action_reject_gm"
+                                type="object"
+                                invisible="expense_state != 'gm_approval' or not is_gm or is_user != False"
+                                class="oe_highlight"/>
+                        <button string="Approve" name="action_approve_ac"
+                                type="object"
+                                invisible="expense_state != 'ac_approval' or not is_ac or is_user != False"
+                                class="oe_highlight"/>
+                        <button string="Refuse" name="action_reject_ac"
+                                type="object"
+                                invisible="expense_state != 'ac_approval' or not is_ac or is_user != False"
+                                class="oe_highlight"/>
+
+                        <button name="action_extend_budget"
+                                string="Request for Extend Budget"
+                                invisible="expense_state != 'confirmed' or not is_user"
+                                type="object" class="oe_highlight"/>
+                        <button name="action_request_extend_budget"
+                                string="Request"
+                                invisible="expense_state != 'extend_budget' or not is_user"
+                                type="object" class="oe_highlight"/>
+
+                        <field name="expense_state" widget="statusbar"/>
+                        <field name="state" widget="statusbar" invisible="1"/>
+                    </header>
+                    <sheet string="Budget">
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name"
+                                       readonly="state != 'draft'"
+                                       placeholder="Budget Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="user_id"
+                                       readonly="state != 'draft'"/>
+                                <field name="remaining_budget"/>
+                                <field name="is_user" invisible="1"/>
+                                <field name="is_dm" invisible="1"/>
+                                <field name="is_gm" invisible="1"/>
+                                <field name="is_ac" invisible="1"/>
+                            </group>
+                            <group>
+                                <label for="date_from" string="Period"/>
+                                <div>
+                                    <field name="date_from" class="oe_inline"
+                                           readonly="state != 'draft'"/>
+
+                                    <field name="date_to" class="oe_inline"
+                                           readonly="state != 'draft'"
+                                           nolabel="1"/>
+                                </div>
+                                <field name="company_id"
+                                       groups="base.group_multi_company"
+                                       options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Budget Lines">
+                                <field name="budget_line_ids"
+                                       context="{'default_date_from': date_from,'default_date_to': date_to}"
+                                       colspan="4"
+                                       nolabel="1"
+                                >
+                                    <list string="Budget Lines"
+                                          decoration-success="is_above_budget == False"
+                                          decoration-danger="is_above_budget == True"
+                                          editable="bottom">
+                                        <field name="budget_analytic_id"
+                                               domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"
+                                               required="parent.expense_state == 'draft_budget'"
+                                               readonly="parent.expense_state != 'draft_budget'"/>
+
+<!--                                        <field name="analytic_account_id"-->
+<!--                                               domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"-->
+<!--                                               groups="hr_expense.group_hr_expense_manager"-->
+<!--                                               required="parent.expense_state == 'draft_budget'"-->
+<!--                                               readonly="parent.expense_state != 'draft_budget'"/>-->
+<!--                                        -->
+                                        <field name="analytic_account_id"
+                                               groups="hr_expense.group_hr_expense_manager"
+                                               required="parent.expense_state == 'draft_budget'"
+                                               readonly="parent.expense_state != 'draft_budget'"/>
+
+
+                                        <field name="date_from"
+                                               groups="hr_expense.group_hr_expense_manager"
+                                               required="parent.expense_state == 'draft_budget'"
+                                               readonly="parent.expense_state != 'draft_budget'"/>
+
+
+                                        <field name="date_to"
+                                               groups="hr_expense.group_hr_expense_manager"
+                                               required="parent.expense_state == 'draft_budget'"
+                                               readonly="parent.expense_state != 'draft_budget'"/>
+
+
+                                        <field name="paid_date"
+                                               groups="hr_expense.group_hr_expense_manager"
+                                               readonly="parent.expense_state != 'draft_budget'"/>
+
+
+                                        <field name="currency_id"
+                                               invisible="1"/>
+                                        <field name="planned_amount"
+                                               sum="Planned Amount"
+                                               required="parent.expense_state == 'draft_budget'"
+                                               readonly="parent.expense_state != 'draft_budget'"/>
+
+                                        <field name="crossovered_budget_id"
+                                               invisible="1"/>
+                                        <field name="amount_to_extend"
+                                               readonly="parent.expense_state != 'draft_budget'"/>
+                                        <field name="practical_amount"
+                                               sum="Practical Amount"/>
+                                        <field name="theoritical_amount"
+                                               sum="Theoretical Amount"/>
+                                        <field name="percentage"
+                                               widget="percentage"/>
+                                        <button type="object"
+                                                name="action_open_budget_entries"
+                                                string="Entries..."
+                                                icon="fa-arrow-circle-o-right"/>
+                                        <field name="is_above_budget" invisible="1"/>
+                                    </list>
+                                    <form string="Budget Lines">
+                                        <group>
+                                            <group>
+                                                <field name="currency_id" invisible="1"/>
+                                                <field name="budget_analytic_id"/>
+                                                <!--                                                <field name="planned_amount"/>-->
+<!--                                                <field name="analytic_account_id"-->
+<!--                                                       domain="['|', ('company_id', '=', parent.company_id), ('company_id', '=', False)]"-->
+<!--                                                       groups="hr_expense.group_hr_expense_manager"/>-->
+<!--                                                -->
+                                                  <field name="analytic_account_id" groups="hr_expense.group_hr_expense_manager"/>
+
+                                            </group>
+                                            <group>
+                                                <label for="date_from"
+                                                       string="Period"/>
+                                                <div>
+                                                    <field name="date_from"
+                                                           class="oe_inline"
+                                                           groups="hr_expense.group_hr_expense_manager"/>
+                                                    -
+                                                    <field name="date_to"
+                                                           class="oe_inline"
+                                                           groups="hr_expense.group_hr_expense_manager"/>
+                                                </div>
+                                                <field name="paid_date"/>
+                                                <field name="company_id"
+                                                       options="{'no_create': True}"
+                                                       groups="base.group_multi_company"/>
+                                                <field name="crossovered_budget_id"
+                                                       invisible="1"/>
+                                                <field name="amount_to_extend"
+                                                       readonly="parent.expense_state != 'extend_budget'"/>
+
+                                            </group>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_budget_analytic_kanban_inherit" model="ir.ui.view">
+            <field name="name">budget.analytic.kanban.inherit</field>
+            <field name="model">budget.analytic</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row mb4">
+                                    <div class="col-8">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="float-right">
+                                            <field name="state"
+                                                   widget="label_selection"
+                                                   options="{'classes': {'draft': 'default', 'done': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <i class="fa fa-clock-o" role="img"
+                                           aria-label="Period" title="Period"/>
+                                        <t t-esc="record.date_from.value"/>-
+                                        <t t-esc="record.date_to.value"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <span class="float-right">
+                                            <img t-att-src="kanban_image('res.users', 'image_128', record.user_id.raw_value)"
+                                                 t-att-title="record.user_id.value"
+                                                 t-att-alt="record.user_id.value"
+                                                 class="oe_kanban_avatar o_image_24_cover float-right"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="hr_expense_actions_my_budget" model="ir.actions.act_window">
+            <field name="name">Budget</field>
+            <field name="res_model">budget.analytic</field>
+            <field name="domain">['|','|','|','|',('user_id', '=',
+                uid),('user_id.emp_id.budget_deputy.user_id', '=',
+                uid),('user_id.emp_id.budget_manager.user_id','=',uid),('user_id.emp_id.director_id','=',uid),('accounting_user_ids','in',uid)]
+            </field>
+
+            <field name="view_mode">list,form,kanban</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('custom_expense.budget_analytic_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('custom_expense.crossovered_budget_view_form_inherit')})]"/>
+        </record>
+
+        <record model="ir.actions.act_window"
+                id="account_budget.act_budget_analytic_view">
+            <field name="name">Budgets</field>
+            <field name="res_model">budget.analytic</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+        (0, 0, {'view_mode': 'list', 'view_id': ref('account_budget.view_budget_analytic_tree')}),
+        (0, 0, {'view_mode': 'form', 'view_id': ref('account_budget.view_budget_analytic_form')}),
+        (0, 0, {'view_mode': 'kanban', 'view_id': ref('account_budget.view_budget_analytic_kanban')})]"/>
+            <field name="search_view_id"
+                   ref="account_budget.view_budget_analytic_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to create a new budget.
+                </p>
+                <p>
+                    Use budgets to compare actual with expected revenues and
+                    costs
+                </p>
+            </field>
+        </record>
+
+
+        <record id="crossovered_budget_view_extend" model="ir.ui.view">
+            <field name="name">Extend Budget line</field>
+            <field name="model">budget.analytic</field>
+            <field name="inherit_id"
+                   ref="account_budget.view_budget_analytic_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header" position="inside">
+                    <field name="expense_state" invisible="1"/>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[1]"
+                       position="after">
+                    <field name="is_extend_budget_state" invisible="1"/>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page/field[@name='budget_line_ids']"
+                       position="replace">
+                    <field name="budget_line_ids"
+                           context="{'default_date_from': date_from,'default_date_to': date_to}"
+                           colspan="4"
+                           nolabel="1">
+                        <list string="Budget Lines"
+                              decoration-success="is_above_budget"
+                              decoration-danger="is_above_budget"
+                              editable="bottom">
+                            <field name="budget_analytic_id"
+                                   domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"
+                                   readonly="parent.state != 'draft'"/>
+<!--                                                        <field name="analytic_account_id"-->
+<!--                                                               domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"-->
+<!--                                                               groups="analytic.group_analytic_accounting"-->
+<!--                                                               readonly="parent.state != 'draft'"/>-->
+                             <field name="analytic_account_id"  groups="analytic.group_analytic_accounting"
+                                                               readonly="parent.state != 'draft'"/>
+                            <field name="date_from"
+                                   readonly="parent.state != 'draft'"/>
+                            <field name="date_to"
+                                   readonly="parent.state != 'draft'"/>
+                            <field name="paid_date" groups="base.group_no_one"
+                                   readonly="parent.state != 'draft'"/>
+                            <field name="currency_id" invisible="1"
+                                   readonly="parent.state != 'draft'"/>
+                            <!--                            <field name="planned_amount" sum="Planned Amount"-->
+                            <!--                                    readonly="parent.state != 'draft'"/>-->
+                            <field name="amount_to_extend"
+                                   readonly="parent.expense_state != 'extend_budget'"/>
+                            <field name="practical_amount"
+                                   sum="Practical Amount"/>
+                            <field name="theoritical_amount"
+                                   sum="Theoretical Amount"/>
+                            <field name="percentage" widget="percentage"/>
+                            <button type="object"
+                                    name="action_open_budget_entries"
+                                    string="Entries..."
+                                    icon="fa-arrow-circle-o-right"/>
+                            <field name="is_above_budget" invisible="1"/>
+                        </list>
+                        <form string="Budget Lines">
+                            <group>
+                                <group>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="budget_analytic_id"/>
+                                    <field name="planned_amount"/>
+<!--                                    <field name="analytic_account_id"-->
+<!--                                           domain="['|', ('company_id', '=', parent.company_id), ('company_id', '=', False)]"-->
+<!--                                           groups="analytic.group_analytic_accounting"-->
+<!--                                           readonly="parent.state != 'draft'"/>-->
+                                    <field name="analytic_account_id"
+                                           groups="analytic.group_analytic_accounting"
+                                           readonly="parent.state != 'draft'"/>
+                                </group>
+                                <group>
+                                    <label for="date_from" string="Period"/>
+                                    <div>
+                                        <field name="date_from"
+                                               class="oe_inline"
+                                               readonly="parent.state != 'draft'"/>
+                                        -
+                                        <field name="date_to" class="oe_inline"
+                                               readonly="parent.state != 'draft'"/>
+                                    </div>
+                                    <field name="paid_date"
+                                           groups="base.group_no_one"
+                                           readonly="parent.state != 'draft'"/>
+                                    <field name="company_id"
+                                           options="{'no_create': True}"
+                                           groups="base.group_multi_company"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+
+                </xpath>
+                <xpath expr="//form/header"
+                       position="inside">
+                    <button string="Extend Budget"
+                            name="action_accounting_user_extend_budget"
+                            invisible="not is_extend_budget_state"
+                            type="object"
+                            class="oe_highlight"/>
+
+                    <button string="Extend" name="action_accounting_user_extend"
+                            readonly="expense_state != 'extend_budget'"
+                            type="object"
+                            class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="menu_hr_expense_my_budget" name="My Budget" sequence="3"
+                  parent="hr_expense.menu_hr_expense_root"
+                  groups="hr_expense.group_hr_expense_team_approver,hr_expense.group_hr_expense_manager"
+                  action="hr_expense_actions_my_budget"/>
+    </data>
+</odoo>

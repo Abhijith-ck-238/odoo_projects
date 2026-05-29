@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ir_cron_deadline_notification" model="ir.cron">
+            <field name="name">Dead Line Notifications</field>
+            <field name="model_id" ref="model_alert_deadline"/>
+            <field name="state">code</field>
+            <field name="code">model.send_deadline_notification()</field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="priority">3</field>
+        </record>
+
+        <record id="ir_cron_amendment_notification" model="ir.cron">
+            <field name="name">Amendment Notifications</field>
+            <field name="model_id" ref="model_amendment_amendment"/>
+            <field name="state">code</field>
+            <field name="code">model.send_amendment_notification()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+        </record>
+        <record id="ir_cron_set_pledge_stage" model="ir.cron">
+            <field name="name">Set Pledge Stage</field>
+            <field name="model_id" ref="model_pledge_pledge"/>
+            <field name="state">code</field>
+            <field name="code">model.action_set_pledge_stage()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="active" eval="False"/>
+        </record>
+    </data>
+</odoo>

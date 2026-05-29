@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template inherit_id="web.external_layout" id="external_layout_edit">
+            <xpath expr="//t[@t-if='company.external_report_layout_id']"
+                   position="before">
+                <t t-if="doc_model == 'offering.offering'" t-set="company"
+                   t-value="o.company_report"/>
+                <t t-log="company"/>
+            </xpath>
+        </template>
+
+        <template inherit_id="web.external_layout_standard" id="external_layout_standard_edit">
+            <!--                    <xpath expr="//div[hasclass('header')]//div[1]//div[1]" position="after">-->
+            <xpath expr="//div[1]//div[contains(@class,'d-flex')]" position="after">  <!-- After flex container -->
+
+                <div t-if="doc_model == 'offering.offering'" class="col-9 mb4">
+                    <img align="right" t-if="doc.vendor_id.image_1920"
+                         t-att-src="image_data_uri(doc.vendor_id.image_1920)" style="max-height: 45px;" alt="Logo"/>
+                </div>
+            </xpath>
+
+            <!--            &lt;!&ndash; <xpath expr="//div[@name='company_address']" position="after">-->
+            <!--                <div t-if="doc_model == 'offering.offering' and doc.vendor_id" class="col-6" align="right">-->
+            <!--                    <div t-field="doc.vendor_id" t-options="{'widget': 'contact', 'fields': ['address', 'name'], 'no_marker': true}"/>-->
+            <!--                </div>-->
+            <!--            </xpath> &ndash;&gt;-->
+
+            <xpath expr="//div[contains(@class, 'footer')]//div[1]" position="before">
+                <div t-if="doc_model == 'offering.offering' and company.footer_image">
+                    <img t-att-src="image_data_uri(company.footer_image)" style="width: 1200px; height: 150px;"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[contains(@class, 'footer')]//div[2]" position="attributes">
+                <attribute name="t-else">else</attribute>
+            </xpath>
+
+            <xpath expr="//div[@name='company_address']" position="attributes">
+                <attribute name="t-if">doc_model != 'offering.offering'</attribute>
+            </xpath>
+        </template>
+
+        <template id="itkan_offering.offering_offering_report_ar">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="itkan_offering.offering_offering_document_ar">
+                        <t t-raw="0"/>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="itkan_offering.offering_offering_document_ar">
+            <t t-call="web.external_layout">
+                <style>
+                    <link rel="stylesheet" type="text/css"
+                          href="/web/static/lib/fontawesome/css/font-awesome.css"/>
+                </style>
+                <t t-set="doc" t-value="doc.sudo()"/>
+                <div class="page"
+                     style="font-family: 'Times New Roman', Times, serif;">
+                    <div class="row"
+                         style="padding-top: 20px; padding-bottom: 100px;direction: rtl;">
+                        <!-- &#160; means a forced space -->
+                        <!-- DO NOT REMOVE THE EXTRA SPACES -->
+                        <!-- I have removed the forced spaces - Ahmed Naseem-->
+                        <div class="col-7">
+                            <p style="line-height: 1.2; font-weight: bold; font-size: large;text-align:right;font-size:22px;"
+                               t-if="doc.customer">
+                                <span t-field="doc.customer.arabic_name"/>
+                            </p>
+                            <p style="line-height: 1.2; font-weight: bold; font-size: large;text-align:right;font-size:22px;"
+                               t-if="doc.customer">
+                                <span t-field="doc.customer.country_id.name"/>
+                                -
+                                <span t-field="doc.customer.state_id.name"/>
+                            </p>
+                            <!-- <p style="line-height: 0.4;" t-if="doc.project_subject">الأسم : <span t-field="doc.project_subject"/>
+                            </p> -->
+                        </div>
+                        <div class="col-5" style="margin-top: 45px;">
+                            <p style="line-height: 0.4;font-weight:bold;font-size:16px;"
+                               t-if="res_company.email">البريد
+                                الالكتروني :
+                                <span style="font-weight:normal;"
+                                      t-field="res_company.email"/>
+                            </p>
+                            <p style="line-height: 0.4;font-weight:bold;font-size:16px;"
+                               t-if="doc.ref_number">العدد :
+                                <span style="font-weight:normal;"
+                                      t-field="doc.ref_number"/>
+                            </p>
+                            <p style="line-height: 0.4;font-weight:bold;font-size:16px;"
+                               t-if="doc.offer_date">التاريخ :
+                                <span style="font-weight:normal;"
+                                      t-field="doc.offer_date"/>
+                            </p>
+                            <p style="line-height: 0.4;font-weight:bold;font-size:16px;"
+                               t-if="doc.iq">رقم المشروع :
+                                <span style="font-weight:normal;"
+                                      t-field="doc.iq"/>
+                            </p>
+                            <p style="line-height: 0.4;font-weight:bold;font-size:16px;"
+                               t-if="doc.ifb_no">IFB No :
+                                <span style="font-weight:normal;"
+                                      t-field="doc.ifb_no"/>
+                            </p>
+                            <p style="line-height: 0.4;font-weight:bold;font-size:16px;"
+                               t-if="doc.tendor_no">رقم العقد
+                                :
+                                <span style="font-weight:normal;"
+                                      t-field="doc.tendor_no"/>
+                            </p>
+                        </div>
+                    </div>
+
+                    <t t-foreach="doc.report_template_lines" t-as="section">
+                        <div t-if="section_first" style="direction:rtl;">
+                            <p style="line-height: 0.4;text-align:right;font-weight:bold;font-size:22px;margin-bottom:40px;"
+                               t-if="doc.project_subject">الموضوع :
+                                <span t-field="doc.project_subject"/>
+                            </p>
+                            <p style="line-height: 0.4;text-align:right;font-weight:bold;font-size:22px;">
+                                تحيـــة
+                                طيبـــة ،
+                            </p>
+                            <div style="margin-bottom: 50px;"
+                                 t-field="section.template_body"/>
+
+                            <!-- SECTION 1: THE COVER LETTER -->
+
+                            <div/>
+                        </div>
+                        <div t-else="else"
+                             t-attf-style="text-align:right;margin: 25px 0; {{'page-break-after: always;' if section_index in [5, 10] else ''}}">
+                            <p>
+                                <t t-if="section.name">
+                                    <span style="font-weight: bold;text-align:right;direction:rtl;">
+                                        <span style="float:right;">
+                                            <t t-esc="section_index"/>
+                                        </span>
+                                        <span>
+                                            <t t-esc="section.name"/>
+                                        </span>
+
+                                        .
+                                    </span>
+                                    <p t-field="section.template_body"
+                                       style="text-align:right;"/>
+                                </t>
+                                <t t-else="">
+                                    <strong t-esc="section_index"
+                                            style="text-align:right;"/>
+                                    .
+                                    <p t-field="section.template_body"
+                                       style="text-align:right;"/>
+                                </t>
+                            </p>
+                        </div>
+                    </t>
+
+                    <p style="line-height: 0.4;text-align:right;font-weight:bold;font-size:22px;">
+                        علما ان المبلغ الكلي
+                        للجهاز هو (<span t-field="doc.total_price_in_iqd"/>)
+                        بالدينار العراقي.
+                    </p>
+                    <p style="line-height: 0.4;text-align:center;font-weight:bold;font-size:22px;">
+                        مع الشكر والتقدير
+                    </p>
+                    <table t-if="doc.sincerely_ids" style="width: 100%;">
+                        <tr>
+                            <t t-foreach="doc.sincerely_ids" t-as="employee">
+                                <td style="padding:20px; width: 20%;">
+                                    <div align="center"
+                                         style="font-weight: bold;font-size:22px;"
+                                         t-field="employee.name"/>
+                                    <div align="center"
+                                         t-field="employee.job_title"
+                                         style="font-size:22px;"/>
+                                </td>
+                                <td t-if="not employee_last"
+                                    t-attf-style="width: {{ (100 - (len(doc.sincerely_ids)*20) ) / (len(doc.sincerely_ids)-1) }}% ;">
+                                </td>
+                            </t>
+                        </tr>
+                    </table>
+                    <!-- <div align="center" t-if="doc.add_conditions_and_warranty">
+                        <p style="font-weight: bold; font-size: large;">
+                            Furthermore, <t t-esc="doc.vendor_id.name"/>
+ General Conditions of supply and Delivery Exports and, for certain products,
+                        <t t-esc="doc.vendor_id.name"/>
+ Special warranty Conditions shall apply.
+                    </p>
+                    </div> -->
+
+
+                    <div style="page-break-after: always;"/>
+
+                    <!-- SECTION 2 : SUMMARY LIST -->
+
+                    <!-- <h4 align="center" style="text-decoration: underline; padding-top: 50px;">
+                            Summray List
+                    </h4> -->
+                    <p style="font-size: large;">
+                        <t t-esc="doc.project_name"/>
+                        <t t-esc="doc.tendor_no"/>
+                        -
+                        <t t-esc="doc.project_subject"/>
+                    </p>
+                    <table class="table table-sm o_main_table"
+                           style="width: 100%; border-collapse: collapse; direction: rtl;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="border: 1px solid black; font-weight: bold; color: black; text-align: center; padding: 5px;">
+                                    الرقم التسلسلي
+                                </th>
+                                <th style="border: 1px solid black; font-weight: bold; color: black; text-align: center; padding: 5px;">
+                                    التفاصيل
+                                </th>
+                                <th style="border: 1px solid black; font-weight: bold; color: black; text-align: center; padding: 5px;">
+                                    الكمية
+                                </th>
+                                <th style="border: 1px solid black; font-weight: bold; color: black; text-align: center; padding: 5px;">
+                                    سعر المفرد بالدينار العراقي
+                                </th>
+                                <th style="border: 1px solid black; font-weight: bold; color: black; text-align: center; padding: 5px;">
+                                    السعر الكلي بالدينار العراقي
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="summary_total" t-value="0.0"/>
+                            <t t-foreach="doc.product_lines.filtered(lambda x: not x.optional_product)"
+                               t-as="line">
+                                <t t-if="not line.hide_from_offer_report">
+                                    <tr>
+                                        <td style="border: 1px solid black; text-align: center; padding: 5px;">
+                                            <span t-esc="line_index + 1"/>
+                                        </td>
+                                        <td style="border: 1px solid black; padding: 5px; text-align: center;">
+                                            <p t-field="line.name"
+                                               style="margin: 0;"/>
+                                            <p t-field="line.product_id"
+                                               style="margin: 0;"/>
+                                        </td>
+                                        <td style="border: 1px solid black; text-align: center; padding: 5px;">
+                                            <span t-field="line.qty"/>
+                                        </td>
+                                        <td style="border: 1px solid black; text-align: center; padding: 5px;">
+                                            <t t-if="doc.offer_currency.name == 'IQD'">
+                                                <span t-esc="int(line.final_unit_price_iqd)"/>
+                                                <t t-set="summary_total"
+                                                   t-value="summary_total + line.final_unit_price_iqd"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="int(line.final_unit_price_usd)"/>
+                                                <t t-set="summary_total"
+                                                   t-value="summary_total + line.final_unit_price_usd"/>
+                                            </t>
+                                        </td>
+                                        <td style="border: 1px solid black; text-align: center; padding: 5px;">
+                                            <span t-if="doc.offer_currency.name == 'IQD'"
+                                                  t-esc="int(line.final_total_price_iqd)"/>
+                                            <span t-else=""
+                                                  t-esc="int(line.final_total_price_usd)"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+
+                            <!-- Optional total row -->
+                            <tr t-if="doc.include_section_id">
+                                <td colspan="5"
+                                    style="border: 1px solid black; padding: 5px;">
+                                    <strong>Including:</strong>
+                                    <p t-field="doc.include_section_id.body"/>
+                                </td>
+                            </tr>
+
+                            <!-- Grand Total Row -->
+                            <tr style="border-top: 2px solid black; border-bottom: 2px solid black;">
+                                <td colspan="4"
+                                    style="border: 1px solid black; text-align: center; font-weight: bold; padding: 5px;">
+                                    المجموع الكلي للمشروع بـ
+                                    <t t-esc="doc.offer_currency.name"/>
+                                </td>
+                                <td style="border: 1px solid black; text-align: center; font-weight: bold; padding: 5px;">
+                                    <span t-esc="round(summary_total, 2)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <!-- SECTION 3 : PARTS DESCRIPTION -->
+                    <div name="parts_section"
+                         t-if="any( doc.product_lines.filtered(lambda x: x.config) )">
+                        <h4 align="center"
+                            style="text-decoration: underline; padding-top: 50px;">
+                            التفاصيل
+                        </h4>
+                        <p t-if="doc.check_defect()">EXCHANGE: items are only
+                            valid in case we receive the corresponding
+                            old or defective items back.
+                        </p>
+                        <t t-foreach="doc.product_lines.filtered(lambda x: x.hide_from_offer_report == False and x.config)"
+                           t-as="item">
+                            <div t-attf-style="{{ 'padding-top: 0px;' if item_first else 'padding-top: 38px;'}}">
+                                <h6 style="background: lightgray; font-size: large; font-weight: bold; padding: 12px 5px;">
+                                    Tendor No.
+                                    <t t-esc="doc.tendor_no"/>
+                                    - Item
+                                    <t t-esc="item_index + 1"/>
+                                    :
+                                    <t t-esc="item.name if item.name else item.product_id.display_name"/>
+                                </h6>
+                            </div>
+                            <table class="table table-sm"
+                                   style="page-break-after: always;direction:rtl;">
+                                <thead>
+                                    <tr>
+                                        <th style="font-weight: bold; color: black;">
+                                            ت
+                                        </th>
+                                        <th style="text-align: center; font-weight: bold; color: black;">
+                                            الرقم التسلسلي
+                                        </th>
+                                        <th style="max-width: 2px; font-weight: bold; color: black;">
+                                            التفاصيل
+                                        </th>
+                                        <th style="font-weight: bold; color: black;">
+                                            QTY
+                                        </th>
+                                        <th style="text-align: center; font-weight: bold; color: black;">
+                                            سعر المفرد بالدينار العراقي
+                                        </th>
+                                        <th style="text-align: center; font-weight: bold; color: black;">
+                                            السعر الكلي بالدينار العراقي
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-family: 'Times New Roman', serif; color: black; font-weight: bold;">
+                                    <t t-set="total_config_price" t-value="0"/>
+                                    <t t-foreach="item.config.product_bom_lines.filtered(lambda x: not x.optional_product)"
+                                       t-as="part">
+                                        <t t-set="converted_unit_price"
+                                           t-value="part.price_unit * part.policy * (item.currency.exchange_rate if item.currency else  1)"/>
+                                        <t t-set="converted_unit_price"
+                                           t-value="converted_unit_price * (item.exchange_rate if doc.offer_currency.name == 'IQD' and item.config.currency.currency_name == 'USD' else  1)"/>
+                                        <t t-set="converted_total_price"
+                                           t-value="part.total_price * (item.currency.exchange_rate if item.currency else  1)"/>
+                                        <t t-set="converted_total_price"
+                                           t-value="converted_total_price * (item.exchange_rate if doc.offer_currency.name == 'IQD' and item.config.currency.currency_name == 'USD' else  1)"/>
+                                        <t t-set="total_config_price"
+                                           t-value="total_config_price + converted_total_price"/>
+                                        <tr t-attf-style="{{ '' if (part_index % 2 == 0) else 'background: lightgray;' }}">
+                                            <td>
+                                                <span t-esc="part_index + 1"/>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <span style="text-align: center;"
+                                                      t-field="part.smn"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="part.product_id.product_long_desc if part.product_id.product_long_desc else part.product_id.name"/>
+                                                <span t-if="part.is_defect">
+                                                    (EXCHANGE)
+                                                </span>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <span t-field="part.qty"/>
+                                            </td>
+                                            <td align="center">
+                                                <span t-if="item.config.show_price"
+                                                      t-esc="round(converted_unit_price, 2)"/>
+                                            </td>
+                                            <td align="center">
+                                                <span t-if="item.config.show_price"
+                                                      t-esc="round(converted_total_price, 2)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr name="config_total_price_line"
+                                        style=" margin-top: 4px; border-bottom: solid 2px black;">
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <span style="font-weight: bold;">
+                                                Total price in
+                                                <t t-esc="doc.offer_currency.name"/>
+                                            </span>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <span t-esc="round(total_config_price, 2)"/>
+                                        </td>
+                                    </tr>
+                                    <t t-foreach="item.config.product_bom_lines.filtered(lambda x: x.optional_product)"
+                                       t-as="op_part">
+                                        <t t-if="op_part_index == 0">
+                                            <tr style="border-top: solid 2px black;">
+                                                <td></td>
+                                                <td>
+                                                    <span style="font-weight: bold; font-size: large;">
+                                                        Optional:
+                                                    </span>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </t>
+                                        <tr t-attf-style="{{ '' if (op_part_index % 2 == 0) else 'background: lightgray;' }}">
+                                            <t t-set="converted_unit_price"
+                                               t-value="op_part.price_unit * op_part.policy * (item.currency.exchange_rate if item.currency else  1)"/>
+                                            <t t-set="converted_unit_price"
+                                               t-value="converted_unit_price * (item.exchange_rate if doc.offer_currency.name == 'IQD' and item.config.currency.currency_name == 'USD' else  1)"/>
+                                            <t t-set="converted_total_price"
+                                               t-value="op_part.total_price * (item.currency.exchange_rate if item.currency else  1)"/>
+                                            <t t-set="converted_total_price"
+                                               t-value="converted_total_price * (item.exchange_rate if doc.offer_currency.name == 'IQD' and item.config.currency.currency_name == 'USD' else  1)"/>
+                                            <td></td>
+                                            <td>
+                                                <span t-field="op_part.smn"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="op_part.product_id.product_long_desc if op_part.product_id.product_long_desc else op_part.product_id.display_name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="op_part.qty"/>
+                                            </td>
+                                            <td align="center">
+                                                <span t-esc="round(converted_unit_price, 2)"/>
+                                            </td>
+                                            <td align="center">
+                                                <span t-esc="round(converted_total_price, 2)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="equipment_view_tree" model="ir.ui.view">
+        <field name="name">equipment.list</field>
+        <field name="model">equipment.equipment</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="purchase_date"/>
+                <field name="equipment_type_id"/>
+                <field name="equipment_status_id"/>
+                <field name="equipment_condition_id"/>
+                <field name="serial_number"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="equipment_view_form" model="ir.ui.view">
+        <field name="name">equipment.form</field>
+        <field name="model">equipment.equipment</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name">Equipment Name</label>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="purchase_date"/>
+                            <field name="equipment_type_id"/>
+                            <field name="equipment_condition_id"/>
+                            <field name="serial_number"/>
+                        </group>
+                        <group>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                            <field name="equipment_status_id"/>
+                            <field name="is_equipment_available" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="notes" placeholder="Add a note..."/>
+                    <notebook>
+                        <page string="Employee History">
+                            <field name="employee_history_ids">
+                                <list editable="bottom">
+                                    <field name="acquiring_date"/>
+                                    <field name="employee_id"/>
+                                    <field name="return_date"/>
+                                    <field name="attachment_id" widget="many2many_binary"/>
+                                </list>
+                            </field>
+                        </page>
+                         <page string="Tools" name="tools">
+                            <field name="tool_line_ids">
+                                <list editable="bottom">
+                                    <field name="tool_id"/>
+                                    <field name="quantity"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="equipment_view_search" model="ir.ui.view">
+        <field name="name">equipment.view.search</field>
+        <field name="model">equipment.equipment</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+                <field name="employee_name_search" string="Employee"/>
+                <filter string="Available Equipments" name="available_equipments" domain="[('is_equipment_available', '=',  True)]"/>
+                <filter string="Unavailable Equipments" name="unavailable_equipments" domain="[('is_equipment_available', '!=',  True)]"/>
+                <filter string="Current Acquirers" name="current_acquirers" domain="[('employee_history_ids.return_date', '=', False)]"/>
+                <filter string="Previous Acquirers" name="previous_acquirers" domain="[('employee_history_ids.return_date', '!=', False)]"/>
+                <filter string="Acquirers" name="acquirers" domain="['|',('employee_history_ids.return_date', '!=', False), ('employee_history_ids.return_date', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_equipment_equipment" model="ir.actions.act_window">
+        <field name="name">Equipments</field>
+        <field name="res_model">equipment.equipment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="equipment_menu_root" name="Equipment" groups="group_equipment_user,group_equipment_manger"/>
+    <menuitem id="equipment_menu" name="Equipments" action="action_equipment_equipment" parent="equipment_menu_root" sequence="0"/>
+</odoo>

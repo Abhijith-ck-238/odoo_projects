@@ -1,0 +1,13 @@
+.kanban-inner-card{
+    transition-delay: 0s;
+    transition-duration: 500ms;
+    transition-property: all;
+    overflow-y: hidden;
+    position: relative;
+    max-height: 60px;
+}
+
+.kanban-inner-card:hover{
+    max-height: 700px;
+}
+

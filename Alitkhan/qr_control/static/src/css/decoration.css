@@ -1,0 +1,15 @@
+.text-danger .o_qr_lot_serial {
+    background-color: #f38c4363 !important;
+}
+.text-warning .o_qr_lot_serial{
+    background-color: #fdf57d8f !important;
+}
+.text-info .o_qr_lot_serial{
+    background-color: #93fbfb7d !important;
+}
+.text-success .o_qr_lot_serial{
+    background-color: #a7f2af7d !important;
+}
+.qr_lot_serial_no_dec{
+    color: #666666 !important;
+}

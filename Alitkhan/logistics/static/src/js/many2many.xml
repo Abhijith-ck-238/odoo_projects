@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="logistics.PurchaseOrderLineDialog">
+        <Dialog title="props.title">
+            <table class="o_list_view table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+<!--                        <th>Serial Number</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="props.orderLines" t-as="line" t-key="line.id">
+                        <tr>
+                            <td t-esc="line.product_id[1]"/>
+                            <td t-esc="line.name"/>
+                            <td t-esc="line.product_qty"/>
+<!--                            <td t-esc="line.lot_serial_no"/>-->
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </Dialog>
+    </t>
+</templates>
+

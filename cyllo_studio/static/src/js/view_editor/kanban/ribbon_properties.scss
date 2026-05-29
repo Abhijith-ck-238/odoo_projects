@@ -1,0 +1,91 @@
+.ribbon_properties {
+    background-color: unset; // Dark background for contrast
+    border-radius: 8px;
+    padding: 20px;
+    color: #BCBBA7; // Light text color for readability
+
+    .cy-navbar_label {
+        font-size: 16px;
+        font-weight: bold;
+        color: #BCBBA7;
+        margin-bottom: 5px;
+        display: block;
+    }
+    .round label{
+        margin-top: 8px;
+    }
+    .overall_container_list{
+        background-color: #3a3a3a;
+    }
+    .cy-input {
+        width: 100%;
+        padding: 8px;
+        background-color: #3a3a3a;
+        border: 1px solid #444;
+        border-radius: 4px;
+        color: #BCBBA7;
+        margin-bottom: 15px;
+    }
+
+    .cy-input.cursor-pointer {
+        background-color: #3a3a3a; // No background for clickable inputs
+        border: none; // No border for clickable inputs
+        padding: 8px;
+    }
+
+    .position-absolute {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 12px;
+        width: 106% !important;
+        left: -7px;
+    }
+
+    .w-100 {
+        width: 100%;
+    }
+
+    .opacity-75-hover {
+        opacity: 0.75;
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .can_create_label {
+        font-size: 14px;
+        color: #BCBBA7;
+    }
+
+    .cy-basedOn {
+        background-color: #3a3a3a;
+        border: none;
+        color: var(--navbar-title-color);
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+
+
+    .p-1, .p-2 {
+        padding: 1px; // Adjust padding values as needed
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .justify-content-between {
+        justify-content: space-between;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    .cursor-pointer {
+        cursor: pointer;
+    }
+}

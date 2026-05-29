@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="approval_limitation_record_rule" model="ir.rule">
+            <field name="name">Approval Access limitation Rule</field>
+            <field name="model_id" ref="approvals.model_approval_category"/>
+            <field name="domain_force">
+                ['|',('accessible_to_ids','=',user.id),("apply_limitations","=",False)]
+            </field>
+        </record>
+
+
+        <record id="approval_limitations_limited_users" model="res.groups">
+            <field name="name">Approval Limitations Limited Users</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+            <field name="rule_groups" eval="[(4, ref('approval_hide.approval_limitation_record_rule'))]"/>
+        </record>
+
+    </data>
+</odoo>

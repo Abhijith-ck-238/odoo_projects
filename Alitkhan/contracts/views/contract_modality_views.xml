@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="contract_modality_form" model="ir.ui.view">
+            <field name="name">contract.modality.form</field>
+            <field name="model">contract.modality</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                        <label for="user_ids"/>
+                        <field name="user_ids"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

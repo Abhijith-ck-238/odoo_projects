@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="project_template_action" model="ir.actions.act_window">
+            <field name="name">Project template</field>
+            <field name="res_model">project.template</field>
+            <field name="view_mode">list,form</field>
+      </record>
+            <!-- Début form  -->
+    <record id="view_project_template_form" model="ir.ui.view">
+      <field name="name">Project template</field>
+      <field name="model">project.template</field>
+      <field name="arch" type="xml">
+            <form string="template">
+                 <header>
+                     <button string="Done" type="object" name="done_progressbar" class="oe_highlight" invisible="state not in ['draft']"/>
+                            <field name="state" widget="statusbar"/>
+                  </header>     
+                <sheet>
+                  <div class="oe_title">
+                          <h1> <field name="name" readonly="state in ['done']"/> </h1>
+<!--                          <h1> <field name="name"  attrs="{'readonly': [('state', 'in', 'done')]}"/> </h1>-->
+                  </div>
+                    <notebook>
+                        <page string="Stages ">
+                            <group string="List of stages">
+                            </group>
+                            <field name="project_template_stage_ids" readonly="state in ['done']">
+                                <list string="" editable="bottom">
+                                     <field name="stage_id" string="Stage"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Tasks">
+                            <group string="List of tasks">
+                            </group>
+                            <field name="project_template_task_ids" readonly="state in ['done']">
+                                <list string="" editable="bottom">
+                                    <field name="name" string="Task"/>
+                                    <field name="task_weight" string="Weight"/>
+                                </list>
+                            </field>
+                        </page>
+                      </notebook>
+                </sheet>  
+            </form>
+      </field>
+    </record>
+    <!-- Fin form -->
+
+    <!-- Début tree  -->
+     <record id="view_project_template_tree" model="ir.ui.view">
+      <field name="name">Project tepmlate</field>
+      <field name="model">project.template</field>
+      <field name="arch" type="xml">
+        
+        <list string="template">
+            <field name="name" class="oe_inline" string="Name"/>
+        </list>
+      </field>
+    </record>
+
+<!-- fin tree -->
+
+              <!-- Début menu item -->
+    <menuitem id="project_template_menu" parent="project.menu_project_config" name="Templates" sequence="11" action="project_template_action" />
+
+              <!-- Fin menu item -->
+
+</odoo>

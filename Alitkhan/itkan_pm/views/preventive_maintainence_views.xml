@@ -1,0 +1,74 @@
+<odoo>
+    <data>
+
+        <record id="preventive_maintainence_form" model="ir.ui.view">
+            <field name="name">preventive_maintainence.form</field>
+            <field name="model">preventive.maintainence</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <header>
+                            <button name="set_active" string="Activate" type="object"
+                                    invisible="status == 'active' or status == 'archived'"/>
+                            <button name="reset_draft" string="Reset to Draft" type="object"
+                                    invisible="status == 'draft' or status == 'archived'"/>
+                            <button name="generate_dates_table" string="Generate Maintainence Schedule" type="object"
+                                    invisible=" not interval or status != 'draft'"/>
+                        </header>
+                        <sheet>
+                            <widget name="web_ribbon" title="Draft" bg_color="bg-danger" invisible="status != 'draft'"/>
+                            <widget name="web_ribbon" title="Active" bg_color="bg-success"
+                                    invisible="status != 'active'"/>
+                            <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                                    invisible="status != 'archived'"/>
+                            <group>
+                                <group>
+                                    <field name="sn" placeholder="Serial Number"
+                                           readonly="status == 'active' or status == 'archived'"/>
+                                    <button name="search_sn" string="Search" type="object"
+                                            invisible="status == 'active' or status == 'archived'"/>
+                                    <field name="iq"/>
+                                    <field name="status" invisible="1"/>
+                                    <field name="starting_date"/>
+                                    <field name="eoc_date"/>
+                                    <field name="ref" widget="radio"
+                                           readonly="status == 'active' or status == 'archived'"/>
+                                    <field name="service_years" invisible="ref == 'eoc'"
+                                           readonly="status == 'active' or status == 'archived'"/>
+                                    <field name="interval" readonly="status == 'active' or status == 'archived'"/>
+                                    <field name="interval_days" readonly="status == 'active' or  status == 'archived'"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="pm_date_lines" readonly="status  == 'active' or  status == 'archived'">
+                                    <list decoration-success="not is_done " decoration-muted="is_done">
+                                        <field name="date"/>
+                                        <field name="is_done" column_invisible="1"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </sheet>
+                        <chatter/>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="preventive_maintainence_tree" model="ir.ui.view">
+            <field name="name">preventive.maintainence.tree</field>
+            <field name="model">preventive.maintainence</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="sn"/>
+                    <field name="iq"/>
+                    <field name="create_date"/>
+                    <field name="status"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!--
+    ============================================================================
+    Template Name: client_action.file_explorer
+    Description:
+        Main File Explorer UI for FTP/local file interaction.
+
+    Features:
+        - Connect to remote host (FTP/SFTP)
+        - Browse files and directories
+        - Upload files
+        - Download files
+        - Navigate backward
+        - Modal-based download location input
+
+    State Variables Used:
+        state.host_id           -> Host address
+        state.user_name         -> Username
+        state.pass              -> Password
+        state.port              -> Port number
+        state.files             -> List of file objects
+        state.showFileInput     -> Toggle upload input visibility
+        state.upload_loc        -> Upload path
+        state.isModalOpen       -> Controls download modal visibility
+        state.downloadLocation  -> Target download path
+
+    Expected File Object Structure:
+        file.name   -> File name
+        file.path   -> Full path (unique key)
+        file.type   -> 'directory' | 'file'
+        file.remote -> Boolean (true = remote file)
+
+    Event Handlers:
+        onClickConnect()
+        RedirectBack()
+        UploadFile()
+        onClickFileRemoteLocal()
+        DownloadFile(file)
+        closeModal()
+        confirmDownload()
+    ============================================================================
+    -->
+
+    <t t-name="client_action.file_explorer">
+
+        <!-- ===========================
+             Page Heading
+        ============================ -->
+        <h1>
+            <center>
+                <span class="file_explorer_heading">File Explorer</span>
+            </center>
+        </h1>
+
+        <div class="FTP_dash">
+
+            <!-- ===========================
+                 Connection Form Section
+                 Used to establish FTP/SFTP connection
+            ============================ -->
+            <div>
+
+                <!-- Host Input -->
+                <input type="text"
+                       name="host"
+                       class="input_host"
+                       placeholder="Host"
+                       t-ref="input_host"
+                       t-model="state.host_id"/>
+                <label class="label_host">Host</label>
+
+                <!-- Username Input -->
+                <input type="text"
+                       name="user_name"
+                       class="input_user"
+                       placeholder="User Name"
+                       t-ref="input_user"
+                       t-model="state.user_name"/>
+                <label class="label_user">User Name</label>
+
+                <!-- Password Input -->
+                <input type="password"
+                       name="password"
+                       class="input_password"
+                       placeholder="Password"
+                       t-model="state.pass"/>
+                <label class="label_password">Password</label>
+
+                <!-- Port Input -->
+                <input type="number"
+                       name="port_number"
+                       class="input_port"
+                       placeholder="Port"
+                       t-model="state.port"/>
+                <label class="label_port">Port Number</label>
+
+                <!-- Connect Button -->
+                <!-- Triggers backend connection logic -->
+                <button type="button"
+                        class="submit_btn"
+                        t-on-click="onClickConnect">
+                    Connect
+                </button>
+            </div>
+
+            <!-- ===========================
+                 Toolbar Section
+                 Contains navigation & upload
+            ============================ -->
+            <div class="toolbar_container">
+                <div class="toolbar_items">
+
+                    <!-- Back Button -->
+                    <!-- Navigates to previous directory -->
+                    <img src="/file_explorer/static/src/img/back.png"
+                         class="back_button"
+                         t-on-click="RedirectBack"/>
+
+                    <!-- Upload Button -->
+                    <!-- Toggles upload input visibility -->
+                    <img src="/file_explorer/static/src/img/test.png"
+                         class="upload_button"
+                         t-on-click="UploadFile"/>
+
+                    <!-- Upload Input Component -->
+                    <!-- Only visible when state.showFileInput == true -->
+                    <t t-if="state.showFileInput">
+                        <div class="file_input_field">
+
+                            <!--
+                            UploadFile Component
+                            Props:
+                                hostId
+                                username
+                                password
+                                port
+                                upload (upload location)
+                            -->
+                            <UploadFile class="file_upload"
+                                        hostId="state.host_id"
+                                        username="state.user_name"
+                                        password="state.pass"
+                                        port="state.port"
+                                        upload="state.upload_loc"/>
+                        </div>
+                    </t>
+                </div>
+            </div>
+
+            <!-- ===========================
+                 File Grid Section
+                 Displays files and directories
+            ============================ -->
+            <div class="window-content">
+                <div class="grid-container">
+
+                    <!-- Loop through files list -->
+                    <t t-foreach="state.files"
+                       t-as="file"
+                       t-key="file.path">
+
+                        <!-- File/Folder Item -->
+                        <div class="grid-item"
+                             t-att-id="file.path"
+                             t-on-click="onClickFileRemoteLocal">
+
+                            <!-- Show Folder Icon -->
+                            <t t-if="file.type == 'directory'">
+                                <img t-attf-src="/file_explorer/static/src/img/folder.png"
+                                     class="grid-icon"/>
+                            </t>
+
+                            <!-- Show File Icon -->
+                            <t t-else="">
+                                <img t-attf-src="/file_explorer/static/src/img/file.png"
+                                     class="grid-icon"/>
+                            </t>
+
+                            <!-- File Name -->
+                            <div class="grid-filename">
+                                <t t-esc="file.name" readonly="true"/>
+                            </div>
+
+                            <!-- Download Button (Local Files Only) -->
+                            <!-- Prevents parent click propagation -->
+                            <t t-if="!file.remote">
+                                <img t-attf-src="/file_explorer/static/src/img/download.png"
+                                     class="download_button"
+                                     t-on-click.prevent.stop="()=> this.DownloadFile(file)"/>
+                            </t>
+
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===========================
+             Download Modal
+             Appears when state.isModalOpen == true
+        ============================ -->
+        <t t-if="state.isModalOpen">
+
+            <div class="modal fade show"
+                 tabindex="-1"
+                 style="display: block;"
+                 role="dialog">
+
+                <div class="modal-dialog modal-dialog-centered"
+                     role="document">
+
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title">Download File</h5>
+                            <button type="button"
+                                    class="btn-close"
+                                    aria-label="Close"
+                                    t-on-click="closeModal"/>
+                        </div>
+
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Download Location
+                                </label>
+
+                                <!-- User input for download path -->
+                                <input type="text"
+                                       class="form-control"
+                                       t-model="state.downloadLocation"
+                                       placeholder="Enter download location"/>
+                            </div>
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <div class="modal-footer">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    t-on-click="confirmDownload">
+                                Download
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    t-on-click="closeModal">
+                                Cancel
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Background Overlay -->
+            <div class="modal-backdrop fade show"></div>
+        </t>
+
+    </t>
+</templates>

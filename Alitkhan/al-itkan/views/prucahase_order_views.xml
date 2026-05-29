@@ -1,0 +1,23 @@
+<odoo>
+	<data>
+
+		<record id="purchase_order_form_inherit" model="ir.ui.view">
+			<field name="name">purchase.order.form.itkan</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//header/field[@name='state']" position="before">
+					<field name="sent_prouduct_info" invisible="1"/>
+					<button name="send_proudct_info_button" type="object" string="Send To Modality Managers" invisible="sent_prouduct_info"/>
+				</xpath>
+				<xpath expr="//field[@name='order_line']/list/field[@name='product_id']" position="after">
+					<field name="company_id" invisible="1"/>
+					<field name="serial_number" optional="1"/>
+					<field name="brand_id" optional="1"/>
+					<field name="customer_id" optional="1"/>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>

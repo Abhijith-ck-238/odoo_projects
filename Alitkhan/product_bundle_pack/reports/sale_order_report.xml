@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="sale_order_report_inh" name="sale_order_pack" inherit_id="sale.report_saleorder_document">
+
+            <xpath expr="//table[hasclass('o_main_table')]//tbody//tr" position="attributes">
+                <attribute name="style">line-height: 2;</attribute>
+            </xpath>
+
+            <xpath expr="//table[hasclass('o_main_table')]//tbody//tr" position="inside">
+                <tbody style="margin-left: 35px; font-size: smaller; line-height: 1; background-color: lightgrey;">
+                        <t t-foreach="line.sale_pack_id.product_lines" t-as="pack">
+                            <tr>
+                                <td name="td_pack_name">
+                                    <span t-field="pack.display_name" style="margin-left: 40px;"/>
+                                </td>
+                                <td name="td_pack_qty_uom">
+                                    Quantity:<span t-esc="int(pack.qty_uom)" style="margin-left: 40px;"/>
+                                </td>
+                            </tr>
+                        </t>
+                </tbody>
+            </xpath>
+
+        </template>
+    </data>
+</odoo>

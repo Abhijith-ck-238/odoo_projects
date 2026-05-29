@@ -1,0 +1,1 @@
+from . import compute_payslip_wizard

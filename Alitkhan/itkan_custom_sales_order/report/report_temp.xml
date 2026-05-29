@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CUSTOM REPORT TEMPLATE CREATED BY SHAMS@INTEGRATED PATH -->
+    <template id="report_saleorder">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="itkan_custom_sales_order.offering_so_custom_external_layout">
+                    <div class="page">
+                        <!-- first row -->
+                        <div class="d-flex justify-content-around"
+                             style=" display:flex;justify-content: space-around !important;margin-bottom: 10px;">
+                            <div class="col-4" style="padding: 0 15px;">
+                                <div class="border border-dark"
+                                     style="padding-left: 1.5rem !important; margin-top: 5px; margin-bottom: 8px;">
+                                    <span t-field="o.partner_id.name"/>
+                                    <p style="margin: 5px 0;">
+                                        <span t-field="o.partner_id.state_id"/>
+                                        <br/>
+                                        <span t-field="o.partner_id.country_id"/>
+                                    </p>
+                                    <p style="margin-top: 5px;">
+                                        TEL:
+                                        <span t-field="o.partner_id.phone"/>
+                                        <br/>
+                                        FAX:
+                                        <br/>
+                                        E-mail:
+                                        <span t-field="o.partner_id.email"/>
+                                    </p>
+                                </div>
+
+                                <div class="border border-dark" style="margin-top: 8px;">
+                                    <table class="table table-borderless"
+                                           style="width: 100%; border-collapse: collapse;margin:0 !important;padding:0 !important">
+                                        <thead>
+                                            <tr>
+                                                <!--<th style="padding: 4px 8px; text-align: left; border-bottom: 1px solid #000;">-->
+                                                <th style="margin-left:5px;padding-top:0;padding-bottom:0">
+                                                    <strong>SHIP TO</strong>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="border-top:1px solid black" t-if="o.ship_to">
+                                            <tr>
+                                                <td style="vertical-align: top;">
+                                                    <span t-field="o.ship_to"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div class="col-4" style="margin-left:8px;padding: 0 15px;">
+
+                                <div class="border border-dark pl-4" style="padding-left: 1.5rem !important;">
+                                    <span>Mobile:00964 7901 504030</span>
+                                    <span>Email:alitkan.info@alitkan.com</span>
+                                </div>
+
+                                <div class="border border-dark text-center" style="margin-top:10px;">
+                                    Shipping marks
+                                    <p class="text-center border-top border-dark">
+                                        <span t-field="o.partner_id.state_id"/>
+                                        <div style="height:1px; width:100%;"/>
+                                        <span t-field="o.partner_id.country_id"/>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-4" style="padding: 0 15px">
+                                <table class="table table-bordered table-sm"
+                                       style="width: 100%; border: 1px solid #dee2e6; border-collapse: collapse;">
+
+                                    <!-- <tr>
+                                        <td><p>PURCHASE ORDER NO<span t-field="o.po_no"/></p></td>
+
+                                    </tr> -->
+
+                                    <tr>
+                                        <td style="border-bottom: 1px solid #dee2e6;">
+                                            <p>Project NO:
+                                                <span t-field="o.project_num"/>
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                    <!-- <tr>
+                                            <td><p>IMPORT LICENCE : <span t-field="o.import_licence" />  </p>  </td>
+                                    </tr> -->
+
+                                    <tr>
+                                        <td>
+                                            <p>ABOVE NUMBERS MUST APPEAR ON ALL SHIPPING DOCUMENTS
+                                                <br/>
+                                                AND CORRESPONDENCE
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                    <!-- <tr>
+                                    <td> <p>PAYMENT BY: <br/> <span t-field="o.payment_by" /> </p> </td>
+                                    </tr>
+
+                                    <tr>
+                                    <td> <p>Price VALID FOR : <br/> <span t-field="o.price_valid_for" />  </p> </td>
+                                    </tr> -->
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div class="row border border-dark" style="margin-top:8px;padding: 0 15px">
+                            <div class="col-4 border-end border-dark">
+                                <p>DELIVERY PERIOD:
+                                    <span t-field="o.delivery_period"/>
+                                </p>
+                            </div>
+                            <div class="col-4 border-left border-dark px-3">
+                                <p>PORT OF SHIPMENT:
+                                    <br/>
+                                    <span t-field="o.port_of_shipment"/>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row border border-dark" style="margin-bottom:5px;">
+                            <p align="left" class="p-2">PLEASE SUPPLY THE FOLLOWING AND ACCOURDING TO THE ATTACHED
+                                BILL OF QUANTITIES
+                            </p>
+                        </div>
+
+                        <div class="row ">
+                            <table class="table table-bordered table-sm"
+                                   style="width: 100%; border: 1px solid #dee2e6; border-collapse: collapse;">
+                                <thead style="border-bottom: 1px solid #dee2e6;">
+                                    <tr>
+                                        <th style="border: 1px solid #dee2e6; text-align: left;font-weight:bold;">
+                                            Description
+                                        </th>
+                                        <th style="border: 1px solid #dee2e6; text-align: right;font-weight:bold;">
+                                            Quantity
+                                        </th>
+                                        <th style="border: 1px solid #dee2e6; text-align: right;font-weight:bold;">Unit
+                                            Price
+                                        </th>
+                                        <th style="border: 1px solid #dee2e6; text-align: right;font-weight:bold;">
+                                            Amount
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="current_subtotal" t-value="0"/>
+
+                                    <t t-foreach="o.order_line" t-as="line">
+                                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+
+                                        <tr t-if="not line.display_type">
+                                            <td style="border: 1px solid #dee2e6;">
+                                                <span t-field="line.product_id.name"/>
+                                            </td>
+                                            <td style="border: 1px solid #dee2e6; text-align: center;">
+                                                <span t-esc="int(line.product_uom_qty)"/>
+                                            </td>
+                                            <td style="border: 1px solid #dee2e6; text-align: right;">
+                                                <span t-field="line.price_unit"/>
+                                            </td>
+                                            <td style="border: 1px solid #dee2e6; text-align: right;">
+                                                <span t-field="line.price_subtotal"/>
+                                            </td>
+                                        </tr>
+
+                                        <tr t-if="line.display_type == 'line_section'">
+                                            <td colspan="4" style="border: 1px solid #dee2e6; font-weight: bold;">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                        </tr>
+                                        <tr t-if="line.display_type == 'line_note'">
+                                            <td colspan="4" style="border: 1px solid #dee2e6; font-style: italic;">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                    <!-- Subtotal row -->
+                                    <tr>
+                                        <td colspan="99" style="border: 1px solid #dee2e6; text-align: right;">
+                                            <strong style="margin-right:16px;">Subtotal</strong>
+                                            <span t-esc="current_subtotal"
+                                                  t-options="{'widget': 'monetary','display_currency': o.pricelist_id and o.pricelist_id.currency_id or o.company_id.currency_id}"/>
+                                        </td>
+                                        <!--<td style="border: 1px solid #dee2e6; text-align: right;">-->
+                                        <!--    <span t-esc="current_subtotal" t-options="{'widget': 'monetary','display_currency': o.pricelist_id and o.pricelist_id.currency_id or o.company_id.currency_id}"/>-->
+                                        <!--</td>-->
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12 text-left">
+                                <p>
+                                    <b>Total Amount in Writing :</b>
+                                    <span t-esc="o.total_amount_written"/>
+                                </p>
+                            </div>
+
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <p>
+                                    <b>Warranty :</b>
+                                    <span t-field="o.warranty"/>
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <br/>
+                        <div class="row" t-attf-style="page-break-after:always;">
+                            <div class="col-12" style="max-heigh:100px;">
+                                <p>
+                                    <b>Payment :</b>
+                                    <div class="col-12" t-field="o.payment"/>
+                                </p>
+                            </div>
+                        </div>
+
+                        <t t-if="o.related_offering_record">
+                            <t t-foreach="o.order_line" t-as="order_line">
+                                <div class="row" style="margin-bottom:10px;" t-if="order_line.sale_pack_id">
+                                    <table class="table table-sm o_main_table">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;background-color:grey;" colspan="5">
+                                                    <span style="font-style:bold;color:white;"
+                                                          t-field="order_line.product_id"/>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center;" name="th_part_num">Part Number</th>
+                                                <th style="text-align:center;" name="th_state">State</th>
+                                                <th style="text-align:center;" name="th_qty">Qty</th>
+                                                <th style="text-align:center;" name="th_usd">Unit Price</th>
+                                                <th style="text-align:center;" name="th_usd">Total Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="order_line.sale_pack_id.product_lines" t-as="pack_line">
+                                                <t t-set="line_unit_price"
+                                                   t-value="order_line.get_pack_line_price(pack_line)"/>
+                                                <tr>
+                                                    <td style="text-align:center;" name="th_part_num">
+                                                        <span t-field="pack_line.product_id.default_code"/>
+                                                    </td>
+                                                    <td style="text-align:left;" name="th_part_num">
+                                                        <span t-field="pack_line.product_id.name"/>
+                                                    </td>
+                                                    <td style="text-align:center;" name="th_qty">
+                                                        <span t-esc="int(pack_line.qty_uom)"/>
+                                                    </td>
+                                                    <td style="text-align:center;" name="th_unit_price">
+                                                        <span t-esc="line_unit_price"/>
+                                                    </td>
+                                                    <td style="text-align:center;" name="th_total_price">
+                                                        <span t-esc="line_unit_price * int(pack_line.qty_uom)"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

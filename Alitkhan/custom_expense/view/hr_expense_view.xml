@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem id="hr_expense.menu_hr_expense_my_expenses_all"
+              parent="hr_expense.menu_hr_expense_configuration"
+              name="My Expenses" sequence="1"/>
+
+</odoo>
+

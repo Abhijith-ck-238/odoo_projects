@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record id="view_logistics_shipment_search" model="ir.ui.view">
+              <field name="name">logistics.shipment.search</field>
+              <field name="model">logistics.shipment</field>
+              <field name="arch" type="xml">
+                <search string="Search logistics">
+                  <field name="vendor"/>
+                  <field name="customer"/>
+                  <field name="origin_ids"/>
+                  <field name="contract_ids"/>
+                  <field name="shipment_lines" string="Part Number" filter_domain="[('shipment_lines.product_id.default_code', '=', self)]"/>
+                  <field name="shipment_lines" string="Description" filter_domain="[('shipment_lines.product_id.name', 'ilike', self)]"/>
+                  <field name="origin_ids" string="Serial Number" filter_domain="[('origin_ids.order_line.serial_number', 'ilike', self)]"/>
+                  <field name="contract_ids" string="Modality" filter_domain="[('contract_ids.product_lines.modality', 'ilike', self)]"/>
+                  <group expand="0" string="Group By">
+                    <filter string="Vendor" name="vendor" context="{'group_by': 'vendor'}"></filter>
+                     <filter string="Customer" name="customer" context="{'group_by': 'customer'}"></filter>
+                    <filter name="purchase_id" string="Purchase Orders" domain="[]" context="{'group_by': 'purchase_id'}"/>
+                    <filter name="contract_id" string="Contracts" domain="[]" context="{'group_by': 'contract_id'}"/>
+                  </group>
+                </search>
+              </field>
+            </record>
+
+          <record model="ir.actions.act_window" id="logistics.action_window">
+              <field name="name">Shipments</field>
+              <field name="res_model">logistics.shipment</field>
+              <field name="view_mode">list,form,kanban</field>
+              <field name="context">{"kanban_view_ref":"logistics.logistics_shipment_kanban"}</field>
+              <field name="search_view_id" ref="view_logistics_shipment_search"></field>
+          </record>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="custom_project_view_form" model="ir.ui.view">
+            <field name="name">project.project</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_open_share_project_wizard']" position="after">
+                    <button string="Project based on template" type="object" name="template_progressbar" class="oe_highlight" invisible="state not in ('new')" />
+                    <button string="Assign template" type="object" name="assign_template_progressbar" class="oe_highlight" invisible="state not in ('template')"/>
+                    <field name="state" widget="statusbar"/>      
+                </xpath>
+                <field name="label_tasks" position="after">
+                <div>
+                    <span invisible="state not in ('template', 'template_assigned')"><strong>Template : </strong></span>
+                    <field name="template_id"
+                           string="Template"
+                           invisible="state not in ['template', 'template_assigned']"
+                           readonly="state == 'template_assigned'"
+                           required="state in ['template', 'template_assigned']"
+                           options="{'no_quick_create': True, 'no_create_edit': True, 'no_open': True}"
+                           domain="[('state', '=', 'done')]"/>
+                    <br/>
+                </div>
+            </field>
+
+                <field name="name" position="after">
+                    <div align="right">
+                        <field name="sum_weight" widget="progressbar" nolabel="1"/>
+                  </div>
+                </field>
+            </field>
+       </record>
+
+       <record id="custom_project_view_kanban" model="ir.ui.view">
+            <field name="name">project.project</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="arch" type="xml">
+                <field name="tag_ids" position="after">
+<!--                <xpath expr="//div[1]/div[1]/div[1]/div[1]/div[1]" position="after">-->
+                            <field name="sum_weight" widget="progressbar" nolabel="1"/> <br/>
+                </field>
+            </field>
+       </record>
+
+</odoo>

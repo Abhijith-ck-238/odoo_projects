@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Pivot View -->
+    <record id="view_account_payment_report_pivot" model="ir.ui.view">
+        <field name="name">account.payment.report.pivot</field>
+        <field name="model">account.payment.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Payment Analysis" disable_linking="True">
+                <field name="payment_journal_id" type="row"/>
+                <field name="payment_date" interval="month" type="col"/>
+                <field name="money_in" type="measure"/>
+                <field name="money_out" type="measure"/>
+                <field name="balance" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="view_account_payment_report_tree" model="ir.ui.view">
+        <field name="name" >account.payment.report.tree</field>
+        <field name="model">account.payment.report</field>
+        <field name="arch" type="xml">
+            <list string="Payments" create="0" edit="0" delete="0">
+                <field name="payment_date"/>
+                <field name="payment_journal_id"/>
+                <field name="payment_move_name"/>
+                <field name="partner_id"/>
+                <field name="label"/>
+                <field name="invoice_id" widget="many2many_tags"/>
+                <field name="expense_sheet_id" widget="many2many_tags"/>
+                <field name="state" widget="badge" decoration-success="state == 'paid'" decoration-info="state == 'in_process'" decoration-warning="state in ('draft', 'canceled', 'rejected')"/>
+                <field name="reconciliation_date" optional="show"/>
+                <field name="money_in" sum="Total In"/>
+                <field name="money_out" sum="Total Out"/>
+                <field name="balance" sum="Net Balance"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_account_payment_report_form" model="ir.ui.view">
+        <field name="name">account.payment.report.form</field>
+        <field name="model">account.payment.report</field>
+        <field name="arch" type="xml">
+            <form string="Payment Report" create="0" edit="0" delete="0">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_process,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="payment_move_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="payment_date"/>
+                            <field name="payment_journal_id"/>
+                            <field name="partner_id"/>
+                            <field name="account_id"/>
+                        </group>
+                        <group>
+                            <field name="money_in"/>
+                            <field name="money_out"/>
+                            <field name="balance"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="label"/>
+                        <field name="payment_move_id"/>
+                        <field name="invoice_id" widget="many2many_tags"/>
+                        <field name="expense_sheet_id" widget="many2many_tags"/>
+                        <field name="reconciliation_date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_account_payment_report_search" model="ir.ui.view">
+        <field name="name">account.payment.report.search</field>
+        <field name="model">account.payment.report</field>
+        <field name="arch" type="xml">
+            <search string="Payments">
+                <field name="payment_move_name" string="Reference"/>
+                <field name="partner_id"/>
+                <field name="payment_journal_id"/>
+                <field name="label" string="Label"/>
+                <field name="invoice_id"/>
+                <field name="expense_sheet_id"/>
+                <field name="state"/>
+                <filter string="Reconciled" name="reconciled" domain="[('reconciliation_date', '!=', False)]"/>
+                <separator/>
+                <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]"/>
+                <filter string="In Process" name="in_process" domain="[('state', '=', 'in_process')]"/>
+                <separator/>
+                <filter string="Money In" name="money_in" domain="[('money_in', '>', 0)]"/>
+                <filter string="Money Out" name="money_out" domain="[('money_out', '>', 0)]"/>
+                <separator/>
+                <filter string="This Year" name="this_year" domain="[('payment_date', '&gt;=', context_today().strftime('%Y-01-01'))]"/>
+                <filter string="This Month" name="this_month" domain="[('payment_date', '&gt;=', context_today().strftime('%Y-%m-01'))]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Company" name="group_by_company" context="{'group_by':'company_id'}"/>
+                    <filter string="Journal" name="group_by_journal" context="{'group_by':'payment_journal_id'}"/>
+                    <filter string="Partner" name="group_by_partner" context="{'group_by':'partner_id'}"/>
+                    <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                    <filter string="Date" name="group_by_date" context="{'group_by':'payment_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_account_payment_report" model="ir.actions.act_window">
+        <field name="name">Payment Report</field>
+        <field name="res_model">account.payment.report</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="search_view_id" ref="view_account_payment_report_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No payments found!
+            </p>
+            <p>
+                This report shows all transactions in Bank and Cash journals.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_account_payment_report"
+              name="Payment Report"
+              action="action_account_payment_report"
+              parent="account.menu_finance_reports"
+              sequence="30"/>
+</odoo>

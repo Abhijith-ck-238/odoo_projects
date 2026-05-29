@@ -1,0 +1,46 @@
+.o_gantt_cells .o_gantt_pill {
+        overflow:unset !important;
+        text-overflow:unset !important;
+		user-select: none;
+		box-sizing: content-box;
+		cursor: pointer;
+		@include o-gantt-hoverable-colors(nth($o-colors-complete, 1));
+
+		.o_gantt_pill_title {
+			// Prevent displaying pill's description when size is smaller than 50px
+			max-width:unset !important;
+		}
+
+		.o_gantt_pill_avatar {
+			// Prevent displaying pill's avatar when size is smaller than 100px
+			max-width: calc((100% - 100px) * 9999);
+		}
+
+		&.decoration-info {
+			@include o-gantt-gradient-decorations(nth($o-colors-complete, 1));
+		}
+
+		// used for `color` attribute on <gantt>
+		@for $index from 1 through length($o-colors-complete) {
+			&.o_gantt_color_#{$index - 1} {
+				$gantt-color: nth($o-colors-complete, $index);
+
+				@include o-gantt-hoverable-colors($gantt-color);
+
+				&.decoration-info {
+					@include o-gantt-gradient-decorations($gantt-color);
+				}
+
+				.o_gantt_progress {
+					opacity: 0.2;
+					background-color: darken($gantt-color, 30%);
+				}
+			}
+		}
+
+		@each $color, $value in $theme-colors {
+			&.decoration-#{$color}:before {
+				@include o-gantt-ribbon-decoration($value);
+			}
+		}
+	}

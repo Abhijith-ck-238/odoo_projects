@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="extended_product_form_view" model="ir.ui.view">
+            <field name="name">product_form_view_extended</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="is_duplicate_internal_reference" invisible="1" />
+                    <field name="is_duplicate_name" invisible="1"/>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="custom_product_template_search_view" model="ir.ui.view">
+            <field name="name">group.product.template.search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_search_form_view_stock"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='real_stock_negative']" position="after">
+                    <filter string="Duplicate Internal Reference" name="is_duplicate_internal_reference"
+                            domain="[('is_duplicate_internal_reference','=', True)]"
+                    />
+                    <filter string="Duplicate Names" name="is_duplicate_name" domain="[('is_duplicate_name','=', True)]"
+                    />
+                </xpath>
+                <xpath expr="//group/filter[@name='type']" position="after">
+                    <filter string="Internal Reference" name="default_code"
+                            context="{'group_by':'default_code'}"/>
+                    <filter string="Name" name="name"
+                            context="{'group_by':'name'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

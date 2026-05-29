@@ -1,0 +1,10 @@
+<odoo> 
+    <data>
+    <record id="fleet_technician" model="res.groups">
+        <field name="name">Fleet / Technician</field>
+        <!-- <field name="category_id" ref="logistics.logistics_category"/> -->
+        <field name="implied_ids" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+    </record>
+    </data>
+
+</odoo>

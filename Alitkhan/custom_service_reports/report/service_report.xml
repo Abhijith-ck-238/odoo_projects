@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="service_report_template_inherit"
+                  inherit_id="studio_customization.odoo_studio_service__6e224a02-32bd-4006-b189-e6f68691ef5c">
+            <xpath expr="//t/t/t/t/div/div[2]" position="attributes">
+                <attribute name="style" separator=";" add="border-style: solid; border-width: thin;height: auto"/>
+            </xpath>
+            <xpath expr="//t/t/t/t/div/div[2]/table[1]" position="attributes">
+                <attribute name="style" separator=";" add="table-layout: fixed; width: 100%;border:0;"/>
+            </xpath>
+            <xpath expr="//t/t/t/t/div/div[2]/table[2]" position="attributes">
+                <attribute name="style" separator=";"
+                           add="table-layout: fixed; width: 100%; height: 100%;margin-top:-20px;border:0;margin-bottom:0px;margin-top:-16px;"/>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[1]" position="replace">
+                <div class="row mt8 mb8"
+                     style="display: -webkit-box; display: flex; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; -webkit-align-self: center; align-self: center;height:65px;">
+                    <div class="col-4" style="font-size:15px;">
+                        <p style="font-weight:bold;">Service Report No. :
+                            <span t-field="o.service_number"/>
+                        </p>
+                    </div>
+                    <div class="col-6">
+                        <p style="font-size:18px;text-align:center; font-weight: bold; margin-left: -50px;">Service
+                            Report /
+                            <span style="font-family:Arial,sans-serif;">تقرير صيانة</span>
+                        </p>
+                    </div>
+                    <div class="col-3">
+                        <t t-if="o.template_id.logo">
+                            <img t-att-src="image_data_uri(o.template_id.logo)"
+                                 style="max-width:200px;max-height:100px;"/>
+                        </t>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[9]" position="replace">
+                <tr style="height:250px; !important;">
+                    <td colspan="6" style="border:1px solid black;">
+                        <div>
+                            <div style="font-weight:bold;">Work Done:</div>
+                            <div style="float:right;font-weight:bold;font-family:Arial,sans-serif;width: 270px;margin-top: -20px;margin-right:-83px;">
+                                : تفاصيل العمل والمواد المستخدمه
+                            </div>
+                        </div>
+                        <br/>
+                        <div>
+                            <div style="padding-left:5px;padding-right:5px;">
+                                <span style="max-width: 550px;" t-field="o.done_desc"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[8]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="6" style="border:1px solid black;">
+                        <p>
+                            <span style="font-weight:bold;">Call reported By:</span>
+                            <span style="font-weight:bold;margin-left:60px;" t-field="o.reported_by"/>
+                        </p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;margin-top:-38px !important;">
+                            :اسم
+                            المتصل
+                        </p>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[7]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="6" style="border:1px solid black;">
+                        <p style="padding-left:3px;float:left;">
+                            <span style="font-weight:bold;">Defect:</span>
+                            <span style="margin-left:60px;" t-field="o.description"/>
+                        </p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:نوع
+                            العطل
+                        </p>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[6]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="6" style="border:1px solid black;">
+                        <p style="float:left;">
+                            <span style="font-weight:bold;">Serial Number:</span>
+                            <span style="margin-left:60px;" t-field="o.sn"/>
+                        </p>
+                        <p style="float:right;font-weight:bold;font-family:Arial,sans-serif;">:الرقم التسلسلي</p>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[3]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="6" style="border:1px solid black;">
+                        <p style="padding-left:3px;float:left;">
+                            <span style="font-weight:bold;">DOH name:</span>
+                            <span style="margin-left:60px;" t-field="o.hd_name"/>
+                        </p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:اسم
+                            دائرة الصحة
+                        </p>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[5]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="6" style="border:1px solid black;">
+                        <p style="padding-left:3px;float:left;width:80%">
+                            <span style="font-weight:bold;">Equipment:</span>
+                            <span style="margin-left:60px;" t-field="o.unit"/>
+                        </p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">
+                            :حهاز=جهاز
+                        </p>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[1]/td[1]" position="replace">
+                <td name="td_engineer" style="border:1px solid black;" width="50%" colspan="3">
+                    <table class="remove-border" style="border-collapse: collapse; width: 100%;">
+                        <tr style="border-bottom: 1px solid black;">
+                            <td align="left" style="font-weight:bold;">Job No:</td>
+                            <td align="center">
+                                <span t-field="o.job_number"/>
+                            </td>
+                            <td align="right" style="font-weight:bold;font-family:Arial,sans-serif;">:رقم الصيانه</td>
+                        </tr>
+                        <tr>
+                            <td align="left" style="font-weight:bold;font-family:Arial,sans-serif;">Project No:</td>
+                            <td align="center">
+                                <span t-field="o.contract.number"/>
+                                <span>-</span>
+                                <span t-field="o.contract.iq"/>
+                            </td>
+                            <td align="right" style="font-weight:bold;font-family:Arial,sans-serif;">:رقم العقد</td>
+                        </tr>
+                    </table>
+                </td>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[2]" position="replace">
+                <tr>
+                    <td name="td_warranty" style="border:1px solid black;" colspan="2">
+                        <p style="float:right;">
+                            <span style="font-weight:bold;font-family:Arial,sans-serif;">عدد سنوات الضمان</span>
+                            <br/>
+                        </p>
+                        <t t-if="o.contract_line_id.eoc_date and o.contract_line_id.eoc_date >= datetime.date.today()">
+                            <span style="margin-left:30px;"
+                              t-esc="o.contract_line_id.warranty + o.contract_line_id.maintainence"/>
+                        </t>
+                    </td>
+                    <td name="td_report_date" style="border:1px solid black;" colspan="2">
+                        <p style="float:right;">
+                            <span style="font-weight:bold;font-family:Arial,sans-serif;">تاريخ التقرير</span>
+                            <br/>
+                        </p>
+                    </td>
+                    <td name="td_warranty_start" style="border:1px solid black;" colspan="2">
+                        <p style="float:right;font-weight:bold;font-family:Arial,sans-serif;">تاريخ البدء بفترة الضمان
+                            والصيانة
+                            <br/>
+                        </p>
+                        <t t-if="o.contract_line_id.eoc_date and o.contract_line_id.eoc_date >= datetime.date.today()">
+                            <span style="margin-left:30px;" t-field="o.contract_line_id.starting_date"/>
+                        </t>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[1]/td[2]" position="replace">
+                <td name="td_engineer" style="border:1px solid black;margin-right:-30px;" colspan="3" width="50%">
+                    <table class="remove-border" width="100%" style="width: 100%;">
+                        <tr>
+                            <td align="left" style="font-weight:bold;">Eng. | Name:</td>
+                            <td align="center">
+                                <t t-if="o.engineer">
+                                    <span t-esc="' '.join(o.engineer.name.split()[:2])"/>
+                                </t>
+                            </td>
+                            <td align="right"
+                                style="font-weight:bold;font-family:Arial,sans-serif;margin-right:-20px; text-align: right;">
+                                :اسم | المهندس
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" style="font-weight:bold">Eng. || Name:</td>
+                            <td align="center">
+                                <t t-if="o.engineer_2">
+                                    <span t-esc="' '.join(o.engineer_2.name.split()[:2])"/>
+                                </t>
+                            </td>
+                            <td align="right"
+                                style="font-weight:bold;font-family:Arial,sans-serif;margin-right:-20px; text-align: right;">
+                                :اسم || المهندس
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div/table[1]/tr[4]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="6" style="border:1px solid black;">
+                        <p style="padding-left:3px;float:left; width: 65%;">
+                            <span style="font-weight:bold;">Institution name:</span>
+                            <span style="margin-left:60px;" t-field="o.site.site_name"/>
+                        </p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:اسم
+                            المؤسسه الصحية
+                        </p>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div/table[1]/tr[10]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="2" height="40px" style="border:1px solid black;border-right:none;">
+                        <p style="padding-left:3px;float:left;font-weight:bold;">Repair Completed:</p>
+                    </td>
+                    <td style="border:1px solid black;border-right:none;border-left:none;">
+                        <img src="/custom_sales/static/src/images/checkbox.png"
+                             style="padding-left:1px;height:16px;width:16px;"/>
+                        <label style="font-weight:bold;padding-left:5px;" for="yes">
+                            Yes
+                        </label>
+                    </td>
+                    <td style="border:1px solid black;border-right:none;border-left:none;text-align:right;">
+                        <img src="/custom_sales/static/src/images/checkbox.png"
+                             style="padding-right:1px;height:16px;width:16px;"/>
+                        <label style="font-weight:bold;padding-left:5px;" for="no">
+                            No
+                        </label>
+                    </td>
+                    <td colspan="2" style="border:1px solid black;border-left:none;">
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:اتمام
+                            العمل
+                        </p>
+                    </td>
+                </tr>
+            </xpath>
+<!--            <xpath expr="/t/t/t/t/div/div/table[2]/thead" position="replace">-->
+<!--                <thead>-->
+<!--                    <tr>-->
+<!--                        <th name="th_date"-->
+<!--                            style="border:1px solid black;text-align:center !important; height:60px !important;"-->
+<!--                            rowspan="2">-->
+<!--                            Date-->
+<!--                        </th>-->
+<!--                        <th name="th_date_end" align="center"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;padding-top:4px;"-->
+<!--                            colspan="2">-->
+<!--                            Time-->
+<!--                        </th>-->
+<!--                        <th name="th_duration" align="center"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;padding-top:4px;"-->
+<!--                            colspan="4">Hours-->
+<!--                        </th>-->
+<!--                        <th name="th_km"-->
+<!--                            style="border:1px solid black;text-align:center;padding-top:4px;height:60px !important;"-->
+<!--                            rowspan="2">KM-->
+<!--                        </th>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th name="th_date_end" align="center"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;padding-top:3px;">-->
+<!--                            From-->
+<!--                        </th>-->
+<!--                        <th name="th_duration" align="center"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;padding-top:3px;">To-->
+<!--                        </th>-->
+<!--                        <th name="th_work" align="center"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;padding-top:3px;">-->
+<!--                            Work-->
+<!--                        </th>-->
+<!--                        <th name="th_wait" align="center"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;padding-top:3px;">-->
+<!--                            Wait-->
+<!--                        </th>-->
+<!--                        <th name="th_travel" align="center"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;padding-top:3px;">-->
+<!--                            Travel-->
+<!--                        </th>-->
+<!--                        <th name="th_total" align="center"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;padding-top:3px;">-->
+<!--                            Total-->
+<!--                        </th>-->
+<!--                    </tr>-->
+<!--                </thead>-->
+<!--            </xpath>-->
+            <xpath expr="//t/t/t/t/div/div[2]/table[2]/tr[2]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="2"
+                        style="border:1px solid black;border-bottom:none;width: 300px !important;word-break: break-all;">
+                        <p style="padding-left:3px;float:left;font-weight:bold;">Name:</p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:الاسم
+                        </p>
+                    </td>
+                    <td name="td_engineer" colspan="2"
+                        style="border:1px solid black;border-bottom:none;width: 300px !important;word-break: break-all;">
+                        <p style="padding-left:3px;float:left;font-weight:bold;">Name:</p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:الاسم
+                        </p>
+                    </td>
+                    <td name="td_engineer" colspan="2"
+                        style="border:1px solid black;border-bottom:none;width: 300px !important;word-break: break-all;">
+                        <p style="padding-left:3px;float:left;font-weight:bold;">Name:</p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:الاسم
+                        </p>
+                    </td>
+                    <td name="td_engineer" colspan="2"
+                        style="border:1px solid black;border-bottom:none;width: 300px !important;word-break: break-all;">
+                        <div>
+                            <p style="padding-left:3px;float:left;font-weight:bold;font-weight:bold;">Name:</p>
+                            <p style="padding-left:3px;float:right;font-weight:bold;font-weight:bold;font-family:Arial,sans-serif;">
+                                :الاسم
+                            </p>
+                        </div>
+                        <div>
+                            <t t-if="o.engineer">
+                                <p t-esc="' '.join(o.engineer.name.split()[:2])"
+                                   style="margin-top: 40px; font-size:  16px; text-align: center; width: 100%;"/>
+                            </t>
+                        </div>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="//t/t/t/t/div/div[2]/table[2]/tr[3]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="2"
+                        style="border-right:1px solid black;border-left:1px solid black; border-top:none;width: 300px !important;word-break: break-all;height:65px;">
+                        <p style="padding-left:3px;float:left;font-weight:bold;">Date:</p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">
+                            :التاريخ
+                        </p>
+                    </td>
+                    <td name="td_engineer" colspan="2"
+                        style="border-right:1px solid black;border-left:1px solid black; border-top:none;width: 300px !important;word-break: break-all;height:65px;">
+                        <p style="padding-left:3px;float:left;font-weight:bold;">Date:</p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">
+                            :التاريخ
+                        </p>
+                    </td>
+                    <td name="td_engineer" colspan="2"
+                        style="border-right:1px solid black;border-left:1px solid black; border-top:none;width: 300px !important;word-break: break-all;height:65px;">
+                        <p style="padding-left:3px;float:left;font-weight:bold;">Date:</p>
+                        <p style="padding-left:3px;padding-top:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">
+                            :التاريخ
+                        </p>
+                    </td>
+                    <td name="td_engineer" colspan="2"
+                        style="border-right:1px solid black; border-left:1px solid black;border-top:none;height:65px;width: 300px !important;word-break: break-all;">
+                        <p style="padding-left:3px;float:left;font-weight:bold;">Date:</p>
+                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">
+                            :التاريخ
+                        </p>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="//t/t/t/t/div/div[2]/table[2]/tr[1]" position="replace">
+                <tr>
+                    <td colspan="8" style="border:1px solid black;">
+                        <div>
+                            <div style="font-weight:bold;">Notes:</div>
+                            <div style="float:right;font-weight:bold;font-family:Arial,sans-serif;width: 270px;margin-top: -20px;margin-right:-208px;">
+                                :الملاحظات
+                            </div>
+                        </div>
+                        <br/>
+                        <div>
+                            <div style="padding-left:5px;padding-right:5px;">
+                                <span style="max-width: 550px;" t-field="o.note"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="//t/t/t/t/div/div[2]/table[2]/tr[4]" position="replace">
+                <tr>
+                    <td name="td_engineer" colspan="2"
+                        style="border-right:1px solid black;border-left:1px solid black;border-bottom:1px solid black;border-top:none;height: 20px !important;width: 300px !important;font-family:Arial,sans-serif;">
+                        <t t-if="o.template_id.kimadia_template">
+                            <span t-field="o.template_id.sign_of_baneficiary"/>
+                        </t>
+                        <t t-else="else">
+                            <p style="padding-left:3px;text-align:center;font-weight:bold;font-family:Arial,sans-serif;">
+                                <span t-field="o.template_id.sign_of_baneficiary"/>
+                            </p>
+                        </t>
+                    </td>
+                    <td name="td_engineer" colspan="2"
+                        style="border-right:1px solid black; border-left:1px solid black;border-bottom:1px solid black;border-top:none;height: 20px !important;width: 300px !important;">
+                        <p style="padding-left:3px;text-align:center;font-weight:bold;font-family:Arial,sans-serif;">
+                            <span t-field="o.template_id.sign_of_maintenance_administrator"/>
+                        </p>
+                    </td>
+                    <td name="td_engineer" colspan="2"
+                        style="border-right:1px solid black; border-left:1px solid black;border-top:none;height: 20px !important;border-bottom:1px solid black;width: 300px !important;">
+                        <p style="padding-left:3px;text-align:center;font-weight:bold;font-family:Arial,sans-serif;">
+                            <span t-field="o.template_id.sign_of_device_operator"/>
+                        </p>
+                    </td>
+                    <td name="td_engineer" colspan="2"
+                        style="border-right:1px solid black; border-left:1px solid black;border-top:none;border-bottom:1px solid black;height: 20px !important;width: 300px !important;">
+                        <p style="padding-left:3px;text-align:center;font-weight:bold;font-family:Arial,sans-serif;">
+                            <span t-field="o.template_id.sign_of_agent"/>
+                        </p>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="/t/t/t/t/div[1]/div[1]/div[3]" position="replace">
+                <div class="col-4">
+                    <t t-if="o.template_id.logo">
+                        <img t-att-src="image_data_uri(o.template_id.logo)" style="max-width:150px;max-height:80px;"/>
+                    </t>
+                </div>
+            </xpath>
+            <xpath expr="//t/t/t/t/div/div[2]/table[2]//t[@t-if='len(o.service_report_time_lines)==0' or @t-if='len(o.service_report_time_lines)==1' or @t-else]" position="replace">
+                <t t-if="len(o.service_report_time_lines)==0">
+                    <tr>
+                        <td name="td_date"
+                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                        </td>
+                        <td name="th_from"
+                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                        </td>
+                        <td name="th_to"
+                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                        </td>
+                        <td name="th_work"
+                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                        </td>
+                        <td name="th_wait"
+                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                        </td>
+                        <td name="th_travel"
+                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                        </td>
+                        <td name="th_total"
+                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;min-height:50px !important;max-height:150px !important;overflow: hidden;height:150px;">
+                        </td>
+                        <td name="th_km"
+                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;min-height:50px !important;max-height:150px !important;overflow: hidden;height:150px;">
+                        </td>
+                    </tr>
+                </t>
+                <t t-if="len(o.service_report_time_lines)==1">
+                    <t t-foreach="o.service_report_time_lines" t-as="timeline">
+                        <tr>
+                            <td name="td_date"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                                <p t-field="timeline.date"/>
+                            </td>
+                            <td name="th_from"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                                <span align="center" t-field="timeline.time_from"/>
+                            </td>
+                            <td name="th_to"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                                <span align="center" t-field="timeline.time_to"/>
+                            </td>
+                            <td name="th_work"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                                <span align="center" t-field="timeline.work"/>
+                            </td>
+                            <td name="th_wait"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                                <span align="center" t-field="timeline.wait"/>
+                            </td>
+                            <td name="th_travel"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;">
+                                <span align="center" t-field="timeline.travel"/>
+                            </td>
+                            <td name="th_total"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;min-height:50px !important;max-height:150px !important;overflow: hidden;height:150px;">
+                                <span align="center" t-field="timeline.total"/>
+                            </td>
+                            <td name="th_km"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;min-height:50px !important;max-height:150px !important;overflow: hidden;height:150px;">
+                                <span align="center" t-field="timeline.distance"/>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+                <t t-else="">
+                    <t t-foreach="o.service_report_time_lines" t-as="timeline">
+                        <tr>
+                            <td name="td_date"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;">
+                                <p t-field="timeline.date"/>
+                            </td>
+                            <td name="th_from"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;">
+                                <span align="center" t-field="timeline.time_from"/>
+                            </td>
+                            <td name="th_to"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;">
+                                <span align="center" t-field="timeline.time_to"/>
+                            </td>
+                            <td name="th_work"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;">
+                                <span align="center" t-field="timeline.work"/>
+                            </td>
+                            <td name="th_wait"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;;">
+                                <span align="center" t-field="timeline.wait"/>
+                            </td>
+                            <td name="th_travel"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;">
+                                <span align="center" t-field="timeline.travel"/>
+                            </td>
+                            <td name="th_total"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;min-height:50px !important;max-height:150px !important;overflow: hidden;">
+                                <span align="center" t-field="timeline.total"/>
+                            </td>
+                            <td name="th_km"
+                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;min-height:50px !important;max-height:150px !important;height:50px !important;overflow: hidden;">
+                                <span align="center" t-field="timeline.distance"/>
+                            </td>
+                        </tr>
+                    </t>
+                </t>
+            </xpath>
+
+        </template>
+        <template id="service_report_template_inherit_1" inherit_id="custom_service_reports.service_report_template_inherit">
+<!--            For removing the engineer name and change the position of job number-->
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[1]/td[2]" position="replace">
+                <td name="td_engineer" style="border:1px solid black;" width="50%" colspan="3" height="75px;">
+                    <table class="remove-border" style="border-collapse: collapse; width: 100%;">
+                        <tr>
+                            <td align="left" style="font-weight:bold;">Job No:</td>
+                            <td align="center">
+                                <span t-field="o.job_number"/>
+                            </td>
+                            <td align="right" style="font-weight:bold;font-family:Arial,sans-serif;">:رقم الصيانه</td>
+                        </tr>
+                    </table>
+                </td>
+            </xpath>
+            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[1]/td[1]" position="replace">
+                <td name="td_engineer" style="border:1px solid black;" width="50%" colspan="3">
+                    <table class="remove-border" style="border-collapse: collapse; width: 100%;">
+                        <tr>
+                            <td align="left" style="font-weight:bold;font-family:Arial,sans-serif;">Project No:</td>
+                            <td align="center">
+                                <span t-field="o.contract.number"/>
+                                <span>-</span>
+                                <span t-field="o.contract.iq"/>
+                            </td>
+                            <td align="right" style="font-weight:bold;font-family:Arial,sans-serif;">:رقم العقد</td>
+                        </tr>
+                    </table>
+                </td>
+            </xpath>
+<!--            To add a fixed name for agent-->
+            <xpath expr="//t/t/t/t/div/div[2]/table[2]/tr[2]/td[4]/div[2]" position="replace">
+     <div style="display:flex; flex-wrap:wrap;">
+        <p style="margin-top: 40px; font-size:  16px; text-align: center; width: 100%;">
+            Ali Khaleel Ibrahim
+        </p>
+    </div>
+</xpath>
+<!--            To set the signature of the agent-->
+           <xpath expr="//t/t/t/t/div/div[2]/table[2]/tr[4]/td[4]" position="replace">
+    <td name="td_engineer" colspan="2"
+        style="border-right:1px solid black; border-left:1px solid black;border-top:none;border-bottom:1px solid black;height: 20px !important;width: 300px !important;">
+        <image style="max-height: 82px;margin-left: 47px;position:absolute;" src="/custom_service_reports/static/src/images/sign.png" />
+        <p style="padding-left:3px;text-align:center;font-weight:bold;font-family:Arial,sans-serif;">
+            <span t-field="o.template_id.sign_of_agent"/>
+        </p>
+    </td>
+</xpath>
+        </template>
+<!--        <template id="service_report_template_inherit_2" inherit_id="custom_service_reports.service_report_template_inherit">-->
+<!--            <xpath expr="//t/t/t/t/div/div[2]/table[2]" position="replace">-->
+<!--                <t t-if="len(o.service_report_time_lines)==0">-->
+<!--                    <tr>-->
+<!--                        <td name="td_date"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;"-->
+<!--                            colspan="2">-->
+<!--                        </td>-->
+<!--                        <td name="th_km"-->
+<!--                            style="border:1px solid black;margin:0px;padding:0px;text-align:center;min-height:50px !important;max-height:150px !important;overflow: hidden;height:150px;"-->
+<!--                            colspan="2">-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </t>-->
+<!--                <t t-if="len(o.service_report_time_lines)==1">-->
+<!--                    <t t-foreach="o.service_report_time_lines" t-as="timeline">-->
+<!--                        <tr>-->
+<!--                            <td name="td_date"-->
+<!--                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;height:150px;"-->
+<!--                                colspan="2">-->
+<!--                                <p t-field="timeline.date"/>-->
+<!--                            </td>-->
+<!--                            <td name="th_km"-->
+<!--                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;min-height:50px !important;max-height:150px !important;overflow: hidden;height:150px;"-->
+<!--                                colspan="2">-->
+<!--                                <span align="center" t-field="timeline.distance"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </t>-->
+<!--                </t>-->
+<!--                <t t-else="">-->
+<!--                    <t t-foreach="o.service_report_time_lines" t-as="timeline">-->
+<!--                        <tr>-->
+<!--                            <td name="td_date"-->
+<!--                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;max-height:150px !important;min-height:50px !important;overflow: hidden;"-->
+<!--                                colspan="2">-->
+<!--                                <p t-field="timeline.date"/>-->
+<!--                            </td>-->
+<!--                            <td name="th_km"-->
+<!--                                style="border:1px solid black;margin:0px;padding:0px;text-align:center;min-height:50px !important;max-height:150px !important;height:50px !important;overflow: hidden;"-->
+<!--                                colspan="2">-->
+<!--                                <span align="center" t-field="timeline.distance"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </t>-->
+<!--                </t>-->
+<!--            </xpath>-->
+<!--            <xpath expr="/t/t/t/t/div/div[2]/table[2]/tr[2]" position="replace">-->
+<!--                <tr>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border:1px solid black;border-bottom:none;width: 300px !important;word-break: break-all;">-->
+<!--                        <p style="padding-left:3px;float:left;font-weight:bold;">Name:</p>-->
+<!--                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:الاسم-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border:1px solid black;border-bottom:none;width: 300px !important;word-break: break-all;">-->
+<!--                        <p style="padding-left:3px;float:left;font-weight:bold;">Name:</p>-->
+<!--                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:الاسم-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border:1px solid black;border-bottom:none;width: 300px !important;word-break: break-all;">-->
+<!--                        <p style="padding-left:3px;float:left;font-weight:bold;">Name:</p>-->
+<!--                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:الاسم-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border:1px solid black;border-bottom:none;width: 300px !important;word-break: break-all;">-->
+<!--                        <div>-->
+<!--                            <p style="padding-left:3px;float:left;font-weight:bold;font-weight:bold;">Name:</p>-->
+<!--                            <p style="padding-left:3px;float:right;font-weight:bold;font-weight:bold;font-family:Arial,sans-serif;">-->
+<!--                                :الاسم-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <t t-if="o.engineer">-->
+<!--                                <p t-esc="' '.join(o.engineer.name.split()[:2])"-->
+<!--                                   style="margin-top: 40px; font-size:  16px; text-align: center; width: 100%;"/>-->
+<!--                            </t>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//t/t/t/t/div/div[2]/table[2]/tr[3]" position="replace">-->
+<!--                <tr>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border-right:1px solid black;border-left:1px solid black; border-top:none;width: 300px !important;word-break: break-all;height:65px;">-->
+<!--                        <p style="padding-left:3px;float:left;font-weight:bold;">Date:</p>-->
+<!--                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">-->
+<!--                            :التاريخ-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border-right:1px solid black;border-left:1px solid black; border-top:none;width: 300px !important;word-break: break-all;height:65px;">-->
+<!--                        <p style="padding-left:3px;float:left;font-weight:bold;">Date:</p>-->
+<!--                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">-->
+<!--                            :التاريخ-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border-right:1px solid black;border-left:1px solid black; border-top:none;width: 300px !important;word-break: break-all;height:65px;">-->
+<!--                        <p style="padding-left:3px;float:left;font-weight:bold;">Date:</p>-->
+<!--                        <p style="padding-left:3px;padding-top:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">-->
+<!--                            :التاريخ-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border-right:1px solid black; border-left:1px solid black;border-top:none;height:65px;width: 300px !important;word-break: break-all;">-->
+<!--                        <p style="padding-left:3px;float:left;font-weight:bold;">Date:</p>-->
+<!--                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">-->
+<!--                            :التاريخ-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </xpath>-->
+<!--            <xpath expr="/t/t/t/t/div/div/table[2]/tbody/tr[4]" position="replace">-->
+<!--                <tr>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border-right:1px solid black;border-left:1px solid black;border-bottom:1px solid black;border-top:none;height: 20px !important;width: 300px !important;font-family:Arial,sans-serif;">-->
+<!--                        <t t-if="o.template_id.kimadia_template">-->
+<!--                            <span t-field="o.template_id.sign_of_baneficiary"/>-->
+<!--                        </t>-->
+<!--                        <t t-else="else">-->
+<!--                            <p style="padding-left:3px;text-align:center;font-weight:bold;font-family:Arial,sans-serif;">-->
+<!--                                <span t-field="o.template_id.sign_of_baneficiary"/>-->
+<!--                            </p>-->
+<!--                        </t>-->
+<!--                    </td>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border-right:1px solid black; border-left:1px solid black;border-bottom:1px solid black;border-top:none;height: 20px !important;width: 300px !important;">-->
+<!--                        <p style="padding-left:3px;text-align:center;font-weight:bold;font-family:Arial,sans-serif;">-->
+<!--                            <span t-field="o.template_id.sign_of_maintenance_administrator"/>-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border-right:1px solid black; border-left:1px solid black;border-top:none;height: 20px !important;border-bottom:1px solid black;width: 300px !important;">-->
+<!--                        <p style="padding-left:3px;text-align:center;font-weight:bold;font-family:Arial,sans-serif;">-->
+<!--                            <span t-field="o.template_id.sign_of_device_operator"/>-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                    <td name="td_engineer"-->
+<!--                        style="border-right:1px solid black; border-left:1px solid black;border-top:none;border-bottom:1px solid black;height: 20px !important;width: 300px !important;">-->
+<!--                        <p style="padding-left:3px;text-align:center;font-weight:bold;font-family:Arial,sans-serif;">-->
+<!--                            <span t-field="o.template_id.sign_of_agent"/>-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </xpath>-->
+<!--&lt;!&ndash;            end of the code for remove the unwanted columns in the time and hours.&ndash;&gt;-->
+<!--&lt;!&ndash;            Code for change the style and funtion for the task completion checkbox according to the vale in the form&ndash;&gt;-->
+<!--            <xpath expr="/t/t/t/t/div/div/table[1]/tr[10]" position="replace">-->
+<!--                <tr>-->
+<!--                    <td name="td_engineer" colspan="2" height="40px" style="border:1px solid black;border-right:none;">-->
+<!--                        <p style="padding-left:3px;float:left;font-weight:bold;">Repair Completed:</p>-->
+<!--                    </td>-->
+<!--                    <td style="border:1px solid black;border-right:none;border-left:none;">-->
+<!--                        <t t-if="o.task_complete == 'Yes'"><i class="fa fa-check-square"/></t>-->
+<!--                        <t t-else="">-->
+<!--                            <i class="fa fa-square-o"/>-->
+<!--                        </t>-->
+<!--                        <label style="font-weight:bold;padding-left:5px;" for="yes">-->
+<!--                            Yes-->
+<!--                        </label>-->
+<!--                    </td>-->
+<!--                    <td style="border:1px solid black;border-right:none;border-left:none;text-align:right;">-->
+<!--                        <t t-if="o.task_complete == 'No'"><i class="fa fa-check-square"/></t>-->
+<!--                        <t t-else="">-->
+<!--                            <i class="fa fa-square-o"/>-->
+<!--                        </t>-->
+<!--                        <label style="font-weight:bold;padding-left:5px;" for="no">-->
+<!--                            No-->
+<!--                        </label>-->
+<!--                    </td>-->
+<!--                    <td colspan="2" style="border:1px solid black;border-left:none;">-->
+<!--                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:اتمام-->
+<!--                            العمل-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </xpath>-->
+<!--        </template>-->
+
+<!--        <template id="service_report_template_inherit_3" inherit_id="custom_service_reports.service_report_template_inherit">-->
+<!--            <xpath expr="/t/t/t/t/div/div[2]/table[1]/tr[9]" position="replace">-->
+<!--                <tr style="height:350px; !important;">-->
+<!--                    <td colspan="6" style="border:1px solid black;padding:3px;">-->
+<!--                        <div style="min-height:350px;padding:3px;">-->
+<!--                            <div>-->
+<!--                                <div style="font-weight:bold;">Work Done:</div>-->
+<!--                                <div style="float:right;font-weight:bold;font-family:Arial,sans-serif;width: 270px;margin-top: -20px;margin-right:-90px;">-->
+<!--                                    : تفاصيل العمل والمواد المستخدمه-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <br/>-->
+<!--                            <div>-->
+<!--                                <div style="padding-left:5px;padding-right:5px;">-->
+<!--                                    <span style="max-width: 550px;" t-field="o.done_desc"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </xpath>-->
+<!--&lt;!&ndash;            <xpath expr="/t/t/t/t/div/div/table[2]/thead" position="replace">&ndash;&gt;-->
+<!--&lt;!&ndash;                <thead>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <th name="th_date"&ndash;&gt;-->
+<!--&lt;!&ndash;                            style="height:60px !important;"&ndash;&gt;-->
+<!--&lt;!&ndash;                            rowspan="2">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <p>Date: <t t-if="o.service_report_time_lines"><span t-field="o.service_report_time_lines[0].date"/></t></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </th>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                </thead>&ndash;&gt;-->
+<!--&lt;!&ndash;            </xpath>&ndash;&gt;-->
+
+<!--            <xpath expr="//t/t/t/t/div/div[2]/table[2]//t[@t-if='len(o.service_report_time_lines)==0' or @t-if='len(o.service_report_time_lines)==1' or @t-else]" position="replace">-->
+<!--</xpath>-->
+
+<!--            <xpath expr="//t/t/t/t/div/div[2]/table[2]/tr[1]" position="replace">-->
+<!--                <tr>-->
+<!--                    <td colspan="8" style="border:1px solid black;">-->
+<!--                        <div style="min-height:150px; padding:3px;">-->
+<!--                            <div>-->
+<!--                                <div style="font-weight:bold;">Notes:</div>-->
+<!--                                <div style="float:right;font-weight:bold;font-family:Arial,sans-serif;width: 270px;margin-top: -20px;margin-right:-212px;">-->
+<!--                                    :الملاحظات-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <br/>-->
+<!--                            <div>-->
+<!--                                <div style="padding-left:5px;padding-right:5px;">-->
+<!--                                    <span style="max-width: 550px;" t-field="o.note"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </xpath>-->
+<!--            <xpath expr="/t/t/t/t/div/div/table[1]/tr[10]" position="replace">-->
+<!--                <tr>-->
+<!--                    <td name="td_engineer" colspan="2" height="40px" style="border:1px solid black;border-right:none;">-->
+<!--                        <p style="padding-left:3px;float:left;font-weight:bold;">Repair Completed:</p>-->
+<!--                    </td>-->
+<!--                    <td style="border:1px solid black;border-right:none;border-left:none;">-->
+<!--                        <t t-if="o.task_complete == 'Yes'"><i class="fa fa-check-square"/></t>-->
+<!--                        <t t-else="">-->
+<!--                            <i class="fa fa-square-o"/>-->
+<!--                        </t>-->
+<!--                        <label style="font-weight:bold;padding-left:5px;" for="yes">-->
+<!--                            Yes-->
+<!--                        </label>-->
+<!--                    </td>-->
+<!--                    <td style="border:1px solid black;border-right:none;border-left:none;text-align:right;">-->
+<!--                        <t t-if="o.task_complete == 'No'"><i class="fa fa-check-square"/></t>-->
+<!--                        <t t-else="">-->
+<!--                            <i class="fa fa-square-o"/>-->
+<!--                        </t>-->
+<!--                        <label style="font-weight:bold;padding-left:5px;" for="no">-->
+<!--                            No-->
+<!--                        </label>-->
+<!--                    </td>-->
+<!--                    <td colspan="2" style="border:1px solid black;border-left:none;">-->
+<!--                        <p style="padding-left:3px;float:right;font-weight:bold;font-family:Arial,sans-serif;">:اتمام-->
+<!--                            العمل-->
+<!--                        </p>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </xpath>-->
+<!--        </template>-->
+    </data>
+</odoo>

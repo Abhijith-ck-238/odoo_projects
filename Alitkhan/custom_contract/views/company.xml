@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="company_tree_view" model="ir.ui.view">
+            <field name="name">company.company.tree.view</field>
+            <field name="model">company.company</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="company_form_view" model="ir.ui.view">
+            <field name="name">company.company.form.view</field>
+            <field name="model">company.company</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="company_action_window" model="ir.actions.act_window">
+            <field name="name">Company</field>
+            <field name="res_model">company.company</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Company
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Company" id="company_company"
+                  parent="contracts.menu_settings"
+                  action="company_action_window"/>
+    </data>
+</odoo>

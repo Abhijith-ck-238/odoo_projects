@@ -1,0 +1,17 @@
+<odoo>
+    <record id="logistics_category" model="ir.module.category">
+      <field name="name">Logistics</field>
+    </record>
+
+
+    <record id="logistics_user" model="res.groups">
+      <field name="name">Logistics User</field>
+      <field name="category_id" ref="logistics.logistics_category"/>
+    </record>
+
+    <record id="logistics_manager" model="res.groups">
+      <field name="name">Logistics Manager</field>
+      <field name="category_id" ref="logistics.logistics_category"/>
+      <field name="implied_ids" eval="[(4, ref('logistics.logistics_user') )]"/>
+    </record>
+</odoo>

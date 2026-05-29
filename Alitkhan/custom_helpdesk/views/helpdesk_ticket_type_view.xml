@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <record id="helpdesk_ticket_type_view_form" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.type.form</field>
+            <field name="model">helpdesk.ticket.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="allowed_fs_stages"
+                                       widget="many2many_tags"/>
+                                <field name="show_contract_status"/>
+                                <field name="exception_id"/>
+                                <field name="subticket_exception_id"/>
+                            </group>
+                            <group>
+                                <field name="sequence"
+                                       groups="base.group_no_one"/>
+                                <field name="require_service_report"/>
+                                <field name="is_to_hide_other_stages"/>
+                                <field name="is_reported_by_required"/>
+                                <field name="bad_use"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="custom_helpdesk_ticket_type_tree" model="ir.ui.view">
+            <field name="name">custom.helpdesk.ticket.type.tree</field>
+            <field name="model">helpdesk.ticket.type</field>
+            <field name="inherit_id"
+                   ref="itkan_helpdesk.helpdesk_ticket_type_view_list"/>
+            <field name="arch" type="xml">
+                <field name="require_service_report" position="after">
+                    <field name="is_show_product_cart"/>
+                    <field name="can_edit_task_range"/>
+                    <field name="allowed_fs_stages" widget="many2many_tags"/>
+                    <field name="is_to_hide_other_stages"/>
+                    <field name="is_reported_by_required"/>
+                    <field name="show_contract_status"/>
+                    <field name="exception_id"/>
+                    <field name="subticket_exception_id"/>
+                    <field name="bad_use"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

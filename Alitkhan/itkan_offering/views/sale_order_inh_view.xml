@@ -1,0 +1,12 @@
+<odoo>
+        <record id="offering_sale_inh_form" model="ir.ui.view">
+            <field name="name">offering_sale_inh.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="related_offering_record"/>
+                </xpath>
+            </field>
+        </record>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_training_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.training</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="35"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="training" string="Training" name="training">
+                        <block title="Notifcation">
+                            <setting help="Send reminder to the training office before due date">
+                                <field name="send_reminder"/>
+                                <div class="content-group">
+                                        <div class="mt16" invisible="send_reminder == False">
+                                            <span>Notify user <field name="days_to_remind" class="oe_inline"/> days before the due date. </span>
+                                        </div>
+                                    </div>
+                            </setting>
+                        </block>
+                        <block title="Budget">
+                            <setting help=" Budget approvers can be notified about the Budget Approval. ">
+                                <field name="budget_approvers"
+                                           class="oe_inline"
+                                           widget="many2many_tags"/>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_training_configuration" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+<!--            <field name="view_id" ref="res_config_settings_training_view_form"/>-->
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'training', 'bin_size': False}</field>
+        </record>
+
+
+        <menuitem id="menu_training_config" name="Settings" parent="custom_training.training_configuration"
+            sequence="0" action="action_training_configuration"/>
+    </data>
+</odoo>

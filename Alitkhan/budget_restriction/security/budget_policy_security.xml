@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Accounting Team rule - full access to budget policies -->
+    <record id="budget_policy_rule_accounting" model="ir.rule">
+        <field name="name">Budget Policy - Accounting Team Access</field>
+        <field name="model_id" ref="model_hr_expense_budget_policy"/>
+        <field name="groups" eval="[(4, ref('account.group_account_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <!-- Accounting Team rule - full access to budget consumption -->
+    <record id="budget_consumption_rule_accounting" model="ir.rule">
+        <field name="name">Budget Consumption - Accounting Team Access</field>
+        <field name="model_id" ref="model_hr_expense_budget_consumption"/>
+        <field name="groups" eval="[(4, ref('account.group_account_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

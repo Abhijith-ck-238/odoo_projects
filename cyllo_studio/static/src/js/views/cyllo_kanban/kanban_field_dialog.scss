@@ -1,0 +1,115 @@
+.kanban_field_dialog {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    border: 1px solid #e1e1e1;
+}
+
+.kanban_field_dialog .form-check {
+    margin-bottom: 15px;
+}
+
+.kanban_field_dialog .form-check-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.kanban_field_dialog .btn-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
+    margin-left: 10px;
+}
+
+.kanban_field_dialog .btn-close:hover {
+    color: #333;
+}
+
+.kanban_field_dialog .btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    padding: 8px 15px;
+    margin-right: 10px;
+}
+
+.kanban_field_dialog .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+    border-radius: 5px;
+    padding: 8px 15px;
+}
+
+.kanban_field_dialog .custom-dropdown {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.kanban_field_dialog .o-autocomplete--input {
+    width: calc(100% - 30px);
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.kanban_field_dialog .selected-text {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.kanban_field_dialog .cy-dropdown-icon {
+    color: #6c757d;
+    cursor: pointer;
+}
+
+.kanban_field_dialog .o-autocomplete--dropdown-menu {
+    position: absolute;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+.kanban_field_dialog .o-autocomplete--dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.kanban_field_dialog .o-autocomplete--dropdown-item:hover {
+    background-color: #f1f1f1;
+}
+
+.kanban_field_dialog .no-results {
+    padding: 10px;
+    color: #888;
+    text-align: center;
+}
+
+.kanban_field_daialog .form-check-label{
+        margin-left: 5%;
+        margin-top: 4%;
+    }
+.cy-studio-custom-dropdown-dialog-kanban {
+    margin-top: -8%;
+    margin-left: 5%;
+
+    .custom-dropdown.o-autocomplete .o-autocomplete--dropdown-menu{
+        left: 0px !important;
+        min-width: 100% !important;
+        top:40% !important;
+        width:100% !important;
+        max-height: 170% !important;
+    }
+}

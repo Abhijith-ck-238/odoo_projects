@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail_act_leave_request_refuse" model="mail.activity.type">
+            <field name="name">Refuse</field>
+            <field name="icon">fa-sun-o</field>
+            <field name="res_model">hr.leave</field>
+        </record>
+        <record id="mail_act_leave_request_approve_time_off_officer" model="mail.activity.type">
+            <field name="name">Approval - Time Off Officer </field>
+            <field name="icon">fa-sun-o</field>
+                       <field name="res_model">hr.leave</field>
+
+        </record>
+        <record id="mail_act_leave_request_approve_second_manager" model="mail.activity.type">
+            <field name="name">Approval - Second Manager Approval </field>
+            <field name="icon">fa-sun-o</field>
+                        <field name="res_model">hr.leave</field>
+
+        </record>
+             <record id="mail_act_leave_request_approved" model="mail.activity.type">
+            <field name="name">Approved</field>
+            <field name="icon">fa-sun-o</field>
+                             <field name="res_model">hr.leave</field>
+
+        </record>
+    </data>
+</odoo>

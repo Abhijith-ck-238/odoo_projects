@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.module.category" id="module_dx_offering">
+        <field name="name">DX Auto Offering</field>
+        <field name="description">Manage the access rights of DX auto offering module.</field>
+        <field name="sequence">45</field>
+    </record>
+
+    <record id="group_dx_offering_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_dx_offering"/>
+    </record>
+
+    <record id="group_dx_offering_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_dx_offering"/>
+        <field name="implied_ids" eval="[(4, ref('group_dx_offering_user'))]"/>
+    </record>
+</odoo>

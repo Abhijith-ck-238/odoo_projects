@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="survey_with_sum" inherit_id="survey.survey_fill_form_in_progress" name="Custom Survey Sum">
+        <xpath expr="//div[hasclass('o_survey_form_content_data')]" position="after">
+            <div class="sum-container"
+                 style="background-color:#d7cdcd;width:100%;padding:20px;margin-bottom:20px;">
+                <h2 style="text-align: center;">
+                    Sum: <span class="sum-value">0</span>
+                </h2>
+            </div>
+        </xpath>
+    </template>
+</odoo>

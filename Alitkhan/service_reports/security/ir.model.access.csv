@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_service_report,service.report,model_service_report,base.group_user,1,1,1,1
+access_service_report_timeline,service.report.timeline,model_service_report_timeline,base.group_user,1,1,1,1
+access_service_report_company,service.report.company,model_service_report_company,base.group_user,1,1,1,1
+
+
+
+
+
+

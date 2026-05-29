@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="stock_picking_view_extend" model="ir.ui.view">
+            <field name="name">stock.picking.related_contract</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id"
+                           filter_domain="[('partner_id', 'child_of', self)]"/>
+                </xpath>
+            </field>
+        </record>
+            <!--View created to fix xpath issue in studio view in opening studio in stock.picking  -->
+            <record id="stock_picking_view_form" model="ir.ui.view">
+                <field name="name">stock.picking.view.form.inherit.module</field>
+                <field name="model">stock.picking</field>
+                <field name="inherit_id" ref="stock.view_picking_form"/>
+                <field name="priority">99</field>
+                <field name="arch" type="xml">
+                    <data>
+                        <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='picking_type_id']"
+                               position="attributes">
+                            <attribute name="readonly">state == False</attribute>
+                        </xpath>
+                        <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='location_id']"
+                               position="attributes">
+                            <attribute name="invisible">picking_type_code == 'incoming'</attribute>
+                            <attribute name="readonly">state == 'done'</attribute>
+                        </xpath>
+                        <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='location_dest_id']"
+                               position="attributes">
+                            <attribute name="invisible">picking_type_code == 'outgoing'</attribute>
+                            <attribute name="readonly">state == False</attribute>
+                        </xpath>
+                        <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='location_dest_id']"
+                               position="after">
+                            <field name="x_studio_related_iq" string="Related IQ"/>
+                            <field name="x_studio_end_user" string="Purchase IQ"/>
+                        </xpath>
+                        <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='origin']" position="after">
+                            <field name="x_studio_so"/>
+                            <field name="x_studio_sales_person"/>
+                        </xpath>
+                        <xpath expr="//field[@name='move_ids_without_package']" position="attributes">
+                            <attribute name="mode">list</attribute>
+                        </xpath>
+<!--                        This Customisation done for adding the detailed operation page in delivery and receipt -->
+                        <xpath expr="//page[@name='operations']" position="before">
+                            <page string="Detailed Operations" name="detailed_operations">
+                                <field name="move_line_ids">
+                                    <list string="Move Lines" create="0" default_order="id desc" duplicate="0">
+                                        <field name="location_usage" column_invisible="True"/>
+                                        <field name="location_dest_usage" column_invisible="True"/>
+                                        <field name="date"/>
+                                        <field name="reference" string="Reference" column_invisible="true"/>
+                                        <field name="product_id"/>
+                                        <field name="package_id" optional="hide" groups="stock.group_tracking_lot"/>
+                                        <field name="result_package_id" optional="hide"
+                                               groups="stock.group_tracking_lot"/>
+                                        <field name="location_id"/>
+                                        <field name="location_dest_id"/>
+                                        <field name="lot_id" optional="show" groups="stock.group_production_lot"/>
+                                        <field name="picking_partner_id" optional="hide"/>
+                                        <field name="company_id" optional="hide" groups="base.group_multi_company"
+                                               force_save="1"/>
+                                        <field name="quantity" string="Quantity"
+                                               decoration-danger="(location_usage in ('internal','transit')) and (location_dest_usage not in ('internal','transit'))"
+                                               decoration-success="(location_usage not in ('internal','transit')) and (location_dest_usage in ('internal','transit'))"/>
+                                        <field name="qty_done"/>
+                                        <field name="product_uom_id" options="{'no_open': True, 'no_create': True}"
+                                               string="Unit" groups="uom.group_uom"/>
+                                        <field name="state" widget="badge" optional="show"
+                                               decoration-danger="state=='cancel'" decoration-info="state== 'assigned'"
+                                               decoration-muted="state == 'draft'" decoration-success="state == 'done'"
+                                               decoration-warning="state not in ('draft','cancel','done','assigned')"/>
+                                        <field name="create_uid" string="Done By" widget="many2one_avatar_user"
+                                               optional="hide"/>
+                                    </list>
+
+                                </field>
+                            </page>
+                        </xpath>
+
+                    </data>
+                </field>
+            </record>
+
+
+        <record id="stock_valuation_layer_tree_for_wizard" model="ir.ui.view">
+            <field name="name">stock.valuation.layer.tree</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="arch" type="xml">
+                <list default_order="create_date desc, id desc" create="0"
+                      import="0" js_class="inventory_report_list">
+                    <field name="create_date" string="Date"/>
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="uom_id" groups="uom.group_uom"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="value" sum="Total Value"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <button type="object" icon="gtk-delete" name="unlink"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
+</odoo>

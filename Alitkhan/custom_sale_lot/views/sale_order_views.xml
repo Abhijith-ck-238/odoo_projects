@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <record id="view_order_tree_lot" model="ir.ui.view">
+        <field name="name">view.order.tree.lot</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="mai_sale_order_lot_selection.view_order_tree_lot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/form/group/group/field[@name='lot_id']" position="after">
+                <field name="available_lot_ids" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='lot_id']" position="after">
+                <field name="product_unreserved_qty" string="Available Qty"/>
+                <field name="use_date" string="Expiry Date"/>
+                <field name="available_lot_ids" column_invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='lot_id']" position="replace">
+                <field name="lot_id" domain="available_lot_ids" context="{'default_product_id': product_id}"
+                       groups="stock.group_production_lot"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form/group/group/field[@name='lot_id']" position="replace">
+                <field name="lot_id" domain="available_lot_ids" context="{'default_product_id': product_id}"
+                       groups="stock.group_production_lot"/>
+
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

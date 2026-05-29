@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="helpdesk_stage_form_itkan_helpdesk" model="ir.ui.view">
+            <field name="name">helpdesk.stage.form.itkan.helpdesk</field>
+            <field name="model">helpdesk.stage</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_stage_view_form"/>
+            <field name="arch" type="xml">
+<!--                <field name="is_close" position="replace"/>-->
+                <xpath expr="//sheet/group" position="inside">
+                    <group string="Stage Info">
+                        <field name="is_first"/>
+<!--                        <field name="is_close"/>-->
+                        <field name="cancelled_stage"/>
+                        <field name="finished_fsm_ticket_stage"/>
+                    </group>
+                    <group string="Configuration Table">
+                        <field name="must_be_within_contract"/>
+                        <field name="must_be_out_of_contract"/>
+                        <field name="auto_create_field_service"/>
+                        <field name="require_field_service"/>
+                        <field name="require_full_resource"/>
+                    </group>
+                    <group string="Stage Mangers">
+                        <field name="modality_stage"/>
+                        <field name="limited_users" widget="many2many_tags"/>
+                        <field name="send_notification"/>
+                        <field name="only_notification"/>
+                        <field name="only_valid_tickets"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="helpdesk_stage_tree_itkan" model="ir.ui.view">
+            <field name="name">helpdesk.stage.tree.itkan</field>
+            <field name="model">helpdesk.stage</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_stage_view_tree" />
+            <field name="arch" type="xml">
+                <field name="team_ids" position="after">
+                    <field name="require_field_service"/>
+                    <field name="auto_create_field_service"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

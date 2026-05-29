@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_set_compressed_product_name" model="ir.actions.server">
+            <field name="name">Set Compressed Product Name</field>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="code">records.set_compressed_product_name()</field>
+        </record>
+    </data>
+</odoo>

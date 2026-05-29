@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="resource_category_action" model="ir.actions.act_window">
+            <field name="name">Resource Category</field>
+            <field name="res_model">helpdedesk.resource.category</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem
+                id="resource_categ_menu"
+                name="Resource Categories"
+                action="resource_category_action"
+                parent="helpdesk.helpdesk_menu_config"
+        />
+
+    </data>
+</odoo>

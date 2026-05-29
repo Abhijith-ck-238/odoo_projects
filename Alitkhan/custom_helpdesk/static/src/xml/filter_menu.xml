@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PmScheduleMenu">
+        <div t-if="Object.keys(widget.fields).length !== 0 &amp;&amp; widget.items.length !== 0" role="separator" class="dropdown-divider o_generator_menu"/>
+            <button t-if="Object.keys(widget.fields).length !== 0" type="button"  class="dropdown-item o_pm_schedule_menu o_pm_schedule_filter"> PM Schedule </button>
+            <div id="collapseOne" class="dropdown-item" style="display:none;">
+                <div class="accordion-body">
+                    <input id="from_date" type="date" class="o_datepicker_input o_input datetimepicker-input" style="margin-bottom: 5px;"/>
+                    <br/>
+                    <input id="to_date" type="date" class="o_datepicker_input o_input datetimepicker-input" style="margin-bottom: 5px;"/>
+                    <br/>
+                    <button class="btn btn-primary me-2 o_pm_schedule_apply">Apply</button>
+                </div>
+            </div>
+    </t>
+</templates>

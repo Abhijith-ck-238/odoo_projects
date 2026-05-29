@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="approval_category_inh_form" model="ir.ui.view">
+            <field name="name">approval_category_inh.form</field>
+            <field name="model">approval.category</field>
+            <field name="inherit_id" ref="approvals.approval_category_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='approval_minimum']" position="after">
+                    <field name="carbon_copy_ids" widget="many2many_tags"/> 
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

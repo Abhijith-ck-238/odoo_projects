@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--    <record id="mail_template_budget_notification_1" model="mail.template">-->
+<!--        <field name="name">Budget Policy Notification</field>-->
+<!--        <field name="model_id" ref="budget_restriction.model_hr_expense_budget_policy"/>-->
+<!--        <field name="email_from">{{ctx.get('email_from')}}</field>-->
+<!--        <field name="email_to">{{ctx.get('email_to')}}</field>-->
+<!--        <field name="subject">Budget Policy Created: {{object.name}}</field>-->
+
+<!--        <field name="body_html" type="html">-->
+<!--            <div style="margin:0; padding:0;">-->
+
+<!--                <p>-->
+<!--                    Dear-->
+<!--                    <strong>-->
+<!--                        <t t-out="ctx.get('namee')"/>-->
+<!--                    </strong>-->
+<!--                    ,-->
+<!--                </p>-->
+
+<!--                <p>-->
+<!--                    <t t-out="ctx.get('message')"/>-->
+<!--                </p>-->
+
+<!--                <p style="margin:16px 0;">-->
+<!--                    <a style="background-color:#875a7b; padding:8px 16px; text-decoration:none; color:#fff; border-radius:5px;"-->
+<!--                       t-att-href="ctx.get('url')">-->
+<!--                        View Details-->
+<!--                    </a>-->
+<!--                </p>-->
+
+<!--                <p>Best regards,</p>-->
+
+<!--                <p>-->
+<!--                    <t t-out="ctx.get('company_name')"/>-->
+<!--                </p>-->
+
+<!--            </div>-->
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

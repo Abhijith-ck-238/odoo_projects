@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_itkan_project_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.itkan.project</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="35"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                        <app data-string="Itkan Project" string="Itkan Project" name="custom_itkan_project">
+                        <block title="Deadline Stage">
+                            <setting help="Move to stage if late (deadline is reached)">
+                                <field name="stage_id"/>
+                            </setting>
+                        </block>
+                    </app>
+<!--                    <div class="app_settings_block" data-string="Itkan Project" string="Itkan Project" data-key="custom_itkan_project" groups="custom_itkan_project.group_itkan_project_administrator">-->
+<!--                        <h2>Deadline Stage</h2>-->
+<!--                        <div class="row mt16 o_settings_container">-->
+<!--                            <div class="col-lg-6 col-12 o_setting_box" id="deadline_stage" title="Move to stage if late (deadline is reached)">-->
+<!--                                <div class="o_setting_left_pane"/>-->
+<!--                                <div class="o_setting_right_pane">-->
+<!--						            <label for="stage_id"/>-->
+<!--                                    <div class="text-muted">-->
+<!--                                        Move to stage if late (deadline is reached)-->
+<!--                                    </div>-->
+<!--                                    <div class="content-group">-->
+<!--                                        <div class="mt16">-->
+<!--                                            <field name="stage_id" class="oe_inline"/>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--					            </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_itkan_project_configuration" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_id" ref="res_config_settings_itkan_project_view_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'custom_itkan_project'}</field>
+        </record>
+
+        <menuitem id="menu_itkan_project_config" name="Settings" parent="menu_itkan_project_configuration"
+            sequence="0" action="action_itkan_project_configuration"/>
+    </data>
+</odoo>

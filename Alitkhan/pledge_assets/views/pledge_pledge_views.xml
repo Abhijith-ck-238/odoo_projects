@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="pledge_assets.form" model="ir.ui.view">
+        <field name="name">pledge_assets.form</field>
+        <field name="model">pledge.pledge</field>
+            <field name="priority" eval="10"/>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="confirm" type="object" string="Confirm" invisible="status != 'draft'" confirm="You will not be able to delete this record after confirmation"/>
+                    <button name="reset_draft" type="object" string="Reset to draft" invisible="status != 'confirmed'" confirm="Are you sure you want to reset this record to draft"/>
+                    <button name="deduct" type="object" string="deduct" invisible="status in ('draft', 'cleared')" confirm="You will be redirected to create a new pledge"/>
+                    <button name="clear_lc" type="object" string="Clear" invisible="status in ('draft', 'cleared')" confirm="Are you sure you want to clear this record"/>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,confirmed,expired,cleared"/>
+                </header>
+                <sheet>
+                    <h3><field name="name" placeholder="Name"/></h3>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="status != 'draft'"/>
+                            <field name="lca_type" readonly="status != 'draft'"/>
+                            <field name="lc_type" invisible="lca_type != 'letter of credit'" readonly="status != 'draft'"/>
+                            <field name="related_contract" invisible="lca_type == 'bid bond'"/>
+                            <field name="bid_ref" readonly="status != 'draft'" invisible="lca_type != 'bid bond'"/>
+                            <field name="payment_method" invisible="lca_type == 'bid bond'" readonly="status != 'draft'"/>
+                            <field name="issuing_bank_name" invisible="payment_method == 'cash'" readonly="status != 'draft'"/>
+                            <field name="benefeciary_bank"/>
+                            <field name="currency_id"/>
+                            <field name="amount" class="oe_inline" widget="monetary" options="{'currency_field': 'currency_id'}" readonly="status != 'draft'"/>
+                            <field name="paid_amount" class="oe_inline" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="parent_pledge"/>
+                        </group>
+                        <group>
+                            <field name="acceptance_date"/>
+                        </group>
+                        <group>
+                            <field name="issuing_bank_ref" readonly="status != 'draft'"/>
+                            <field name="attachment_ids" widget="many2many_binary" class="oe_inline" readonly="status != 'draft'"/>
+                            <button name="re_confirm" type="object" string="extend" invisible="status != 'expired'" confirm="You are about to reconfirm an expired pledge, please make sure the date is correct, this step is irreversible"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="validity_lines" string="Validity Lines">
+                        <field name="validity_lines" nolabel="1">
+                            <list editable="bottom">
+                                <field name="issuing_date"/>
+                                <field name="expiration_date"/>
+                            </list>
+                        </field>
+                    </page>
+
+                        <page name="expenses_tab" string="Expenses Information">
+                            <field name="expense_lines">
+                                <list editable="top">
+                                    <field name="name"/>
+                                    <field name="amount"/>
+                                    <field name="currency"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page name="clearance_info" string="Clearance Information" invisible="status == 'draft'">
+                            <group>
+                                <field name="clearance_amount" readonly="status == 'cleared'"/>
+                                <field name="clearance_attachement" readonly="status == 'cleared'"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <field name="notes"/>
+                </sheet>
+               <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="pledge_assets.tree" model="ir.ui.view">
+        <field name="name">pledge_assets.tree</field>
+        <field name="model">pledge.pledge</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="partner_id"/>
+                <field name="bid_ref"/>
+                <field name="issuing_bank_name"/>
+                <field name="benefeciary_bank"/>
+                <field name="lca_type"/>
+                <field name="issuing_bank_ref"/>
+                <field name="lc_type"/>
+                <field name="amount"/>
+                <field name="latest_date_of_shipment"/>
+                <field name="parent_pledge"/>
+                <field name="status"/>
+            </list>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="reservation_reason_action" model="ir.actions.act_window">
+            <field name="name">Reservation Reason</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reservation.reason</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <menuitem id="helpdesk_menu_" action="reservation_reason_action"
+                  sequence="0" parent="helpdesk.helpdesk_menu_config"
+                  name="Reservation Reasons"
+                  groups="helpdesk.group_helpdesk_user"
+        />
+    </data>
+</odoo>

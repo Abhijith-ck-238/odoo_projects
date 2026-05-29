@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pledge_report_pivot" model="ir.ui.view">
+        <field name="name">pledge.report.pivot</field>
+        <field name="model">pledge.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Pledge Analysis" disable_linking="True">
+                <field name="pledge_type" type="row"/>
+                <field name="amount" type="measure"/>
+                <field name="pending_amendments" type="measure"/>
+                <field name="amount_coverage" type="measure"/>
+                <field name="paid_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_pledge_report_graph" model="ir.ui.view">
+        <field name="name">pledge.report.graph</field>
+        <field name="model">pledge.report</field>
+        <field name="arch" type="xml">
+            <graph string="Pledge Analysis">
+                <field name="pledge_type"/>
+                <field name="amount" type="measure"/>
+                <field name="pending_amendments" type="measure"/>
+                <field name="amount_coverage" type="measure"/>
+                <field name="paid_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_pledge_report_search" model="ir.ui.view">
+        <field name="name">pledge.report.search</field>
+        <field name="model">pledge.report</field>
+        <field name="arch" type="xml">
+            <search string="Pledge Analysis">
+                <filter string="Expired" name="expired" domain="[('status', '=', 'expired')]"/>
+                <filter string="Non Expired" name="non_expired" domain="[('status', '!=', 'expired')]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Pledge Type" name="pledge_type" context="{'group_by': 'pledge_type'}"/>
+                    <filter string="Acceptance Date" name="date" context="{'group_by': 'date'}"/>
+                    <filter string="Currency" name="currency_id" context="{'group_by': 'currency_id'}"/>
+                    <filter string="Status" name="status" context="{'group_by': 'status'}"/>
+                    <filter string="Contract Type" name="contract_type" context="{'group_by': 'contract_type'}"/>
+                    <filter string="Opening Date" name="opining_date" context="{'group_by': 'opining_date'}"/>
+                    <filter string="Expire Date" name="expire_date" context="{'group_by': 'expire_date'}"/>
+                    <filter string="Date of Extension" name="date_of_extension" context="{'group_by': 'date_of_extension'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pledge_report" model="ir.actions.act_window">
+        <field name="name">Pledge Analysis</field>
+        <field name="res_model">pledge.report</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="search_view_id" ref="view_pledge_report_search"/>
+    </record>
+
+    <menuitem
+        id="menu_pledge_reporting"
+        name="Reporting"
+        parent="pledge_assets.menu_root"
+        sequence="50"/>
+
+    <menuitem
+        id="menu_pledge_report"
+        name="Pledges"
+        parent="menu_pledge_reporting"
+        action="custom_pledges.action_pledge_report"
+        sequence="10"/>
+
+</odoo>

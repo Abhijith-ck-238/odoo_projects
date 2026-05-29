@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="sale_order_lot_extension_inh_tree" model="ir.ui.view">
+            <field name="name">sale.order.lot.extension.inh.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']//list" position="inside">
+                    <field name="expiration_date" optional="1"/>
+                    <field name="lot_notes" optional="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

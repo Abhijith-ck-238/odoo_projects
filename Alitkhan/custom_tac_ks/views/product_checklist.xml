@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_checklist_view_tree" model="ir.ui.view">
+        <field name="name">product.checklist.list</field>
+        <field name="model">product.checklist</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="product_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="product_checklist_view_form" model="ir.ui.view">
+        <field name="name">product.checklist.form</field>
+        <field name="model">product.checklist</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                        </group>
+                    </group>
+                    <field name="checklist_item_ids">
+                        <list editable="bottom">
+                            <field name="checklist_item"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_checklist_view_search" model="ir.ui.view">
+        <field name="name">product.checklist.search</field>
+        <field name="model">product.checklist</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="product_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_product_checklist" model="ir.actions.act_window">
+        <field name="name">Product Checklist</field>
+        <field name="res_model">product.checklist</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_product_checklist" name="Product Checklist" action="action_product_checklist" parent="tac_ks_configuration" sequence="6"/>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="report_invoice_document_fc_inherit"
+                  inherit_id="itkan_report_mod.report_invoice_document_fc">
+            <xpath expr="//table/tr[1]" position="after">
+                <tr class="text-bold ">
+                    <td class="" style="background: lightgray;">
+                        Bank Address:
+                    </td>
+                    <td class="">
+                        <t t-if="o.partner_bank_id.bank_id.street">
+                            <p class="m-0"
+                               t-field="o.partner_bank_id.bank_id.street"/>
+                        </t>
+                        <t t-if="o.partner_bank_id.bank_id.street2">
+                            <p class="m-0"
+                               t-field="o.partner_bank_id.bank_id.street2"/>
+                        </t>
+                        <t t-if="o.partner_bank_id.bank_id.city">
+                            <p class="m-0"
+                               t-field="o.partner_bank_id.bank_id.city"/>
+                        </t>
+                        <t t-if="o.partner_bank_id.bank_id.state">
+                            <p class="m-0"
+                               t-field="o.partner_bank_id.bank_id.state.name"/>
+                        </t>
+                        <t t-if="o.partner_bank_id.bank_id.zip">
+                            <p class="m-0"
+                               t-field="o.partner_bank_id.bank_id.zip"/>
+                        </t>
+                        <t t-if="o.partner_bank_id.bank_id.country">
+                            <p class="m-0"
+                               t-field="o.partner_bank_id.bank_id.country.name"/>
+                        </t>
+                    </td>
+                </tr>
+            </xpath>
+        </template>
+    </data>
+</odoo>

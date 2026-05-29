@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="dx_invoice_report.dx_invoice_template">
+            <!--  <link rel="stylesheet" href="/dx_invoice_report/static/src/css/font.css"/>  -->
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <!--  <t t-call="web.internal_layout">  -->
+                    <!--  Custom external layout  -->
+                    <t t-call="dx_invoice_report.dx_invoice_external_layout">
+                        <div class="page" style="font-size:24px;">
+                            <style>
+                                @import url('https://fonts.googleapis.com/css2?family=Rock+Salt&amp;display=swap');
+
+                            </style>
+                            <div class="row"
+                                 style="border:1px solid black;margin-top:10px;margin-bottom:0;"/>
+                            <div class="row"
+                                 style="font-family: 'Times New Roman', Times, serif;">
+                                <div class="col-12 text-center align-items-center">
+                                    <span style="font-size:32px;">قائمة بيع
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row"
+                                 style="font-family: 'Times New Roman', Times, serif;margin-bottom:20px;">
+                                <div class="col-12"
+                                     style="border:1px solid black;padding:5px; ">
+                                    <div class="col-12"
+                                         style="border:1px solid black; ">
+                                        <div class="row">
+                                            <div class="col-4 text-center">
+                                                <p style="margin:0px;">رقم
+                                                    القائمة
+                                                </p>
+                                                <span style="color:red;margin:0px;"
+                                                      t-field="doc.name"/>
+                                            </div>
+                                            <div class="col-8 text-right" style="text-align:right">
+                                                <p style="font-size:22px;">
+                                                    <span t-esc="doc.date_order.strftime('%d/%m/%Y')"/>
+                                                    :التاريخ
+                                                </p>
+                                                <p style="font-size:22px;">
+                                                    <span t-field="doc.partner_id"/>
+                                                    المواد المجهزة الى
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <table class="table table-sm o_main_table "
+                                       style="page-break-before:always;direction:rtl;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;border:2px solid black;font-size:16px;font-family: 'Times New Roman', Times, serif;font-weight:bold;"
+                                                name="th_desc">التفاصيل
+                                            </th>
+                                            <th style="text-align:center;border:2px solid black;font-size:16px;font-family: 'Times New Roman', Times, serif;font-weight:bold;"
+                                                name="th_exp">تاريخ نفاذ
+                                                الصلاحية
+                                            </th>
+                                            <th style="text-align:center;border:2px solid black;font-size:16px;font-family: 'Times New Roman', Times, serif;font-weight:bold;"
+                                                name="th_lot">رقم الوجبة
+                                            </th>
+                                            <th style="text-align:center;border:2px solid black;font-size:16px;font-family: 'Times New Roman', Times, serif;font-weight:bold;"
+                                                name="th_qty">الكمية
+                                            </th>
+                                            <th style="text-align:center;border:2px solid black;font-size:16px;font-family: 'Times New Roman', Times, serif;font-weight:bold;"
+                                                name="th_price">سعر المفرد
+                                            </th>
+                                            <th style="text-align:center;border:2px solid black;font-size:16px;font-family: 'Times New Roman', Times, serif;font-weight:bold;"
+                                                name="th_total">المبلغ الكلي
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="doc.order_line"
+                                           t-as="line">
+                                            <tr>
+                                                <td style="font-size:14px;text-align:center;border:1px solid black;border-top:2px solid black;color:#5873B2;font-family:'Rock Salt', cursive;"
+                                                    name="th_desc">
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                                <td style="font-size:14px;text-align:center;border:1px solid black;border-top:2px solid black;font-family: 'Rock Salt', cursive;color:#5873B2;"
+                                                    name="th_exp">
+                                                    <!--  <span  t-field="line.expiration_date"/>  -->
+                                                </td>
+                                                <td style="font-size:14px;text-align:center;border:1px solid black;border-top:2px solid black;font-family: 'Rock Salt', cursive;color:#5873B2;"
+                                                    name="th_lot">
+<!--                                                    <span t-field="line.lot_id"/>-->
+                                                </td>
+                                                <td style="font-size:14px;text-align:center;border:1px solid black;border-top:2px solid black;font-family: 'Rock Salt', cursive;color:#5873B2;"
+                                                    name="th_qty">
+                                                    <span t-esc="int(line.product_uom_qty)"/>
+                                                </td>
+                                                <td style="font-size:14px;text-align:center;border:1px solid black;border-top:2px solid black;font-family: 'Rock Salt', cursive;color:#5873B2;"
+                                                    name="td_price">
+                                                    <p t-field="line.price_unit"/>
+                                                </td>
+                                                <td style="font-size:14px;text-align:center;border:1px solid black;border-top:2px solid black;font-family: 'Rock Salt', cursive;color:#5873B2;"
+                                                    name="td_price">
+                                                    <p t-field="line.price_subtotal"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-4 text-center"
+                                     style="border:1px solid black;">
+                                    <span style="font-family: 'Rock Salt', cursive;color:#5873B2;"
+                                          t-field="doc.amount_total"/>
+                                </div>
+                                <div class="col-8 text-right"
+                                     style="border:1px solid black;font-family: 'Times New Roman', Times, serif;height:60px;text-align:right;">
+                                    <p style="font-size:16px;margin-top:20px;">
+                                        المبلغ فقط
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row"
+                                 style="font-family: 'Times New Roman', Times, serif;margin-top:60px;">
+                                <div class="col-4 text-center">
+                                    <p style="font-size:16px;">التوقيع</p>
+                                </div>
+                                <div class="col-8 text-right" style="text-align:right">
+                                    <p style="font-size:16px;">
+                                        ....................................................................
+                                        الملاحظات
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <!--  </t>  -->
+                </t>
+            </t>
+        </template>
+         <record id="dx_invoice" model="ir.actions.report">
+            <field name="name">Dx Custom Invoice</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">dx_invoice_report.dx_invoice_template</field>
+            <field name="report_file">dx_invoice_report.dx_invoice_template</field>
+            <field name="print_report_name">'Dx Invoice - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+        </record>
+    </data>
+</odoo>

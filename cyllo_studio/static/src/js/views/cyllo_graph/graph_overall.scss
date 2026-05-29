@@ -1,0 +1,47 @@
+.graph_properties{
+
+    .plus_input{
+/*
+       top: 27.6%;
+ */
+        left: 87%;
+    }
+    .dropdown-item.focus{
+        background-color: #f7f7f7;
+    }
+    .o-dropdown--menu{
+
+        position: fixed;
+        top: 36% !important;
+        left: 5% !important;
+        background: black;
+        width: 90%;
+        max-height: 60%;
+    }
+    .btn:hover {
+        color: unset;
+    }
+    .cy-input{
+        margin-top:5%;
+    }
+}
+.light-studio-mode .cy-studio-graph-icon{
+    background-color:#d3d3d3;
+    color: #494840;
+}
+.cy-studio-graph-icon{
+    color:#828176;
+    background-color: #3d3d3d;
+    width: 17%;
+    text-align: center;
+    border-radius: 6px;
+/*
+    background-color:#d3d3d3;
+    width: 17%;
+    text-align: center;
+    border-radius: 6px;
+ */
+}
+.cy-studio-graph-icon .active-icon{
+    color: #9EA700;
+    }

@@ -1,0 +1,10 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_letter_ticket_user,access.letter.ticket.user,custom_letters.model_letter_ticket,custom_letters.group_letters_user,1,1,1,0
+access_letter_type_user,access.letter.type.user,custom_letters.model_letter_type,custom_letters.group_letters_user,1,0,0,0
+access_letter_stage_user,access.letter.stage.user,custom_letters.model_letter_stage,custom_letters.group_letters_user,1,0,0,0
+access_letter_report_user,access.letter.report.user,custom_letters.model_letter_report,custom_letters.group_letters_user,1,0,0,0
+
+access_letter_ticket_admin,access.letter.ticket.admin,custom_letters.model_letter_ticket,custom_letters.group_letters_administrator,1,1,1,1
+access_letter_type_admin,access.letter.type.admin,custom_letters.model_letter_type,custom_letters.group_letters_administrator,1,1,1,1
+access_letter_stage_admin,access.letter.stage.admin,custom_letters.model_letter_stage,custom_letters.group_letters_administrator,1,1,1,1
+access_letter_report_admin,access.letter.report.admin,custom_letters.model_letter_report,custom_letters.group_letters_administrator,1,1,1,1

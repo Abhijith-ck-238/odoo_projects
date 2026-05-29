@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="custom_project_task_view_form" model="ir.ui.view">
+            <field name="name">project.task</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            
+            <field name="arch" type="xml">
+                <field name="tag_ids" position="after">
+                  <field name="weight" string="Weight" invisible="True"/>
+                </field>
+            </field>
+       </record>
+
+       <record id="custom_project_task_view_kanban" model="ir.ui.view">
+            <field name="name">project.task</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <div align="center">
+                        <field name="weight_percent_display" widget="percentpie" nolabel="1"/> <br/>
+                    </div>
+                </xpath>
+            </field>
+       </record>
+
+     <record id="project.action_view_all_task" model="ir.actions.act_window">
+        <field name="name">All Tasks</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">kanban,list,form,gantt,calendar,map,pivot,graph,activity</field>
+        <field name="domain">[]</field>
+        <field name="context">{'search_default_my_tasks': 1}</field>
+
+    </record>
+
+
+     <menuitem
+        id="project.menu_project_management_all_tasks"
+        name="All Tasks"
+        parent="project.menu_main_pm"
+        sequence="10"/>
+
+    <record id="project.menu_project_management" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+</odoo>

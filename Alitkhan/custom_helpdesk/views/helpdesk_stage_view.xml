@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="helpdesk_stage_view_extend" model="ir.ui.view">
+            <field name="name">helpdesk.stage.extend</field>
+            <field name="model">helpdesk.stage</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_stage_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fold']"
+                       position="after">
+                    <field name="is_close"/>
+                </xpath>
+                <xpath expr="//field[@name='only_valid_tickets']"
+                       position="after">
+                    <field name="is_restrict_ticket_move"/>
+                    <field name="cancel_activities"/>
+                    <field name="is_field_service_ticket_exist"/>
+                    <field name="send_notification_to_spare_parts_responsible"/>
+                    <field name="archive_ticket"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="helpdesk_stage_view_tree_extend" model="ir.ui.view">
+            <field name="name">helpdesk.stage.list.extend</field>
+            <field name="model">helpdesk.stage</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_stage_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fold']"
+                       position="after">
+                    <field name="is_close"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

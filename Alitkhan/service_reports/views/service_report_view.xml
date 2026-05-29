@@ -1,0 +1,112 @@
+<odoo>
+    <data>
+        <record id="service_report_form" model="ir.ui.view">
+            <field name="name">service_report.form</field>
+            <field name="model">service.report</field>
+            <field name="arch" type="xml">
+                <form string="Service Report Form">
+                    <header>
+                        <button name="print_report" type="object" string="Print"/>
+                    </header>
+                    <sheet>
+                        <group>
+                        <h1><field name="task_number" placeholder="Task Number"/></h1>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="service_number"/>
+                                <field name="t_type"/>
+                                <field name="modality"/>
+                                <field name="travel_from"/>
+                                <field name="travel_to"/>
+                                <field name="hd_name"/>
+                                <field name="reported_by"/>
+                                <field name="defect"/>
+                            </group>
+                            <group>
+                                <field name="location"/>
+                                <field name="in_out"/>
+                                <field name="date"/>
+                                <field name="engineer"/>
+                                <field name="engineer_2"/>
+                                <field name="resource" />
+                                <field name="old_data" invisible="1"/>
+                                <field name="car" />
+                                <!-- <field name="vehicle_id" attrs="{'invisible': [('old_data', '=', True)]}"/> -->
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="province"/>
+                                <field name="site"/>
+                                <field name="unit"/>
+                                <field name="type_unit"/>
+                                <field name="sn"/>
+                                <field name="contract"/>
+                            </group>
+                            <group>
+                                <field name="spare"/>
+                                <field name="task_complete" widget="radio"/>
+                                <field name="state"/>                                
+                                <field name="template_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+
+                            <page string="Done Description" name="done_desc">
+                                <field name="done_desc"/>
+                            </page>
+
+                             <page string="Task Description" name="task_desc">
+                                <field name="desc"/>
+                            </page>
+
+                            <page string="Timelines" name="timelines">
+                                <field name="service_report_time_lines">
+                                    <list editable="bottom">
+                                        <field name="date"/>
+                                        <field name="time_from" />
+                                        <field name="time_to" />
+                                        <field name="work" />
+                                        <field name="wait" />
+                                        <field name="travel" />
+                                        <field name="total" />
+                                        <field name="distance" />
+                                    </list>
+
+
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>                  
+                </form>
+            </field>
+        </record>
+
+        <record id="service_report_tree" model="ir.ui.view">
+            <field name="name">service_report.tree</field>
+            <field name="model">service.report</field>
+            <field name="arch" type="xml">
+                <list string="Service Report Tree">
+                    <field name="task_number"/>
+                    <field name="service_number"/>
+                    <field name="t_type"/>
+                    <field name="modality"/>
+                    <field name="travel_from" optional="1" />
+                    <field name="travel_to" optional="1"/>
+                    <field name="in_out" optional="1"/>
+                    <field name="date" optional="1"/>
+                    <field name="engineer" optional="1"/>
+                    <field name="car" optional="1"/>
+                    <field name="province" optional="1"/>
+                    <field name="unit" optional="1"/>
+                    <field name="type_unit" optional="1"/>
+                    <field name="sn" optional="1"/>
+                    <field name="contract" optional="1"/>
+                    <field name="spare" optional="1"/>
+                    <field name="task_complete" optional="1"/>
+                </list>
+            </field>
+        </record>
+    </data>
+</odoo>

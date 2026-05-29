@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit the existing hr.expense.sheet search view -->
+        <record id="hr_expense_sheet_view_search_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.view.search.inherit</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id"
+                   ref="hr_expense.hr_expense_sheet_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='my_team_reports']"
+                       position="after">
+                    <separator/>
+                    <filter domain="[('state', '=', 'submit')]"
+                            string="To Approve" name="submitted"
+                            help="Confirmed Expenses"/>
+                    <filter domain="[('state', '=', 'approve')]"
+                            string="To Post" name="to_post"
+                            help="Approved Expenses"/>
+                    <filter domain="['|', ('state', '=', 'approve'), ('state', '=', 'post')]"
+                            string="To Pay" name="approved"
+                            help="Expenses to Invoice"/>
+                    <filter domain="[('state', '=', 'cancel')]" string="Refused"
+                            name="canceled"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="action_hr_expense_sheet_to_approve"
+                model="ir.actions.act_window">
+            <field name="name">To Approve</field>
+            <field name="res_model">hr.expense.sheet</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{
+                'search_default_submitted': 1,
+                'default_state': 'submit'
+                }
+            </field>
+        </record>
+
+        <!-- Action for To Post Expenses -->
+        <record id="action_hr_expense_sheet_to_post"
+                model="ir.actions.act_window">
+            <field name="name">To Post</field>
+            <field name="res_model">hr.expense.sheet</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{
+                'search_default_to_post': 1,
+                'default_state': 'approve'
+                }
+            </field>
+        </record>
+
+        <!-- Action for To Pay Expenses -->
+        <record id="action_hr_expense_sheet_to_pay"
+                model="ir.actions.act_window">
+            <field name="name">To Pay</field>
+            <field name="res_model">hr.expense.sheet</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]
+            </field>
+            <field name="context">{
+                'search_default_approved': 1
+                }
+            </field>
+        </record>
+
+        <record id="hr_expense.menu_hr_expense_reports" model="ir.ui.menu">
+            <field name="active">False</field>
+        </record>
+
+        <menuitem id="menu_hr_expense_reports_main"
+                  name="Expense Reports"
+                  parent="hr_expense.menu_hr_expense_root"
+                  sequence="2"/>
+
+        <!-- Submenu: To Approve -->
+        <menuitem id="menu_hr_expense_to_approve"
+                  name="To Approve"
+                  parent="menu_hr_expense_reports_main"
+                  action="action_hr_expense_sheet_to_approve"
+                  sequence="10"
+                  groups="hr_expense.group_hr_expense_manager"/>
+
+        <!-- Submenu: To Post -->
+        <menuitem id="menu_hr_expense_to_post"
+                  name="To Post"
+                  parent="menu_hr_expense_reports_main"
+                  action="action_hr_expense_sheet_to_post"
+                  sequence="20"
+                  groups="hr_expense.group_hr_expense_manager"/>
+
+        <!-- Submenu: To Pay -->
+        <menuitem id="menu_hr_expense_to_pay"
+                  name="To Pay"
+                  parent="menu_hr_expense_reports_main"
+                  action="action_hr_expense_sheet_to_pay"
+                  sequence="30"
+                  groups="hr_expense.group_hr_expense_manager"/>
+    </data>
+</odoo>

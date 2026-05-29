@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="create_shipment_wizard_action" model="ir.actions.act_window">
+        <field name="name">Create Logistic Shipment</field>
+        <field name="res_model">logistics.shipment</field>
+        <field name="view_mode">form</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="context">{'default_origin_ids': active_ids}</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

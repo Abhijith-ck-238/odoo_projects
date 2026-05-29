@@ -1,0 +1,15 @@
+<odoo>
+    <record id="mail_activity_checklist_deadline_reached"
+                model="mail.activity.type">
+        <field name="name">Checklist Deadline Reached</field>
+        <field name="icon">fa-bars</field>
+        <field name="res_model">itkan.project</field>
+    </record>
+
+    <record id="mail_activity_checklist_subtask_assigned"
+                model="mail.activity.type">
+        <field name="name">Checklist Subtask Assigned</field>
+        <field name="icon">fa-bars</field>
+        <field name="res_model">project.subtask</field>
+    </record>
+</odoo>

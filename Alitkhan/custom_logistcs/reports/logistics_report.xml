@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_logistics_report_tree" model="ir.ui.view">
+         <field name="name">logistics.report.tree</field>
+         <field name="model">logistics.report</field>
+         <field name="arch" type="xml">
+             <list string="Logistics Analysis">
+                    <field name="shipment_id"/>
+             </list>
+         </field>
+    </record>
+
+    <record id="view_logistics_report_pivot" model="ir.ui.view">
+         <field name="name">logistics.report.pivot</field>
+         <field name="model">logistics.report</field>
+         <field name="arch" type="xml">
+             <pivot string="Logistics Analysis">
+                 <field name="shipment_id" type="row"/>
+                 <field name="status" type="row"/>
+                 <field name="shipment_value" type="measure"/>
+                 <field name="purchase_total" type="measure"/>
+                 <field name="fees_percentage" type="measure"/>
+                 <field name="bill_total" type="measure"/>
+                 <field name="contract_id" type="row"/>
+                 <field name="purchase_id" type="row"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="view_logistics_report_graph" model="ir.ui.view">
+         <field name="name">logistics.report.graph</field>
+         <field name="model">logistics.report</field>
+         <field name="arch" type="xml">
+             <graph string="Logistics Analysis" type="line">
+                 <field name="shipment_value" type="measure"/>
+                 <field name="purchase_total" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+<!--    <record id="logistics_report_view_dashboard" model="ir.ui.view">-->
+<!--        <field name="name">logistics.report.view.dashboard</field>-->
+<!--        <field name="model">logistics.report</field>-->
+<!--        <field name="mode">primary</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <dashboard>-->
+<!--                <view type="graph" ref="custom_logistcs.view_logistics_report_graph"/>-->
+<!--                <group>-->
+
+<!--                </group>-->
+<!--                <view type="pivot" ref="custom_logistcs.view_logistics_report_pivot"/>-->
+<!--            </dashboard>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="view_logistics_report_search" model="ir.ui.view">
+        <field name="name">logistics.report.search</field>
+        <field name="model">logistics.report</field>
+        <field name="arch" type="xml">
+            <search string="Logistics Analysis">
+                <group expand="1" string="Group By">
+                    <filter string="Shipment" name="Shipment" context="{'group_by':'shipment_id'}"/>
+                     <filter string="Status" name="Status" context="{'group_by':'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_logistics_report" model="ir.actions.act_window">
+        <field name="name">Logistics Analysis</field>
+        <field name="res_model">logistics.report</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="view_logistics_report_search"/>
+        <field name="help">This report performs analysis on your Logistics.</field>
+    </record>
+
+    <menuitem
+            id="menu_logistics_reporting"
+            name="Reporting"
+            parent="logistics.menu_root"
+            sequence="50" groups="logistics.logistics_manager"/>
+    <menuitem
+        id="menu_logistics_report"
+        name="Logistics"
+        parent="menu_logistics_reporting"
+        action="custom_logistcs.action_logistics_report"
+        sequence="10"/>
+</odoo>

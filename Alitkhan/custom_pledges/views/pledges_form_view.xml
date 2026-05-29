@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="pledge_pledge_view_inheritt" model="ir.ui.view">
+            <field name="name">pledge.pledge.form.inherit</field>
+            <field name="model">pledge.pledge</field>
+            <field name="inherit_id" ref="pledge_assets.form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='related_contract']" position="after">
+                    <field name="contract_type"/>
+                    <field name="active" invisible="1"/>
+                    <field name="count_pending_amendments"/>
+                </xpath>
+                <xpath expr="//field[@name='issuing_bank_ref']" position="after">
+                    <field name="lc_type_id"/>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='currency_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='amount']" position="after">
+                    <field name="x_studio_amount_coverage" string="Amount Coverage" widget="monetary"/>
+                </xpath>
+                <xpath expr="//field[@name='acceptance_date']" position="before">
+                    <field name="x_studio_opining_date" string="Opining date"/>
+                </xpath>
+                <xpath expr="//field[@name='acceptance_date']" position="after">
+                    <field name="x_studio_expire_date" string="Expire Date"/>
+                    <field name="date_of_extension"/>
+                    <field name="date_of_extension"/>
+                </xpath>
+                <xpath expr="//field[@name='lc_type_id']" position="attributes">
+                    <attribute name="string">LC Category</attribute>
+                </xpath>
+                <xpath expr="//field[@name='expiration_date']" position="attributes">
+                    <attribute name="string">Expiration Date Notification</attribute>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page name="studio_page_3hQrw" string="Deadlines">
+                        <field name="deadline_ids">
+                            <list>
+                                <field name="pledge_id" column_invisible="1"/>
+                                <field name="deadline_entity"/>
+                                <field name="deadline"/>
+                                <field name="alarm_entity"/>
+                            </list>
+                            <form>
+                                <group name="studio_group_d28943">
+                                    <group name="studio_group_9fc87e">
+                                        <field name="pledge_id" invisible="1"/>
+                                        <field name="deadline_entity"/>
+                                    </group>
+                                    <group name="studio_group_4b08d7">
+                                        <field name="deadline"/>
+                                        <field name="alarm_entity"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page name="amendments" string="Amendments">
+                        <field name="amendment_ids">
+                            <list>
+                                <field name="pledge_id" column_invisible="1"/>
+                                <field name="description"/>
+                                <field name="status"/>
+                            </list>
+                            <form>
+                                <group name="studio_group_485c81">
+                                    <group name="studio_group_bb5185">
+                                        <field name="pledge_id" invisible="1"/>
+                                        <field name="description"/>
+                                    </group>
+                                    <group name="studio_group_1808e6">
+                                        <field name="status"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <page name="payment_installation_ids" string="Payment Instalments">
+                        <field name="payment_installation_ids">
+                            <list editable="top">
+                                <field name="pledge_id" column_invisible="1"/>
+                                <field name="payment_type"/>
+                                <field name="payment_amount"/>
+                                <field name="currency_id"/>
+                                <field name="payment_date"/>
+                            </list>
+                            <form>
+
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--   this is archived in 13   -->
+        <!--        <record id="pledge_pledge_studio_view_inherit" model="ir.ui.view">-->
+        <!--            <field name="name">pledge.pledge.studio.form.inherit</field>-->
+        <!--            <field name="model">pledge.pledge</field>-->
+        <!--            <field name="inherit_id" ref="studio_customization.odoo_studio_pledge_a_c86e9a88-613c-4c2a-8918-ac3615e02811"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <field name="x_studio_expire_date" position="after">-->
+        <!--                    <field name="date_of_extension"/>-->
+        <!--                </field>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <record id="pledge_pledge_tree_view_inherit" model="ir.ui.view">
+            <field name="name">pledge.pledge.tree.inherit</field>
+            <field name="model">pledge.pledge</field>
+            <field name="inherit_id" ref="pledge_assets.tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='status']" position="before">
+                    <field name="count_pending_amendments"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--   this is archived in 13   -->
+
+        <!--        <record id="pledge_pledge_studio_view_extend" model="ir.ui.view">-->
+        <!--            <field name="name">pledge.pledge.studio.form.extend</field>-->
+        <!--            <field name="model">pledge.pledge</field>-->
+        <!--            <field name="inherit_id"-->
+        <!--                   ref="studio_customization.odoo_studio_pledge_a_c86e9a88-613c-4c2a-8918-ac3615e02811"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//page[@name='studio_page_3hQrw']" position="replace">-->
+        <!--                    <page name="studio_page_3hQrw" string="Deadlines">-->
+        <!--                        <field name="deadline_ids">-->
+        <!--                            <list>-->
+        <!--                                <field name="pledge_id" invisible="1"/>-->
+        <!--                                <field name="deadline_entity"/>-->
+        <!--                                <field name="deadline"/>-->
+        <!--                                <field name="alarm_entity"/>-->
+        <!--                            </list>-->
+        <!--                            <form>-->
+        <!--                                <group>-->
+        <!--                                    <group>-->
+        <!--                                        <field name="pledge_id" invisible="1"/>-->
+        <!--                                        <field name="deadline_entity"/>-->
+        <!--                                    </group>-->
+        <!--                                    <group>-->
+        <!--                                        <field name="deadline"/>-->
+        <!--                                        <field name="alarm_entity"/>-->
+        <!--                                    </group>-->
+        <!--                                </group>-->
+        <!--                            </form>-->
+        <!--                        </field>-->
+        <!--                    </page>-->
+        <!--                </xpath>-->
+
+        <!--                <xpath expr="//page[@name='amendments']" position="replace">-->
+        <!--                    <page name="amendments" string="Amendments">-->
+        <!--                        <field name="amendment_ids">-->
+        <!--                            <list>-->
+        <!--                                <field name="pledge_id" invisible="1"/>-->
+        <!--                                <field name="description"/>-->
+        <!--                                <field name="status"/>-->
+        <!--                            </list>-->
+        <!--                            <form>-->
+        <!--                                <group>-->
+        <!--                                    <group>-->
+        <!--                                        <field name="pledge_id" invisible="1"/>-->
+        <!--                                        <field name="description"/>-->
+        <!--                                    </group>-->
+        <!--                                    <group>-->
+        <!--                                        <field name="status"/>-->
+        <!--                                    </group>-->
+        <!--                                </group>-->
+        <!--                            </form>-->
+        <!--                        </field>-->
+        <!--                    </page>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//page[@name='amendments']" position="after">-->
+        <!--                    <page name="payment_installation_ids" string="Payment Installation">-->
+        <!--                        <field name="payment_installation_ids">-->
+        <!--                            <list editable="top">-->
+        <!--                                <field name="pledge_id" invisible="1"/>-->
+        <!--                                <field name="payment_type"/>-->
+        <!--                                <field name="payment_amount"/>-->
+        <!--                                <field name="currency_id"/>-->
+        <!--                                <field name="payment_date"/>-->
+        <!--                            </list>-->
+        <!--                            <form>-->
+        <!--                                <group>-->
+        <!--                                    <group>-->
+        <!--                                        <field name="pledge_id" invisible="1"/>-->
+        <!--                                        <field name="payment_type"/>-->
+        <!--                                        <field name="payment_amount"/>-->
+        <!--                                    </group>-->
+        <!--                                    <group>-->
+        <!--                                        <field name="currency_id"/>-->
+        <!--                                        <field name="payment_date"/>-->
+        <!--                                    </group>-->
+        <!--                                </group>-->
+        <!--                            </form>-->
+        <!--                        </field>-->
+        <!--                    </page>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <record id="pledge_view_search" model="ir.ui.view">
+            <field name="name">pledge.pledge.search</field>
+            <field name="model">pledge.pledge</field>
+            <field name="arch" type="xml">
+                <search string="Pledges">
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                    <filter string="Pending Amendments" name="pending_amendments"
+                            domain="[('count_pending_amendments', '>', 0)]"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

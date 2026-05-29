@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="qoutation_offer_template_form" model="ir.ui.view">
+            <field name="name">qoutation_offer_template.form</field>
+            <field name="model">quotation.offer.template</field>
+            <field name="arch" type="xml">
+                <form string="DX auto offering template">
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <field name="template"/>
+                    <group>
+                        <span><span>Customer Name</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{customer_id.name}</span></span>
+                        <span><span>IQ Number</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{iq_number}</span></span>
+                        <span><span>Reference</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{reference}</span></span>
+                        <span><span>Offer Date</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{offer_date}</span></span>
+                        <span><span>Total Offer Price</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{total_offer_price}</span></span>
+                    </group>
+                    <group>
+                        <span><span>Written Total Net Price</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{written_total_offer_price}</span></span>
+                        <span><span>Package Policy</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{package_policy}</span></span>
+                        <span><span>Profit</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{profit}</span></span>
+                        <span><span>Exchange</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{exchange}</span></span>
+                        <span><span>Currency Name</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{currency_id.name}</span></span>
+                        <span><span>Total Net Price</span><span class="dx_auto_offering_red-font dx_auto_offering_copy-on-click">{total_net_price}</span></span>
+
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

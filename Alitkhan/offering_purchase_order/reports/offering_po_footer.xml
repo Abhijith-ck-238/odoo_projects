@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <template id="offering_po_footer">
+            <div class="footer o_standard_footer"  >
+                <img src="/offering_purchase_order/static/src/img/footer.jpg" width="1200px" height="150"/>
+            </div>
+        </template>
+    </data>
+</odoo>

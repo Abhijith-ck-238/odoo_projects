@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="training_ticket_view_tree" model="ir.ui.view">
+        <field name="name">training.ticket.list</field>
+        <field name="model">training.ticket</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="ticket_name"/>
+                <field name="contract_id"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="training_type_id"/>
+                <field name="stage_id" widget=""/>
+            </list>
+        </field>
+    </record>
+
+    <record id="training_ticket_view_form" model="ir.ui.view">
+        <field name="name">training.ticket.form</field>
+        <field name="model">training.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <header>
+                    <field name="allowed_stage_ids" invisible="1"/>
+                    <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_purchase_order" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o" invisible="po_count == 0">
+                            <field string="PO" name="po_count"
+                                   widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="contract_id"/>
+                            <field name="training_type_id"/>
+                            <field name="letters_certificate_attachment_ids" widget="many2many_binary"/>
+                            <field name="analytic_account_id"/>
+                            <field name="modality_id"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="date"/>
+                            <field name="budget_sheet_attachment_ids" widget="many2many_binary"/>
+                            <field name="training_location_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Expenses">
+                            <field name="expense_ids"/>
+                        </page>
+                        <page string="Attendees">
+                            <field name="attendee_ids">
+                                <list editable="bottom">
+                                    <field name="attendee_id"/>
+                                    <field name="position"/>
+                                    <field name="document" widget="many2many_binary"/>
+
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Documents">
+                            <group>
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+               <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="training_ticket_view_kanban" model="ir.ui.view">
+        <field name="name">training.ticket.kanban</field>
+        <field name="model">training.ticket</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id"
+                    class="o_kanban_small_column o_kanban_training_ticket"
+                    quick_create="false"
+                    default_order="create_date desc">
+                <field name="name"/>
+                 <field name="ticket_name"/>
+                <field name="contract_id"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="training_type_id"/>
+                <field name="color"/>
+                <field name="active"/>
+                <field name="message_needaction_counter"/>
+                <field name="activity_ids"/>
+                <field name="activity_state"/>
+                <progressbar field="activity_state"
+                             colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+
+                <templates>
+                    <t t-name="menu">
+                        <t t-if="widget.editable">
+                            <a role="menuitem" type="open"
+                               class="dropdown-item">Edit
+                            </a>
+                        </t>
+                        <t t-if="widget.deletable">
+                            <a role="menuitem" type="delete"
+                               class="dropdown-item">Delete
+                            </a>
+                        </t>
+                        <a role="menuitem" type="object" name="toggle_active"
+                           class="dropdown-item">
+                            <t t-if="record.active.raw_value">Archive</t>
+                            <t t-else="">Restore</t>
+                        </a>
+                        <field name="color" widget="kanban_color_picker"/>
+                    </t>
+                    <t t-name="card">
+                        <div class="oe_kanban_content">
+                             <div class="mt-2 text-truncate">
+                                <field name="ticket_name"
+                                       class="text-truncate"/>
+                            </div>
+                            <div class="mt-2">
+                                <strong>Contract:</strong>
+                                <field name="contract_id"
+                                       class="text-truncate"/>
+                            </div>
+                            <div class="mt-2">
+                                <strong>Partner:</strong>
+                                <field name="partner_id"
+                                       class="text-truncate"/>
+                            </div>
+                            <div class="mt-2">
+                                <field name="date"
+                                       class="text-truncate"/>
+                            </div>
+                            <div class="mt-2">
+                                <strong>Type:</strong>
+                                <field name="training_type_id"
+                                       class="text-truncate"/>
+                            </div>
+
+                            <div class="mt-2">
+                                <field name="activity_ids"
+                                       widget="kanban_activity"/>
+                                <t t-if="record.message_needaction_counter.raw_value">
+                                    <span class="o_kanban_counter">
+                                        <i class="fa fa-comments"/>
+                                        <t t-out="record.message_needaction_counter.raw_value"/>
+                                    </span>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+
+    <record id="training_ticket_view_search" model="ir.ui.view">
+        <field name="name">training.ticket.form</field>
+        <field name="model">training.ticket</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+                 <group expand="1" string="Group By">
+                     <filter string="Training Type" name="training type" context="{'group_by':'training_type_id'}"/>
+                     <filter string="State" name="state" context="{'group_by':'stage_id'}"/>
+                 </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="training_ticket_view_form_inherit"
+            model="ir.ui.view">
+        <field name="name">training.ticket.view.form.inherit</field>
+        <field name="model">training.ticket</field>
+        <field name="inherit_id" ref="custom_training.training_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='training_location_id']" position="after">
+                <field name="site_sector_id"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="instructor_id"/>
+            </xpath>
+            <xpath expr="//field[@name='attendee_ids']/list/field[@name='position']" position="after">
+                <field name="work_location_id"/>
+                <field name="phone" widget="phone"/>
+            </xpath>
+            <xpath expr="//page[1]" position="before">
+                <page name="previous_training" string="Prev. Trainings">
+                    <group>
+                        <group>
+                            <field name="previous_abroad_trained"/>
+                            <field name="previous_locally_trained"/>
+                            <field name="contract_id_1"/>
+                            <field name="contract_id_2"/>
+                            <field name="installed_base_quantity"/>
+                            <field name="partner_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="replace">
+                <div class="oe_title">
+                    <h1>
+                        <field name="ticket_name"/>
+                    </h1>
+                    <h2>
+                        <field name="name"/>
+                    </h2>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_training_ticket" model="ir.actions.act_window">
+        <field name="name">Training Ticket</field>
+        <field name="res_model">training.ticket</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+
+    <menuitem id="training_menu_root" name="Training"/>
+    <menuitem id="training_tickets" name="Training Tickets" action="action_training_ticket" parent="training_menu_root" sequence="0"/>
+</odoo>

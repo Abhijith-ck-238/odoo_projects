@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- list View -->
+    <record id="view_hr_expense_budget_policy_tree" model="ir.ui.view">
+        <field name="name">hr.expense.budget.policy.tree</field>
+        <field name="model">hr.expense.budget.policy</field>
+        <field name="arch" type="xml">
+            <list string="Expense Budget Policies">
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="time_bucket"/>
+                <field name="cap_amount"/>
+                <field name="behavior"/>
+                <field name="budget_owner_id"/>
+<!--                <field name="active"/>-->
+            </list>
+        </field>
+    </record>
+    
+    <!-- Form View -->
+    <record id="view_hr_expense_budget_policy_form" model="ir.ui.view">
+        <field name="name">hr.expense.budget.policy.form</field>
+        <field name="model">hr.expense.budget.policy</field>
+        <field name="arch" type="xml">
+            <form string="Expense Budget Policy" class="o_form_full_width">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id"/>
+<!--                            <field name="active"/>-->
+                        </group>
+                        <group>
+                            <field name="time_bucket"/>
+                            <field name="custom_date_from" invisible="time_bucket != 'custom'"/>
+                            <field name="custom_date_to" invisible="time_bucket != 'custom'"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- Scope -->
+                        <page string="Scope">
+                            <group>
+                                <field name="scope_employee_ids" widget="many2many_tags"/>
+                                <field name="scope_analytic_plan_ids" widget="many2many_tags"/>
+                                <field name="scope_analytic_account_ids" widget="many2many_tags" domain="[('plan_id', 'in', scope_analytic_plan_ids)]"/>
+<!--                                <field name="scope_category_ids" widget="many2many_tags"/>-->
+                                <field name="scope_product_ids" widget="many2many_tags"/>
+                                <field name="scope_tag_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+
+                        <!-- Budget -->
+                        <page string="Budget Configuration">
+                            <group>
+                                <field name="currency_id"/>
+                                <field name="cap_amount"/>
+                                <field name="grace_percentage"/>
+                                <field name="count_advances"/>
+                            </group>
+                        </page>
+
+                        <!-- Behavior -->
+                        <page string="Behavior Settings">
+                            <group>
+                                <field name="behavior"/>
+                                <field name="budget_owner_id"/>
+                            </group>
+                        </page>
+
+                        <!-- Effective Period -->
+                        <page string="Effective Period">
+                            <group>
+                                <field name="effective_from"/>
+                                <field name="effective_to"/>
+                            </group>
+                        </page>
+
+                        <!-- Consumption -->
+                        <!--                        <page string="Consumption">-->
+                        <!--                            <field name="consumption_ids">-->
+                        <!--                                <list editable="bottom">-->
+                        <!--&lt;!&ndash;                                    <field name="date"/>&ndash;&gt;-->
+                        <!--                                    <field name="amount"/>-->
+                        <!--                                    <field name="description"/>-->
+                        <!--                                </list>-->
+                        <!--                            </field>-->
+                        <!--                        </page>-->
+
+                    </notebook>
+                </sheet>
+                <chatter/>
+
+                <!--                <footer>-->
+                <!--                    <button string="Save" type="object" class="oe_highlight" invisible="1"/>-->
+                <!--                </footer>-->
+            </form>
+        </field>
+    </record>
+
+    <!-- Budget Policy Action -->
+    <record id="action_hr_expense_budget_policy" model="ir.actions.act_window">
+        <field name="name">Budget Policies</field>
+        <field name="res_model">hr.expense.budget.policy</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Root Menu: Expense Budgets -->
+    <menuitem id="menu_hr_expense_budget_root"
+              name="Expense Budgets"
+              parent="hr_expense.menu_hr_expense_root"
+              sequence="50"/>
+
+    <!-- Sub Menu: Budget Policies -->
+    <menuitem id="menu_hr_expense_budget_policy"
+              name="Budget Policies"
+              parent="menu_hr_expense_budget_root"
+              action="action_hr_expense_budget_policy"
+              sequence="10"/>
+</odoo>

@@ -1,0 +1,48 @@
+<odoo>
+  <data>
+
+    <record model="ir.actions.act_window" id="itkan_offering.config_action_window">
+      <field name="name">Config Window</field>
+      <field name="res_model">offering.config</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="itkan_offering.offering_action_window">
+      <field name="name">Offering Window</field>
+      <field name="res_model">offering.offering</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="itkan_offering.template_action_window">
+      <field name="name">Template Window</field>
+      <field name="res_model">offering.template</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="itkan_offering.currency_action_window">
+      <field name="name">Currency Window</field>
+      <field name="res_model">offering.exchangerate</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="Offering and Configuraion" id="itkan_offering.menu_root"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Offering" id="itkan_offering.menu_main" parent="itkan_offering.menu_root"
+    action="itkan_offering.offering_action_window"/>
+
+    <menuitem name="Configuration" id="itkan_offering.menu_config" parent="itkan_offering.menu_root"
+    action="itkan_offering.config_action_window"/>
+
+    <menuitem name="Report Templates" id="itkan_offering.menu_template" parent="itkan_offering.menu_root"
+    action="itkan_offering.template_action_window"/>
+
+    <menuitem name="Currencies and Exchange" id="itkan_offering.menu_currency" parent="itkan_offering.menu_root"
+    action="itkan_offering.currency_action_window" groups="itkan_offering.offering_manager"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="custom_helpdesk.HtmlField" t-inherit="web.HtmlField" t-inherit-mode="primary">
+        <xpath expr="//span[@t-out]" position="replace">
+            <span t-out="this.stripHtml(props.record.data[props.name] )or ''" />
+        </xpath>
+        <xpath expr="//t[@t-call]" position="replace">
+            <t t-else="" t-call="web.TextField" />
+        </xpath>
+    </t>
+
+</templates>

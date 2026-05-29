@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_helpdesk" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.helpdesk</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="helpdesk" string="Helpdesk"
+                         name="helpdesk">
+                        <block title="PM Settings">
+                            <!--                     <div class="app_settings_block" data-string="Helpdesk" -->
+                            <!--                          string="Helpdesk" data-key="helpdesk"> -->
+                            <!--                         <h2>PM Settings</h2> -->
+                            <div class="row mt16 o_settings_container"
+                                 id="pm_round_date">
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane">
+                                        <field name="avoid_off_days"/>
+                                    </div>
+                                    <div class="o_setting_right_pane">
+                                        <label string="Avoid Off Days"
+                                               for="avoid_off_days"/>
+                                        <div class="text-muted">Avoid Off Days
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="avoid_off_days"
+                                     class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane"/>
+                                    <div class="o_setting_right_pane">
+                                        <span class="o_form_label">Days Offset
+                                        </span>
+                                        <div class="text-muted">Number of days
+                                            specified to calculate PM ROUNDED
+                                            DAte.
+                                        </div>
+                                        <div class="text-muted">
+                                            <field name="days_offset"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 o_setting_box">
+                                    <div class="o_setting_left_pane"></div>
+                                    <div class="o_setting_right_pane">
+                                        <label string="Modality"
+                                               for="modality_ids"/>
+                                        <field name="modality_ids"
+                                               widget="many2many_tags"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </block>
+                    </app>
+                    <!--                     </div> -->
+                </xpath>
+            </field>
+        </record>
+        <record id="action_helpdesk_config_settings"
+                model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'helpdesk', 'bin_size': False}</field>
+        </record>
+        <menuitem id="helpdesk_settings_menu" name="Settings"
+                  action="action_helpdesk_config_settings" sequence="-1"
+                  parent="helpdesk.helpdesk_menu_config"
+                  groups="helpdesk.group_helpdesk_manager"/>
+    </data>
+</odoo>

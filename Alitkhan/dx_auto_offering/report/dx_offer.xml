@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_quotation_offer">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <table width="100%" height="100%" cellspacing="0"
+                               cellpadding="0">
+
+                            <!-- white space -->
+                            <tr height="30px"></tr>
+
+                            <!-- heading info -->
+                            <tr>
+                                <td width="33%">
+                                    <p style="line-height:0px;">
+                                        <t t-esc="doc.customer_id.name"/>
+                                    </p>
+                                    <p style="line-height:0px;">
+                                        <t t-esc="doc.customer_id.city"/>
+                                    </p>
+                                    <p style="line-height:0px;">
+                                        <t t-esc="doc.customer_id.country_id.name"/>
+                                    </p>
+                                </td>
+                                <td width="33%">
+                                </td>
+                                <td width="33%">
+                                    <p>
+                                        <t t-esc="doc.company_id.email"/>
+                                    </p>
+                                    <p>
+                                        <t t-esc="doc.reference"/>
+                                    </p>
+                                    <p>
+                                        <t t-esc="doc.offer_date"/>
+                                    </p>
+                                </td>
+                            </tr>
+
+
+                            <!-- white space -->
+                            <tr height="30px"></tr>
+
+
+                            <!-- subject -->
+                            <tr>
+                                <td colspan="3">
+                                    Subject:
+                                    <t t-esc="doc.subject"/>
+                                </td>
+                            </tr>
+
+                            <!-- white space -->
+                            <tr height="10px"></tr>
+
+                            <!-- content -->
+                            <tr>
+                                <td colspan="3">
+                                    <span style="line-height:30px;"
+                                          t-raw="doc.printing_string"/>
+                                </td>
+                            </tr>
+
+
+                            <!-- sincerely -->
+
+                            <tr>
+                                <td t-foreach="doc.sincerely_ids"
+                                    t-as="sincerely_id">
+                                    <t t-esc="sincerely_id.display_name"/>
+                                    <br/>
+                                    <t t-esc="sincerely_id.job_title"/>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </t>
+
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,124 @@
+.sh_t_black-screen{
+    display: flex;
+    position: fixed;
+    background-color: rgba(0,0,0,0.7);
+    width: 100vw;
+    height: 100vh;
+    top:0px;
+    left: 0px;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999999999999;
+}
+
+
+.sh_t_loading{
+    display: flex;
+    width: 150px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.sh_t__container{
+    width: 100%;
+    height: calc(100vh - 46px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sh_t__info-container{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 70%;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+    border-radius: 5px;
+    height: 80%;
+}
+
+
+.sh_t__cross_section{
+    display: flex;
+    width: 100%;
+    flex-basis: 10%;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    font-size: 30px;
+    color: #333;
+}
+
+.sh_t__cross_section span{
+    display: flex;
+    cursor: pointer;
+}
+
+
+.sh_t_customer-section{
+    display: flex;
+    width: 100%;
+    flex-basis: 10%;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    font-size: 23px;
+    color: #333;
+}
+
+.sh_t_po-info,.sh_t_po-info-header{
+    display: flex;
+    width: 97%;
+    border-radius: 4px;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 18px;
+    min-height: 70px;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+.sh_t_po-info{
+    border:1px solid #ccc;
+    font-size: 15px;
+}
+
+.sh_t_po-info-header{
+    font-weight: bold;
+    border:2px solid purple;
+}
+
+.sh_t_po-info span{
+    display: flex;
+    flex-basis: 22%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.sh_t_po-info-lines{
+    display: flex;
+    width: 97%;
+    flex-grow: 1;
+    overflow-y: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.sh_t_po-info-lines .sh_t_po-info{
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    min-height: 70px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .sh_t__info-container{
+        flex-basis: 98%;
+    }
+}

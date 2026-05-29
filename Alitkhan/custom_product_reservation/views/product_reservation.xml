@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_reservation_view_tree" model="ir.ui.view">
+        <field name="name">product.reservation.list</field>
+        <field name="model">product.reservation</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="serial_number"/>
+                <field name="contract_id"/>
+                <field name="employee_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="product_reservation_view_form" model="ir.ui.view">
+        <field name="name">product.reservation.form</field>
+        <field name="model">product.reservation</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <header>
+                    <button name="action_submit"  type="object" string="Submit" class="btn btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_reset_draft"  type="object" string="Reset to Draft" class="btn" invisible="state != 'submit'"/>
+                    <button name="action_reserve"  type="object" string="Reserve" class="btn btn-primary"
+                             groups="custom_product_reservation.group_product_reservation_administrator" invisible="state != 'submit'"/>
+                    <button name="action_return"  type="object" string="Return" class="btn btn-primary"
+                             groups="custom_product_reservation.group_product_reservation_administrator" invisible="state != 'reservation'"/>
+                    <field name="state"  widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="serial_number" readonly="state == 'submit'"/>
+                            <field name="contract_id" readonly="state == 'submit'"/>
+                        </group>
+                        <group>
+                            <field name="employee_id" readonly="state == 'submit'"/>
+                            <field name="is_return" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="product_line_ids" readonly="state == 'submit'">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="return_quantity" column_invisible="parent.is_return == False" groups="custom_product_reservation.group_product_reservation_administrator"/>
+                                    <field name="used_quantity" column_invisible="parent.is_return == False" groups="custom_product_reservation.group_product_reservation_administrator"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_reservation_view_search" model="ir.ui.view">
+        <field name="name">product.reservation.form</field>
+        <field name="model">product.reservation</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+                <filter name="my_purchases" string="My Purchases" domain="[('employee_id.user_id', '=', uid)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_product_reservation" model="ir.actions.act_window">
+        <field name="name">Product Reservation</field>
+        <field name="res_model">product.reservation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="product_reservation_menu_root" name="Product Reservation" groups="custom_product_reservation.group_product_reservation_user"/>
+    <menuitem id="menu_product_reservation" name="Product Reservation" action="action_product_reservation" parent="product_reservation_menu_root" sequence="0"/>
+</odoo>

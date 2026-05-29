@@ -1,0 +1,18 @@
+.o_one2many_tree {
+    margin: 8px 0;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.o_one2many_tree .table {
+    margin-bottom: 0;
+}
+
+.o_one2many_tree th {
+    text-transform: capitalize;
+    font-size: 0.9em;
+}
+
+.o_one2many_tree td {
+    font-size: 0.85em;
+}

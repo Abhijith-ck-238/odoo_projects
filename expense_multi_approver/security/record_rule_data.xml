@@ -1,0 +1,9 @@
+<odoo>
+	<data>
+
+		<record id="hr_expense.ir_rule_hr_expense_sheet_approver" model="ir.rule">
+            <field name="domain_force">['|', '|', ('user_ids', 'in', user.id), ('user_id', '=', user.id), ('employee_id.user_id', '=', user.id)]</field>        
+        </record>
+
+	</data>
+</odoo>

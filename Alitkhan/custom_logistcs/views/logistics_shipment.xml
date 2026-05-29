@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record id="logistics_shipment_view_inherit" model="ir.ui.view">
+            <field name="name">logistics shipment</field>
+            <field name="model">logistics.shipment</field>
+            <field name="inherit_id" ref="logistics.shipment_form" />
+            <field name="arch" type="xml">
+                <button name="redirect_to_pos" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="redirect_to_routes" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="redirect_to_routes" position="after">
+                    <button name="action_bill_lines" type="object" class="oe_stat_button"
+                        icon="fa-tasks" groups="" >
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">Bill Lines</span>
+                            <field name="bill_count" widget="statinfo" nolabel="1" />
+                        </div>
+                    </button>
+                </button>
+                <field name="origin_ids" position="before">
+                   <field name="purchase_id" invisible="1"/>
+                </field>
+                 <field name="contract_ids" position="before">
+                   <field name="contract_id" invisible="1"/>
+                </field>
+                <field name="customer" position="replace">
+                    <field name="customer" invisible="1" readonly="status != 'draft'" domain="[('employee','=',False)]"/>
+                </field>
+                <field name="vendor" position="replace">
+                    <field name="vendor"  invisible="multi_vendor" readonly="status != 'draft'" domain="[('is_company','=',True)]"/>
+                </field>
+                <field name="multi_vendor" position="replace">
+                    <field name="multi_vendor" readonly="status != 'draft'" invisible="1"/>
+                </field>
+                <field name="tags_ids" position="replace">
+                    <field name="tags_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" readonly="status != 'draft'" invisible="1"/>
+                </field>
+                <field name="ratio" position="replace">
+                    <field name="ratio"  decoration-danger="ratio &gt; 1" invisible="1"/>
+                </field>
+                <button name="get_from_pos" position="replace">
+                    <button name="get_from_pos" type="object" string="Get From PO's" class="oe_highlight" invisible="not origin_is_selected"/>
+                </button>
+                <page name="shipment" position="replace">
+                    <page name='shipment' string='Shipment Items Lines' invisible="1">
+                            <field name="shipment_lines" readonly="status == 'done'">
+                                <list editable="top">
+                                    <field name="product_id" width="200px"/>
+                                    <field name="vendors" column_invisible="not parent.multi_vendor" required="1"/>
+                                    <field name="qty"/>
+                                    <field name="unit_price"  invisible="1"/>
+                                    <field name="amount_total"  sum="Total Amounts"/>
+                                </list>
+                            </field>
+                    </page>
+                </page>
+
+                <page name="shipment" position="before">
+                    <page name="shipment_details" string="Shipment Details">
+                        <group>
+                            <group>
+                                <field name="purchase_total"/>
+                                <field name="shipment_value"/>
+                                <field name="fees_percentage"/>
+                                <field name="bill_total"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name="shipment_type_details" string="Shipment Type Details">
+                        <field name="shipment_type_line_ids">
+                            <list editable="bottom">
+                                <field name="partner_id"/>
+                                <field name="shipment_type_id"/>
+                                <field name="total_value"/>
+                                <field name="per_percentage"/>
+                            </list>
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+        <record id="logistics_shipment_tree_search_more" model="ir.ui.view">
+            <field name="name">logistics_shipment.tree.search.more</field>
+            <field name="model">logistics.shipment</field>
+            <field name="arch" type="xml">
+                <list string="Shipments">
+                    <field name="name_seq"/>
+                    <field name="status" />
+                    <field name="contract_ids" widget="many2many_tags"/>
+                    <field name="origin_ids" widget="many2many_tags"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="logistics_shipment_tree" model="ir.ui.view">
+            <field name="name">logistics.shipment.tree.inherit.custom.logistics</field>
+            <field name="model">logistics.shipment</field>
+            <field name="inherit_id" ref="logistics.logistics_shipment_tree" />
+            <field name="arch" type="xml">
+                <field name="ratio" position="after">
+                    <field name="purchase_total" optional="hide"/>
+                    <field name="shipment_value" optional="hide"/>
+                    <field name="fees_percentage" optional="hide"/>
+                    <field name="bill_total" optional="hide"/>
+                </field>
+                <field name="customer" position="replace"/>
+                <field name="vendor" position="replace"/>
+                <field name="multi_vendor" position="replace"/>
+                <field name="shipment_total" position="replace"/>
+                <field name="ratio" position="replace"/>
+            </field>
+        </record>
+</odoo>

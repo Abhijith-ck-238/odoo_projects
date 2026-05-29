@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_compute_contract_in_warranty" model="ir.cron">
+        <field name="name">Compute is contract in warranty</field>
+        <field name="model_id" ref="model_contract_contract"/>
+        <field name="state">code</field>
+        <field name="code">model.compute_contract_in_warranty()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+    </record>
+
+    <record id="ir_cron_map_products" model="ir.cron">
+        <field name="name">Map Technical products</field>
+        <field name="model_id" ref="model_technical_product"/>
+        <field name="state">code</field>
+        <field name="code">model.map_technical_products()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="active">False</field>
+    </record>
+
+    <record id="ir_cron_map_contract_products" model="ir.cron">
+        <field name="name">Map Contract products</field>
+        <field name="model_id" ref="model_technical_product"/>
+        <field name="state">code</field>
+        <field name="code">model.map_contract_products()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="active">False</field>
+    </record>
+</odoo>

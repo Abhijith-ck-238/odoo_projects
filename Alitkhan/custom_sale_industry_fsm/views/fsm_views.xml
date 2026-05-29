@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="industry_fsm.project_task_action_fsm" model="ir.actions.act_window">
+            <field name="name">My Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">map,kanban,gantt,calendar,list,form,activity</field>
+            <field name="search_view_id" ref="industry_fsm.project_task_view_search_fsm"/>
+            <field name="domain">[('is_fsm', '=', True)]</field>
+            <field name="context">{
+                'fsm_mode': True,
+                'search_default_my_tasks': True,
+                'search_default_planned_future': True,
+                'search_default_planned_today': True,
+                'search_default_last_30_days': True,
+                'search_default_groupby_stage': 1,
+                }</field>
+            <field name="help" type="html">
+                <p class='o_view_nocontent_smiling_face'>No future Tasks planned</p>
+                <p>You can create one for yourself by clicking on Create.</p>
+            </field>
+        </record>
+
+
+        <record id="industry_fsm.project_task_action_all_fsm" model="ir.actions.act_window">
+            <field name="name">All Tasks</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">kanban,gantt,calendar,map,pivot,graph,list,form,activity</field>
+            <field name="search_view_id" ref="industry_fsm.project_task_view_search_fsm"/>
+            <field name="domain">[('is_fsm', '=', True)]</field>
+            <field name="context">{
+                'fsm_mode': True,
+                'default_user_id': False,
+                 'search_default_last_30_days': True,
+                'search_default_groupby_stage': 1,
+                'fsm_task_kanban_whole_date': 1,
+                }
+            </field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new task
+                </p>
+                <p>
+                    There are currently no tasks, click on create to create one
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

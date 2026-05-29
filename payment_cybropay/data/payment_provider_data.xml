@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="payment_provider_cybropay" model="payment.provider">
+            <field name="name">CybroPay Online</field>
+            <field name="code">cybropay</field>
+            <field name="redirect_form_view_id" ref="payment_cybropay_redirect_form"/>
+            <field name="payment_method_ids" eval="[(6, 0, [ref('payment_method_cybropay')])]"/>
+        </record>
+        <record id="payment_provider_cybropay_direct" model="payment.provider">
+            <field name="name">CybroPay Direct</field>
+            <field name="code">cybropay_direct</field>
+            <field name="inline_form_view_id" ref="payment_cybropay_inline_form"/>
+            <field name="payment_method_ids" eval="[(6, 0, [ref('payment_method_cybropay_direct')])]"/>
+        </record>
+    </data>
+</odoo>

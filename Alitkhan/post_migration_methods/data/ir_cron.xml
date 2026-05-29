@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--        scheduled action for removing html tag in description-->
+    <record id="action_fetch_ticket_type" model="ir.actions.server">
+        <field name="name">Fetch Ticket Type</field>
+        <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+        <field name="binding_model_id" ref="helpdesk.model_helpdesk_ticket"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.fetchTicketType()</field>
+    </record>
+
+<!--    &lt;!&ndash;        scheduled action for removing html tag in description&ndash;&gt;-->
+<!--    <record id="action_fetch_co_person" model="ir.actions.server">-->
+<!--        <field name="name">Fetch Co Person</field>-->
+<!--        <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>-->
+<!--        <field name="binding_model_id" ref="helpdesk.model_helpdesk_ticket"/>-->
+<!--        <field name="binding_view_types">list</field>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">action = records.fetchTicketType()</field>-->
+<!--    </record>-->
+
+    <!--        scheduled action for removing html tag in description-->
+    <record id="action_ticket_convert_to_task" model="ir.actions.server">
+        <field name="name">Remove html tag</field>
+        <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+        <field name="binding_model_id" ref="helpdesk.model_helpdesk_ticket"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_remove_html_tag()</field>
+    </record>
+
+    <!--        scheduled action for setting the res_id in attachments in helpdesk  -->
+    <record id="action_set_attachment_res_id" model="ir.actions.server">
+        <field name="name">Set attachment res_id</field>
+        <field name="model_id" ref="contracts.model_contract_contract"/>
+        <field name="binding_model_id"
+               ref="contracts.model_contract_contract"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.set_attachment_data()</field>
+    </record>
+    <record id="ir_cron_clean_fs_stages" model="ir.cron">
+        <field name="name">Remove unwanted field service stages</field>
+        <field name="model_id" ref="model_project_task_type"/>
+        <field name="state">code</field>
+        <field name="code">model.clean_fs_stages()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">False</field>
+    </record>
+
+    <!-- Scheduled action to fix old discuss messages with missing 'Message posted from' prefix -->
+    <record id="ir_cron_fix_discuss_messages" model="ir.cron">
+        <field name="name">Fix Old Discuss Messages</field>
+        <field name="model_id" ref="mail.model_discuss_channel"/>
+        <field name="state">code</field>
+        <field name="code">model.fix_old_discuss_messages()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active">False</field>
+<!--        <field name="numbercall">1</field>-->
+    </record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+<!--        <record id="action_report_xlsx_overdue_sales" model="ir.actions.report">-->
+<!--            <field name="name">Report Xlsx Overdue Sales</field>-->
+<!--            <field name="model">account.move</field>-->
+<!--            <field name="report_type">xlsx</field>-->
+<!--            <field name="report_name">custom_sales.report_xlsx</field>-->
+<!--            <field name="report_file">custom_sales.report_xlsx</field>-->
+<!--            <field name="print_report_name">'Report Xlsx'</field>-->
+<!--        </record>-->
+
+
+
+         <record id="action_report_xlsx_overdue_sales_report" model="ir.actions.server">
+            <field name="name">Report Xlsx Overdue Sales</field>
+            <field name="model_id" ref="model_sale_order"/>
+<!--            <field name="binding_model_id" ref="model_project_task"/>-->
+<!--            <field name="binding_view_types">list,form</field>-->
+<!--            <field name="binding_type">report</field>-->
+            <field name="state">code</field>
+            <field name="code">action = records.action_overdue_sales_report_excel()</field>
+        </record>
+            <!--    Hiding the default menu PDF quote from the sale order print menu    -->
+         <record id="sale.action_report_saleorder" model="ir.actions.report">
+            <field name="name">PDF Quote</field>
+            <field name="binding_model_id" eval="False"/>  <!-- removes the action from the Print menu (forced False value for update) -->
+        </record>
+
+    </data>
+</odoo>

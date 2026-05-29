@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<odoo>
+    <record id="view_production_lot_view_tree" model="ir.ui.view">
+        <field name="name">stock.production.lot.tree.inherit.product.expiry</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <field name="use_date" position="before">
+                <field name="date_month"/>
+            </field>
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-danger">use_date and (use_date &lt; current_date)</attribute>
+                <attribute name="decoration-success">use_date and (use_date &gt; date_month)</attribute>
+                <attribute name="decoration-warning">use_date and (use_date &gt; current_date) and (use_date &lt; date_month)</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

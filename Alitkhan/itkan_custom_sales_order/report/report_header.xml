@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <data>
+
+        <template id="offering_so_header">
+            <div class="header" style="margin-top:50px;">
+                <div class="row">
+                    <div  class="col-8 text-left" >
+                        <span style="font-family: 'Times New Roman', Times, serif;font-style:italic;font-weight:bold;color:#909090;font-size:56px;">AL ITKAN</span>
+                    </div>
+                    <div  class="col-4 text-right" style="margin-top:28px;">
+                        <p style="font-family: 'Times New Roman', Times, serif;font-style:italic;font-size:20px;color:#909090;">Sale Order <span t-field="o.name" /></p>
+                    </div> 
+                </div>
+
+                <div class="row">
+                    <div class="col-12" style="border:1px solid black;"/>
+                </div>
+            </div>
+
+        </template>
+
+
+
+
+
+
+
+    </data>
+</odoo>

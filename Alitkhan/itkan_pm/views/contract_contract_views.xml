@@ -1,0 +1,16 @@
+<odoo>
+	<data>
+
+		<record id="contract_contract_form" model="ir.ui.view">
+			<field name="name">contract.contract.pm.form</field>
+			<field name="model">contract.contract</field>
+			<field name="inherit_id" ref="contracts.form"/>
+			<field name="arch" type="xml">
+				<field name="signed_date" position="after">
+					<field name="interval"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</odoo>

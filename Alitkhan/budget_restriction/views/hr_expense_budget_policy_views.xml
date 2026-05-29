@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- list View -->
+    <record id="view_hr_expense_budget_policy_tree" model="ir.ui.view">
+        <field name="name">hr.expense.budget.policy.tree</field>
+        <field name="model">hr.expense.budget.policy</field>
+        <field name="arch" type="xml">
+            <list string="Expense Budget Policies">
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="time_bucket"/>
+                <field name="cap_amount"/>
+                <field name="budget_owner_id"/>
+                <field name="state"/>
+                <field name="available_amount" optional="hide"/>
+                <field name="consumption_percentage" optional="hide"/>
+
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_expense_budget_policy_form" model="ir.ui.view">
+        <field name="name">hr.expense.budget.policy.form</field>
+        <field name="model">hr.expense.budget.policy</field>
+        <field name="arch" type="xml">
+            <form string="Expense Budget Policy" class="o_form_full_width">
+                 <header>
+                    <field name="state" widget="statusbar" statusbar_visible="open,achieved,closed" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived"
+                        bg_color="bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="!account.group_account_manager" options="{'no_open': True}"/>
+                            <field name="company_id" groups="account.group_account_manager"/>
+                        </group>
+                        <group>
+                            <field name="time_bucket"/>
+                            <field name="custom_date_from" invisible="time_bucket != 'custom'"/>
+                            <field name="custom_date_to" invisible="time_bucket != 'custom'"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!-- Scope -->
+                        <page string="Scope">
+                            <group>
+                                <field name="budget_owner_id"/>
+                                <field name="scope_employee_ids" widget="many2many_tags"/>
+                               <field name="scope_analytic_plan_ids" widget="many2many_tags"/>
+                                <field name="analytic_precision" invisible="1"/>
+                                <field name="analytic_distribution"
+                                       widget="analytic_distribution"
+                                       invisible="not scope_analytic_plan_ids"
+                                       options="{'plan_id': 'scope_analytic_plan_ids'}"/>
+                                <field name="scope_product_ids" widget="many2many_tags"/>
+                                <field name="scope_tag_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+
+                        <!-- Budget -->
+                        <page string="Budget Configuration">
+                            <group>
+                                <field name="currency_id"/>
+                                <field name="cap_amount"/>
+                                <field name="grace_percentage"/>
+                                <field name="count_advances"/>
+                            </group>
+                        </page>
+
+                        <!-- Effective Period -->
+                        <page string="Effective Period">
+                            <group>
+                                <field name="bucket_amount"/>
+                                <field name="effective_from"/>
+                                <field name="effective_to"/>
+                            </group>
+                        </page>
+
+                         <!-- Other Info -->
+                        <page string="Other Info">
+                            <group>
+                                <field name="journal_id" groups="!account.group_account_manager" options="{'no_open': True}"/>
+                                <field name="journal_id" groups="account.group_account_manager"/>
+                                <field name="budget_consumption_id" options="{'no_quick_create': True}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_hr_expense_budget_policy_search" model="ir.ui.view">
+        <field name="name">hr.expense.budget.policy.search</field>
+        <field name="model">hr.expense.budget.policy</field>
+        <field name="arch" type="xml">
+            <search string="Search Budget Policies">
+                <!-- Quick search fields -->
+                <field name="name"/>
+                <field name="budget_owner_id"/>
+
+                <!-- State Filters -->
+                <filter string="Open" name="filter_open" domain="[('state','=','open')]"/>
+                <filter string="Achieved" name="filter_achieved" domain="[('state','=','achieved')]"/>
+                <filter string="Closed" name="filter_closed" domain="[('state','=','closed')]"/>
+
+                <!-- Separator -->
+                <separator/>
+
+                <!-- Group By -->
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+     <record id="action_budget_policy_dynamic_view" model="ir.actions.server">
+    <field name="name">Budget Policies</field>
+    <field name="model_id" ref="budget_restriction.model_hr_expense_budget_policy"/>
+    <field name="state">code</field>
+         <field name="groups_id" eval="[
+        (4, ref('account.group_account_manager')),
+        (4, ref('hr_expense.group_hr_expense_team_approver')),
+    ]"/>
+    <field name="code">
+special_users = [
+    env.ref('__export__.res_users_68_0bae31a5').id,
+    env.ref('__export__.res_users_1144_d8379cef').id,
+]
+# Check if the user belongs to the budget owner group
+if env.user.has_group('account.group_account_manager'):
+    domain = []
+elif env.user.has_group('hr_expense.group_hr_expense_team_approver'):
+    if env.user.id in special_users:
+        domain = ['|', ('budget_owner_id', '=', env.user.id), ('scope_tag_ids.name', '=', 'Tech Group')]
+    else:
+        domain = [('budget_owner_id', '=', env.user.id)]
+
+search_view_id = env.ref('budget_restriction.view_hr_expense_budget_policy_search').id
+
+action = {
+    'name': 'Budget Policies',
+    'type': 'ir.actions.act_window',
+    'res_model': 'hr.expense.budget.policy',
+    'view_mode': 'list,form',
+    'domain': domain,
+    'search_view_id': [search_view_id, 'search'],
+}
+    </field>
+</record>
+
+    <!-- Root Menu: Expense Budgets -->
+    <menuitem id="menu_hr_expense_budget_root"
+              name="Budget"
+              parent="hr_expense.menu_hr_expense_root"
+              sequence="50"
+              groups="account.group_account_manager,hr_expense.group_hr_expense_team_approver"/>
+
+    <!-- Sub Menu: Budget Policies -->
+    <menuitem id="menu_hr_expense_budget_policy"
+              name="Budget Policies"
+              parent="menu_hr_expense_budget_root"
+              action="action_budget_policy_dynamic_view"
+              sequence="10"
+              />
+</odoo>

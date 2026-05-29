@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data noupdate="0">
+    <odoo>
+    <record id="pledge_asset_view_kanban" model="ir.ui.view">
+        <field name="name">pledge.ticket.kanban</field>
+        <field name="model">pledge.pledge</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id"
+                    class="o_kanban_small_column o_kanban_training_ticket"
+                    quick_create="false">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="bid_ref"/>
+                <field name="issuing_bank_name"/>
+                <field name="related_contract"/>
+                <field name="lca_type"/>
+                <field name="issuing_bank_ref"/>
+                <field name="amount"/>
+                <field name="status"/>
+                <field name="color"/>
+                <field name="active"/>
+                <field name="message_needaction_counter"/>
+
+                <templates>
+                    <t t-name="menu">
+                        <t t-if="widget.editable">
+                            <a role="menuitem" type="open"
+                               class="dropdown-item">Edit
+                            </a>
+                        </t>
+                        <t t-if="widget.deletable">
+                            <a role="menuitem" type="delete"
+                               class="dropdown-item">Delete
+                            </a>
+                        </t>
+                        <a role="menuitem" type="object" name="toggle_active"
+                           class="dropdown-item">
+                            <t t-if="record.active.raw_value">Archive</t>
+                            <t t-else="">Restore</t>
+                        </a>
+                        <field name="color" widget="kanban_color_picker"/>
+                    </t>
+                    <t t-name="card">
+                        <div class="oe_kanban_content">
+                            <field class="fw-bold fs-5" name="name"/>
+                            <div>
+                                <strong>Bid Reference:</strong>
+                                <field name="bid_ref"/>
+                            </div>
+                            <div>
+                                <strong>Bank:</strong>
+                                <field name="issuing_bank_name"
+                                       class="text-truncate"/>
+                            </div>
+                            <div>
+                                <strong>Bank Reference:</strong>
+                                <field name="issuing_bank_ref"/>
+                            </div>
+                            <div class="text-truncate">
+                                <strong>Contract:</strong>
+                                <field name="related_contract"
+                                       class="text-truncate"/>
+                            </div>
+                            <div>
+                                <strong>Type:</strong>
+                                <field name="lca_type"/>
+                            </div>
+                            <div>
+                                <strong>Amount:</strong>
+                                <field name="amount" widget="monetary"/>
+                            </div>
+
+                            <div class="mt-2">
+                                <field name="partner_id"
+                                       class="text-truncate"/>
+                            </div>
+
+                            <div class="mt-2">
+                                <span class="badge"
+                                      t-attf-class="badge text-bg-#{record.status.raw_value == 'approved' ? 'success' : (record.status.raw_value == 'pending' ? 'warning' : 'secondary')}">
+                                    <field name="status"/>
+                                </span>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+<!--    &lt;!&ndash; find the ir.model.data record &ndash;&gt;-->
+<!--    <function model="ir.model.data" name="search">-->
+<!--        <value eval="[('module', '=', 'custom_pledges'),-->
+<!--                       ('name',   '=', 'action_pledge_assets_kanban')]"/>-->
+<!--    </function>-->
+
+<!--    &lt;!&ndash; write() will act on the ids returned by the previous search &ndash;&gt;-->
+<!--    <function model="ir.model.data" name="write">-->
+<!--        <value eval="{'noupdate': False}"/>-->
+<!--    </function>-->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'custom_pledges'), ('name','=','action_pledge_assets_kanban')] "/>
+            </function>
+            <value eval=" {'noupdate': False} "/>
+        </function>
+
+    <record id="action_pledge_assets_kanban" model="ir.actions.act_window">
+        <field name="name">L/C Process</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pledge.pledge</field>
+        <field name="domain">[('lc_type_id','!=', False)]</field>
+        <field name="view_mode">kanban,form,list</field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+                            (0, 0, {'view_mode': 'kanban', 'view_id': ref('custom_pledges.pledge_asset_view_kanban')}),
+                            (0, 0, {'view_mode': 'form', 'view_id': ref('custom_pledges.pledge_pledge_view_form')}),
+                            ]"/>
+    </record>
+
+    <menuitem id="pledge_Kanban" name="L/C Process"
+              parent="pledge_assets.menu_root" sequence="1"
+              action="action_pledge_assets_kanban"
+              groups="group_pledge_view_only,group_pledge_view_and_edit"/>
+    <menuitem name="Pledges" id="pledge_assets.menu_root"
+              web_icon="pledge_assets,static/description/icon.png"
+              groups="pledge_assets.pledge_user,custom_pledges.group_pledge_view_only,group_pledge_view_and_edit"/>
+    <menuitem name="Pledge" id="custom_pledges.menu_pledge"
+              action="pledge_assets.pledge_window"
+              groups="pledge_assets.pledge_user"
+              parent="pledge_assets.menu_root" sequence="0"/>
+
+</odoo>
+</data>
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="config_tempalte_xlsx_action" model="ir.actions.server">
+            <field name="name">Export Template</field>
+            <field name="model_id" ref="model_offering_config"/>
+            <field name="binding_model_id" ref="model_offering_config"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="binding_type">report</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.action_export_template_report_excel()
+            </field>
+        </record>
+
+
+        <record id="print_offering_offering_record" model="ir.actions.report">
+            <field name="name">Offering Report</field>
+            <field name="model">offering.offering</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">itkan_offering.offering_offering_report</field>
+            <field name="report_file">itkan_offering.offering_offering_report</field>
+            <field name="print_report_name">'Ref-%s Offer' % (object.ref_number)</field>
+            <!--            <field name="print_report_name">'Attendee List - %s' % (object.name)</field>-->
+            <field name="attachment"/>
+            <field name="binding_model_id" ref="itkan_offering.model_offering_offering"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="binding_type">report</field>
+        </record>
+
+
+        <record id="print_offering_offering_record_ar" model="ir.actions.report">
+            <field name="name">Offering Report - Arabic</field>
+            <field name="model">offering.offering</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">itkan_offering.offering_offering_report_ar</field>
+            <field name="report_file">itkan_offering.offering_offering_report_ar</field>
+            <field name="print_report_name">'Ref-%s Offer' % (object.ref_number)</field>
+            <field name="attachment"/>
+            <field name="binding_model_id" ref="itkan_offering.model_offering_offering"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>
+

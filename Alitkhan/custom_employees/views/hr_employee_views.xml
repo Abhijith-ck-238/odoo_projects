@@ -1,0 +1,113 @@
+<odoo>
+    <data>
+        <record id="employee_form_extend" model="ir.ui.view">
+            <field name="name">employee.form.extend</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page name="documents" string="Documents">
+                        <group>
+                            <group>
+                                <field name="passport"/>
+                                <field name="photo"/>
+                                <field name="marriage_certificate"/>
+                                <field name="old_schengen_visa"/>
+                                <field name="sanad"/>
+                            </group>
+                            <group>
+                                <field name="bank_statement"/>
+                                <field name="driving_license"/>
+                                <field name="graduation_certificate"/>
+                                <field name="housing_card"/>
+                                <field name="ration_card"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="unified_card_nationality"
+                                       widget="many2many_binary"/>
+                                <field name="family_ids"
+                                       widget="many2many_binary"/>
+                            </group>
+                            <group>
+                                <field name="family_passports"
+                                       widget="many2many_binary"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//form/sheet/group/group[2]/field[@name='department_id']"
+                       position="after">
+                    <field name="new_divisions"/>
+                    <field name="new_units"/>
+                    <field name="is_set_division_and_unit_visible"
+                           invisible="1"/>
+                </xpath>
+                <xpath expr="//form/header" position="inside">
+                    <button name="%(action_set_division_and_unit)d"
+                            string="Set Division and Units" type="action"
+                            class="oe_highlight"
+                            invisible = 'not is_set_division_and_unit_visible'/>
+                </xpath>
+                <xpath expr="//group[@name='managers']" position="inside">
+                    <field name="budget_deputy"/>
+                    <field name="timeoff_deputy"/>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem
+                id="hr_org_chart.menu_hr_employee_org_chart"
+                parent="hr.hr_menu_hr_reports"
+                sequence="2"
+                name="Organizational Chart"
+                groups="base.group_user"
+        />
+
+        <record id="hr_sp_form_extend" model="ir.ui.view">
+            <field name="name">hr_sp.search_extend</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//searchpanel//field[@name='divisions']"
+                       position="replace">
+                    <field name="new_divisions" icon="fa-users"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_employee_form_customization" model="ir.ui.view">
+            <field name="name">hr.employee.form customization</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="custom_employees.employee_form_extend"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='old_schengen_visa']" position="attributes">
+                    <attribute name="string">Old Schengen Visa</attribute>
+                </xpath>
+                <xpath expr="//field[@name='sanad']" position="attributes">
+                <attribute name="string">sanad</attribute>
+              </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_holidays_filter_inherit_all_approver" model="ir.ui.view">
+        <field name="name">hr.holidays.filter.inherit.all.approver</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//filter[@name='approve']" position="before">
+            <filter domain="[('employee_id.new_units', 'ilike', 'mech')]"
+                    name="studio_filter_Izg4C"
+                    string="Mech"/>
+            <filter domain="[('employee_id.new_divisions', 'ilike', 'Technical')]"
+                    name="studio_filter_Y7IOo"
+                    string="Technical"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    </data>
+</odoo>

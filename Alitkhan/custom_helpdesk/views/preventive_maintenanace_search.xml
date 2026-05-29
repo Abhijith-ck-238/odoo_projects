@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_preventive_maintenance_search" model="ir.ui.view">
+            <field name="name">preventive.maintenance.search</field>
+            <field name="model">preventive.maintainence</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="active"/>
+                    <field name="this_month"/>
+                    <field name="next_month"/>
+                    <filter string="This Month" name="this_month"
+                            domain="[( 'this_month', '=' ,True) ]"/>
+                    <filter string="Next Month" name="next_month"
+                            domain="[( 'next_month', '=' , True)]"/>
+                    <filter string="Archived" name="inactive"
+                            domain="[('active', '=', False)]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Modality" name="modality"
+                                context="{'group_by':'modality'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="itkan_pm.action_window">
+            <field name="name">Preventive Maintainence Window</field>
+            <field name="res_model">preventive.maintainence</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id"
+                   ref="view_preventive_maintenance_search"/>
+        </record>
+    </data>
+</odoo>

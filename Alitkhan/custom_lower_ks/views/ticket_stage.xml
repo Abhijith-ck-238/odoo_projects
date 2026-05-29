@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="lower_ks_ticket_stage_view_tree" model="ir.ui.view">
+        <field name="name">lower.ks.ticket.stage.list</field>
+        <field name="model">lower.ks.ticket.stage</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+                <field name="sequence"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="lower_ks_ticket_stage_view_form" model="ir.ui.view">
+        <field name="name">lower.ks.ticket.stage.form</field>
+        <field name="model">lower.ks.ticket.stage</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="lower_ks_ticket_stage_view_search" model="ir.ui.view">
+        <field name="name">lower.ks.ticket.stage.search</field>
+        <field name="model">lower.ks.ticket.stage</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_lower_ks_ticket_stage" model="ir.actions.act_window">
+        <field name="name">Ticket Stages</field>
+        <field name="res_model">lower.ks.ticket.stage</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="lower_ks_menu_root" name="Lower KS"/>
+    <menuitem id="lower_ks_configuration" name="Configuration" parent="lower_ks_menu_root" sequence="1" groups="custom_lower_ks.group_lower_ks_administrator"/>
+    <menuitem id="menu_lower_ks_ticket_stage" name="Ticket Stage" action="action_lower_ks_ticket_stage" parent="lower_ks_configuration" sequence="3"/>
+</odoo>

@@ -1,0 +1,124 @@
+/* Popup Container */
+.dialog-custom-popup {
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+/* Dialog Box */
+.dialog-custom-popup .dialog {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px; /* Adjust width for better spacing */
+    max-width: 90%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    animation: dialogFadeIn 0.3s ease-in-out;
+}
+
+/* Grid Layout */
+.dialog-custom-popup .d-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px; /* Increase gap for better spacing */
+    padding: 10px 0;
+}
+
+/* Card Styling */
+.dialog-custom-popup .card {
+    border: 2px solid transparent; /* No border by default */
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+.dialog-custom-popup .card:hover {
+    border-color: #719500; /* Greenish border color on hover */
+    background: #e9ecef;
+    transform: translateY(-5px); /* Change on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+/* Card Content */
+.dialog-custom-popup .card-body {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+/* Icon Styling */
+.dialog-custom-popup .card-body i {
+    font-size: 24px; /* Increase icon size */
+    color: #719500; /* Greenish icon color */
+}
+
+/* Checkbox */
+.dialog-custom-popup .form-check-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Labels */
+.dialog-custom-popup .form-check-label {
+    font-size: 1rem; /* Increase font size */
+    color: #333;
+}
+
+/* Footer Buttons */
+.dialog-custom-popup .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px; /* Increase gap */
+    padding-top: 20px; /* Increase padding */
+}
+
+/* Button Styling */
+.dialog-custom-popup .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px; /* Increase font size */
+    transition: all 0.3s ease-in-out;
+}
+
+.dialog-custom-popup .btn-primary {
+    background: #5cb85c; /* Greenish primary button color */
+    border: none;
+    color: white;
+}
+
+.dialog-custom-popup .btn-primary:hover {
+    background: #4cae4c; /* Greenish hover color */
+}
+
+.dialog-custom-popup .btn-secondary {
+    background: #6c757d; /* Secondary button color */
+    border: none;
+    color: white;
+}
+
+.dialog-custom-popup .btn-secondary:hover {
+    background: #5a6268; /* Secondary hover color */
+}
+
+/* Animation */
+@keyframes dialogFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

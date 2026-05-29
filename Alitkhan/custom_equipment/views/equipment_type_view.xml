@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="equipment_type_view_tree" model="ir.ui.view">
+        <field name="name">equipment.type.list</field>
+        <field name="model">equipment.type</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="equipment_type_view_form" model="ir.ui.view">
+        <field name="name">equipment.type.form</field>
+        <field name="model">equipment.type</field>
+        <field name="arch" type="xml">
+            <form string="Form Views">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="equipment_type_view_search" model="ir.ui.view">
+        <field name="name">equipment.type.form</field>
+        <field name="model">equipment.type</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_equipment_type" model="ir.actions.act_window">
+        <field name="name">Equipment Type</field>
+        <field name="res_model">equipment.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="equipment_configuration_menu" name="Configuration" parent="equipment_menu_root" sequence="1"/>
+    <menuitem id="equipment_type_menu" name="Equipment Type" action="action_equipment_type" parent="equipment_configuration_menu" sequence="1"/>
+</odoo>

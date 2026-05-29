@@ -1,0 +1,13 @@
+<odoo>
+  <data>
+  <record id="service_report_manager" model="res.groups">
+      <field name="name">Service Report Manager</field>
+      <field name="category_id" ref="base.module_category_hidden"/>
+<!--      [(4,2) is replaced by user_admin-->
+      <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+      <field name="comment">Only Members from this group can access service reports</field>
+  </record>
+    
+
+  </data>
+</odoo>

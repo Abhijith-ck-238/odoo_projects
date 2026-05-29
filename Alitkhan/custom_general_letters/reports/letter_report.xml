@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_general_letter_report_tree" model="ir.ui.view">
+        <field name="name">general.letter.report.tree</field>
+        <field name="model">general.letter.report</field>
+        <field name="arch" type="xml">
+            <list string="General Letters Analysis">
+                <field name="letter_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_general_letter_report_pivot" model="ir.ui.view">
+        <field name="name">general.letter.report.pivot</field>
+        <field name="model">general.letter.report</field>
+        <field name="arch" type="xml">
+            <pivot string="General Letters Analysis" disable_linking="True">
+                <field name="letter_id" type="row"/>
+                <field name="stage_id" type="column"/>
+                <field name="letter_type_id" type="column"/>
+                <field name="contract_id" type="column"/>
+                <field name="modality_id" type="column"/>
+                <field name="late_letters" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_general_letter_report_graph" model="ir.ui.view">
+        <field name="name">general.letter.report.graph</field>
+        <field name="model">general.letter.report</field>
+        <field name="arch" type="xml">
+            <graph string="General Letter Analysis" type="line">
+                <field name="late_letters" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+
+    <!--    <record id="general_letter_report_view_dashboard" model="ir.ui.view">-->
+    <!--        <field name="name">general.letter.report.view.dashboard</field>-->
+    <!--        <field name="model">general.letter.report</field>-->
+    <!--        <field name="mode">primary</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <dashboard>-->
+    <!--                <view type="graph" ref="custom_general_letters.view_general_letter_report_graph"/>-->
+    <!--                <group>-->
+
+    <!--                </group>-->
+    <!--                <view type="pivot" ref="custom_general_letters.view_general_letter_report_pivot"/>-->
+    <!--            </dashboard>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+    <!--        <record id="general_letter_report_action_dashboard" model="ir.actions.act_window">-->
+    <!--        <field name="name">General Letter Report Dashboard</field>-->
+    <!--        <field name="res_model">general.letter.report</field>-->
+    <!--        <field name="view_mode">kanban,graph,pivot</field>-->
+    <!--        <field name="view_id" ref="general_letter_report_view_kanban"/>-->
+    <!--    </record>-->
+
+
+    <record id="view_general_letter_report_search" model="ir.ui.view">
+        <field name="name">general.letter.report.search</field>
+        <field name="model">general.letter.report</field>
+        <field name="arch" type="xml">
+            <search string="General Letters Analysis">
+                <group expand="1" string="Group By">
+                    <filter string="Letter" name="Letter"
+                            context="{'group_by':'letter_id'}"/>
+                    <filter string="Stage" name="Stage"
+                            context="{'group_by':'stage_id'}"/>
+                    <filter string="Letter Type" name="Letter Type"
+                            context="{'group_by':'letter_type_id'}"/>
+                    <filter string="Contract" name="Contract"
+                            context="{'group_by':'contract_id'}"/>
+                    <filter string="Modality" name="Modality"
+                            context="{'group_by':'modality_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_general_letter_report" model="ir.actions.act_window">
+        <field name="name">General Letters Analysis</field>
+        <field name="res_model">general.letter.report</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_general_letter_report_search"/>
+        <field name="help">This report performs analysis on your General
+            Lettres.
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_general_letter_reporting"
+            name="Reporting"
+            parent="custom_general_letters.general_letter_menu_root"
+            sequence="50" groups="group_general_letters_administrator"/>
+    <menuitem
+            id="menu_general_letter_report"
+            name="Letters"
+            parent="menu_general_letter_reporting"
+            action="custom_general_letters.action_general_letter_report"
+            sequence="10"/>
+</odoo>

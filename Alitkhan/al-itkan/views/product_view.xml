@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ITK_product" model="ir.ui.view">
+            <field name="name">ITK_Product</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='inventory']//group[@name='group_lots_and_weight']" position="inside">
+                    <field name="custom_country_of_origin"/>
+                    <field name="dangerous_goods"/>
+                    <field name="moq"/>
+                    <field name="specifications"/>
+                    <field name="length"/>
+                </xpath>
+                <field name="name" position="after">
+                    <img src="al-itkan/static/img/danger1.png" height="30" width="30"
+                         invisible="dangerous_goods != 'Dangerous Good'"/>
+                    <img src="al-itkan/static/img/ice.png" height="30" width="30"
+                         invisible="dangerous_goods != 'Dry Ice'"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_helpdedesk_resource,helpdedesk.resource,model_helpdedesk_resource,base.group_user,1,1,1,1
+access_helpdesk_ticket_type,helpdesk.ticket.type,model_helpdesk_ticket_type,base.group_user,1,1,1,1
+access_helpdedesk_resource_category,helpdedesk.resource.category,model_helpdedesk_resource_category,base.group_user,1,1,1,1
+access_helpdedesk_exception_read,helpdesk.ticket.exception.read,model_helpdesk_ticket_exception,base.group_user,1,0,0,0
+access_helpdedesk_exception_full,helpdesk.ticket.exception.full,model_helpdesk_ticket_exception,helpdesk.group_helpdesk_manager,1,1,1,1

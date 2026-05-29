@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="contract_sub_line_wizard_view" model="ir.ui.view">
+        <field name="name">wizard for add sub lines</field>
+        <field name="model">contract.sub.line.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Add Sub line">
+                <field name="contract_product_id" invisible="1"/>
+                <field name="contract_sub_lines">
+                    <form>
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="product_char"/>
+                                    <field name="product_id"
+                                           context="{'list_view_ref': 'custom_contract.product_product_tree_inherits'}"/>
+                                    <field name="technical_product"
+                                           context="{'list_view_ref': 'custom_contract.product_product_tree_inherits'}"/>
+                                    <field name="serial_no"/>
+                                    <field name="qty"/>
+                                    <field name="price"/>
+                                    <field name="notes"/>
+                                    <field name="province_id"/>
+                                    <field name="site_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="peripherals"
+                                           widget="many2many_tags"/>
+                                    <field name="modality_id"/>
+                                    <field name="password_validity"/>
+                                    <field name="part_number"/>
+                                    <field name="is_technical_products_only"
+                                           invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name="password_validity_date"/>
+                                    <field name="functional_location"/>
+                                    <field name="health_department_id"/>
+                                    <field name="contract_type"/>
+                                    <field name="maintenance"/>
+                                    <field name="starting_date"/>
+                                    <field name="pac_date"/>
+                                    <field name="eoc_date"/>
+                                    <field name="warranty"/>
+                                    <field name="parent_product_id"
+                                           invisible="1"/>
+                                    <field name="conn" invisible="1"/>
+                                    <field name="config"/>
+
+                                    <button string="Configuration"
+                                            name="action_display_sub_units"
+                                            type="object">
+                                    </button>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                    <list>
+                        <field name="product_char"/>
+                        <field name="product_id"
+                               invisible="is_technical_products_only"
+                               context="{'list_view_ref': 'custom_contract.product_product_tree_inherits'}"/>
+                        <field name="technical_product"
+                               invisible="not is_technical_products_only"
+                               context="{'list_view_ref': 'custom_contract.product_product_tree_inherits'}"/>
+                        <field name="serial_no"/>
+                        <field name="is_technical_products_only" invisible="1"/>
+                        <field name="qty"/>
+                        <field name="peripherals" widget="many2many_tags"/>
+                        <field name="price"/>
+                        <field name="site_id"/>
+                        <field name="partner_id"/>
+                        <field name="modality_id"/>
+                        <field name="password_validity"/>
+                        <field name="password_validity_date"/>
+                        <field name="functional_location"/>
+                        <field name="contract_type"/>
+                        <field name="maintenance"/>
+                        <field name="starting_date"/>
+                        <field name="pac_date"/>
+                        <field name="eoc_date"/>
+                        <field name="warranty"/>
+                        <field name="province_id"/>
+                        <field name="health_department_id"/>
+                        <field name="part_number"/>
+                        <field name="notes"/>
+                        <field name="parent_product_id" invisible="1"/>
+                        <field name="conn" invisible="1"/>
+                    </list>
+                </field>
+                <footer>
+                    <button string="Save" class="btn-primary" type="object"
+                            name="save_sub_lines"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_contract_sub_line_wizard" model="ir.actions.act_window">
+        <field name="name">Contract sub line wizard</field>
+        <field name="res_model">contract.sub.line.wizard</field>
+        <field name="view_id" ref="contract_sub_line_wizard_view"/>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+</odoo>

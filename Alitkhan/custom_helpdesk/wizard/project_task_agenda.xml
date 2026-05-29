@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="project_task_agenda_view" model="ir.ui.view">
+            <field name="name">project.task.agenda.view.gantt</field>
+            <field name="model">project.task.agenda</field>
+            <field name="arch" type="xml">
+                <gantt
+                        default_group_by="user_id"
+                        date_start="date_start"
+                        date_stop="date_end"
+                        default_scale="week"
+                        color="user_id"
+                        scales="day,week,month,year"
+                        precision="{'day': 'hour:full', 'week': 'day:full', 'month': 'day:full', 'year': 'day:full'}"
+                        thumbnails="{'user_id': 'image_128'}"
+
+                >
+                    <field name="user_id"/>
+                    <templates>
+                        <div t-name="gantt-popover" class="container-fluid">
+                            <div class="row no-gutters">
+                                <div class="col">
+                                    <ul class="pl-1 mb-0">
+                                        <li>
+                                            <strong>Start Date:</strong>
+                                            <t t-esc="userTimezoneStartDate.format('YYYY-MM-DD hh:mm:ss A')"/>
+                                        </li>
+                                        <li>
+                                            <strong>Stop Date:</strong>
+                                            <t t-esc="date_end.format('YYYY-MM-DD hh:mm:ss A')"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </templates>
+                </gantt>
+            </field>
+        </record>
+    </data>
+</odoo>

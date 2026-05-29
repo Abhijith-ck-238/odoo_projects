@@ -1,0 +1,57 @@
+<odoo>
+  <data>
+    <record model="ir.actions.act_window" id="routes_action_window">
+      <field name="name">Routes</field>
+      <field name="res_model">shipment.route</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="logistics.action_window">
+      <field name="name">Shipments</field>
+      <field name="res_model">logistics.shipment</field>
+      <field name="view_mode">list,form,kanban</field>
+      <field name="context">{"kanban_view_ref":"logistics.logistics_shipment_kanban"}</field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="types_action_window">
+      <field name="name">Expnese Types</field>
+      <field name="res_model">logistics.shipment.transtypes</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+
+    <menuitem 
+      name="Logistics" 
+      id="logistics.menu_root"
+      web_icon="logistics,static/src/img/icon.png"
+    />
+
+
+    <menuitem 
+      name="Shipments" 
+      id="logistics.logistics_menu" 
+      parent="logistics.menu_root"
+      action="logistics.action_window"
+    />
+
+
+    <menuitem 
+      name="Types" 
+      id="logistics.types_menu" 
+      parent="logistics.menu_root"
+      action="logistics.types_action_window"
+    />
+
+    <menuitem 
+      name="All Registered Routes" 
+      id="logistics.routes_menu" 
+      parent="logistics.menu_root"
+      action="logistics.routes_action_window"
+    />
+
+
+
+  </data>
+</odoo>

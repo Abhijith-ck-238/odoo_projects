@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="project_task_type_form_industry_fsm" model="ir.ui.view">
+            <field name="name">project.task.type.form.industry.fsm</field>
+            <field name="model">project.task.type</field>
+            <field name="inherit_id"
+                   ref="itkan_helpdesk.project_task_type_form_itkan_helpdesk"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='limited_users']" position="after">
+                    <field name="move_to_stage_limited_users"
+                           widget="many2many_tags"/>
+                    <field name="check_product_cart"/>
+                    <field name="is_the_users_to_be_notified"/>
+                    <field name="out_of_this_stage_alarm_for_modality"/>
+                    <field name="out_of_this_stage_alarm_for_resources"/>
+                    <field name="is_not_send_notification"/>
+                    <field name="send_notification_to_spare_parts_responsible"/>
+                    <field name="confirm_sale_order_if_contract_in_warranty"/>
+                    <field name="confirm_sale_order_if_contract_is_expired"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

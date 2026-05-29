@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="contract_modality_view_form_inherit" model="ir.ui.view">
+        <field name="name">contract.modality.form.inherit</field>
+        <field name="model">contract.modality</field>
+        <field name="inherit_id"
+               ref="contracts.contract_modality_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group" position="after">
+                <group>
+                    <field name="spare_parts_user_ids" widget="many2many_tags"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

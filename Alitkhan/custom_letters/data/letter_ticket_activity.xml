@@ -1,0 +1,8 @@
+<odoo>
+    <record id="mail_activity_letter_ticket"
+                model="mail.activity.type">
+            <field name="name">Payment Letter Ticket</field>
+            <field name="icon">fa-bars</field>
+        <field name="res_model">letter.ticket</field>
+        </record>
+</odoo>

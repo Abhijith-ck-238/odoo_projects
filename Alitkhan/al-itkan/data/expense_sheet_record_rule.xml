@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="ir_rule_read_all_employee" model="ir.rule">
+            <field name="name">Read All Employees</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="perm_read">True</field>
+            <field name="perm_write">False</field>
+            <field name="perm_create">False</field>
+            <field name="perm_unlink">False</field>
+            <field name="domain_force">[(1, '=', 1)]</field>      
+            <field name="groups" eval="[(4, ref('hr_expense.group_hr_expense_team_approver'))]"/>      
+        </record>
+    </data>
+</odoo>

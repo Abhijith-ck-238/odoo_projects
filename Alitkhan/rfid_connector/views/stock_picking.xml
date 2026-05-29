@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="stock_picking_form_view_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.view.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id"
+               ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="js_class">rfid_picking_tag_print</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']"
+                   position="before">
+                <div class="btn btn-secondary sent_picking_label_to_printer" string="Print RFID Tag">Print RFID Tag</div>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button string="Fetch RFID Data" name="action_open_fetch_wizard" type="object"/>
+                <button string="RFID Done" name="action_open_done_wizard" type="object"/>
+                <button string="Scan Product" name="action_open_scan_wizard" type="object"/>
+            </xpath>
+            <xpath expr="//page[@name='operations']/field[@name='move_ids_without_package']/list" position="inside">
+                <field name="rfid_qty"/>
+            </xpath>
+            <xpath expr="//page[@name='operations']/field/list" position="attributes">
+                <attribute name="decoration-danger">rfid_qty and (rfid_qty &lt; product_uom_qty)</attribute>
+            </xpath>
+            <xpath expr="//page[@name='operations']" position="after">
+                <page name="extra_rfid_quantity" string="Extra RFID Quantity">
+                    <field name="rfid_extra_quantity_ids">
+                        <list edit="0">
+                            <field name="product_id"/>
+                            <field name="lot_id"/>
+                            <field name="quantity"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//notebook" position="after">
+                <field name="is_rfid_difference_exist" invisible="1"/>
+                <div invisible="not is_rfid_difference_exist">
+                    <h3 style="color:red;">There is some difference between RFID transfer and this transfer.</h3>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

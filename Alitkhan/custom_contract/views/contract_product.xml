@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="contracts_product_view_inheritt" model="ir.ui.view">
+            <field name="name">contract.product.form.inherit</field>
+            <field name="model">contract.contract</field>
+            <field name="inherit_id" ref="contracts.form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="create_pm_schedule" type="object"
+                                string="CREATE PM SCHEDULE"
+                                class="btn-primary"/>
+                    </header>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button class="oe_stat_button" name="button_view_related_pm"
+                            type="object"
+                            icon="fa-bars"
+                            invisible="pm_count == 0">
+                        <field name="pm_count" widget="statinfo"
+                               string="PM Tickets"/>
+                    </button>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_button_box')]"
+                       position="inside">
+                    <button class="oe_stat_button"
+                            name="button_view_related_pm_tickets"
+                            type="object"
+                            icon="fa-bars"
+                            invisible="helpdesk_count == 0">
+                        <field name="helpdesk_count" widget="statinfo"
+                               string="Helpdesk Tickets"
+                               style="font-size:10px;"/>
+
+                    </button>
+                </xpath>
+
+                <field name="product_lines" position="replace">
+                    <field name="product_lines"
+                           context="{'list_view_ref': 'custom_contract.contract_product_tree_view', 'form_view_ref': 'custom_contract.contract_product_form_view'}"/>
+                </field>
+                <xpath expr="//field[@name='main_contract']" position="after">
+                    <field name="x_studio_training" string="Training"/>
+                    <field name="active" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='main_contract']" position="after">
+                    <field name="comp_id"/>
+                    <field name="product_show_option" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='financial_docs2']" position="after">
+                    <field name="dx_financial_documents"
+                           widget="many2many_binary"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="contracts_product_view_inherit_studio_customization"
+                model="ir.ui.view">
+            <field name="name">
+                contract.product.form.inherit.studion.customization
+            </field>
+            <field name="model">contract.contract</field>
+            <field name="inherit_id"
+                   ref="studio_customization.odoo_studio_contract_ca3b85fd-ba6f-479d-894d-2acbb397ff0f"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_lines']/list"
+                       position="attributes">
+                    <attribute name="class">o_contract_product</attribute>
+                    <attribute name="decoration-muted">parent_product_id == False</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_char']" position="after">
+                    <field name="technical_product"
+                           context="{'list_view_ref': 'custom_contract.product_product_tree_inherits'}"
+                    />
+                </xpath>
+                <xpath expr="//field[@name='financial_docs_att']"
+                       position="after">
+                    <field name="is_technical_products_only"/>
+                </xpath>
+                <xpath expr="//field[@name='financial_docs_att']"
+                       position="after">
+                    <field name="is_eoc" invisible="1"/>
+                </xpath>
+<!--                <xpath expr="//field[@name='product_lines']/list/field[@name='qty']"-->
+<!--                       position="replace">-->
+<!--                    <field name="qty" optional="1"/>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='product_lines']/list/field[@name='part_number']"
+                       position="replace">
+                    <field name="part_number" optional="1"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/list/field[@name='starting_date']"
+                       position="replace">
+                    <field name="starting_date" optional="1"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/list/field[@name='pac_date']"
+                       position="replace">
+                    <field name="pac_date" optional="1"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/list/field[@name='warranty']"
+                       position="replace">
+                    <field name="warranty"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/list/field[@name='maintainence']"
+                       position="replace">
+                    <field name="maintainence"/>
+                    <field name="parent_product_id"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/list/button[@name='action_display_sub_units']"
+                       position="after">
+                    <button name="add_sub_line" type="object"
+                            string="ADD SUB UNIT"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/list/button[@name='action_display_sub_units']"
+                       position="after">
+                    <field name="sub_item_sequence" column_invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/list/field[@name='maintainence']"
+                       position="after">
+                    <field name="peripherals" widget="many2many_tags"/>
+                    <field name="notes" optional="1"/>
+                </xpath>
+                <xpath expr="//group[@name='studio_group_35aca2']/field[@name='maintainence']"
+                       position="after">
+                    <field name="peripherals" widget="many2many_tags"/>
+                    <field name="notes" optional="1"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/list/field[@name='product_id']"
+                       position="replace">
+                    <field name="technical_product"
+                           column_invisible="not parent.is_technical_products_only"
+                           context="{'list_view_ref': 'custom_contract.product_product_tree_inherits'}"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/list/field[@name='province']"
+                       position="after">
+                    <field name="hd_name"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/form/sheet/group[1]/group[1]/field[@name='province']"
+                       position="after">
+                    <field name="hd_name"/>
+                    <field name="parent_product_id"/>
+                    <field name="sub_item_sequence" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='product_lines']/form/sheet/group[1]/group[2]/field[@name='contract_id']"
+                       position="after">
+                    <field name="pac_document" widget="many2many_binary"/>
+                    <field name="dac_document" widget="many2many_binary"/>
+                    <field name="handing_over_document" widget="many2many_binary"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="contracts_contract_view_inherit_pm_interval"
+                model="ir.ui.view">
+            <field name="name">contract.contract.interval</field>
+            <field name="model">contract.contract</field>
+            <field name="inherit_id" ref="itkan_pm.contract_contract_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='interval']" position="replace">
+                    <field name="pm_interval" string="PM Interval"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_contract_product_search" model="ir.ui.view">
+            <field name="name">contract.product.search</field>
+            <field name="model">contract.product</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="is_contract_in_warranty" invisible="1"/>
+                    <field name="active_contract" invisible="1"/>
+                    <filter string="Contract in Warranty"
+                            name="contract_in_warranty"
+                            domain="[('is_contract_in_warranty', '=', True)]"/>
+                    <filter string="Archived contract" name="archived_contract"
+                            domain="[('active_contract', '!=', True)]"/>
+                    <filter string="Active Contracts" name="active_contracts"
+                            domain="[('active_contract', '=', True)]"/>
+                    <filter string="Active Device" name="active_device"
+                            domain="[('eoc_date', '>=', context_today().strftime('%Y/%m/%d'))]"/>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window"
+                id="contracts.contracts_product_action_window">
+            <field name="name">Contracts Product Window</field>
+            <field name="res_model">contract.product</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_contract_product_search"/>
+            <field name="context">{'search_default_active_device': True}</field>
+        </record>
+    </data>
+</odoo>

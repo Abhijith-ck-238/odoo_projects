@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="offering_config_view_inherit" model="ir.ui.view">
+            <field name="name">offering</field>
+            <field name="model">offering.config</field>
+            <field name="inherit_id"
+                   ref="itkan_offering.offering_config_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_bom_lines']/list/field[@name='vendor']"
+                       position="after">
+                    <field name="product_access_unit"/>
+                    <field name="exchange_rate"/>
+                </xpath>
+                <xpath expr="//field[@name='product_bom_lines']/list/field[@name='total_price']"
+                       position="replace">
+                    <field name="total_price" string="PO Price"
+                           sum="Total PO Price"/>
+                </xpath>
+                <xpath expr="//field[@name='product_bom_lines']/list/field[@name='total_price']"
+                       position="after">
+                    <field name="so_total_price" string="SO Price"
+                           sum="Total SO Price"/>
+                </xpath>
+                <xpath expr="//field[@name='product_bom_lines']/list/field[@name='qty']"
+                       position="after">
+                    <field name="uom_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="offering_config_form_calculcation_view_inherit"
+                model="ir.ui.view">
+            <field name="name">offering</field>
+            <field name="model">offering.config</field>
+            <field name="inherit_id"
+                   ref="itkan_offering.offering_config_form_calculcation"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_bom_lines']/list/field[@name='qty']"
+                       position="after">
+                    <field name="uom_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

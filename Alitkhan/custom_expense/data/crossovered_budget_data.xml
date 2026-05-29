@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ir_cron_budget_deadline_notification" model="ir.cron">
+            <field name="name">Reminder : The budget is going to end soon.</field>
+            <field name="model_id" ref="custom_expense.model_budget_analytic"/>
+            <field name="state">code</field>
+            <field name="code">model.send_budget_deadline_notification()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+        </record>
+    </data>
+</odoo>
